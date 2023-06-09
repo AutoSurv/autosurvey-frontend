@@ -19,20 +19,20 @@ export default function Home() {
 
   useEffect(() => {
     getAllSurveys();
-    
+
   }, [])
 
   return (
     <>
       <main className={`${styles.main} ${inter.className}`}>
+        <p>Hello</p>
         {
           allSurveys.map((s: AutoSurvey, index: number) => {
-            console.log(s);
+            
             return (
-              <div>
-                <label>{s.locationGiven}</label>
-              </div>
+              <p>{s.location_given}</p>
             )
+
           })
         }
       </main>
