@@ -2,39 +2,74 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { getSurveys } from './api/autosurvey'
+import { getCountries, getOrganizations, getSurveys } from './api/autosurvey'
 import { useEffect, useState } from 'react'
-import { AutoSurvey } from './type/type'
+import { AutoSurvey, Country, Organization } from './type/type'
+import Button from '@mui/material/Button';
+import 'semantic-ui-css/semantic.min.css'
+import { Header, Icon, List } from 'semantic-ui-react'
 
 const inter = Inter({ subsets: ['latin'] })
+
 
 export default function Home() {
 
   const [allSurveys, setAllSurveys] = useState<AutoSurvey[]>([]);
+  const [allOrgs, setAllOrgs] = useState<Organization[]>([]);
+  const [allCountries, setAllCountries] = useState<Country[]>([]);
 
   const getAllSurveys = async () => {
     const listOfSurvey = await getSurveys();
     setAllSurveys(listOfSurvey);
   }
 
+  /*
+  const getAllOrgs = async () => {
+    const listOfOrgs = await getOrganizations();
+    setAllOrgs(listOfOrgs);
+  }
+  */
+
+  const getAllCountries = async () => {
+    const listOfCountries = await getCountries();
+    setAllCountries(listOfCountries);
+  }
+
+
+
   useEffect(() => {
     getAllSurveys();
-
+    //getAllOrgs();
+    getAllCountries();
   }, [])
 
   return (
     <>
-      <main className={`${styles.main} ${inter.className}`}>
-        <p>Hello</p>
-        {
-          allSurveys.map((s: AutoSurvey, index: number) => {
-            
-            return (
-              <p>{s.location_given}</p>
-            )
+      <main className="home-body">
+        <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+          <Icon name='clipboard' />
+          <Header.Content>Welcome to AutoSurvey</Header.Content>
+        </Header>
+        <div>
+         <Button variant='contained' href='/org'>Sign-in</Button>
+        </div>
 
-          })
-        }
+        <footer className='home-footer'>
+          <List horizontal>
+            <List.Item>
+              <List.Content>
+                <List.Header>Simon.H</List.Header>
+              </List.Content>
+            </List.Item>
+            <List.Item>
+              <List.Content>
+                <List.Header>Marco.D</List.Header>
+              </List.Content>
+            </List.Item>
+
+
+          </List>
+        </footer>
       </main>
     </>
   )

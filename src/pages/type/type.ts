@@ -4,21 +4,21 @@ export type AutoSurvey = {
   rent: number;
   utilities: number,
   food: number,
-  basic_items: number,
+  basicItems: number,
   transportation: number,
-  education_total: number,
-  education_supplies: number,
-  education_fee: number,
-  education_type: string,
-  accommodation_type: string,
+  educationTotal: number,
+  educationSupplies: number,
+  educationFee: number,
+  educationType: string,
+  accommodationType: string,
   profession: string,
-  location_given: string,
-  location_clustered: string,
-  num_residents: number,
-  num_incomes: number,
-  num_full_incomes: number,
-  num_children: number,
-  total_income: number,
+  locationGiven: string,
+  locationClustered: string,
+  numResidents: number,
+  numIncomes: number,
+  numFullIncomes: number,
+  numChildren: number,
+  totalIncome: number,
   comments: string
 }
 
@@ -28,20 +28,34 @@ export type AutoSurveyDto = {
   rent: number;
   utilities: number,
   food: number,
-  basic_items: number,
+  basicItems: number,
   transportation: number,
-  education_total: number,
-  education_supplies: number,
-  education_fee: number,
-  education_type: string,
-  accommodation_type: string,
+  educationTotal: number,
+  educationSupplies: number,
+  educationFee: number,
+  educationType: string,
+  accommodationType: string,
   profession: string,
   location_given: string,
-  location_clustered: string,
-  num_residents: number,
-  num_incomes: number,
-  num_full_incomes: number,
-  num_children: number,
-  total_income: number,
+  locationClustered: string,
+  numResidents: number,
+  numIncomes: number,
+  numFullIncomes: number,
+  numChildren: number,
+  totalIncome: number,
   comments: string
+}
+
+export type Country = {
+  countryId: string,
+  country: string
+}
+
+export type Organization = {
+  orgId: string,
+  orgName: string
+}
+
+export type OrgRequestDto = {
+  orgName: string
 }
