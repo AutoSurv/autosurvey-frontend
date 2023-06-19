@@ -36,7 +36,7 @@ export type AutoSurveyDto = {
   educationType: string,
   accommodationType: string,
   profession: string,
-  locationGiven: string,
+  location_given: string,
   locationClustered: string,
   numResidents: number,
   numIncomes: number,
@@ -44,4 +44,14 @@ export type AutoSurveyDto = {
   numChildren: number,
   totalIncome: number,
   comments: string
+}
+
+export type Country = {
+  countryId: string,
+  country: string
+}
+
+export type Organization = {
+  orgId: string,
+  orgName: string
 }
