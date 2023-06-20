@@ -3,16 +3,15 @@ import Link from "next/link";
 import { use, useEffect, useState } from "react";
 import { Form, Input, Label, Modal } from "semantic-ui-react";
 import { addOrganization, getOrganizations } from "../api/autosurvey";
-import { OrgRequestDto, Organization } from "../type/type";
-import OrgCard from "@/component/OrgCard";
+import { CountryRequestDto, OrgRequestDto, Organization } from "../type/type";
 
 export default function Orgs() {
 
-    const [orgName, setOrgName] = useState<OrgRequestDto>({} as OrgRequestDto);
+    const [countryName, setcountryName] = useState<CountryRequestDto>({} as CountryRequestDto);
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
-
+    
     useEffect(() => {
         getOrganizations(setOrganizations);
     }, [])
@@ -41,16 +40,8 @@ export default function Orgs() {
                     </Modal.Content>
 
                 </Modal>
-
             </div>
 
-            <div className="org-list">
-              {
-                organizations.map((organization: Organization) => {
-                  return (<OrgCard organization={organization} />)
-                })
-              }
-            </div>
         </main>
 
     )

@@ -59,3 +59,7 @@ export type Organization = {
 export type OrgRequestDto = {
   orgName: string
 }
+
+export type CountryRequestDto = {
+  orgName: string
+}

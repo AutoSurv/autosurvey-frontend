@@ -57,7 +57,7 @@ const BASE_ORG_URL = `http://localhost:8080/api/organizations`;
 export async function getOrganizations(setOranizations: Dispatch<SetStateAction<Organization[]>> ) {
    const apiResponse = await fetch(BASE_ORG_URL, { cache: 'no-store' });
    const data: Organization[] = await apiResponse.json();
-  setOranizations(data);
+   setOranizations(data);
 };
 
 export async function getOrganization(id: string) {
