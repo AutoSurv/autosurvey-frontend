@@ -127,12 +127,18 @@ export async function getCountries(setCountries: Dispatch<SetStateAction<Country
   return data;
 };
 
+export async function stuff() {
+   const apiResponse = await fetch(BASE_COUNTRY_URL, { cache: 'no-store' });
+   const data : Country[] = await apiResponse.json();
+  return data;
+};
+
 export async function getCountry(id: string) {
   const autosurveysURL = BASE_COUNTRY_URL + `/${id}`;
   const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
   const data = await apiResponse.json();
  return data;
-}
+};
 
 export async function addCountry(orgid: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>, setCountries: Dispatch<SetStateAction<Country[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   

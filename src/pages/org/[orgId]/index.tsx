@@ -1,5 +1,5 @@
 import CountryCard from "@/component/CountryCard";
-import { addCountry, getCountries, getOrganization } from "@/pages/api/autosurvey";
+import { addCountry, getCountries, getOrganization, stuff } from "@/pages/api/autosurvey";
 import { Country, Organization } from "@/pages/type/type";
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { useRouter } from "next/router"
@@ -16,16 +16,14 @@ export default function OrgDetails() {
   const [countries, setCountries] = useState<Country[]>([]);
   const [errMessage, setErrMessage] = useState<string>("");
 
-  console.log("orgid", orgId);
-
   useEffect(() => {
     if (router.isReady) {
       if (orgId != undefined) {
         getOrganization(orgId, setOrganization);
         getCountries(setCountries);
-      }
-    }  
-  }, [countries.length])
+      }  
+    }
+  }, [orgId, countries.length])
 
   return (
     <div>
@@ -38,7 +36,6 @@ export default function OrgDetails() {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            console.log(orgId);
             addCountry(orgId, e, setCountries, setOpen, setErrMessage);
           }}>
             <Form.Field>
@@ -52,7 +49,7 @@ export default function OrgDetails() {
       </Modal>
       <div className="specific-org-body">
 
-        {organization.countries.length > 0 && organization.countries.map(country => {
+        {countries.length > 0 && organization.countries.map(country => {
           return <CountryCard organization={organization} country={country} />
         })}
         {/* <div className="specific-org-cardcontainer">
