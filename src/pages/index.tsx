@@ -30,18 +30,18 @@ export default function Home() {
   }
   */
 
-  const getAllCountries = async () => {
+ /*  const getAllCountries = async () => {
     const listOfCountries = await getCountries();
     setAllCountries(listOfCountries);
   }
+ */
 
 
-
-  useEffect(() => {
+  /* useEffect(() => {
     getAllSurveys();
     //getAllOrgs();
     getAllCountries();
-  }, [])
+  }, []) */
 
   return (
     <>

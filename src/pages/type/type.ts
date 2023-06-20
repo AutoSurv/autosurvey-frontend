@@ -48,12 +48,14 @@ export type AutoSurveyDto = {
 
 export type Country = {
   countryId: string,
-  country: string
+  country: string,
+  surveys: AutoSurvey[]
 }
 
 export type Organization = {
   orgId: string,
-  orgName: string
+  orgName: string,
+  countries: Country[]
 }
 
 export type OrgRequestDto = {
@@ -61,5 +63,5 @@ export type OrgRequestDto = {
 }
 
 export type CountryRequestDto = {
-  orgName: string
+  country: string
 }

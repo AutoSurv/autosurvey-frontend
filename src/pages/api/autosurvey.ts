@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, OrgRequestDto, Organization } from "../type/type";
+import { AutoSurvey, Country, CountryRequestDto, OrgRequestDto, Organization } from "../type/type";
 
 
 //Survey section
@@ -60,11 +60,11 @@ export async function getOrganizations(setOranizations: Dispatch<SetStateAction<
    setOranizations(data);
 };
 
-export async function getOrganization(id: string) {
-  const organizationURL = BASE_ORG_URL + `/${id}`;
+export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>> ) {
+  const organizationURL = BASE_ORG_URL + `/${orgid}`;
   const apiResponse = await fetch(organizationURL, { cache: 'no-store' });
   const data: Organization = await apiResponse.json();
- return data;
+  setOrganization(data);
 }
 
 export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOranizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
@@ -120,9 +120,10 @@ export async function deleOrganizaion(id: string) {
 //Country section
 const BASE_COUNTRY_URL = `http://localhost:8080/api/countrygroups`;
 
-export async function getCountries() {
+export async function getCountries(setCountries: Dispatch<SetStateAction<Country[]>>) {
    const apiResponse = await fetch(BASE_COUNTRY_URL, { cache: 'no-store' });
-   const data = await apiResponse.json();
+   const data : Country[] = await apiResponse.json();
+   setCountries(data);
   return data;
 };
 
@@ -133,16 +134,30 @@ export async function getCountry(id: string) {
  return data;
 }
 
-export async function addCountry(autosurvey: AutoSurvey) {
-  const response = await fetch(BASE_COUNTRY_URL, {
+export async function addCountry(orgid: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>, setCountries: Dispatch<SetStateAction<Country[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+  
+  const orgCountryURL = BASE_ORG_URL + `/${orgid}/countries` 
+  const reqBody: CountryRequestDto = {
+    country: event.currentTarget.country.value
+  };
+
+  if(!reqBody.country) {
+    setErrMessage('Please choose a country');
+  }
+
+  const response = await fetch(orgCountryURL, {
     method: "POST",
-    body: JSON.stringify(autosurvey),
+    body: JSON.stringify(reqBody),
     headers: {
       "content-type": "application/json",
     },
   });
-  const json = (await response.json()) as { addedSurvey: AutoSurvey };
-  return json;
+
+  if(response.ok) {
+    await getCountries(setCountries);
+    setOpen(false);
+    setErrMessage("");
+  }
 };
 
 export async function updateCountry(autosurvey: AutoSurvey) {
