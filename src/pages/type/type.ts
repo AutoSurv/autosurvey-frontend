@@ -23,7 +23,6 @@ export type AutoSurvey = {
 }
 
 export type AutoSurveyDto = {
-  id: string;
   country: string;
   rent: number;
   utilities: number,
@@ -36,7 +35,7 @@ export type AutoSurveyDto = {
   educationType: string,
   accommodationType: string,
   profession: string,
-  location_given: string,
+  locationGiven: string,
   locationClustered: string,
   numResidents: number,
   numIncomes: number,
@@ -52,6 +51,10 @@ export type Country = {
   surveys: AutoSurvey[]
 }
 
+export type CountryRequestDto = {
+  country: string
+}
+
 export type Organization = {
   orgId: string,
   orgName: string,
@@ -62,6 +65,3 @@ export type OrgRequestDto = {
   orgName: string
 }
 
-export type CountryRequestDto = {
-  country: string
-}

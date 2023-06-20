@@ -15,33 +15,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
 
   const [allSurveys, setAllSurveys] = useState<AutoSurvey[]>([]);
-  const [allOrgs, setAllOrgs] = useState<Organization[]>([]);
-  const [allCountries, setAllCountries] = useState<Country[]>([]);
-
-  const getAllSurveys = async () => {
-    const listOfSurvey = await getSurveys();
-    setAllSurveys(listOfSurvey);
-  }
-
-  /*
-  const getAllOrgs = async () => {
-    const listOfOrgs = await getOrganizations();
-    setAllOrgs(listOfOrgs);
-  }
-  */
-
- /*  const getAllCountries = async () => {
-    const listOfCountries = await getCountries();
-    setAllCountries(listOfCountries);
-  }
- */
-
-
-  /* useEffect(() => {
-    getAllSurveys();
-    //getAllOrgs();
-    getAllCountries();
-  }, []) */
+ 
 
   return (
     <>

@@ -5,9 +5,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Link } from '@mui/material';
 import { Country, Organization } from '@/pages/type/type';
-import { Button, Form, Input, Label, Modal } from 'semantic-ui-react';
-import { useState } from 'react';
-import { addCountry } from '@/pages/api/autosurvey';
 
 type CountryCardProp = {
     organization: Organization,
@@ -15,8 +12,6 @@ type CountryCardProp = {
 }
 
 export default function CountryCard(props: CountryCardProp) {
-    const [open, setOpen] = useState(false);
-    const [errMessage, setErrMessage] = useState<string>("");
    
     return (
         <>
