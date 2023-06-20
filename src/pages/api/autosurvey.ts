@@ -141,6 +141,8 @@ export async function addCountry(orgid: string | string[] | undefined, event: Re
     country: event.currentTarget.country.value
   };
 
+  console.log("reqBody", reqBody)
+
   if(!reqBody.country) {
     setErrMessage('Please choose a country');
   }

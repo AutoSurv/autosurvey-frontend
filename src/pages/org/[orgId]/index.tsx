@@ -3,24 +3,29 @@ import { addCountry, getCountries, getOrganization } from "@/pages/api/autosurve
 import { Country, Organization } from "@/pages/type/type";
 import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Form, Input, Label, Modal } from "semantic-ui-react";
 
 
 export default function OrgDetails() {
 
-  const router = useRouter();
-  const { orgid } = router.query;
+  const  router  = useRouter();
+  const { orgId } = router.query;
   const [organization, setOrganization] = useState<Organization>({ orgId: "", orgName: "", countries: [] })
   const [open, setOpen] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);
   const [errMessage, setErrMessage] = useState<string>("");
+
+  console.log("orgid", orgId);
+
   useEffect(() => {
-    if (orgid) {
-      getOrganization(orgid, setOrganization);
-      //getCountries(setCountries);
-    }
-  }, [orgid])
+    if (router.isReady) {
+      if (orgId != undefined) {
+        getOrganization(orgId, setOrganization);
+        getCountries(setCountries);
+      }
+    }  
+  }, [countries.length])
 
   return (
     <div>
@@ -33,7 +38,8 @@ export default function OrgDetails() {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addCountry(orgid, e, setCountries, setOpen, setErrMessage);
+            console.log(orgId);
+            addCountry(orgId, e, setCountries, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>
