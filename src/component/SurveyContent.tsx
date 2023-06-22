@@ -113,10 +113,6 @@ export default function CountryContent(props: SurveyContentProp) {
               <Label>Comments</Label>
               <Input placeholder="Comments" type="text" name="comments" />
             </Form.Field>
-            <Form.Field>
-              <Label>Organization Id</Label>
-              <Input placeholder="Organization Id" type="text" name="orgId" />
-            </Form.Field>
             
 
             <Button type="submit">Add Survey +</Button>
