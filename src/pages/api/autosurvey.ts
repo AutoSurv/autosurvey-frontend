@@ -16,6 +16,7 @@ export async function getOrganization(orgid: string | string[], setOrganization:
   const apiResponse = await fetch(organizationURL, { cache: 'no-store' });
   const data: Organization = await apiResponse.json();
   setOrganization(data);
+  return data;
 }
 
 export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
@@ -86,6 +87,7 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
   const apiResponse = await fetch(BASE_SURVEY_URL, { cache: 'no-store' });
   const data: AutoSurvey[] = await apiResponse.json();
   setSurveys(data);
+  return data;
 };
 
 export async function getSurvey(id: string | string[], setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
@@ -96,7 +98,7 @@ export async function getSurvey(id: string | string[], setSurvey: Dispatch<SetSt
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  orgId: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
+  orgId: string, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: AutoSurveyRequestDto = {
     country: event.currentTarget.country.value,
@@ -132,7 +134,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     body: JSON.stringify(reqBody)
   };
   const response = await fetch(BASE_SURVEY_URL, reqOptions);
-  await getSurveys(setSurveys);
+  getOrganization(orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
 }

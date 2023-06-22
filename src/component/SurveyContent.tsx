@@ -1,24 +1,29 @@
 import { addSurvey, getOrganizations, getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Organization } from "@/pages/type/type";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import SurveyCard from "./SurveyCard";
+import { Context } from "@/helper/context";
 
 type SurveyContentProp = {
-  organization: Organization;
-  setOrganizations: Dispatch<SetStateAction<Organization[]>>;
+  propOrganization: Organization;
+  setPropOrganization: Dispatch<SetStateAction<Organization>>;
 }
 
 export default function CountryContent(props: SurveyContentProp) {
 
-  const { organization, setOrganizations } = props;
-  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
-  useEffect(() => {
-    getSurveys(setSurveys);
-  }, []);
-
+  const { organization, setOrganization } = useContext(Context);
+  const { propOrganization, setPropOrganization } = props;
+  setOrganization(propOrganization);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
+
+  useEffect(() => {
+  
+  }, [propOrganization.surveys.length]);
+
+  console.log("SurveyCOntent.organization.orgNAme: ", organization.orgName);
+  console.log("propOrganization.surveys.length: ", propOrganization.surveys.length);
 
   return (
     <div className="countries-content">
@@ -31,7 +36,7 @@ export default function CountryContent(props: SurveyContentProp) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey( e, organization.orgId, setSurveys, setOpen, setErrMessage);
+            addSurvey( e, propOrganization.orgId, setPropOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>
@@ -121,9 +126,12 @@ export default function CountryContent(props: SurveyContentProp) {
 
       </Modal>
       <div className="orgs-orgcard-box">
-        {organization.surveys.map((survey) => {
+        {propOrganization.surveys.map((survey) => {
+          // console.log("propOrganization: ", propOrganization);
+          // console.log("organization: ", organization);
+          console.log("surveyContent.CountryContent.organization.name: ", organization.orgName);
           return (
-            <SurveyCard organization={organization} survey={survey} />
+            <SurveyCard organization={propOrganization} survey={survey} />
           )
         })}
 
