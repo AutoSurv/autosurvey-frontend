@@ -19,10 +19,36 @@ export type AutoSurvey = {
   numFullIncomes: number,
   numChildren: number,
   totalIncome: number,
-  comments: string
+  comments: string,
+  orgId: string,
+  orgName: string
 }
 
-export type AutoSurveyDto = {
+export type AutoSurveyRequestDto = {
+  country: string;
+  rent: number;
+  utilities: number,
+  food: number,
+  basicItems: number,
+  transportation: number,
+  educationTotal: number,
+  educationSupplies: number,
+  educationFee: number,
+  educationType: string,
+  accommodationType: string,
+  profession: string,
+  locationGiven: string,
+  locationClustered: string,
+  numResidents: number,
+  numIncomes: number,
+  numFullIncomes: number,
+  numChildren: number,
+  totalIncome: number,
+  comments: string,
+  orgId: string
+}
+
+export type AutoSurveyUpdateDto = {
   country: string;
   rent: number;
   utilities: number,
@@ -45,20 +71,12 @@ export type AutoSurveyDto = {
   comments: string
 }
 
-export type Country = {
-  countryId: string,
-  country: string,
-  surveys: AutoSurvey[]
-}
 
-export type CountryRequestDto = {
-  country: string
-}
 
 export type Organization = {
   orgId: string,
   orgName: string,
-  countries: Country[]
+  surveys: AutoSurvey[]
 }
 
 export type OrgRequestDto = {

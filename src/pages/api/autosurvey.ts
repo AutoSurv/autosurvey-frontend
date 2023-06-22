@@ -1,55 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, Country, CountryRequestDto, OrgRequestDto, Organization } from "../type/type";
-
-
-//Survey section
-const BASE_SURVEY_URL = `http://localhost:8080/api/autosurveys`;
-
-export async function getSurveys() {
-  const apiResponse = await fetch(BASE_SURVEY_URL, { cache: 'no-store' });
-  const data = await apiResponse.json();
-  return data;
-};
-
-export async function getSurvey(id: string) {
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
-  const data = await apiResponse.json();
-  return data;
-}
-
-export async function addSurvey(autosurvey: AutoSurvey) {
-  const response = await fetch(BASE_SURVEY_URL, {
-    method: "POST",
-    body: JSON.stringify(autosurvey),
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const json = (await response.json()) as { addedSurvey: AutoSurvey };
-  return json;
-};
-
-export async function updateSurvey(autosurvey: AutoSurvey) {
-  const id = autosurvey.id
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const response = await fetch(autosurveysURL, {
-    method: "PATCH",
-    body: JSON.stringify(autosurvey),
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-  const json = (await response.json()) as { updatedSurvey: AutoSurvey };
-  return json;
-};
-
-export async function deleteSurvey(id: string) {
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const response = await fetch(autosurveysURL, {
-    method: "DELETE",
-  });
-};
+import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, OrgRequestDto, Organization } from "../type/type";
 
 
 //Organization section
@@ -116,9 +66,6 @@ export async function updateOrganizaionName(id: string, name: string, setOraniza
   await getOrganization(id, setOranization);
   setOpen(false);
   setErrMessage('');
-
-
-
 };
 
 export async function deleOrganizaion(id: string, setOranizations: Dispatch<SetStateAction<Organization[]>>) {
@@ -132,76 +79,106 @@ export async function deleOrganizaion(id: string, setOranizations: Dispatch<SetS
 
 
 
-//Country section
-const BASE_COUNTRY_URL = `http://localhost:8080/api/countrygroups`;
+//Survey section
+const BASE_SURVEY_URL = `http://localhost:8080/api/autosurveys`;
 
-export async function getCountries(setCountries: Dispatch<SetStateAction<Country[]>>) {
-  const apiResponse = await fetch(BASE_COUNTRY_URL, { cache: 'no-store' });
-  const data: Country[] = await apiResponse.json();
-  setCountries(data);
-  return data;
+export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+  const apiResponse = await fetch(BASE_SURVEY_URL, { cache: 'no-store' });
+  const data: AutoSurvey[] = await apiResponse.json();
+  setSurveys(data);
 };
 
-export async function getCountry(id: string, setCountry: Dispatch<SetStateAction<Country>>) {
-  const orgCountryURL = BASE_COUNTRY_URL + `/${id}`;
-  const apiResponse = await fetch(orgCountryURL, { cache: 'no-store' });
-  const data : Country = await apiResponse.json();
-  setCountry(data);
+export async function getSurvey(id: string | string[], setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
+  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
+  const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
+  const data: AutoSurvey = await apiResponse.json();
+  setSurvey(data);
 }
 
-export async function addCountry(orgid: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>, setCountries: Dispatch<SetStateAction<Country[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
-
-  const orgCountryURL = BASE_ORG_URL + `/${orgid}/countries`
-  const reqBody: CountryRequestDto = {
-    country: event.currentTarget.country.value
+export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
+  orgId: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
+  setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+  const reqBody: AutoSurveyRequestDto = {
+    country: event.currentTarget.country.value,
+    rent: event.currentTarget.rent.value,
+    utilities: event.currentTarget.utilities.value,
+    food: event.currentTarget.food.value,
+    basicItems: event.currentTarget.basicItems.value,
+    transportation: event.currentTarget.transportation.value,
+    educationTotal: event.currentTarget.educationTotal.value,
+    educationSupplies: event.currentTarget.educationSupplies.value,
+    educationFee: event.currentTarget.educationFee.value,
+    educationType: event.currentTarget.educationType.value,
+    accommodationType: event.currentTarget.accommodationType.value,
+    profession: event.currentTarget.profession.value,
+    locationGiven: event.currentTarget.locationGiven.value,
+    locationClustered: event.currentTarget.locationClustered.value,
+    numResidents: event.currentTarget.numResidents.value,
+    numIncomes: event.currentTarget.numIncomes.value,
+    numFullIncomes: event.currentTarget.numFullIncomes.value,
+    numChildren: event.currentTarget.numChildren.value,
+    totalIncome: event.currentTarget.totalIncome.value,
+    comments: event.currentTarget.comments.value,
+    orgId: orgId,
   };
 
-  if (!reqBody.country) {
-    setErrMessage('Please choose a country');
+  if (!reqBody.country || !reqBody.orgId) {
+    setErrMessage('Please fill the form.');
+    return;
   }
+  const reqOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(reqBody)
+  };
+  const response = await fetch(BASE_SURVEY_URL, reqOptions);
+  await getSurveys(setSurveys);
+  setOpen(false);
+  setErrMessage('');
+}
 
-  const response = await fetch(orgCountryURL, {
-    method: "POST",
+export async function updateSurvey(id: string | string[], event: React.FormEvent<HTMLFormElement>,
+  setSurvey: Dispatch<SetStateAction<AutoSurvey>>, setOpen: Dispatch<SetStateAction<boolean>>,
+  setErrMessage: Dispatch<SetStateAction<string>>) {
+  const reqBody: AutoSurveyUpdateDto = {
+    country: event.currentTarget.country.value,
+    rent: event.currentTarget.rent.value,
+    utilities: event.currentTarget.utilities.value,
+    food: event.currentTarget.food.value,
+    basicItems: event.currentTarget.basicItems.value,
+    transportation: event.currentTarget.transportation.value,
+    educationTotal: event.currentTarget.educationTotal.value,
+    educationSupplies: event.currentTarget.educationSupplies.value,
+    educationFee: event.currentTarget.educationFee.value,
+    educationType: event.currentTarget.educationType.value,
+    accommodationType: event.currentTarget.accomodationType.value,
+    profession: event.currentTarget.profession.value,
+    locationGiven: event.currentTarget.locationGiven.value,
+    locationClustered: event.currentTarget.locationClustered.value,
+    numResidents: event.currentTarget.numResidents.value,
+    numIncomes: event.currentTarget.numIncomes.value,
+    numFullIncomes: event.currentTarget.numFullIcomes.value,
+    numChildren: event.currentTarget.numChildren.value,
+    totalIncome: event.currentTarget.totalIncome.value,
+    comments: event.currentTarget.comments.value,
+  };
+  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
+  const response = await fetch(autosurveysURL, {
+    method: "PATCH",
     body: JSON.stringify(reqBody),
     headers: {
       "content-type": "application/json",
     },
   });
-
-  if (response.ok) {
-    await getCountries(setCountries);
-    setOpen(false);
-    setErrMessage("");
-  }
-};
-
-export async function updateCountry(countryid: string, name: string, setCountry: Dispatch<SetStateAction<Country>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
-  const reqBody: CountryRequestDto = {
-    country: name
-  }
-
-  if (!reqBody.country) {
-    setErrMessage("Please edit country name");
-  }
-
-  const reqOptions = {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(reqBody)
-  };
-
-  const response = await fetch(`${BASE_COUNTRY_URL}/${countryid}`, reqOptions);
-  await getCountry(countryid, setCountry);
+  await getSurvey(id, setSurvey);
   setOpen(false);
   setErrMessage('');
-
 };
 
-export async function deleCountry(id: string, setCountries: Dispatch<SetStateAction<Country[]>> ) {
-  const orgCountryURL = BASE_COUNTRY_URL + `/${id}`;
-  const response = await fetch(orgCountryURL, {
+export async function deleteSurvey(id: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
+  const response = await fetch(autosurveysURL, {
     method: "DELETE",
   });
-  await getCountries(setCountries);
-
-}; 
+  await getSurveys(setSurveys);
+};
