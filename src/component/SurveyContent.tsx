@@ -75,7 +75,7 @@ export default function CountryContent(props: SurveyContentProp) {
             </Form.Field>
             <Form.Field>
               <Label>Accommodation Type</Label>
-              <Input placeholder="Accommodation Type" type="text" name="accommodation" />
+              <Input placeholder="Accommodation Type" type="text" name="accommodationType" />
             </Form.Field>
             <Form.Field>
               <Label>Profession</Label>

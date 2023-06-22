@@ -46,7 +46,7 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 
 };
 
-export async function updateOrganizaionName(id: string, name: string, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function updateOrganizationName(id: string, name: string, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
     orgName: name
