@@ -5,10 +5,10 @@ import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, OrgRequestDto, O
 //Organization section
 const BASE_ORG_URL = `http://localhost:8080/api/organizations`;
 
-export async function getOrganizations(setOranizations: Dispatch<SetStateAction<Organization[]>>) {
+export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   const apiResponse = await fetch(BASE_ORG_URL, { cache: 'no-store' });
   const data: Organization[] = await apiResponse.json();
-  setOranizations(data);
+  setOrganizations(data);
 };
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
@@ -18,7 +18,7 @@ export async function getOrganization(orgid: string | string[], setOrganization:
   setOrganization(data);
 }
 
-export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOranizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value
@@ -37,7 +37,7 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
   });
 
   if (response.ok) {
-    await getOrganizations(setOranizations);
+    await getOrganizations(setOrganizations);
     setOpen(false);
     setErrMessage("");
   } else {
@@ -46,7 +46,7 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 
 };
 
-export async function updateOrganizaionName(id: string, name: string, setOranization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function updateOrganizaionName(id: string, name: string, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
     orgName: name
@@ -63,17 +63,17 @@ export async function updateOrganizaionName(id: string, name: string, setOraniza
   };
 
   const response = await fetch(`${BASE_ORG_URL}/${id}`, reqOptions);
-  await getOrganization(id, setOranization);
+  await getOrganization(id, setOrganization);
   setOpen(false);
   setErrMessage('');
 };
 
-export async function deleOrganizaion(id: string, setOranizations: Dispatch<SetStateAction<Organization[]>>) {
+export async function deleOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   const autosurveysURL = BASE_ORG_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
   });
-  await getOrganizations(setOranizations);
+  await getOrganizations(setOrganizations);
 };
 
 
