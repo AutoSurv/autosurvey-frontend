@@ -14,7 +14,6 @@ export default function Orgs() {
 
     return (
         <main className="org-main">
-
             <div className="org-content-container">
               <OrgContent/>
             </div>

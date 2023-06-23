@@ -1,4 +1,4 @@
-import { addSurvey, getOrganizations, getSurveys } from "@/pages/api/autosurvey";
+import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Organization } from "@/pages/type/type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
@@ -6,17 +6,15 @@ import SurveyCard from "./SurveyCard";
 
 type SurveyContentProp = {
   organization: Organization;
-  organizations: Organization[];
-  setOrganizations: Dispatch<SetStateAction<Organization[]>>;
+  setOrganization: Dispatch<SetStateAction<Organization>>;
 }
 
 export default function CountryContent(props: SurveyContentProp) {
 
-  const { organization, organizations, setOrganizations } = props;
+  const { organization, setOrganization } = props;
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   useEffect(() => {
     getSurveys(setSurveys);
-    getOrganizations(setOrganizations);
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -33,7 +31,7 @@ export default function CountryContent(props: SurveyContentProp) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey( e, organization.orgId, setSurveys, setOpen, setErrMessage);
+            addSurvey( e, organization.orgId, setSurveys, setOrganization,setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>
@@ -116,7 +114,6 @@ export default function CountryContent(props: SurveyContentProp) {
               <Input placeholder="Comments" type="text" name="comments" />
             </Form.Field>
             
-
             <Button type="submit">Add Survey +</Button>
           </Form>
         </Modal.Content>

@@ -96,7 +96,7 @@ export async function getSurvey(id: string | string[], setSurvey: Dispatch<SetSt
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  orgId: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
+  orgId: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: AutoSurveyRequestDto = {
     country: event.currentTarget.country.value,
@@ -133,6 +133,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   };
   const response = await fetch(BASE_SURVEY_URL, reqOptions);
   await getSurveys(setSurveys);
+  await getOrganization(orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
 }
