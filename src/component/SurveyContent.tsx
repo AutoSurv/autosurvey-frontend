@@ -9,7 +9,7 @@ type SurveyContentProp = {
   setOrganizations: Dispatch<SetStateAction<Organization[]>>;
 }
 
-export default function CountryContent(props: SurveyContentProp) {
+export default function SurveyContent(props: SurveyContentProp) {
 
   const { organization, setOrganizations } = props;
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
@@ -75,7 +75,7 @@ export default function CountryContent(props: SurveyContentProp) {
             </Form.Field>
             <Form.Field>
               <Label>Accommodation Type</Label>
-              <Input placeholder="Accommodation Type" type="text" name="accommodation" />
+              <Input placeholder="Accommodation Type" type="text" name="accommodationType" />
             </Form.Field>
             <Form.Field>
               <Label>Profession</Label>
@@ -112,12 +112,7 @@ export default function CountryContent(props: SurveyContentProp) {
             <Form.Field>
               <Label>Comments</Label>
               <Input placeholder="Comments" type="text" name="comments" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Organization Id</Label>
-              <Input placeholder="Organization Id" type="text" name="orgId" />
-            </Form.Field>
-            
+            </Form.Field>          
 
             <Button type="submit">Add Survey +</Button>
           </Form>
@@ -125,7 +120,7 @@ export default function CountryContent(props: SurveyContentProp) {
 
       </Modal>
       <div className="orgs-orgcard-box">
-        {organization.surveys.map((survey) => {
+        {surveys.map((survey) => {
           return (
             <SurveyCard organization={organization} survey={survey} />
           )

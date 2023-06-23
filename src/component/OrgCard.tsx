@@ -19,7 +19,7 @@ export default function OrgCard(props: OrgCardProp) {
   return (
     <>
 
-      <Link href={"/org/" + props.organization.orgId}>
+      <Link href={"/survey"}>
         <Card sx={{ maxWidth: 345 }}>
           <CardActionArea>
             <CardMedia

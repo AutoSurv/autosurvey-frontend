@@ -12,28 +12,29 @@ type SurveyCardProp = {
 }
 
 export default function SurveyCard(props: SurveyCardProp) {
-   
+    const { organization, survey } = props;
+
+
     return (
         <>
-          
+            {organization.orgId === survey.orgId ? 
+            <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image=""
+                        alt={props.survey.country}
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {props.organization.orgName}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card> : null}
 
-            <Link href={"/country/"}>
-                <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                        <CardMedia
-                            component="img"
-                            height="140"
-                            image=""
-                            alt={props.survey.country}
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                {props.organization.orgName}
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
-            </Link>
+
         </>
     );
 }

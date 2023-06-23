@@ -10,7 +10,7 @@ export default function OrgDetails() {
   const router = useRouter();
   const { orgid } = router.query;
   const [organization, setOrganization] = useState<Organization>({ orgId: "", orgName: "", surveys: [] })
-  const [organizationa, setOrganizations] = useState<Organization[]>([]);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
 
   useEffect(() => {
     if (orgid) {
@@ -20,7 +20,7 @@ export default function OrgDetails() {
 
   return (
     <div>
-      <SurveyContent organization={organization} setOrganizations={setOrganizations} />
+      {organization.orgName}
     </div>
   )
 }
