@@ -4,19 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Link } from '@mui/material';
-import { Country, Organization } from '@/pages/type/type';
-import { Button, Form, Input, Label, Modal } from 'semantic-ui-react';
-import { useState } from 'react';
-import { addCountry } from '@/pages/api/autosurvey';
+import { AutoSurvey, Organization } from '@/pages/type/type';
 
-type CountryCardProp = {
+type SurveyCardProp = {
     organization: Organization,
-    country: Country
+    survey: AutoSurvey
 }
 
-export default function CountryCard(props: CountryCardProp) {
-    const [open, setOpen] = useState(false);
-    const [errMessage, setErrMessage] = useState<string>("");
+export default function SurveyCard(props: SurveyCardProp) {
    
     return (
         <>
@@ -29,7 +24,7 @@ export default function CountryCard(props: CountryCardProp) {
                             component="img"
                             height="140"
                             image=""
-                            alt={props.country.country}
+                            alt={props.survey.country}
                         />
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
