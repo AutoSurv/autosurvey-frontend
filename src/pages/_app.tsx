@@ -8,7 +8,7 @@ import { OrgContext } from '@/helper/context'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
-  const [organization, setOrganization] = useState<Organization>({} as Organization);
+  const [organization, setOrganization] = useState<Organization>({orgId: '', orgName:'', surveys:[]});
 
   return (
     <SessionProvider session={session} refetchInterval={5 * 60}>

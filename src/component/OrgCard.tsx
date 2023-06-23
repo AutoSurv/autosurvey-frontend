@@ -19,21 +19,21 @@ export default function OrgCard(props: OrgCardProp) {
   return (
     <>
 
-      <Link href={"/org/" + props.organization.orgId}>
+      <Link href={"/org/" + organization.orgId}>
         <Card sx={{ maxWidth: 345 }}>
           <CardActionArea>
             <CardMedia
               component="img"
               height="140"
               image=""
-              alt={props.organization.orgName}
+              alt={organization.orgName}
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {props.organization.orgName}
+                {organization.orgName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {props.organization.orgId}
+                {organization.orgId}
               </Typography>
             </CardContent>
           </CardActionArea>
