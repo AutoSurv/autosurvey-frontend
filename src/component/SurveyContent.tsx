@@ -6,27 +6,29 @@ import SurveyCard from "./SurveyCard";
 
 type SurveyContentProp = {
   organization: Organization;
+  organizations: Organization[];
   setOrganizations: Dispatch<SetStateAction<Organization[]>>;
 }
 
 export default function CountryContent(props: SurveyContentProp) {
 
-  const { organization, setOrganizations } = props;
+  const { organization, organizations, setOrganizations } = props;
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   useEffect(() => {
     getSurveys(setSurveys);
+    getOrganizations(setOrganizations);
   }, []);
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
   return (
-    <div className="countries-content">
+    <div className="surveys-content">
       <Modal animation={false}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button className="org-modal-btn"> Create Survey +</Button>}>
+        trigger={<Button className="surveys-modal-btn"> Create Survey +</Button>}>
         <Modal.Header>Make New Survey</Modal.Header>
         <Modal.Content>
           <Form onSubmit={(e) => {
@@ -120,7 +122,7 @@ export default function CountryContent(props: SurveyContentProp) {
         </Modal.Content>
 
       </Modal>
-      <div className="orgs-orgcard-box">
+      <div className="surveys-surveycard-box">
         {organization.surveys.map((survey) => {
           return (
             <SurveyCard organization={organization} survey={survey} />
