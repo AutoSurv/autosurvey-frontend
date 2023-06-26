@@ -91,8 +91,10 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
   return data;
 };
 
-export async function getSurvey(id: string | string[], setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
+export async function getSurvey(surveyId: string | string[], setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
+  console.log("surveyId: ", surveyId);
+
+  const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
   const data: AutoSurvey = await apiResponse.json();
   setSurvey(data);

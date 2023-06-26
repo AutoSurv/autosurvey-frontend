@@ -15,9 +15,8 @@ export default function SurveyCard(props: SurveyCardProp) {
    
     return (
         <>
-          
-
-            <Link href={"/"}>
+        
+            <Link href={"/org/" + props.organization.orgId + "/" + props.survey.id}>
                 <Card sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                         <CardMedia

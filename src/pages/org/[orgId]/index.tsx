@@ -20,8 +20,6 @@ export default function OrgDetails() {
     }
   }, [orgid])
 
-  organization.orgName = "modified";
-
   return (
     <div>
       <SurveyContent />
