@@ -1,4 +1,7 @@
-import '@/styles/globals.css'
+import '@/styles/home.css'
+import '@/styles/orgcard.css'
+import '@/styles/surveycard.css'
+import '@/styles/specificsurvey.css'
 import 'semantic-ui-css/semantic.min.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'

@@ -1,0 +1,25 @@
+
+.orgs-content-container {
+
+    background-color:whitesmoke;
+    min-height: 100vh;
+    
+}
+
+.ui.button.org-modal-btn {
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.orgs-orgcard-box {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.org-card-container {
+
+    margin: 3%;
+}

@@ -1,0 +1,22 @@
+.surveys-content {
+    background-color: whitesmoke;
+    min-height: 100vh;
+}
+
+.ui.button.surveys-modal-btn {
+    margin-left: 5%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+}
+
+.surveys-surveycard-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 3%;
+}
+
+.survey-card-container {
+    margin: 3%;
+}

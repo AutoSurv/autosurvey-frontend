@@ -1,7 +1,7 @@
 import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Organization } from "@/pages/type/type";
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Icon, Input, Label, Modal } from "semantic-ui-react";
 import SurveyCard from "./SurveyCard";
 import { OrgContext } from "@/helper/context";
 
@@ -23,11 +23,14 @@ export default function SurveyContent() {
 
   return (
     <div className="surveys-content">
+       <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+                <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
+            </Header>
       <Modal animation={false}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button className="surveys-modal-btn"> Create Survey +</Button>}>
+        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
         <Modal.Header>Make New Survey</Modal.Header>
         <Modal.Content>
           <Form onSubmit={(e) => {

@@ -1,13 +1,13 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
 import { Organization } from "@/pages/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Icon, Input, Label, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 
 
 export default function OrgContent() {
-    const {setOrganization} =useContext(OrgContext);
+    const { setOrganization } = useContext(OrgContext);
 
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
@@ -19,11 +19,14 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
+            <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+                <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
+            </Header>
             <Modal animation={false}
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button className="org-modal-btn"> Create Organization +</Button>}>
+                trigger={<Button className="org-modal-btn" color="green"> Create Organization +</Button>}>
                 <Modal.Header>Make Your Organization</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={(e) => {
@@ -34,7 +37,7 @@ export default function OrgContent() {
                             <Label>Organization Name</Label>
                             <Input placeholder="Name your organization" type="text" name="orgname" />
                         </Form.Field>
-                        <Button type="submit">Add Organization +</Button>
+                        <Button type="submit" color="green">Add Organization +</Button>
                     </Form>
                 </Modal.Content>
 

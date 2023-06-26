@@ -15,15 +15,15 @@ export default function Home() {
   
 
   return (
-    <>
+    
    
       <main className="home-body">
         <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
           <Icon name='clipboard' />
           <Header.Content>Welcome to AutoSurvey</Header.Content>
         </Header>
-        <div>
-         <Button variant='contained' href='/org'>Sign-in</Button>
+        <div className="home-login">
+         <Button className="home-login-btn" variant='contained' href='/org'>Sign-in</Button>
         </div>
 
         <footer className='home-footer'>
@@ -44,6 +44,6 @@ export default function Home() {
         </footer>
       </main>
     
-    </>
+    
   )
 }

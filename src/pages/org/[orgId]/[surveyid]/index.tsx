@@ -12,17 +12,11 @@ import { redirect } from 'next/navigation';
 export default function SurveyDetails() {
 
   const  router  = useRouter();
-  console.log("router.query: ",router.query);
   const { orgid, surveyid } = router.query;
   const { organization, setOrganization, survey, setSurvey, setSurveys} = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-
-  // console.log("organization.orgId: ", organization.orgId);
-  // console.log("surveyid: ", surveyid);
-  console.log("survsurvey.id: ", survey.id);
-    //const [organization, setOrganization] = useState<Organization>({ orgId: "", orgName: "", surveys: [] })
-
+  
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
@@ -30,8 +24,11 @@ export default function SurveyDetails() {
   }, [surveyid])
 
   return (
-    <div>
+    <div className="specificsurvey-card-container">
       <Card>
+      <CardContent>
+          <Typography gutterBottom variant="h3" component="div">Survey Details </Typography>
+        </CardContent>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">Country: {survey && survey.country} </Typography>
         </CardContent>
