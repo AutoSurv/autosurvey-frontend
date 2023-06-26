@@ -7,7 +7,7 @@ import { CardActionArea, Link } from '@mui/material';
 import { Organization } from '@/pages/type/type';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Button, Form, Input, Label, Modal } from 'semantic-ui-react';
-import { updateOrganizationName } from '@/pages/api/autosurvey';
+import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
 import { OrgContext } from '@/helper/context';
 
 type OrgCardProp = {
@@ -63,7 +63,11 @@ export default function OrgCard(props: OrgCardProp) {
                     </Form>
                 </Modal.Content>
             </Modal>
-          <Button>Delete Organization</Button>
+          <Button onClick={(e) => {
+            e.preventDefault();
+            deleOrganization(organization.orgId, setOrganizations)
+          }}
+          >Delete Organization</Button>
         </Card>
 
     </>
