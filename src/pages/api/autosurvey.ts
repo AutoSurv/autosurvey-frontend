@@ -184,7 +184,7 @@ export async function updateSurvey(id: string | string[] | undefined, event: Rea
   setErrMessage('');
 };
 
-export async function deleteSurvey(id: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+export async function deleteSurvey(id: string | string[] | undefined, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",

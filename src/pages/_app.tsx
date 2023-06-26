@@ -11,9 +11,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
   const [organization, setOrganization] = useState<Organization>(initOrg);
   const [survey, setSurvey] = useState<AutoSurvey>(initSurvey);
+  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+
+
   return (
     <SessionProvider session={session} refetchInterval={5 * 60}>
-      <OrgContext.Provider value={{ organization, setOrganization, survey, setSurvey}}>
+      <OrgContext.Provider value={{ organization, setOrganization, survey, setSurvey, setSurveys}}>
       <Component {...pageProps} />
       </OrgContext.Provider>
     </SessionProvider>

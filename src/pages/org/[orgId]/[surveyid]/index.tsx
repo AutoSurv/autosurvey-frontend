@@ -1,11 +1,12 @@
 import SurveyContent from "@/component/SurveyContent";
 import { OrgContext } from "@/helper/context";
-import { getOrganization, getSurvey, updateSurvey } from "@/pages/api/autosurvey";
+import { deleteSurvey, getOrganization, getSurvey, updateSurvey } from "@/pages/api/autosurvey";
 import { Organization } from "@/pages/type/type";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Card, CardContent, Form, Input, Label, Modal } from "semantic-ui-react";
+import { redirect } from 'next/navigation';
 
 
 export default function SurveyDetails() {
@@ -13,7 +14,7 @@ export default function SurveyDetails() {
   const  router  = useRouter();
   console.log("router.query: ",router.query);
   const { orgid, surveyid } = router.query;
-  const { organization, setOrganization, survey, setSurvey} =useContext(OrgContext);
+  const { organization, setOrganization, survey, setSurvey, setSurveys} = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
@@ -101,7 +102,7 @@ export default function SurveyDetails() {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            updateSurvey(surveyid, e, setSurvey, setOpen, setErrMessage, orgid)
+            updateSurvey(surveyid, e, setSurvey, setOpen, setErrMessage, orgid);
           }}>
             <Form.Field>
               <Label>Country Name</Label>
@@ -189,7 +190,12 @@ export default function SurveyDetails() {
         </Modal.Content>
 
       </Modal>
-
+      <Button onClick={(e) => {
+        e.preventDefault();
+        deleteSurvey(surveyid, setSurveys);
+        window.location.href = "/org/" + orgid;
+        //redirect('/org/' + orgid);
+        }} >Delete Survey</Button>
       </Card>
     </div>
   )
