@@ -91,7 +91,7 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
   return data;
 };
 
-export async function getSurvey(surveyId: string | string[], setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
+export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
   console.log("surveyId: ", surveyId);
 
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
@@ -143,9 +143,11 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   setErrMessage('');
 }
 
-export async function updateSurvey(id: string | string[], event: React.FormEvent<HTMLFormElement>,
+export async function updateSurvey(id: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<AutoSurvey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>) {
+  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string | string[] | undefined) {
+  console.log("orgid: ", orgid)
+
   const reqBody: AutoSurveyUpdateDto = {
     country: event.currentTarget.country.value,
     rent: event.currentTarget.rent.value,
@@ -157,16 +159,17 @@ export async function updateSurvey(id: string | string[], event: React.FormEvent
     educationSupplies: event.currentTarget.educationSupplies.value,
     educationFee: event.currentTarget.educationFee.value,
     educationType: event.currentTarget.educationType.value,
-    accommodationType: event.currentTarget.accomodationType.value,
+    accommodationType: event.currentTarget.accommodationType.value,
     profession: event.currentTarget.profession.value,
     locationGiven: event.currentTarget.locationGiven.value,
     locationClustered: event.currentTarget.locationClustered.value,
     numResidents: event.currentTarget.numResidents.value,
     numIncomes: event.currentTarget.numIncomes.value,
-    numFullIncomes: event.currentTarget.numFullIcomes.value,
+    numFullIncomes: event.currentTarget.numFullIncomes.value,
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
+    orgId: orgid
   };
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {

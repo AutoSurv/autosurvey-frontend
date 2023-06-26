@@ -68,7 +68,8 @@ export type AutoSurveyUpdateDto = {
   numFullIncomes: number,
   numChildren: number,
   totalIncome: number,
-  comments: string
+  comments: string,
+  orgId: string | string[] | undefined
 }
 
 
