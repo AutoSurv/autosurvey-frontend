@@ -1,18 +1,16 @@
 import { Organization } from "@/pages/type/type";
-import { initOrg } from "./initializer";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-} from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 
+export interface OrgContextValue {
 
-export interface MyContextValue {
-  organization: Organization
-  setOrganization: Dispatch<SetStateAction<Organization>>;
+    organization: Organization;
+    setOrganization: Dispatch<SetStateAction<Organization>>;  
+
 }
 
-export const Context = createContext<MyContextValue>({
-  organization: initOrg,
-  setOrganization: () => {}
+export const OrgContext = createContext<OrgContextValue> ({
+
+    organization: {orgId: '', orgName: '', surveys: []},
+    setOrganization: () => {}
+    
 });

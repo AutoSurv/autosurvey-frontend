@@ -17,7 +17,7 @@ export default function SurveyCard(props: SurveyCardProp) {
         <>
           
 
-            <Link href={"/country/"}>
+            <Link href={"/"}>
                 <Card sx={{ maxWidth: 345 }}>
                     <CardActionArea>
                         <CardMedia
