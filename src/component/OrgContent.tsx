@@ -1,9 +1,10 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
 import { Organization } from "@/pages/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Header, Icon, Input, Label, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
+import Link from "next/link";
 
 
 export default function OrgContent() {
@@ -22,6 +23,15 @@ export default function OrgContent() {
             <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
                 <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
             </Header>
+            <Menu size='small' color="yellow" inverted>
+                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>                   
+                <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
+                <Menu.Menu position='right'>
+                    <Menu.Item>
+                        <Button inverted>Sign Up</Button>
+                    </Menu.Item>
+                </Menu.Menu>
+            </Menu>
             <Modal animation={false}
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}

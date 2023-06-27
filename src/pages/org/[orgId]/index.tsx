@@ -11,7 +11,6 @@ export default function OrgDetails() {
 
   const  router  = useRouter();
   const { orgid } = router.query;
-  //const [organization, setOrganization] = useState<Organization>({ orgId: "", orgName: "", surveys: [] })
   const { organization, setOrganization} =useContext(OrgContext);
 
   useEffect(() => {

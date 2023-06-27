@@ -29,7 +29,10 @@ export default function SurveyCard(props: SurveyCardProp) {
                                 {props.organization.orgName}
                             </Typography>
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                                {props.survey.country} / {props.survey.locationGiven}
+                                Country: {props.survey.country} 
+                            </Typography>
+                            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                                Survey Id: {props.survey.id}
                             </Typography>
                         </CardContent>
                     </CardActionArea>

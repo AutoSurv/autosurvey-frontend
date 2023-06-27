@@ -3,7 +3,33 @@
     text-align: center;
 }
 
-.ui.card {
+.ui.yellow.small.inverted.menu {
+    margin-left: 2%;
+    margin-right: 2%;
+}
 
+.specificsurvey-card {
+    display: flex;
+    justify-content: center;
+}
+
+.ui.card {
+ 
+ display: block;
 
 }
+
+.MuiTableCell-root.MuiTableCell-head.MuiTableCell-alignLeft.MuiTableCell-sizeMedium.specificsurvey-table-head.css-1ygcj2i-MuiTableCell-root {
+    font-size:x-large;
+    font-weight:normal;
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiTableContainer-root.specificsurvey-table-container.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+    display: flex;
+    justify-content: center;
+}
+
+.MuiTable-root.specificsurvey-table.css-rqglhn-MuiTable-root {
+    width: 80%;
+}
+
