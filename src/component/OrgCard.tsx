@@ -1,14 +1,10 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea, Link } from '@mui/material';
 import { Organization } from '@/pages/type/type';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Button, Form, Input, Label, Modal } from 'semantic-ui-react';
+import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
 import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
 import { OrgContext } from '@/helper/context';
+import Link from 'next/link';
 
 type OrgCardProp = {
   organization: Organization;
@@ -20,31 +16,23 @@ export default function OrgCard(props: OrgCardProp) {
   const { setOrganization } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
+  const orgLowerName: string = organization.orgName.toLowerCase();
+
 
   return (
 
 
     <div className="org-card-container">
-      <Card sx={{ maxWidth: 345 }} className="org-card">
-        <Link href={"/org/" + organization.orgId} underline="none" color="inherit">
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              image="https://tukuz.com/wp-content/uploads/2019/09/medecins-sans-frontieres-doctors-without-borders-logo-vector.png"
-              alt={organization.orgName}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div" >
-                {organization.orgName}
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                the number of surveys: {organization.surveys.length}
-              </Typography>
+      <Card className="org-card" >
+        <Link href={"/org/" + organization.orgId} >
+          <Image className="org-card-image" src={`/${orgLowerName}.png`} alt={organization.orgName} size='large'  />
+          <Card.Content>
+            <Card.Header>{organization.orgName}</Card.Header>
+            <Card.Meta>the number of surveys: {organization.surveys.length}</Card.Meta>
+          </Card.Content>
 
-            </CardContent>
-          </CardActionArea>
         </Link>
+        <div className="org-card-btn-container">
         <Modal animation={false}
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
@@ -64,11 +52,12 @@ export default function OrgCard(props: OrgCardProp) {
             </Form>
           </Modal.Content>
         </Modal>
-        <Button onClick={(e) => {
+        <Button className="org-modal-btn" onClick={(e) => {
           e.preventDefault();
           deleOrganization(organization.orgId, setOrganizations)
         }} color="orange"
         >Delete Org.</Button>
+        </div>
       </Card>
 
     </div>

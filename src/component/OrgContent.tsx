@@ -5,6 +5,7 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
+import { color } from "@mui/system";
 
 
 export default function OrgContent() {
@@ -21,7 +22,7 @@ export default function OrgContent() {
     return (
         <div className="orgs-content">
             <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
-                <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
+             <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
             </Header>
             <Menu size='small' color="yellow" inverted>
                 <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>                   

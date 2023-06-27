@@ -27,7 +27,7 @@ export default function SurveyDetails() {
   return (
     <div className="specificsurvey-card-container">
       <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
-        <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
+        <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
       </Header>
       <Menu size='small' color="yellow" inverted>
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>

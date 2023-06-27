@@ -6,11 +6,19 @@
     
 }
 
+.org-card-btn-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+
+
 .ui.button.org-modal-btn {
     margin-left: 5%;
     margin-top: 5%;
     margin-bottom: 5%;
 }
+
 
 .orgs-orgcard-box {
     width: 100%;
@@ -22,4 +30,10 @@
 .org-card-container {
 
     margin: 3%;
+}
+
+
+.MuiCardMedia-root.MuiCardMedia-media.MuiCardMedia-img.css-o69gx8-MuiCardMedia-root {
+ width: 100%;
+
 }
