@@ -5,35 +5,8 @@ import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
+import { AutoSurvey } from '@/pages/type/type';
 
-
-const data = [
-  {
-    rent: 1000,
-    utilities: 100,
-    food: 50,
-    basicItems: 500,
-    transportation: 60,
-    educationTotal: 89,
-    educationSupplies: 0,
-    educationFee: 1000,
-    educationType: "Public",
-    accommodationType: "Own",
-    profession: "Teacher",
-    locationGiven: "Oslo",
-    locationClustered: "Oslo",
-    numResidents: 0,
-    numIncomes: 0,
-    numFullIncomes: 0,
-    numChildren: 0,
-    totalIncome: 0,
-    comments: "Nice",
-    id: "649bebe75f02d15b376979cf",
-    country: "Norway",
-    orgId: "649beb9d5f02d15b376979cb",
-    orgName: "MSF"
-  }
-]
 
 export default function SurveyDetails() {
 
@@ -42,15 +15,19 @@ export default function SurveyDetails() {
   const { organization, setOrganization, survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-
+  
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
   }, [surveyid])
 
+  const surveyArray : AutoSurvey[] = [];
+
+
   const downloadExcel = (data: any) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    surveyArray.push(data);
+    const worksheet = XLSX.utils.json_to_sheet(surveyArray);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
@@ -84,7 +61,7 @@ export default function SurveyDetails() {
               <TableCell className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country}</TableCell>
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
-                downloadExcel(data);
+                downloadExcel(survey);
               }} color="green">Export Survey</Button></TableCell>
 
             </TableRow>
