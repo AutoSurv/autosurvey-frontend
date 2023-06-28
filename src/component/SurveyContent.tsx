@@ -1,3 +1,4 @@
+import * as XLSX from 'xlsx';
 import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey } from "@/pages/type/type";
 import { useContext, useEffect, useState } from "react";
@@ -21,6 +22,15 @@ export default function SurveyContent() {
   useEffect(() => {
 
   }, []);
+
+  const downloadExcel = (data: any) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "DataSheet.xlsx");
+  };
 
   return (
     <div className="surveys-content">
@@ -143,8 +153,12 @@ export default function SurveyContent() {
             >Cancel</Button>
           </Form>
         </Modal.Content>
-
       </Modal>
+      <Button onClick={(e) => {
+                e.preventDefault();
+                downloadExcel(surveys);
+              }} color="green">Export Survey
+              </Button>
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey) => {
           return (
