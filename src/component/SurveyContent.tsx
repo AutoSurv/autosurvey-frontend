@@ -42,7 +42,13 @@ export default function SurveyContent() {
         onOpen={() => setOpen(true)}
         open={open}
         trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
-        <Modal.Header>Make New Survey</Modal.Header>
+        <Modal.Header>Make New Survey
+        <Button onClick={(e) => {
+          e.preventDefault();
+          setOpen(false);
+        }} color="grey"
+        >X</Button>
+        </Modal.Header>
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
@@ -130,6 +136,11 @@ export default function SurveyContent() {
             </Form.Field>
 
             <Button type="submit">Add Survey +</Button>
+            <Button onClick={(e) => {
+              e.preventDefault();
+              setOpen(false);
+            }} color="orange"
+            >Cancel</Button>
           </Form>
         </Modal.Content>
 

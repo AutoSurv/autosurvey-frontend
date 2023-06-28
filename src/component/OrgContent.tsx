@@ -29,7 +29,7 @@ export default function OrgContent() {
                 <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Button inverted>Sign Up</Button>
+                        <Button inverted>Sign Out</Button>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

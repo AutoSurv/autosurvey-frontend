@@ -177,7 +177,13 @@ export default function SurveyDetails() {
                   onOpen={() => setOpen(true)}
                   open={open}
                   trigger={<Button className="surveys-modal-btn" color="blue"> Edit Survey</Button>}>
-                  <Modal.Header>Edit Survey</Modal.Header>
+                  <Modal.Header>Edit Survey
+                    <Button onClick={(e) => {
+                        e.preventDefault();
+                        setOpen(false);
+                      }} color="grey"
+                      >X</Button>
+                  </Modal.Header>
                   <Modal.Content>
                     <Form onSubmit={(e) => {
                       e.preventDefault();
@@ -264,6 +270,11 @@ export default function SurveyDetails() {
                         <Input placeholder="Comments" type="text" name="comments" />
                       </Form.Field>
                       <Button type="submit" color="blue">Edit Survey</Button>
+                      <Button onClick={(e) => {
+                        e.preventDefault();
+                        setOpen(false);
+                      }} color="orange"
+                      >Cancel</Button>
                     </Form>
                   </Modal.Content>
                 </Modal>
