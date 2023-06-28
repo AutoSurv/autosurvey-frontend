@@ -9,7 +9,7 @@ type CreateSurveyProps = {
   setSurvey: Dispatch<SetStateAction<AutoSurvey>>;
 }
 
-export default function CreateSurvey(props: CreateSurveyProps) {
+export default function UpdSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 

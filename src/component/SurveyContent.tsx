@@ -6,6 +6,7 @@ import SurveyCard from "./SurveyCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import CreateSurvey from "./CreateSurvey";
+import ImportSurvey from "./ImportSurvey";
 
 
 
@@ -39,17 +40,16 @@ export default function SurveyContent() {
         </Menu.Menu>
       </Menu>
 
-      <Button floated="right" className="surveys-import-btn" onClick={(e) => {
-          e.preventDefault();
-        }} color="blue"
-      >Import Survey</Button>
+
+      <ImportSurvey />
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
       <div className="surveys-surveycard-box">
-        {organization.surveys.map((survey) => {
+        {organization.surveys.map((survey: AutoSurvey, index: number) => {
+          console.log(survey);
           return (
-            <SurveyCard organization={organization} survey={survey} />
+            <SurveyCard key={index} organization={organization} survey={survey} />
           )
         })}
 
