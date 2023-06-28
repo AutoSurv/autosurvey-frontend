@@ -38,7 +38,12 @@ export default function SurveyContent() {
           </Menu.Item>
         </Menu.Menu>
       </Menu>
-      
+
+      <Button floated="right" className="surveys-import-btn" onClick={(e) => {
+          e.preventDefault();
+        }} color="blue"
+      >Import Survey</Button>
+
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
       <div className="surveys-surveycard-box">
