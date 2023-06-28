@@ -47,10 +47,10 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 
 };
 
-export async function updateOrganizationName(id: string, name: string, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function updateOrganizationName(id: string, event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
-    orgName: name
+    orgName: event.currentTarget.orgname.value
   }
 
   if (!reqBody.orgName) {
@@ -65,6 +65,7 @@ export async function updateOrganizationName(id: string, name: string, setOrgani
 
   const response = await fetch(`${BASE_ORG_URL}/${id}`, reqOptions);
   await getOrganization(id, setOrganization);
+  await getOrganizations(setOrganizations);
   setOpen(false);
   setErrMessage('');
 };
@@ -90,15 +91,17 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
   return data;
 };
 
-export async function getSurvey(id: string | string[], setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
+export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
+  console.log("surveyId: ", surveyId);
+
+  const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
   const data: AutoSurvey = await apiResponse.json();
   setSurvey(data);
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  orgId: string, setOrganization: Dispatch<SetStateAction<Organization>>,
+  orgId: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: AutoSurveyRequestDto = {
     country: event.currentTarget.country.value,
@@ -134,14 +137,17 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     body: JSON.stringify(reqBody)
   };
   const response = await fetch(BASE_SURVEY_URL, reqOptions);
-  getOrganization(orgId, setOrganization)
+  await getSurveys(setSurveys);
+  await getOrganization(orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
 }
 
-export async function updateSurvey(id: string | string[], event: React.FormEvent<HTMLFormElement>,
+export async function updateSurvey(id: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<AutoSurvey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>) {
+  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string | string[] | undefined) {
+  console.log("orgid: ", orgid)
+
   const reqBody: AutoSurveyUpdateDto = {
     country: event.currentTarget.country.value,
     rent: event.currentTarget.rent.value,
@@ -153,16 +159,17 @@ export async function updateSurvey(id: string | string[], event: React.FormEvent
     educationSupplies: event.currentTarget.educationSupplies.value,
     educationFee: event.currentTarget.educationFee.value,
     educationType: event.currentTarget.educationType.value,
-    accommodationType: event.currentTarget.accomodationType.value,
+    accommodationType: event.currentTarget.accommodationType.value,
     profession: event.currentTarget.profession.value,
     locationGiven: event.currentTarget.locationGiven.value,
     locationClustered: event.currentTarget.locationClustered.value,
     numResidents: event.currentTarget.numResidents.value,
     numIncomes: event.currentTarget.numIncomes.value,
-    numFullIncomes: event.currentTarget.numFullIcomes.value,
+    numFullIncomes: event.currentTarget.numFullIncomes.value,
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
+    orgId: orgid
   };
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
@@ -177,7 +184,7 @@ export async function updateSurvey(id: string | string[], event: React.FormEvent
   setErrMessage('');
 };
 
-export async function deleteSurvey(id: string, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+export async function deleteSurvey(id: string | string[] | undefined, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",

@@ -1,42 +1,58 @@
-import { addSurvey, getOrganizations, getSurveys } from "@/pages/api/autosurvey";
-import { AutoSurvey, Organization } from "@/pages/type/type";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
+import { AutoSurvey } from "@/pages/type/type";
+import { useContext, useEffect, useState } from "react";
+import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 import SurveyCard from "./SurveyCard";
-import { Context } from "@/helper/context";
+import { OrgContext } from "@/helper/context";
+import Link from "next/link";
 
-type SurveyContentProp = {
-  propOrganization: Organization;
-  setPropOrganization: Dispatch<SetStateAction<Organization>>;
-}
 
-export default function CountryContent(props: SurveyContentProp) {
 
-  const { organization, setOrganization } = useContext(Context);
-  const { propOrganization, setPropOrganization } = props;
-  setOrganization(propOrganization);
+export default function SurveyContent() {
+  const { organization, setOrganization } = useContext(OrgContext);
+  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+  useEffect(() => {
+    getSurveys(setSurveys);
+  }, []);
+
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
   useEffect(() => {
-  
-  }, [propOrganization.surveys.length]);
 
-  console.log("SurveyCOntent.organization.orgNAme: ", organization.orgName);
-  console.log("propOrganization.surveys.length: ", propOrganization.surveys.length);
+  }, []);
 
   return (
-    <div className="countries-content">
+    <div className="surveys-content">
+      <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+        <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
+      </Header>
+      <Menu size='small' color="yellow" inverted>
+        <Menu.Item> <Link href={"/org"}>Home</Link></Menu.Item>
+        <Menu.Item> <Link href={"/org/" + organization.orgId}>Organization</Link></Menu.Item>
+        <Menu.Item> <Link href={"/"}>About</Link></Menu.Item>
+        <Menu.Menu position='right'>
+          <Menu.Item>
+            <Button inverted>Sign Out</Button>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
       <Modal animation={false}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button className="org-modal-btn"> Create Survey +</Button>}>
-        <Modal.Header>Make New Survey</Modal.Header>
+        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
+        <Modal.Header>Make New Survey
+        <Button onClick={(e) => {
+          e.preventDefault();
+          setOpen(false);
+        }} color="grey" floated='right'
+        >X</Button>
+        </Modal.Header>
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey( e, propOrganization.orgId, setPropOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization.orgId, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>
@@ -118,20 +134,21 @@ export default function CountryContent(props: SurveyContentProp) {
               <Label>Comments</Label>
               <Input placeholder="Comments" type="text" name="comments" />
             </Form.Field>
-            
 
-            <Button type="submit">Add Survey +</Button>
+            <Button type="submit" color="blue">Add Survey +</Button>
+            <Button onClick={(e) => {
+              e.preventDefault();
+              setOpen(false);
+            }} color="orange"
+            >Cancel</Button>
           </Form>
         </Modal.Content>
 
       </Modal>
-      <div className="orgs-orgcard-box">
-        {propOrganization.surveys.map((survey) => {
-          // console.log("propOrganization: ", propOrganization);
-          // console.log("organization: ", organization);
-          console.log("surveyContent.CountryContent.organization.name: ", organization.orgName);
+      <div className="surveys-surveycard-box">
+        {organization.surveys.map((survey) => {
           return (
-            <SurveyCard organization={propOrganization} survey={survey} />
+            <SurveyCard organization={organization} survey={survey} />
           )
         })}
 

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea, Link } from '@mui/material';
 import { Organization } from '@/pages/type/type';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
+import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
+import { OrgContext } from '@/helper/context';
+import Link from 'next/link';
 
 type OrgCardProp = {
   organization: Organization;
@@ -13,32 +12,59 @@ type OrgCardProp = {
 }
 
 export default function OrgCard(props: OrgCardProp) {
-
   const { organization, setOrganizations } = props;
+  const { setOrganization } = useContext(OrgContext);
+  const [open, setOpen] = useState(false);
+  const [errMessage, setErrMessage] = useState<string>("");
+  const orgLowerName: string = organization.orgName.toLowerCase();
+
 
   return (
-    <>
 
-      <Link href={"/org/" + props.organization.orgId}>
-        <Card sx={{ maxWidth: 345 }}>
-          <CardActionArea>
-            <CardMedia
-              component="img"
-              height="140"
-              image=""
-              alt={props.organization.orgName}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {props.organization.orgName}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {props.organization.orgId}
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-        </Card>
-      </Link>
-    </>
+
+    <div className="org-card-container">
+      <Card className="org-card" >
+        <Link href={"/org/" + organization.orgId} >
+          <Image className="org-card-image" src={`/${orgLowerName}.png`} alt={organization.orgName} size='large'  />
+          <Card.Content>
+            <Card.Header>{organization.orgName}</Card.Header>
+            <Card.Meta>the number of surveys: {organization.surveys.length}</Card.Meta>
+          </Card.Content>
+
+        </Link>
+        <div className="org-card-btn-container">
+        <Modal animation={false}
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          open={open}
+          trigger={<Button className="org-modal-btn" color="blue"> Edit Name</Button>}>
+          <Modal.Header>Make Your Organization</Modal.Header>
+          <Modal.Content>
+            <Form onSubmit={(e) => {
+              e.preventDefault();
+              updateOrganizationName(organization.orgId, e, setOrganizations, setOrganization, setOpen, setErrMessage);
+            }}>
+              <Form.Field>
+                <Label>Organization Name</Label>
+                <Input placeholder="Name your organization" type="text" name="orgname" />
+              </Form.Field>
+              <Button type="submit" color="blue">Edit</Button>
+              <Button onClick={(e) => {
+                  e.preventDefault();
+                  setOpen(false);
+              }} color="orange"
+              >Cancel</Button>
+            </Form>
+          </Modal.Content>
+        </Modal>
+        <Button className="org-modal-btn" onClick={(e) => {
+          e.preventDefault();
+          deleOrganization(organization.orgId, setOrganizations)
+        }} color="orange"
+        >Delete Org.</Button>
+        </div>
+      </Card>
+
+    </div>
   );
 }

@@ -1,18 +1,24 @@
-import { Organization } from "@/pages/type/type";
-import { initOrg } from "./initializer";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-} from "react";
+import { AutoSurvey, Organization } from "@/pages/type/type";
+import { Dispatch, SetStateAction, createContext } from "react";
+import { initSurvey } from "./initializer";
 
+export interface OrgContextValue {
 
-export interface MyContextValue {
-  organization: Organization
-  setOrganization: Dispatch<SetStateAction<Organization>>;
+    organization: Organization;
+    setOrganization: Dispatch<SetStateAction<Organization>>;  
+
+    survey: AutoSurvey;
+    setSurvey: Dispatch<SetStateAction<AutoSurvey>>; 
+
+    setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>; 
+
 }
 
-export const Context = createContext<MyContextValue>({
-  organization: initOrg,
-  setOrganization: () => {}
+export const OrgContext = createContext<OrgContextValue> ({
+
+    organization: {orgId: '', orgName: '', surveys: []},
+    setOrganization: () => {},
+    survey: initSurvey,
+    setSurvey: () => {},
+    setSurveys: () => {}
 });

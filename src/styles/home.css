@@ -1,0 +1,23 @@
+.home-body {
+    
+    background-color:whitesmoke;
+    min-height: 100vh;
+}
+
+.ui.pink.icon.center.aligned.header.home-header {
+
+    padding-top: 8%;
+
+}
+
+.home-login{
+    margin-top: 15%;
+    text-align: center;
+}
+
+.home-footer {
+ 
+    margin-top: 15%;
+    margin-bottom: 1%;
+    text-align: center;
+}

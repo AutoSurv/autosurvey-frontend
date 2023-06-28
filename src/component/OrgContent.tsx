@@ -1,11 +1,14 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
 import { Organization } from "@/pages/type/type";
-import { useEffect, useState } from "react";
-import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { useContext, useEffect, useState } from "react";
+import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
+import { OrgContext } from "@/helper/context";
+import Link from "next/link";
 
 
 export default function OrgContent() {
+    const { setOrganization } = useContext(OrgContext);
 
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
@@ -17,11 +20,23 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
+            <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
+             <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
+            </Header>
+            <Menu size='small' color="yellow" inverted>
+                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>                   
+                <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
+                <Menu.Menu position='right'>
+                    <Menu.Item>
+                        <Button inverted>Sign Out</Button>
+                    </Menu.Item>
+                </Menu.Menu>
+            </Menu>
             <Modal animation={false}
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Button className="org-modal-btn"> Create Organization +</Button>}>
+                trigger={<Button className="org-modal-btn" color="green"> Create Organization +</Button>}>
                 <Modal.Header>Make Your Organization</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={(e) => {
@@ -32,7 +47,12 @@ export default function OrgContent() {
                             <Label>Organization Name</Label>
                             <Input placeholder="Name your organization" type="text" name="orgname" />
                         </Form.Field>
-                        <Button type="submit">Add Organization +</Button>
+                        <Button type="submit" color="green">Add Organization +</Button>
+                        <Button onClick={(e) => {
+                            e.preventDefault();
+                            setOpen(false);
+                        }} color="orange"
+                        >Cancel</Button>
                     </Form>
                 </Modal.Content>
 
