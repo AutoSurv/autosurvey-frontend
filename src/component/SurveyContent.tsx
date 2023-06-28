@@ -1,6 +1,6 @@
 import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
-import { AutoSurvey, Organization } from "@/pages/type/type";
-import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import { AutoSurvey } from "@/pages/type/type";
+import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 import SurveyCard from "./SurveyCard";
 import { OrgContext } from "@/helper/context";

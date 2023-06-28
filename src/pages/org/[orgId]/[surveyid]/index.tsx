@@ -1,14 +1,10 @@
 import SurveyContent from "@/component/SurveyContent";
 import { OrgContext } from "@/helper/context";
-import { deleteSurvey, getOrganization, getSurvey, updateSurvey } from "@/pages/api/autosurvey";
-import { Organization } from "@/pages/type/type";
+import { deleteSurvey, getSurvey, updateSurvey } from "@/pages/api/autosurvey";
 import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
-import { Button, Card, CardContent, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
-import { redirect } from 'next/navigation';
-import { width } from "@mui/system";
-
+import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 
 export default function SurveyDetails() {
 

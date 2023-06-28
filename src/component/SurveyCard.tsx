@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 import Link from 'next/link';
 
 

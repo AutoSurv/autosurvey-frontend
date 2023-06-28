@@ -5,7 +5,6 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
-import { color } from "@mui/system";
 
 
 export default function OrgContent() {
