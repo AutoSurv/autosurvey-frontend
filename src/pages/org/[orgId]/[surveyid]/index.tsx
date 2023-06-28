@@ -1,10 +1,39 @@
-import SurveyContent from "@/component/SurveyContent";
+import * as XLSX from 'xlsx';
 import { OrgContext } from "@/helper/context";
 import { deleteSurvey, getSurvey, updateSurvey } from "@/pages/api/autosurvey";
-import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
+import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
+
+
+const data = [
+  {
+    rent: 1000,
+    utilities: 100,
+    food: 50,
+    basicItems: 500,
+    transportation: 60,
+    educationTotal: 89,
+    educationSupplies: 0,
+    educationFee: 1000,
+    educationType: "Public",
+    accommodationType: "Own",
+    profession: "Teacher",
+    locationGiven: "Oslo",
+    locationClustered: "Oslo",
+    numResidents: 0,
+    numIncomes: 0,
+    numFullIncomes: 0,
+    numChildren: 0,
+    totalIncome: 0,
+    comments: "Nice",
+    id: "649bebe75f02d15b376979cf",
+    country: "Norway",
+    orgId: "649beb9d5f02d15b376979cb",
+    orgName: "MSF"
+  }
+]
 
 export default function SurveyDetails() {
 
@@ -19,6 +48,17 @@ export default function SurveyDetails() {
       getSurvey(surveyid, setSurvey);
     }
   }, [surveyid])
+
+  const downloadExcel = (data: any) => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "DataSheet.xlsx");
+  };
+
+
 
   return (
     <div className="specificsurvey-card-container">
@@ -38,10 +78,15 @@ export default function SurveyDetails() {
 
       <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
-          
+
           <TableHead>
             <TableRow>
               <TableCell className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country}</TableCell>
+              <TableCell align="right"><Button onClick={(e) => {
+                e.preventDefault();
+                downloadExcel(data);
+              }} color="green">Export Survey</Button></TableCell>
+
             </TableRow>
           </TableHead>
 
@@ -175,10 +220,10 @@ export default function SurveyDetails() {
                   trigger={<Button className="surveys-modal-btn" color="blue"> Edit Survey</Button>}>
                   <Modal.Header>Edit Survey
                     <Button onClick={(e) => {
-                        e.preventDefault();
-                        setOpen(false);
-                      }} color="grey" floated='right'
-                      >X</Button>
+                      e.preventDefault();
+                      setOpen(false);
+                    }} color="grey" floated='right'
+                    >X</Button>
                   </Modal.Header>
                   <Modal.Content>
                     <Form onSubmit={(e) => {
