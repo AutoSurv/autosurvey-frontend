@@ -49,6 +49,11 @@ export default function OrgCard(props: OrgCardProp) {
                 <Input placeholder="Name your organization" type="text" name="orgname" />
               </Form.Field>
               <Button type="submit" color="blue">Edit</Button>
+              <Button onClick={(e) => {
+                  e.preventDefault();
+                  setOpen(false);
+              }} color="orange"
+              >Cancel</Button>
             </Form>
           </Modal.Content>
         </Modal>

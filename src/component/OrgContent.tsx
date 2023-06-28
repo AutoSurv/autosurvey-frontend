@@ -21,7 +21,7 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
-            <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+            <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
              <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
             </Header>
             <Menu size='small' color="yellow" inverted>
@@ -49,6 +49,11 @@ export default function OrgContent() {
                             <Input placeholder="Name your organization" type="text" name="orgname" />
                         </Form.Field>
                         <Button type="submit" color="green">Add Organization +</Button>
+                        <Button onClick={(e) => {
+                            e.preventDefault();
+                            setOpen(false);
+                        }} color="orange"
+                        >Cancel</Button>
                     </Form>
                 </Modal.Content>
 

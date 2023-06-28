@@ -46,7 +46,7 @@ export default function SurveyContent() {
         <Button onClick={(e) => {
           e.preventDefault();
           setOpen(false);
-        }} color="grey"
+        }} color="grey" floated='right'
         >X</Button>
         </Modal.Header>
         <Modal.Content>
@@ -135,7 +135,7 @@ export default function SurveyContent() {
               <Input placeholder="Comments" type="text" name="comments" />
             </Form.Field>
 
-            <Button type="submit">Add Survey +</Button>
+            <Button type="submit" color="blue">Add Survey +</Button>
             <Button onClick={(e) => {
               e.preventDefault();
               setOpen(false);

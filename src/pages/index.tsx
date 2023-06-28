@@ -18,7 +18,7 @@ export default function Home() {
     
    
       <main className="home-body">
-        <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+        <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
           <Icon name='clipboard' />
           <Header.Content>Welcome to AutoSurvey</Header.Content>
         </Header>

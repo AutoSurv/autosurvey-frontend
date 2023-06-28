@@ -181,7 +181,7 @@ export default function SurveyDetails() {
                     <Button onClick={(e) => {
                         e.preventDefault();
                         setOpen(false);
-                      }} color="grey"
+                      }} color="grey" floated='right'
                       >X</Button>
                   </Modal.Header>
                   <Modal.Content>
