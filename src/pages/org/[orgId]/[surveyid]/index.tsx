@@ -38,16 +38,16 @@ export default function SurveyDetails() {
 
   return (
     <div className="specificsurvey-card-container">
-      <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
+      <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
         <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
       </Header>
-      <Menu size='small' color="yellow" inverted>
+      <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
         <Menu.Item> <Link href={"/org/" + survey.orgId} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item> <Link href={"/"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-            <Button inverted>Sign Out</Button>
+            <Button circular icon='sign out' color='blue' inverted></Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -197,7 +197,7 @@ export default function SurveyDetails() {
                   onClose={() => setOpen(false)}
                   onOpen={() => setOpen(true)}
                   open={open}
-                  trigger={<Button className="surveys-modal-btn" color="blue"> Edit Survey</Button>}>
+                  trigger={<Button className="surveys-modal-btn" color="blue" basic> Edit Survey</Button>}>
                   <Modal.Header>Edit Survey
                     <Button onClick={(e) => {
                       e.preventDefault();
@@ -304,7 +304,7 @@ export default function SurveyDetails() {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
                 window.location.href = "/org/" + orgid;
-              }} color="orange">Delete Survey</Button></TableCell>
+              }} color="orange" basic>Delete Survey</Button></TableCell>
             </TableRow>
 
           </TableBody>
