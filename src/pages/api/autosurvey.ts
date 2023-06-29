@@ -142,53 +142,54 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   setErrMessage('');
 }
 
-export async function addImportedSurvey(survey: AutoSurvey,
+export async function addImportedSurvey(
+  surveyArr: AutoSurvey[],
   orgId: string, 
   setErrMessage: Dispatch<SetStateAction<string>>, 
   setOpen: Dispatch<SetStateAction<boolean>>, 
   setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
   setOrganization: Dispatch<SetStateAction<Organization>>) {
 
+  for (let i = 0; i < surveyArr.length; i++) {  
+    const reqBody: AutoSurveyRequestDto = {
+    country: surveyArr[i].country,
+    rent: surveyArr[i].rent,
+    utilities: surveyArr[i].utilities,
+    food: surveyArr[i].food,
+    basicItems: surveyArr[i].basicItems,
+    transportation: surveyArr[i].transportation,
+    educationTotal: surveyArr[i].educationTotal,
+    educationSupplies: surveyArr[i].educationSupplies,
+    educationFee: surveyArr[i].educationFee,
+    educationType: surveyArr[i].educationType,
+    accommodationType: surveyArr[i].accommodationType,
+    profession: surveyArr[i].profession,
+    locationGiven: surveyArr[i].locationGiven,
+    locationClustered: surveyArr[i].locationClustered,
+    numResidents: surveyArr[i].numResidents,
+    numIncomes: surveyArr[i].numIncomes,
+    numFullIncomes: surveyArr[i].numFullIncomes,
+    numChildren: surveyArr[i].numChildren,
+    totalIncome: surveyArr[i].totalIncome,
+    comments: surveyArr[i].comments,
+    orgId: orgId,
+    };
 
-const reqBody: AutoSurveyRequestDto = {
-country: survey.country,
-rent: survey.rent,
-utilities: survey.utilities,
-food: survey.food,
-basicItems: survey.basicItems,
-transportation: survey.transportation,
-educationTotal: survey.educationTotal,
-educationSupplies: survey.educationSupplies,
-educationFee: survey.educationFee,
-educationType: survey.educationType,
-accommodationType: survey.accommodationType,
-profession: survey.profession,
-locationGiven: survey.locationGiven,
-locationClustered: survey.locationClustered,
-numResidents: survey.numResidents,
-numIncomes: survey.numIncomes,
-numFullIncomes: survey.numFullIncomes,
-numChildren: survey.numChildren,
-totalIncome: survey.totalIncome,
-comments: survey.comments,
-orgId: orgId,
-};
-
-if (!reqBody.country || !reqBody.orgId) {
-  setErrMessage('Please fill the form.');
-  return;
-}
-const reqOptions = {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(reqBody)
-};
-const response = await fetch(BASE_SURVEY_URL, reqOptions);
-await getSurveys(setSurveys);
-await getOrganization(orgId, setOrganization)
-setOpen(false);
-setErrMessage('');
- 
+    if (!reqBody.country || !reqBody.orgId) {
+      setErrMessage('Please fill the form.');
+      return;
+    }
+    const reqOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(reqBody)
+    };
+    const response = await fetch(BASE_SURVEY_URL, reqOptions);
+    await getSurveys(setSurveys);
+    await getOrganization(orgId, setOrganization)
+    setOpen(false);
+    setErrMessage('');
+  }
 }
 
 export async function updateSurvey(id: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>,
