@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 import { AutoSurvey } from '@/pages/type/type';
+import { CSVLink } from 'react-csv';
 
 
 export default function SurveyDetails() {
@@ -15,14 +16,14 @@ export default function SurveyDetails() {
   const { organization, setOrganization, survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  
+
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
   }, [surveyid])
 
-  const surveyArray : AutoSurvey[] = [];
+  const surveyArray: AutoSurvey[] = [survey];
 
 
   const downloadExcel = (data: any) => {
@@ -30,8 +31,6 @@ export default function SurveyDetails() {
     const worksheet = XLSX.utils.json_to_sheet(surveyArray);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "DataSheet.xlsx");
   };
 
@@ -39,16 +38,16 @@ export default function SurveyDetails() {
 
   return (
     <div className="specificsurvey-card-container">
-      <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+      <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
         <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
       </Header>
-      <Menu size='small' color="yellow" inverted>
+      <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
         <Menu.Item> <Link href={"/org/" + survey.orgId} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item> <Link href={"/"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-            <Button inverted>Sign Out</Button>
+            <Button circular icon='sign out' color='blue' inverted></Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
@@ -62,7 +61,11 @@ export default function SurveyDetails() {
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
                 downloadExcel(survey);
-              }} color="green">Export Survey</Button></TableCell>
+              }} color="green">Export(Excel) Survey</Button>
+                <Button color="green">
+                  <CSVLink className="specificsurvey-export-csv-link" filename={"survey.csv"} data={surveyArray}> Export(CSV) Survey</CSVLink>
+                </Button>
+              </TableCell>
 
             </TableRow>
           </TableHead>
@@ -194,7 +197,7 @@ export default function SurveyDetails() {
                   onClose={() => setOpen(false)}
                   onOpen={() => setOpen(true)}
                   open={open}
-                  trigger={<Button className="surveys-modal-btn" color="blue"> Edit Survey</Button>}>
+                  trigger={<Button className="surveys-modal-btn" color="blue" basic> Edit Survey</Button>}>
                   <Modal.Header>Edit Survey
                     <Button onClick={(e) => {
                       e.preventDefault();
@@ -301,7 +304,7 @@ export default function SurveyDetails() {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
                 window.location.href = "/org/" + orgid;
-              }} color="orange">Delete Survey</Button></TableCell>
+              }} color="orange" basic>Delete Survey</Button></TableCell>
             </TableRow>
 
           </TableBody>
