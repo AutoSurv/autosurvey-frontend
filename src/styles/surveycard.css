@@ -17,6 +17,14 @@
     margin: 3%;
 }
 
+a.surveys-export-csv-link {
+    color: white;
+}
+
+a.surveys-export-csv-link:hover {
+    color: white;
+}
+
 .survey-card-container {
     margin: 3%;
 }

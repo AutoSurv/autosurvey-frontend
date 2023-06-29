@@ -115,7 +115,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
               <Input placeholder="Comments" type="text" name="comments" />
             </Form.Field>
 
-            <Button type="submit" color="blue">Add Survey +</Button>
+            <Button type="submit" color="green">Add Survey +</Button>
             <Button onClick={(e) => {
               e.preventDefault();
               setOpen(false);

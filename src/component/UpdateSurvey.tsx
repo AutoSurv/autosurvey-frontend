@@ -20,7 +20,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button className="surveys-modal-btn" color="blue"> Edit Survey</Button>}>
+      trigger={<Button className="surveys-modal-btn" color="blue" basic> Edit Survey</Button>}>
       <Modal.Header>Edit Survey
         <Button onClick={(e) => {
             e.preventDefault();

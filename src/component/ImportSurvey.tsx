@@ -21,7 +21,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
 
 
 
-  const handleFileUpload = (e: { target: { files: Blob[]; }; } | null) => {
+  const handleFileUpload = (e) => {
     if (e != null) {
       const reader = new FileReader();
       reader.readAsArrayBuffer(e.target.files[0]);
@@ -71,7 +71,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
                 onChange={handleFileUpload}  
               />
             </Form.Field>
-            <Button type="submit" color="blue">Ok</Button>
+            <Button type="submit" color="green">Ok</Button>
             <Button onClick={(e) => {
               e.preventDefault();
               setOpen(false);

@@ -20,15 +20,15 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
-            <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
-             <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
+            <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
+                <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
             </Header>
-            <Menu size='small' color="yellow" inverted>
-                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>                   
+            <Menu size='small' color="blue" >
+                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>
                 <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Button inverted>Sign Out</Button>
+                    <Button circular icon='sign out' color='blue' inverted></Button>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>
@@ -55,7 +55,6 @@ export default function OrgContent() {
                         >Cancel</Button>
                     </Form>
                 </Modal.Content>
-
             </Modal>
             <div className="orgs-orgcard-box">
                 {organizations.map((organization) => {

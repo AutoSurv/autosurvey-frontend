@@ -13,6 +13,14 @@
     justify-content: center;
 }
 
+a.specificsurvey-export-csv-link {
+    color: white;
+}
+
+a.specificsurvey-export-csv-link:hover {
+    color: white;
+}
+
 .ui.card {
  
  display: block;

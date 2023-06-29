@@ -37,7 +37,7 @@ export default function OrgCard(props: OrgCardProp) {
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           open={open}
-          trigger={<Button className="org-modal-btn" color="blue"> Edit Name</Button>}>
+          trigger={<Button className="org-modal-btn" basic color="blue"> Edit Name</Button>}>
           <Modal.Header>Make Your Organization</Modal.Header>
           <Modal.Content>
             <Form onSubmit={(e) => {
@@ -60,7 +60,7 @@ export default function OrgCard(props: OrgCardProp) {
         <Button className="org-modal-btn" onClick={(e) => {
           e.preventDefault();
           deleOrganization(organization.orgId, setOrganizations)
-        }} color="orange"
+        }} color="orange" basic
         >Delete Org.</Button>
         </div>
       </Card>
