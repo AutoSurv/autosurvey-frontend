@@ -6,6 +6,7 @@ import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 import { AutoSurvey } from '@/pages/type/type';
+import { CSVLink } from 'react-csv';
 
 
 export default function SurveyDetails() {
@@ -15,14 +16,14 @@ export default function SurveyDetails() {
   const { organization, setOrganization, survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  
+
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
   }, [surveyid])
 
-  const surveyArray : AutoSurvey[] = [];
+  const surveyArray: AutoSurvey[] = [survey];
 
 
   const downloadExcel = (data: any) => {
@@ -30,8 +31,6 @@ export default function SurveyDetails() {
     const worksheet = XLSX.utils.json_to_sheet(surveyArray);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "DataSheet.xlsx");
   };
 
@@ -39,7 +38,7 @@ export default function SurveyDetails() {
 
   return (
     <div className="specificsurvey-card-container">
-      <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+      <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
         <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
       </Header>
       <Menu size='small' color="yellow" inverted>
@@ -62,7 +61,11 @@ export default function SurveyDetails() {
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
                 downloadExcel(survey);
-              }} color="green">Export Survey</Button></TableCell>
+              }} color="green">Export(Excel) Survey</Button>
+                <Button color="green">
+                  <CSVLink className="specificsurvey-export-csv-link" filename={"survey.csv"} data={surveyArray}> Export(CSV) Survey</CSVLink>
+                </Button>
+              </TableCell>
 
             </TableRow>
           </TableHead>

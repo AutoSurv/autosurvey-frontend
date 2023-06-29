@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import { CSVLink, CSVDownload } from "react-csv";
 import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey } from "@/pages/type/type";
 import { useContext, useEffect, useState } from "react";
@@ -27,14 +28,14 @@ export default function SurveyContent() {
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
     XLSX.writeFile(workbook, "DataSheet.xlsx");
   };
 
+
+
   return (
     <div className="surveys-content">
-      <Header className="home-header" as='h1' icon textAlign='center' color='pink'>
+      <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
         <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
       </Header>
       <Menu size='small' color="yellow" inverted>
@@ -53,11 +54,11 @@ export default function SurveyContent() {
         open={open}
         trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
         <Modal.Header>Make New Survey
-        <Button onClick={(e) => {
-          e.preventDefault();
-          setOpen(false);
-        }} color="grey" floated='right'
-        >X</Button>
+          <Button onClick={(e) => {
+            e.preventDefault();
+            setOpen(false);
+          }} color="grey" floated='right'
+          >X</Button>
         </Modal.Header>
         <Modal.Content>
           <Form onSubmit={(e) => {
@@ -155,10 +156,12 @@ export default function SurveyContent() {
         </Modal.Content>
       </Modal>
       <Button onClick={(e) => {
-                e.preventDefault();
-                downloadExcel(surveys);
-              }} color="green">Export Survey
-              </Button>
+        e.preventDefault();
+        downloadExcel(surveys);
+      }} color="green">Export(Excel) Survey
+      </Button>
+      <Button color="green"><CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys}> Export(CSV) Survey</CSVLink>
+      </Button>
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey) => {
           return (
