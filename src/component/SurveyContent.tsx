@@ -17,9 +17,6 @@ export default function SurveyContent() {
     getSurveys(setSurveys);
   }, []);
 
-  const [open, setOpen] = useState(false);
-  const [errMessage, setErrMessage] = useState<string>("");
-
   useEffect(() => {
 
   }, []);
@@ -41,13 +38,12 @@ export default function SurveyContent() {
       </Menu>
 
 
-      <ImportSurvey />
+      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey: AutoSurvey, index: number) => {
-          console.log(survey);
           return (
             <SurveyCard key={index} organization={organization} survey={survey} />
           )

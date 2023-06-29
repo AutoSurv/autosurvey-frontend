@@ -83,4 +83,3 @@ export type Organization = {
 export type OrgRequestDto = {
   orgName: string
 }
-

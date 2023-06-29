@@ -169,7 +169,7 @@ export default function SurveyDetails() {
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="left">
-                
+                <UpdateSurvey surveyid={surveyid} orgid={orgid} setSurvey={setSurvey}/>
               </TableCell>
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
@@ -177,7 +177,8 @@ export default function SurveyDetails() {
                 window.location.href = "/org/" + orgid;
               }} color="orange">Delete Survey</Button></TableCell>
             </TableRow>
-            <UpdateSurvey surveyid={surveyid} orgid={orgid} setSurvey={setSurvey}/>
+            
+          
           </TableBody>
         </Table>
       </TableContainer>
