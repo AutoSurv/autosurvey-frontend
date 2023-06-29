@@ -14,7 +14,6 @@ type SurveyCardProp = {
 
 export default function SurveyCard(props: SurveyCardProp) {
     const orgLowerName: string = props.survey.orgName.toLowerCase();
-console.log(orgLowerName);
     return (
         <div className='survey-card-container'>
             <Card >

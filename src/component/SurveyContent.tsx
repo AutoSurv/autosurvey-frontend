@@ -7,7 +7,8 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-
 import SurveyCard from "./SurveyCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
-
+import CreateSurvey from "./CreateSurvey";
+import ImportSurvey from "./ImportSurvey";
 
 
 export default function SurveyContent() {
@@ -48,113 +49,10 @@ export default function SurveyContent() {
           </Menu.Item>
         </Menu.Menu>
       </Menu>
-      <Modal animation={false}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        open={open}
-        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
-        <Modal.Header>Make New Survey
-          <Button onClick={(e) => {
-            e.preventDefault();
-            setOpen(false);
-          }} color="grey" floated='right'
-          >X</Button>
-        </Modal.Header>
-        <Modal.Content>
-          <Form onSubmit={(e) => {
-            e.preventDefault();
-            addSurvey(e, organization.orgId, setSurveys, setOrganization, setOpen, setErrMessage);
-          }}>
-            <Form.Field>
-              <Label>Country Name</Label>
-              <Input placeholder="Name your country" type="text" name="country" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Rent</Label>
-              <Input placeholder="Rent" type="text" name="rent" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Utilities</Label>
-              <Input placeholder="Utilities" type="text" name="utilities" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Food</Label>
-              <Input placeholder="Food" type="text" name="food" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Basic Items</Label>
-              <Input placeholder="Basic Items" type="text" name="basicItems" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Transportation</Label>
-              <Input placeholder="Transportation" type="text" name="transportation" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Education Total</Label>
-              <Input placeholder="Education Total" type="text" name="educationTotal" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Education Supplies</Label>
-              <Input placeholder="Education Supplies" type="text" name="educationSupplies" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Education Fee</Label>
-              <Input placeholder="Education Fee" type="text" name="educationFee" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Education Type</Label>
-              <Input placeholder="Education Type" type="text" name="educationType" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Accommodation Type</Label>
-              <Input placeholder="Accommodation Type" type="text" name="accommodationType" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Profession</Label>
-              <Input placeholder="Profession" type="text" name="profession" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Location Given</Label>
-              <Input placeholder="Location Given" type="text" name="locationGiven" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Location Clustered</Label>
-              <Input placeholder="Location Clustered" type="text" name="locationClustered" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Number of Residents</Label>
-              <Input placeholder="Number of Residents" type="text" name="numResidents" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Number of Incomes</Label>
-              <Input placeholder="Number of Incomes" type="text" name="numIncomes" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Number of Full Incomes</Label>
-              <Input placeholder="Number of Full Incomes" type="text" name="numFullIncomes" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Number of Children</Label>
-              <Input placeholder="Number of Children" type="text" name="numChildren" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Total Income</Label>
-              <Input placeholder="Total Income" type="text" name="totalIncome" />
-            </Form.Field>
-            <Form.Field>
-              <Label>Comments</Label>
-              <Input placeholder="Comments" type="text" name="comments" />
-            </Form.Field>
 
-            <Button type="submit" color="blue">Add Survey +</Button>
-            <Button onClick={(e) => {
-              e.preventDefault();
-              setOpen(false);
-            }} color="orange"
-            >Cancel</Button>
-          </Form>
-        </Modal.Content>
-      </Modal>
+      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+      <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+
       <Button onClick={(e) => {
         e.preventDefault();
         downloadExcel(surveys);

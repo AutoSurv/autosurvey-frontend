@@ -92,7 +92,6 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
 };
 
 export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
-  console.log("surveyId: ", surveyId);
 
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
@@ -143,10 +142,58 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   setErrMessage('');
 }
 
+export async function addImportedSurvey(survey: AutoSurvey,
+  orgId: string, 
+  setErrMessage: Dispatch<SetStateAction<string>>, 
+  setOpen: Dispatch<SetStateAction<boolean>>, 
+  setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
+  setOrganization: Dispatch<SetStateAction<Organization>>) {
+
+
+const reqBody: AutoSurveyRequestDto = {
+country: survey.country,
+rent: survey.rent,
+utilities: survey.utilities,
+food: survey.food,
+basicItems: survey.basicItems,
+transportation: survey.transportation,
+educationTotal: survey.educationTotal,
+educationSupplies: survey.educationSupplies,
+educationFee: survey.educationFee,
+educationType: survey.educationType,
+accommodationType: survey.accommodationType,
+profession: survey.profession,
+locationGiven: survey.locationGiven,
+locationClustered: survey.locationClustered,
+numResidents: survey.numResidents,
+numIncomes: survey.numIncomes,
+numFullIncomes: survey.numFullIncomes,
+numChildren: survey.numChildren,
+totalIncome: survey.totalIncome,
+comments: survey.comments,
+orgId: orgId,
+};
+
+if (!reqBody.country || !reqBody.orgId) {
+  setErrMessage('Please fill the form.');
+  return;
+}
+const reqOptions = {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(reqBody)
+};
+const response = await fetch(BASE_SURVEY_URL, reqOptions);
+await getSurveys(setSurveys);
+await getOrganization(orgId, setOrganization)
+setOpen(false);
+setErrMessage('');
+ 
+}
+
 export async function updateSurvey(id: string | string[] | undefined, event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<AutoSurvey>>, setOpen: Dispatch<SetStateAction<boolean>>,
   setErrMessage: Dispatch<SetStateAction<string>>, orgid: string | string[] | undefined) {
-  console.log("orgid: ", orgid)
 
   const reqBody: AutoSurveyUpdateDto = {
     country: event.currentTarget.country.value,
