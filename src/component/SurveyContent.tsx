@@ -47,10 +47,10 @@ export default function SurveyContent() {
 
       <Button onClick={(e) => {
         e.preventDefault();
-        downloadExcel(surveys);
+        downloadExcel(surveys.filter(s => s.orgName === organization.orgName));
       }} color="green">Export(Excel) Surveys
       </Button>
-      <Button color="green"><CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys}> Export(CSV) Survey</CSVLink>
+      <Button color="green"><CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> Export(CSV) Survey</CSVLink>
       </Button>
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey) => {
