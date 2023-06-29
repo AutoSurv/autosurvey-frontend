@@ -8,6 +8,7 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-
 import { AutoSurvey } from '@/pages/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
+import { downloadExcel } from '@/helper/methods';
 
 
 export default function SurveyDetails() {
@@ -25,17 +26,6 @@ export default function SurveyDetails() {
   }, [surveyid])
 
   const surveyArray: AutoSurvey[] = [survey];
-
-
-  const downloadExcel = (data: any) => {
-    surveyArray.push(data);
-    const worksheet = XLSX.utils.json_to_sheet(surveyArray);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    XLSX.writeFile(workbook, "DataSheet.xlsx");
-  };
-
-
 
   return (
     <div className="specificsurvey-card-container">
@@ -61,7 +51,7 @@ export default function SurveyDetails() {
               <TableCell className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country}</TableCell>
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
-                downloadExcel(survey);
+                downloadExcel(surveyArray);
               }} color="green">Export(Excel) Survey</Button>
                 <Button color="green">
                   <CSVLink className="specificsurvey-export-csv-link" filename={"survey.csv"} data={surveyArray}> Export(CSV) Survey</CSVLink>

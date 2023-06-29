@@ -9,6 +9,7 @@ import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
+import { downloadExcel } from '@/helper/methods';
 
 
 export default function SurveyContent() {
@@ -24,15 +25,6 @@ export default function SurveyContent() {
   useEffect(() => {
 
   }, []);
-
-  const downloadExcel = (data: any) => {
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    XLSX.writeFile(workbook, "DataSheet.xlsx");
-  };
-
-
 
   return (
     <div className="surveys-content">
@@ -56,7 +48,7 @@ export default function SurveyContent() {
       <Button onClick={(e) => {
         e.preventDefault();
         downloadExcel(surveys);
-      }} color="green">Export(Excel) Survey
+      }} color="green">Export(Excel) Surveys
       </Button>
       <Button color="green"><CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys}> Export(CSV) Survey</CSVLink>
       </Button>
