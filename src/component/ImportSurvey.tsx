@@ -21,12 +21,12 @@ export default function ImportSurvey(props: ImportSurveyProps) {
 
 
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = (e: any) => {
     if (e != null) {
       const reader = new FileReader();
       reader.readAsArrayBuffer(e.target.files[0]);
       reader.onload = (e) => {
-        const data = e.target.result;
+        const data = e.target!.result;
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
