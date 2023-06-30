@@ -16,6 +16,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials, req) {
                 const response = await fetch(BASE_PATH, {
                     method: 'POST',
+                    //password using bcrypt
                     body: JSON.stringify(credentials),
                     headers: { "Content-Type": "application/json" }
                 });
@@ -32,6 +33,10 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_SECRET as string
         })
     ],
+    session: {
+        strategy: "jwt",
+        maxAge: 7, //7days
+    },
     secret: process.env.NEXT_PUBLIC_SECRET,
     callbacks: {
         async jwt({ token }) {
@@ -40,5 +45,6 @@ export const authOptions: NextAuthOptions = {
         },
       },
 }
+
 
 export default NextAuth(authOptions)
