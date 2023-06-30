@@ -1,6 +1,7 @@
 import { initSurvey } from "@/helper/initializer";
 import { addImportedSurvey } from "@/pages/api/autosurvey";
 import { AutoSurvey, Organization } from "@/pages/type/type";
+import { headers } from "next/dist/client/components/headers";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
@@ -17,23 +18,25 @@ export default function ImportSurvey(props: ImportSurveyProps) {
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  const [data, setData] = useState<AutoSurvey>(initSurvey);
+  const [data, setData] = useState<AutoSurvey[]>([]);
 
 
 
-  const handleFileUpload = (e) => {
+  const handleFileUpload = (e: any) => {
     if (e != null) {
+
       const reader = new FileReader();
       reader.readAsArrayBuffer(e.target.files[0]);
       reader.onload = (e) => {
-        const data = e.target.result;
+        const data = e.target!.result;
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json = XLSX.utils.sheet_to_json(worksheet);
+        
         if (typeof json[0] === "object"){
-          const autoSurvey = JSON.stringify(json[0]);
-          setData(JSON.parse(autoSurvey));
+          const surveyArr: AutoSurvey[] = JSON.parse(JSON.stringify(json));
+          setData(surveyArr);
         }
       };
     }  

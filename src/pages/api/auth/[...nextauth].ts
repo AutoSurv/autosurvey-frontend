@@ -1,10 +1,11 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { NextApiRequest } from "next";
+import GoogleProvider from "next-auth/providers/google";
+import { NextAuthOptions } from "next-auth";
 
 const BASE_PATH: string = 'https://localhost:8080/api/login';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: 'Credentials',
@@ -25,7 +26,19 @@ export default NextAuth({
                 }
                 return null;
             }
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_ID as string,
+            clientSecret: process.env.GOOGLE_SECRET as string
         })
     ],
-    secret: process.env.NEXT_PUBLIC_SECRET
-})
+    secret: process.env.NEXT_PUBLIC_SECRET,
+    callbacks: {
+        async jwt({ token }) {
+          token.userRole = "admin"
+          return token
+        },
+      },
+}
+
+export default NextAuth(authOptions)
