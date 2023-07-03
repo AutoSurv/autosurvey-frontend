@@ -83,3 +83,8 @@ export type Organization = {
 export type OrgRequestDto = {
   orgName: string
 }
+
+export type User = {
+  email: string,
+  password: string
+}

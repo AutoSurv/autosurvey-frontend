@@ -2,9 +2,6 @@ import * as React from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import Link from 'next/link';
 
-
-
-
 import { AutoSurvey, Organization } from '@/pages/type/type';
 
 type SurveyCardProp = {

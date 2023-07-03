@@ -1,9 +1,8 @@
-import * as XLSX from 'xlsx';
-import { CSVLink, CSVDownload } from "react-csv";
-import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
+import { CSVLink } from "react-csv";
+import { getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey } from "@/pages/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
+import { Button, Form, Header, Icon, Menu } from "semantic-ui-react";
 import SurveyCard from "./SurveyCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
@@ -39,12 +38,10 @@ export default function SurveyContent() {
         </Menu.Menu>
       </Menu>
 
-      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
-
       <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-
+      
       <Button onClick={(e) => {
         e.preventDefault();
         downloadExcel(surveys.filter(s => s.orgName === organization.orgName));
@@ -52,7 +49,6 @@ export default function SurveyContent() {
       </Button>
       <Button color="green"><CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> Export(CSV) Survey</CSVLink>
       </Button>
-      <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey: AutoSurvey, index: number) => {

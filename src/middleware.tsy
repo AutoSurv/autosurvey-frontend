@@ -1,0 +1,12 @@
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  if(!request.headers.get("accessToken")) {
+    return NextResponse.redirect(new URL('/signin', request.url))
+  }  
+}
+
+export const config = {
+  matcher: ["/org"] //next 13.4.4 issue on unautorized req: dentifier 'NextResponse' has already been declared: #7650
+}
