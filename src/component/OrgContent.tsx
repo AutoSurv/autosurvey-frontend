@@ -5,11 +5,11 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
-
+import { useSession } from "next-auth/react";
 
 export default function OrgContent() {
     const { setOrganization } = useContext(OrgContext);
-
+    const {data: session, status} = useSession();
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
         getOrganizations(setOrganizations);
@@ -28,7 +28,7 @@ export default function OrgContent() {
                 <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                    <Button circular icon='sign out' color='blue' inverted></Button>
+                    <Button circular icon='sign out' color='blue' inverted>{session?.user?.email}</Button>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

@@ -2,8 +2,9 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
+import * as bcrypt from "bcrypt";
 
-const BASE_PATH: string = 'https://localhost:8080/api/login';
+const BASE_PATH: string = 'http://localhost:8080/api/login'; //db and controller must be created
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -14,6 +15,10 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type:"password" }
             },
             async authorize(credentials, req) {
+                //const secureCredentials = credentials;
+                //secureCredentials.password = await bcrypt.hash(credentials?.password as string, 10);
+
+
                 const response = await fetch(BASE_PATH, {
                     method: 'POST',
                     //password using bcrypt
@@ -33,11 +38,11 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_SECRET as string
         })
     ],
+
+    secret: process.env.NEXT_PUBLIC_SECRET,
     session: {
         strategy: "jwt",
-        maxAge: 7, //7days
     },
-    secret: process.env.NEXT_PUBLIC_SECRET,
     callbacks: {
         async jwt({ token }) {
           token.userRole = "admin"

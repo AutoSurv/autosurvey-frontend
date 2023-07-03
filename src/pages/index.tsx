@@ -18,6 +18,7 @@ export default function Home() {
         </Header>
         <div className="home-login">
           <Login />
+          <Button className="home-login-btn" variant='contained' href='/org'>To Organizations</Button>
         </div>
 
         <footer className='home-footer'>
