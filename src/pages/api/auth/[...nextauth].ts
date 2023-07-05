@@ -52,10 +52,10 @@ export const authOptions: NextAuthOptions = {
                 return null;
             }
         }),
-/*         GoogleProvider({
+         GoogleProvider({
             clientId: process.env.GOOGLE_ID as string,
             clientSecret: process.env.GOOGLE_SECRET as string
-        }) */
+        }) 
     ],
 
     secret: process.env.NEXT_PUBLIC_SECRET,
@@ -65,9 +65,9 @@ export const authOptions: NextAuthOptions = {
      callbacks: {
         async jwt({ token, user }) {
             if(user) {
-                user
+                
             }
-            return {...token, ...user}
+            return token;
         },
         async session({session, token}) {
             session.user.accessToken = token as any;
