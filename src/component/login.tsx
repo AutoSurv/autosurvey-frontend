@@ -4,8 +4,8 @@ import { Button } from "semantic-ui-react";
 
 export default function Login() {
     const {data: session, status} = useSession();
-    console.log("session: ", session);
     const loading = status === "loading";
+    console.log("accessToken: ", session?.user.accessToken)
     if (status === "authenticated" && session.user) {
         return (
             <>

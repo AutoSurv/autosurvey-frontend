@@ -16,6 +16,8 @@ export default function OrgContent() {
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
 
+    console.log("organizations.length: ", organizations.length);
+
     return (
         <div className="orgs-content">
             <Header className="home-header" as='h1' icon textAlign='center' color='blue' >

@@ -1,10 +1,30 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
+import { verifyJwt } from "./helper/jwt"
 
-export function middleware(request: NextRequest) {
-  if(!request.headers.get("accessToken")) {
+
+export async function middleware(request: NextRequest) {
+  let redirectToLogin = false;
+
+  if(!request.headers.get("accessToken") && !request.cookies.has("accessToken")) {
     return NextResponse.redirect(new URL('/signin', request.url))
-  }  
+  }
+  
+  const token: string = request.cookies.get("accessToken")?.value as string;
+  
+  if (request.nextUrl.pathname.startsWith("/org") && (!token || redirectToLogin)) {
+    return null;
+  }
+
+  const response = NextResponse.next();
+  try {
+    if (token) {
+      const payload = verifyJwt(token);
+      response.headers.set("accessToken", payload?.sub?.toString() as string); //???
+    }
+  } catch (error) {
+    redirectToLogin = true;
+  }
+
 }
 
 export const config = {

@@ -3,29 +3,35 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
 import * as bcrypt from "bcrypt";
-import { User } from "@/pages/type/type";
+import { AuthenticatedUser, User } from "@/pages/type/type";
 
-const BASE_PATH: string = 'http://localhost:8080/api/login'; //db and controller must be created
+const BASE_PATH: string = 'http://localhost:8080/authenticate'; //db and controller must be created
 
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
-                email: { label: "Email", type: "email", placeholder: "userExample@domainExample.com" },
+                //email: { label: "Email", type: "email", placeholder: "userExample@domainExample.com" },
+                username: { label: "User name", type: "text", placeholder: "userExample@domainExample.com" },
+
                 password: { label: "Password", type:"password" }
             },
             async authorize(credentials, req) {
-                const secureCredentials = credentials;
-                secureCredentials!.password = await bcrypt.hash(credentials?.password as string, 10);
+                //const secureCredentials = credentials;
+                //secureCredentials!.password = await bcrypt.hash(credentials?.password as string, 10);
 
                 const response = await fetch(BASE_PATH, {
                     method: 'POST',
                     //password using bcrypt
-                    body: JSON.stringify(secureCredentials),
+                    body: JSON.stringify(credentials),
+                    //body: JSON.stringify(secureCredentials),
                     headers: { "Content-Type": "application/json" }
                 });
-                const userResponse = await response.json(); //user must be defined as a type (same as in the userDb)
+                const userResponse = await response.json();
+                const authUser: AuthenticatedUser = JSON.parse(JSON.stringify(userResponse))
+
+                 //user must be defined as a type (same as in the userDb)
                 //const userInDb = getUserByEmail(secureCredentials.email)
                 /*
                   if (user && (bcrypt.compare(userInDb.encPassword, credentials.password))) {
@@ -40,30 +46,34 @@ export const authOptions: NextAuthOptions = {
 
                 */
                 if(response.ok) {
+                   
                     return userResponse;
                 }
                 return null;
             }
         }),
-        GoogleProvider({
+/*         GoogleProvider({
             clientId: process.env.GOOGLE_ID as string,
             clientSecret: process.env.GOOGLE_SECRET as string
-        })
+        }) */
     ],
 
     secret: process.env.NEXT_PUBLIC_SECRET,
     session: {
         strategy: "jwt",
     },
-    callbacks: {
+     callbacks: {
         async jwt({ token, user }) {
+            if(user) {
+                user
+            }
             return {...token, ...user}
         },
         async session({session, token}) {
-            session.user = token as any;
+            session.user.accessToken = token as any;
             return session;
         }
-      },
+      }, 
 }
 
 export default NextAuth(authOptions)
