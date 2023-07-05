@@ -19,7 +19,7 @@ export default function Home() {
           <Header.Content>Welcome to AutoSurvey</Header.Content>
         </Header>
         <div className="home-login">
-         <Button className="home-login-btn" variant='contained' href='/org'>Sign-in</Button>
+         <Button className="home-login-btn" variant='contained' href='/login'>Sign-in</Button>
         </div>
 
         <footer className='home-footer'>

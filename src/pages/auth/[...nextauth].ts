@@ -1,5 +1,6 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from 'next-auth/providers/google';
 import { NextApiRequest } from "next";
 
 const BASE_PATH: string = 'https://localhost:8080/api/login';
@@ -25,7 +26,14 @@ export default NextAuth({
                 }
                 return null;
             }
-        })
+        }),
+        // GoogleProvider({
+        //     clientId: process.env.GOOGLE_CLIENT_ID,
+        //     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+
+        // })
+
+
     ],
     secret: process.env.NEXT_PUBLIC_SECRET
 })

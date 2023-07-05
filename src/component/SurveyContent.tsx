@@ -42,8 +42,9 @@ export default function SurveyContent() {
         </Menu.Menu>
       </Menu>
 
-      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+      
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
 
       <Button onClick={(e) => {
         e.preventDefault();
