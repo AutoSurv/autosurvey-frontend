@@ -5,8 +5,11 @@ import { Label, TextInput, Button, Toast } from "flowbite-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { HiX } from "react-icons/hi";
+import { signOut, useSession } from "next-auth/react";
 
 const Login = () => {
+  const {data: session, status} = useSession();
+  const loading = status === "loading";
   const [username, setUsername] = useState("");
   const [signUpStatus, setSignUpStatus] = useState<boolean>(false);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
@@ -169,6 +172,15 @@ const Login = () => {
     }
   }
 
+  if (status === "authenticated" && session.user) {
+    return (
+      <>
+          Signed in as {session.user.email} <br />
+          <Button className="home-login-btn" variant='contained' href='/org' color="blue">To Organizations</Button>
+          <Button onClick={() => signOut()} color="orange">Sign out</Button>
+      </>
+  )
+  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-24">
       <div className="flex flex-col gap-4">
