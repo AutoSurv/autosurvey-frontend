@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
-import * as bcrypt from "bcrypt";
+//import * as bcrypt from "bcrypt";
 import { AuthenticatedUser, User } from "@/pages/type/type";
 
 const BASE_PATH: string = 'http://localhost:8080/authenticate'; //db and controller must be created
@@ -17,36 +17,19 @@ export const authOptions: NextAuthOptions = {
 
                 password: { label: "Password", type:"password" }
             },
-            async authorize(credentials, req) {
-                //const secureCredentials = credentials;
-                //secureCredentials!.password = await bcrypt.hash(credentials?.password as string, 10);
+            async authorize(credentials) {
 
                 const response = await fetch(BASE_PATH, {
                     method: 'POST',
-                    //password using bcrypt
                     body: JSON.stringify(credentials),
-                    //body: JSON.stringify(secureCredentials),
                     headers: { "Content-Type": "application/json" }
                 });
                 const userResponse = await response.json();
                 const authUser: AuthenticatedUser = JSON.parse(JSON.stringify(userResponse))
-
-                 //user must be defined as a type (same as in the userDb)
-                //const userInDb = getUserByEmail(secureCredentials.email)
-                /*
-                  if (user && (bcrypt.compare(userInDb.encPassword, credentials.password))) {
-                    const accessToken = signJwtToken(userInDb);
-                    const result = {
-                        ...userInDb,
-                        accessToken
-                    };
-                    return result; //or new Response(JSON.stringify(result)) 
-                }    
-                return null; // or new Response(JSON.stringify(null))   
-
-                */
+                console.log("authUSer: ", authUser);
+        
                 if(response.ok) {
-                   
+                    console.log("userResponse: ", JSON.parse(JSON.stringify(userResponse)));
                     return userResponse;
                 }
                 return null;
@@ -63,12 +46,6 @@ export const authOptions: NextAuthOptions = {
         strategy: "jwt",
     },
      callbacks: {
-        async jwt({ token, user }) {
-            if(user) {
-                
-            }
-            return token;
-        },
         async session({session, token}) {
             session.user.accessToken = token as any;
             return session;
