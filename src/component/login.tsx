@@ -1,11 +1,13 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { redirect } from 'next/navigation';
 import { Button } from "semantic-ui-react";
+import * as bcrypt from "bcrypt";
 
 export default function Login() {
     const {data: session, status} = useSession();
     const loading = status === "loading";
-    console.log("accessToken: ", session?.user.accessToken)
+    
+
     if (status === "authenticated" && session.user) {
         return (
             <>
