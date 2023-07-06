@@ -85,7 +85,12 @@ export type OrgRequestDto = {
 }
 
 export type User = {
-  email: string,
+  username: string,
+  password: string
+}
+
+export type UserCred = {
+  username: string,
   password: string
 }
 

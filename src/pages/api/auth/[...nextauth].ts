@@ -2,12 +2,15 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
-//import * as bcrypt from "bcrypt";
-import { AuthenticatedUser, User } from "@/pages/type/type";
+import * as bcrypt from "bcrypt";
+import { AuthenticatedUser, User, UserCred } from "@/pages/type/type";
+import { useState } from "react";
 
 const BASE_PATH: string = 'http://localhost:8080/authenticate'; //db and controller must be created
+let beToken = "";
 
 export const authOptions: NextAuthOptions = {
+	
     providers: [
         CredentialsProvider({
             name: 'Credentials',
@@ -18,14 +21,22 @@ export const authOptions: NextAuthOptions = {
                 password: { label: "Password", type:"password" }
             },
             async authorize(credentials) {
+	
+							const secureCred: UserCred = {
+								username: credentials?.username as string,
+								password: await bcrypt.hash(credentials?.password as string,10)
+							}
 
+							 
                 const response = await fetch(BASE_PATH, {
                     method: 'POST',
-                    body: JSON.stringify(credentials),
+                    //body: JSON.stringify(secureCred),
+										body: JSON.stringify(credentials),
                     headers: { "Content-Type": "application/json" }
                 });
                 const userResponse = await response.json();
                 const authUser: AuthenticatedUser = JSON.parse(JSON.stringify(userResponse))
+								beToken = authUser.accessToken;
                 console.log("authUSer: ", authUser);
         
                 if(response.ok) {
@@ -41,13 +52,17 @@ export const authOptions: NextAuthOptions = {
         }) 
     ],
 
-    secret: process.env.NEXT_PUBLIC_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
     },
      callbacks: {
-        async session({session, token}) {
-            session.user.accessToken = token as any;
+
+        async session({session, token, user}) {
+					console.log("session: ", session);
+					console.log("token: ", token);
+					console.log("user: ", user);
+            session.user.accessToken = beToken;
             return session;
         }
       }, 
