@@ -1,6 +1,15 @@
 import { AutoSurvey } from '@/pages/type/type';
+import { useRouter } from 'next/navigation';
+import router from 'next/router';
+import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
+type UserData = {
+  username: string,
+  password: string,
+  email: string,
+  roles: string
+}
 
 export const downloadExcel = (data: any) => {
 
@@ -15,5 +24,28 @@ export const downloadExcel = (data: any) => {
     XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.id + ".xlsx");
   } else {
     XLSX.writeFile(workbook, survey.orgName + ".xlsx");
-  }  
+  }
 };
+
+// export function SignOut(setFormDataSingup: Dispatch<SetStateAction<UserData>>): void {
+//   const formData = {
+//     username: "",
+//     password: "",
+//     email: "",
+//     roles: "role_user"
+//   }
+//   localStorage.clear();
+//   const myHeaders = new Headers();
+//   myHeaders.delete("Authorization");
+//   console.log(1);
+//   setFormDataSingup(formData);
+//   router.push("");
+//   console.log(2);
+// }
+
+export function SignOut(): void {
+  
+  localStorage.clear();
+  router.push("/");
+ 
+}

@@ -5,7 +5,8 @@ import { Label, TextInput, Button, Toast } from "flowbite-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { HiX } from "react-icons/hi";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { SignOut } from "@/helper/methods";
 
 const Login = () => {
   const {data: session, status} = useSession();
@@ -24,14 +25,11 @@ const Login = () => {
     email: "",
     roles: "role_user",
   });
-  const [formDataSingupUser, setFormDataSingupUser] = useState({
-    userName: "",
-    userEmail: "",
-  });
   const [formDataSingupAuth, setFormDataSingupAuth] = useState({
     username: "",
     password: "",
   });
+
   const router = useRouter();
 
   async function jwtTokenHandler(): Promise<void> {
@@ -96,56 +94,6 @@ const Login = () => {
         [fieldName]: fieldValue,
       }));
     }
-    if (fieldName === "username") {
-      setFormDataSingupUser((prevState) => ({
-        ...prevState,
-        userName: fieldValue,
-      }));
-    }
-    if (fieldName === "email") {
-      setFormDataSingupUser((prevState) => ({
-        ...prevState,
-        userEmail: fieldValue,
-      }));
-    }
-    console.log(formDataSingupAuth.username);
-    console.log(formDataSingupUser.userEmail);
-  }
-
-  async function createNewUser(jwtToken: string) {
-    const url = "http://localhost:8080/users/new";
-    console.log("formDataSingup: ", formDataSingup);
-    await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify(formDataSingup),
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
-      },
-    });
-  }
-
-  async function authenticateSignup() {
-    const url = "http://localhost:8080/authenticate";
-    console.log("formDataSingupAuth: ", formDataSingupAuth);
-    await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify(formDataSingupAuth),
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.text();
-      })
-      .then((data: any) => {
-        const jwtToken = data;
-        if (jwtToken) {
-          createNewUser(jwtToken);
-        }
-      });
   }
 
   async function signUpHandler(): Promise<void> {
@@ -166,10 +114,6 @@ const Login = () => {
         headers: {
           "Content-type": "application/json",
         },
-      }).then((response) => {
-        if (response.status === 200) {
-          authenticateSignup();
-        }
       });
       setSignupSuccessMessage("Successfully signed up");
     }
@@ -238,6 +182,16 @@ const Login = () => {
           }}
         >
           LOG IN
+        </Button>
+        <Button
+          type="submit"
+          onClick={() => {
+            setErrorMsg("");
+            console.log('hello');
+            SignOut();
+          }}
+        >
+          LOG OUT
         </Button>
         <div>
           {errorMsg ? (
