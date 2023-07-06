@@ -114,6 +114,7 @@ const Login = () => {
 
   async function createNewUser(jwtToken: string) {
     const url = "http://localhost:8080/users/new";
+    console.log("formDataSingup: ", formDataSingup);
     await fetch(url, {
       method: "POST",
       mode: "cors",
@@ -127,6 +128,7 @@ const Login = () => {
 
   async function authenticateSignup() {
     const url = "http://localhost:8080/authenticate";
+    console.log("formDataSingupAuth: ", formDataSingupAuth);
     await fetch(url, {
       method: "POST",
       mode: "cors",
@@ -156,6 +158,7 @@ const Login = () => {
       console.log("all empty fields");
     } else {
       const url = "http://localhost:8080/users/new";
+      console.log("formDataSingup: ", formDataSingup);
       await fetch(url, {
         method: "POST",
         mode: "cors",
@@ -172,7 +175,7 @@ const Login = () => {
     }
   }
 
-  if (status === "authenticated" && session.user) {
+/*   if (status === "authenticated" && session.user) {
     return (
       <>
           Signed in as {session.user.email} <br />
@@ -180,19 +183,11 @@ const Login = () => {
           <Button onClick={() => signOut()} color="orange">Sign out</Button>
       </>
   )
-  }
+  } */
   return (
     <main className="flex min-h-screen flex-col items-center justify-start p-24">
       <div className="flex flex-col gap-4">
-        <Button>
-          <FaGithub className="mr-2 h-5 w-5" />
-          CONTINUE WITH GITHUB
-        </Button>
-        <Button>
-          <FcGoogle className="mr-2 h-5 w-5" />
-          CONTINUE WITH GOOGLE
-        </Button>
-        <span>----- OR -----</span>
+
         <div>
           <div className="mb-2 block">
             <Label htmlFor="username" color="white" value="Username" />
@@ -257,7 +252,7 @@ const Login = () => {
             <></>
           )}
         </div>
-        <span>----------</span>
+        {/* <span>----------</span>
         <div className="flex flex-col gap-4 mt-6">
           <p>Don't have an account?</p>
           <div className={!signUpStatus ? "hidden" : "visible"}>
@@ -334,7 +329,7 @@ const Login = () => {
               <></>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </main>
   );
