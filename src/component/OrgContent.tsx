@@ -24,7 +24,7 @@ export default function OrgContent() {
                 <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
             </Header>
             <Menu size='small' color="blue" >
-                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>
+                <Menu.Item> <Link href={"/"} >Home</Link></Menu.Item>
                 <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
