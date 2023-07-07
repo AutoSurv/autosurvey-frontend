@@ -3,6 +3,7 @@ import {  useEffect, useState } from "react";
 import { getOrganizations } from "../api/autosurvey";
 import { Organization } from "../type/type";
 import OrgContent from "@/component/OrgContent";
+import { AutoSurveyHeader } from "@/component/AutoSurveyHeader";
 
 export default function Orgs() {
 
@@ -16,6 +17,7 @@ export default function Orgs() {
         <main className="org-main">
             <div className="org-content-container">
               <OrgContent/>
+             
             </div>
         </main>
 

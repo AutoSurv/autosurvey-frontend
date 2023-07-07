@@ -84,17 +84,12 @@ export type OrgRequestDto = {
   orgName: string
 }
 
-export type User = {
+export type LoginUser = {
   username: string,
   password: string
 }
 
-export type UserCred = {
+export type AuthUser = {
   username: string,
-  password: string
-}
-
-export type AuthenticatedUser = {
-  email: string,
-  accessToken: string
+  isAuthorizes: boolean
 }

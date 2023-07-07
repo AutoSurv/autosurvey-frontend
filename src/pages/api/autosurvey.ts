@@ -1,19 +1,31 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, OrgRequestDto, Organization } from "../type/type";
+import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingup, LoginUser, OrgRequestDto, Organization } from "../type/type";
 
 
 //Organization section
 const BASE_ORG_URL = `http://localhost:8080/api/organizations`;
+let jwt: any = "";
+if (typeof window !== "undefined") {
+  jwt = localStorage.getItem("jwt");
+}
 
 export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
-  const apiResponse = await fetch(BASE_ORG_URL, { cache: 'no-store' });
+  const apiResponse = await fetch(BASE_ORG_URL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
   const data: Organization[] = await apiResponse.json();
   setOrganizations(data);
 };
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
   const organizationURL = BASE_ORG_URL + `/${orgid}`;
-  const apiResponse = await fetch(organizationURL, { cache: 'no-store' });
+  const apiResponse = await fetch(organizationURL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
   const data: Organization = await apiResponse.json();
   setOrganization(data);
   return data;
@@ -34,6 +46,7 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
     body: JSON.stringify(reqBody),
     headers: {
       "content-type": "application/json",
+      Authorization: `Bearer ${jwt}`
     },
   });
 
@@ -59,7 +72,10 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
 
   const reqOptions = {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`
+    },
     body: JSON.stringify(reqBody)
   };
 
@@ -74,6 +90,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
   const autosurveysURL = BASE_ORG_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
+    headers: { Authorization: `Bearer ${jwt}` }
   });
   await getOrganizations(setOrganizations);
 };
@@ -85,7 +102,11 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 const BASE_SURVEY_URL = `http://localhost:8080/api/autosurveys`;
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
-  const apiResponse = await fetch(BASE_SURVEY_URL, { cache: 'no-store' });
+  const apiResponse = await fetch(BASE_SURVEY_URL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
   const data: AutoSurvey[] = await apiResponse.json();
   setSurveys(data);
   return data;
@@ -94,7 +115,11 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
 export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
 
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
-  const apiResponse = await fetch(autosurveysURL, { cache: 'no-store' });
+  const apiResponse = await fetch(autosurveysURL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
   const data: AutoSurvey = await apiResponse.json();
   setSurvey(data);
 }
@@ -132,7 +157,10 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   }
   const reqOptions = {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`
+    },
     body: JSON.stringify(reqBody)
   };
   const response = await fetch(BASE_SURVEY_URL, reqOptions);
@@ -144,35 +172,35 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 
 export async function addImportedSurvey(
   surveyArr: AutoSurvey[],
-  orgId: string, 
-  setErrMessage: Dispatch<SetStateAction<string>>, 
-  setOpen: Dispatch<SetStateAction<boolean>>, 
+  orgId: string,
+  setErrMessage: Dispatch<SetStateAction<string>>,
+  setOpen: Dispatch<SetStateAction<boolean>>,
   setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
   setOrganization: Dispatch<SetStateAction<Organization>>) {
 
-  for (let i = 0; i < surveyArr.length; i++) {  
+  for (let i = 0; i < surveyArr.length; i++) {
     const reqBody: AutoSurveyRequestDto = {
-    country: surveyArr[i].country,
-    rent: surveyArr[i].rent,
-    utilities: surveyArr[i].utilities,
-    food: surveyArr[i].food,
-    basicItems: surveyArr[i].basicItems,
-    transportation: surveyArr[i].transportation,
-    educationTotal: surveyArr[i].educationTotal,
-    educationSupplies: surveyArr[i].educationSupplies,
-    educationFee: surveyArr[i].educationFee,
-    educationType: surveyArr[i].educationType,
-    accommodationType: surveyArr[i].accommodationType,
-    profession: surveyArr[i].profession,
-    locationGiven: surveyArr[i].locationGiven,
-    locationClustered: surveyArr[i].locationClustered,
-    numResidents: surveyArr[i].numResidents,
-    numIncomes: surveyArr[i].numIncomes,
-    numFullIncomes: surveyArr[i].numFullIncomes,
-    numChildren: surveyArr[i].numChildren,
-    totalIncome: surveyArr[i].totalIncome,
-    comments: surveyArr[i].comments,
-    orgId: orgId,
+      country: surveyArr[i].country,
+      rent: surveyArr[i].rent,
+      utilities: surveyArr[i].utilities,
+      food: surveyArr[i].food,
+      basicItems: surveyArr[i].basicItems,
+      transportation: surveyArr[i].transportation,
+      educationTotal: surveyArr[i].educationTotal,
+      educationSupplies: surveyArr[i].educationSupplies,
+      educationFee: surveyArr[i].educationFee,
+      educationType: surveyArr[i].educationType,
+      accommodationType: surveyArr[i].accommodationType,
+      profession: surveyArr[i].profession,
+      locationGiven: surveyArr[i].locationGiven,
+      locationClustered: surveyArr[i].locationClustered,
+      numResidents: surveyArr[i].numResidents,
+      numIncomes: surveyArr[i].numIncomes,
+      numFullIncomes: surveyArr[i].numFullIncomes,
+      numChildren: surveyArr[i].numChildren,
+      totalIncome: surveyArr[i].totalIncome,
+      comments: surveyArr[i].comments,
+      orgId: orgId,
     };
 
     if (!reqBody.country || !reqBody.orgId) {
@@ -181,7 +209,10 @@ export async function addImportedSurvey(
     }
     const reqOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`
+      },
       body: JSON.stringify(reqBody)
     };
     const response = await fetch(BASE_SURVEY_URL, reqOptions);
@@ -225,6 +256,7 @@ export async function updateSurvey(id: string | string[] | undefined, event: Rea
     body: JSON.stringify(reqBody),
     headers: {
       "content-type": "application/json",
+      Authorization: `Bearer ${jwt}`
     },
   });
   await getSurvey(id, setSurvey);
@@ -236,6 +268,57 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
+    headers: {
+       Authorization: `Bearer ${jwt}`
+    }
   });
   await getSurveys(setSurveys);
 };
+
+//userSection
+
+const AUTH_URL = "http://localhost:8080/authenticate";
+const NEW_USER_URL = "http://localhost:8080/users/new";
+
+
+export async function signUpHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
+    const data: FormDataSingup = {
+      username: event.currentTarget.username.value,
+      password: event.currentTarget.password.value,
+      email: event.currentTarget.email.value,
+      roles: "role_user"
+    }
+
+  //setSignUpStatus(!signUpStatus);
+  if (
+    !data.username &&
+    !data.password &&
+    !data.email
+  ) {
+    console.log("all empty fields");
+  } else {
+    await fetch(NEW_USER_URL, {
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+    //setSignupSuccessMessage("Successfully signed up");
+  }
+}
+
+
+export async function authenticateUser(user: LoginUser) {
+  const response = await fetch(AUTH_URL, {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify(user),
+    headers: {
+      "Content-type": "application/json",
+    },
+  })
+
+  return response;
+}

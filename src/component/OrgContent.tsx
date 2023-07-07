@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
 import Link from "next/link";
+import { AutoSurveyHeader } from "./AutoSurveyHeader";
 import { useSession } from "next-auth/react";
 
+
 export default function OrgContent() {
-    const {data: session, status} = useSession();
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
         getOrganizations(setOrganizations);
@@ -16,22 +17,9 @@ export default function OrgContent() {
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
 
-    console.log("organizations.length: ", organizations.length);
-
     return (
         <div className="orgs-content">
-            <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
-                <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
-            </Header>
-            <Menu size='small' color="blue" >
-                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>
-                <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
-                <Menu.Menu position='right'>
-                    <Menu.Item>
-                    <Button circular icon='sign out' color='blue' inverted>{session?.user?.email}</Button>
-                    </Menu.Item>
-                </Menu.Menu>
-            </Menu>
+            <AutoSurveyHeader />
             <Modal animation={false}
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
@@ -57,11 +45,14 @@ export default function OrgContent() {
                 </Modal.Content>
             </Modal>
             <div className="orgs-orgcard-box">
-                {organizations.map((organization: Organization, index: number) => {
+                {organizations ?
+                organizations.map((organization: Organization, index: number) => {
                     return (
                         <OrgCard key={index} organization={organization} setOrganizations={setOrganizations} />
                     )
-                })}
+                })
+                :null
+                }
 
             </div>
 
