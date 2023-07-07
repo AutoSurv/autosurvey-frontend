@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
+import { Form, Input, Label, Modal, Card, Image, Message } from 'semantic-ui-react';
 import { TextInput, Toast } from "flowbite-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { HiX } from "react-icons/hi";
 import { signOut } from "next-auth/react";
-import { SignOut } from "@/helper/methods";
+import { SignOut, signInJwtTokenHandler, signUpHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -19,79 +19,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
   const [signUpStatus, setSignUpStatus] = useState<boolean>(false);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-  const [formDataSingup, setFormDataSingup] = useState({
-    username: "",
-    password: "",
-    email: "",
-    roles: "role_user",
-  });
-  const [formDataSingupAuth, setFormDataSingupAuth] = useState({
-    username: "",
-    password: "",
-  });
-
-  const router = useRouter();
-
-  async function jwtTokenHandler(): Promise<void> {
-    const url = "http://localhost:8080/authenticate";
-    await fetch(url, {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.status === 200) return response.text();
-        else if (response.status === 401 || response.status === 403) {
-          setErrorMsg("Invalid username or password");
-        } else {
-          setErrorMsg(
-            "Something went wrong, try again later or reach out to simonhong85@gmail.com"
-          );
-        }
-      })
-      .then((data: any) => {
-        const jwtToken = data;
-        if (jwtToken) {
-          localStorage.setItem("jwt", jwtToken);
-          localStorage.setItem("username", username);
-          router.push("org");
-        }
-      });
-  }
-
-  async function signUpHandler(): Promise<void> {
-    setSignUpStatus(!signUpStatus);
-    if (
-      !formDataSingup.username &&
-      !formDataSingup.password &&
-      !formDataSingup.email
-    ) {
-      console.log("all empty fields");
-    } else {
-      const url = "http://localhost:8080/users/new";
-      await fetch(url, {
-        method: "POST",
-        mode: "cors",
-        body: JSON.stringify(formDataSingup),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
-      setSignupSuccessMessage("Successfully signed up");
-    }
-  }
 
   return (
 
@@ -106,15 +37,7 @@ const Login = () => {
       >
         <Box component="form" onSubmit={(e) => {
           e.preventDefault();
-          const inputName = e.currentTarget.username.value;
-          console.log(inputName);
-          const inputPassword = e.currentTarget.password.value;
-          setFormData({
-            username: inputName,
-            password: inputPassword
-          })
-          setUsername(inputName);
-          jwtTokenHandler();
+          signInJwtTokenHandler(e, setErrorMsg);
         }} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -146,10 +69,18 @@ const Login = () => {
           >
             Sign In
           </Button>
+          {(errorMsg.length > 0) ? <Message warning>
+            <p>{errorMsg}</p>
+          </Message> : null}
+          {(signupSuccessMessage.length > 0) ? <Message success
+          header= 'Your user registration was successful'
+          content='You may now log-in with the username you have chosen'
+          >
+          </Message> : null}
         </Box>
         <Grid container>
           <Grid item xs>
-            <Link href="#" variant="body2">
+            <Link href="/" variant="body2">
               Forgot password?
             </Link>
           </Grid>
@@ -166,26 +97,8 @@ const Login = () => {
               <Modal.Content>
                 <Form onSubmit={(e) => {
                   e.preventDefault();
-                  const inputNewName = e.currentTarget.username.value;
-                  console.log(inputNewName);
-                  const inputNewPassword = e.currentTarget.password.value;
-                  console.log(inputNewPassword);
-                  const inputNewEmail = e.currentTarget.email.value;
-                  console.log(inputNewEmail);
-                  setFormDataSingup({
-                    username: inputNewName,
-                    password: inputNewPassword,
-                    email: inputNewEmail,
-                    roles: "role_user"
-                  });
-                  setFormDataSingupAuth({
-                    username: inputNewName,
-                    password: inputNewPassword
-                  });
-                  signUpHandler();
-                  console.log(formDataSingupAuth);
-                  setOpen(false);
-
+                  signUpHandler(e, setErrorMsg, setSignupSuccessMessage, setOpen);
+                  
                 }}>
                   <Form.Field>
                     <Label>User Name</Label>
@@ -206,6 +119,9 @@ const Login = () => {
                   }}
                   >Cancel</Button>
                 </Form>
+                {(errorMsg.length > 0) ? <Message warning>
+                  <p>{errorMsg}</p>
+                </Message> : null}
               </Modal.Content>
             </Modal>
 
