@@ -12,6 +12,10 @@ export interface OrgContextValue {
 
     setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>; 
 
+    signUpStatus: boolean;
+
+    setSignUpStatus: Dispatch<SetStateAction<boolean>>; 
+
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -20,5 +24,7 @@ export const OrgContext = createContext<OrgContextValue> ({
     setOrganization: () => {},
     survey: initSurvey,
     setSurvey: () => {},
-    setSurveys: () => {}
+    setSurveys: () => {},
+    signUpStatus: false,
+    setSignUpStatus: () => {}
 });

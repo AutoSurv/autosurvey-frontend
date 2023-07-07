@@ -28,15 +28,16 @@ export const downloadExcel = (data: any) => {
 };
 
 
-export function SignOut(): void {
-
+export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
+  setSignUpStatus(false);
   localStorage.clear();
   router.push("/");
 
 }
 
 export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormElement>,
-  setErrorMsg: Dispatch<SetStateAction<string>>): Promise<void> {
+  setErrorMsg: Dispatch<SetStateAction<string>>,
+  setSignUpStatus: Dispatch<SetStateAction<boolean>>): Promise<void> {
 
   const inputBody = {
     username: event.currentTarget.username.value,
@@ -67,6 +68,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
       if (jwtToken) {
         localStorage.setItem("jwt", jwtToken);
         localStorage.setItem("username", inputBody.username);
+        setSignUpStatus(true);
         router.push("org");
       }
     });

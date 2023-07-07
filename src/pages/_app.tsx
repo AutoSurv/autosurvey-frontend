@@ -14,11 +14,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [organization, setOrganization] = useState<Organization>(initOrg);
   const [survey, setSurvey] = useState<AutoSurvey>(initSurvey);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+  const [signUpStatus, setSignUpStatus] =useState<boolean>(false);
 
 
   return (
 
-      <OrgContext.Provider value={{ organization, setOrganization, survey, setSurvey, setSurveys}}>
+      <OrgContext.Provider value={{ organization, setOrganization, survey, setSurvey, setSurveys, setSignUpStatus, signUpStatus}}>
       <Component {...pageProps} />
       </OrgContext.Provider>
 

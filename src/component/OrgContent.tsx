@@ -9,7 +9,7 @@ import { SignOut } from "@/helper/methods";
 
 
 export default function OrgContent() {
-    const { setOrganization } = useContext(OrgContext);
+    const { setOrganization, setSignUpStatus } = useContext(OrgContext);
 
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
@@ -29,7 +29,7 @@ export default function OrgContent() {
                 <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                    <Button circular icon='sign out' color='blue' inverted onClick={SignOut}></Button>
+                    <Button circular icon='sign out' color='blue' inverted onClick={() => SignOut(setSignUpStatus)}></Button>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

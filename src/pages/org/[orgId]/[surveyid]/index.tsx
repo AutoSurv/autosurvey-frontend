@@ -33,7 +33,7 @@ export default function SurveyDetails() {
         <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
       </Header>
       <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
+        <Menu.Item> <Link href={"/"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
         <Menu.Item> <Link href={"/org/" + survey.orgId} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item> <Link href={"/"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
         <Menu.Menu position='right'>

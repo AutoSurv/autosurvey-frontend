@@ -13,7 +13,7 @@ import { SignOut, downloadExcel } from '@/helper/methods';
 
 
 export default function SurveyContent() {
-  const { organization, setOrganization } = useContext(OrgContext);
+  const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   useEffect(() => {
     getSurveys(setSurveys);
@@ -32,12 +32,12 @@ export default function SurveyContent() {
         <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
       </Header>
       <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"}>Home</Link></Menu.Item>
+        <Menu.Item> <Link href={"/"}>Home</Link></Menu.Item>
         <Menu.Item> <Link href={"/org/" + organization.orgId}>Organization</Link></Menu.Item>
         <Menu.Item> <Link href={"/"}>About</Link></Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-          <Button circular icon='sign out' color='blue' inverted onClick={SignOut}></Button>
+          <Button circular icon='sign out' color='blue' inverted onClick={() => SignOut(setSignUpStatus)}></Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

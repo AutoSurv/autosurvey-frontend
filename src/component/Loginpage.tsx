@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Form, Input, Label, Modal, Message, Popup } from 'semantic-ui-react';
-import { signInJwtTokenHandler, signUpHandler } from "@/helper/methods";
+import { SignOut, signInJwtTokenHandler, signUpHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import { OrgContext } from "@/helper/context";
+import { Sign } from "crypto";
 
 const Login = () => {
-  const [signUpStatus, setSignUpStatus] = useState<boolean>(false);
+  const { signUpStatus, setSignUpStatus } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [open, setOpen] = useState(false);
@@ -18,6 +20,8 @@ const Login = () => {
   return (
 
     <Container component="main" maxWidth="xs">
+
+      {(signUpStatus === false) ? 
       <Box
         sx={{
           marginTop: 8,
@@ -28,7 +32,8 @@ const Login = () => {
       >
         <Box component="form" onSubmit={(e) => {
           e.preventDefault();
-          signInJwtTokenHandler(e, setErrorMsg);
+          signInJwtTokenHandler(e, setErrorMsg, setSignUpStatus);
+        
         }} noValidate sx={{ mt: 1 }}>
 
           <TextField
@@ -123,6 +128,15 @@ const Login = () => {
           </Grid>
         </Grid>
       </Box>
+       :  <Button
+       type="submit"
+       fullWidth
+       variant="contained"
+       sx={{ mt: 3, mb: 2 }}
+       onClick={() => {SignOut(setSignUpStatus)}}
+     >
+       Sign Out
+     </Button>}
     </Container>
   );
 };
