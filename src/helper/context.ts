@@ -1,4 +1,4 @@
-import { AutoSurvey, Organization } from "@/pages/type/type";
+import { AutoSurvey, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, createContext } from "react";
 import { initSurvey } from "./initializer";
 
@@ -9,14 +9,14 @@ export interface OrgContextValue {
 
     survey: AutoSurvey;
     setSurvey: Dispatch<SetStateAction<AutoSurvey>>; 
-
     setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>; 
 
-    isUserAuthenticated: boolean;
-    setIsUserAuthenticated: Dispatch<SetStateAction<boolean>>;
-
     userNameAuth: string;
-    setUserNameAuth: Dispatch<SetStateAction<string>>;
+    setUserNameAuth: Dispatch<SetStateAction<string>>;    
+
+    signUpStatus: boolean;
+    setSignUpStatus: Dispatch<SetStateAction<boolean>>; 
+
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -26,8 +26,8 @@ export const OrgContext = createContext<OrgContextValue> ({
     survey: initSurvey,
     setSurvey: () => {},
     setSurveys: () => {},
-    isUserAuthenticated: false,
-    setIsUserAuthenticated: () => {},
     userNameAuth: "",
     setUserNameAuth: () => {},
+    signUpStatus: false,
+    setSignUpStatus: () => {}
 });

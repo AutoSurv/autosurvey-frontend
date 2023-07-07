@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingup, LoginUser, OrgRequestDto, Organization } from "../type/type";
+import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization } from "../../type/type";
 
 
 //Organization section
@@ -281,32 +281,27 @@ const AUTH_URL = "http://localhost:8080/authenticate";
 const NEW_USER_URL = "http://localhost:8080/users/new";
 
 
-export async function signUpHandler(event: React.FormEvent<HTMLFormElement>): Promise<void> {
-    const data: FormDataSingup = {
-      username: event.currentTarget.username.value,
-      password: event.currentTarget.password.value,
-      email: event.currentTarget.email.value,
-      roles: "role_user"
-    }
+export async function signUpUser(data: FormDataSingUp) {
 
-  //setSignUpStatus(!signUpStatus);
   if (
     !data.username &&
     !data.password &&
     !data.email
   ) {
     console.log("all empty fields");
-  } else {
-    await fetch(NEW_USER_URL, {
-      method: "POST",
-      mode: "cors",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
-    //setSignupSuccessMessage("Successfully signed up");
-  }
+    return null;
+  } 
+  const response = await fetch(NEW_USER_URL, {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json",
+    },
+  });
+  //setSignupSuccessMessage("Successfully signed up");
+  
+  return response;
 }
 
 

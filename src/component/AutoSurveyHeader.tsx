@@ -6,7 +6,7 @@ import { Button, Header, Icon, Menu } from "semantic-ui-react";
 
 
 export function AutoSurveyHeader() {
-  const { userNameAuth, setIsUserAuthenticated} = useContext(OrgContext);
+  const { setSignUpStatus} = useContext(OrgContext);
   return(
     <>
       <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
@@ -19,8 +19,8 @@ export function AutoSurveyHeader() {
         <Menu.Menu position='right'>
           <Menu.Item>
             <Button onClick={() => {
-              setIsUserAuthenticated(false);
-              SignOut();
+              setSignUpStatus(false);
+              SignOut(setSignUpStatus);
           }}
              circular icon='sign out' color='blue' inverted></Button>
           </Menu.Item>

@@ -1,7 +1,5 @@
-import { initSurvey } from "@/helper/initializer";
 import { addImportedSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Organization } from "@/pages/type/type";
-import { headers } from "next/dist/client/components/headers";
+import { AutoSurvey, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'

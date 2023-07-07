@@ -1,11 +1,14 @@
-import { initFormDataSingup } from "@/helper/initializer";
-import { signUpHandler } from "@/pages/api/autosurvey";
-import { FormDataSingup } from "@/pages/type/type";
+import { signUpHandler } from "@/helper/methods";
 import Link from "@mui/material/Link";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
-export function SignUp() {
+type SignUpProps = {
+  setErrorMsg: Dispatch<SetStateAction<string>>
+  setSignupSuccessMessage: Dispatch<SetStateAction<string>>
+}
+
+export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
     const [open, setOpen] = useState(false);
     
     return (
@@ -22,7 +25,7 @@ export function SignUp() {
       <Modal.Content>
         <Form onSubmit={(e) => {
           e.preventDefault();
-          signUpHandler(e);
+          signUpHandler(e, setErrorMsg, setSignupSuccessMessage, setOpen);
           setOpen(false);
         }}>
           <Form.Field>
@@ -31,7 +34,7 @@ export function SignUp() {
           </Form.Field>
           <Form.Field>
             <Label>Password</Label>
-            <Input placeholder="Password" type="text" name="password" />
+            <Input placeholder="Password" type="password" name="password" />
           </Form.Field>
           <Form.Field>
             <Label>Email</Label>
@@ -40,7 +43,7 @@ export function SignUp() {
           <Button type="submit" >Sign Up +</Button>
           <Button onClick={(e) => {
             e.preventDefault();
-            setOpen(false);
+            setErrorMsg("");
           }}
           >Cancel</Button>
         </Form>

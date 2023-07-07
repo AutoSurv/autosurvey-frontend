@@ -1,12 +1,10 @@
-import * as XLSX from 'xlsx';
-import { CSVLink, CSVDownload } from "react-csv";
-import { addSurvey, getSurveys } from "@/pages/api/autosurvey";
-import { AutoSurvey } from "@/pages/type/type";
+import { CSVLink } from "react-csv";
+import { getSurveys } from "@/pages/api/autosurvey";
+import { AutoSurvey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import SurveyCard from "./SurveyCard";
 import { OrgContext } from "@/helper/context";
-import Link from "next/link";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
 import { downloadExcel } from '@/helper/methods';
@@ -14,14 +12,13 @@ import { AutoSurveyHeader } from './AutoSurveyHeader';
 
 
 export default function SurveyContent() {
-  const { organization, setOrganization } = useContext(OrgContext);
+  const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   useEffect(() => {
     getSurveys(setSurveys);
   }, []);
 
   const [open, setOpen] = useState(false);
-  const [errMessage, setErrMessage] = useState<string>("");
 
   useEffect(() => {
 

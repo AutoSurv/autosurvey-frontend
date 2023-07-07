@@ -1,15 +1,14 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
-import { Organization } from "@/pages/type/type";
+import { Organization } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "semantic-ui-react";
+import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
-import Link from "next/link";
 import { AutoSurveyHeader } from "./AutoSurveyHeader";
 
 
 export default function OrgContent() {
-    const { setOrganization } = useContext(OrgContext);
+    const { setOrganization, setSignUpStatus } = useContext(OrgContext);
 
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {

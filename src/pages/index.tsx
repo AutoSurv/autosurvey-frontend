@@ -1,9 +1,7 @@
 
 import { Inter } from 'next/font/google'
-import Button from '@mui/material/Button';
 import 'semantic-ui-css/semantic.min.css'
 import { Header, Icon, List } from 'semantic-ui-react'
-import { SignOut } from '@/helper/methods';
 import Loginpage from '@/component/Loginpage';
 
 const inter = Inter({ subsets: ['latin'] })

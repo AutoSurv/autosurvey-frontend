@@ -1,4 +1,4 @@
-import { AutoSurvey, FormDataSingup, Organization } from "@/pages/type/type";
+import { AutoSurvey, Organization } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",
@@ -30,11 +30,4 @@ export const initSurvey: AutoSurvey = {
   id: "",
   orgId: "",
   orgName: ""
-}
-
-export const initFormDataSingup: FormDataSingup = {
-  username: "",
-  password: "",
-  email: "",
-  roles: "",
 }

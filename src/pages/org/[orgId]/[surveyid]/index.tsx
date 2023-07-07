@@ -1,11 +1,10 @@
-import * as XLSX from 'xlsx';
 import { OrgContext } from "@/helper/context";
-import { deleteSurvey, getSurvey, updateSurvey } from "@/pages/api/autosurvey";
-import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { deleteSurvey, getSurvey } from "@/pages/api/autosurvey";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
-import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
-import { AutoSurvey } from '@/pages/type/type';
+import { Button } from "semantic-ui-react";
+import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { downloadExcel } from '@/helper/methods';
@@ -16,8 +15,7 @@ export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgid, surveyid } = router.query;
-  const { organization, setOrganization, survey, setSurvey, setSurveys } = useContext(OrgContext);
-  const [open, setOpen] = useState(false);
+  const {  survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   useEffect(() => {
