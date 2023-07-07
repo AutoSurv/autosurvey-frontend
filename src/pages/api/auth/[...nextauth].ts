@@ -7,7 +7,7 @@ import { AuthenticatedUser, User, UserCred } from "@/pages/type/type";
 import { useState } from "react";
 
 const BASE_PATH: string = "http://localhost:8080/authenticate"; //db and controller must be created
-const SALT_JUMP="$2b$10$uA7w6TxrjNtbkzd6SCjJQu"
+const SALT_JUMP="$2b$10$uA7w6TxrjNtbkzd6SCjJQu";
 let beToken = "";
 
 export const authOptions: NextAuthOptions = {
@@ -26,6 +26,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
 
+        console.log(await bcrypt.genSalt(20));
          const secureCred: UserCred = {
           username: credentials?.username as string,
           password: await bcrypt.hash(
@@ -33,7 +34,6 @@ export const authOptions: NextAuthOptions = {
             SALT_JUMP
           ),
         };
-        console.log("secureCred: ", secureCred); 
 
         const response = await fetch(BASE_PATH, {
           method: "POST",
