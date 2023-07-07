@@ -3,7 +3,7 @@ import { AutoSurvey, FormDataSingUp, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
-import * as bcrypt from 'bcrypt'
+import * as bcryptjs from 'bcryptjs'
 
 //bcrypt issue #49759
 const SALT_JUMP="$2b$10$uA7w6TxrjNtbkzd6SCjJQu";
@@ -48,7 +48,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
-    password: event.currentTarget.password.value,// bcrypt.hashSync(event.currentTarget.password.value, SALT_JUMP)
+    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
   }
 
   console.log(inputBody)
@@ -84,7 +84,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
-    password: event.currentTarget.password.value, // bcrypt.hashSync(event.currentTarget.password.value, SALT_JUMP),
+    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
     email: event.currentTarget.email.value,
     roles: "role_user"
   }
