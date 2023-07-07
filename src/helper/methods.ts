@@ -27,21 +27,6 @@ export const downloadExcel = (data: any) => {
   }
 };
 
-// export function SignOut(setFormDataSingup: Dispatch<SetStateAction<UserData>>): void {
-//   const formData = {
-//     username: "",
-//     password: "",
-//     email: "",
-//     roles: "role_user"
-//   }
-//   localStorage.clear();
-//   const myHeaders = new Headers();
-//   myHeaders.delete("Authorization");
-//   console.log(1);
-//   setFormDataSingup(formData);
-//   router.push("");
-//   console.log(2);
-// }
 
 export function SignOut(): void {
 
