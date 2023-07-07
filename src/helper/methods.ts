@@ -46,6 +46,6 @@ export const downloadExcel = (data: any) => {
 export function SignOut(): void {
   
   localStorage.clear();
-  router.push("/login");
+  router.push("/");
  
 }

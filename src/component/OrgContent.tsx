@@ -5,6 +5,7 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
+import { SignOut } from "@/helper/methods";
 
 
 export default function OrgContent() {
@@ -28,7 +29,7 @@ export default function OrgContent() {
                 <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                    <Button circular icon='sign out' color='blue' inverted></Button>
+                    <Button circular icon='sign out' color='blue' inverted onClick={SignOut}></Button>
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>

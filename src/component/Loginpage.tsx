@@ -146,68 +146,72 @@ const Login = () => {
           >
             Sign In
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-
-              <Modal animation={false}
-                onClose={() => setOpen(false)}
-                onOpen={() => setOpen(true)}
-                open={open}
-                trigger={<Link variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>}>
-                <Modal.Header>Sign Up</Modal.Header>
-                <Modal.Content>
-                  <Form onSubmit={(e) => {
-                    e.preventDefault();
-                    const inputNewName = e.currentTarget.username.value;
-                    console.log(inputNewName);
-                    const inputNewPassword = e.currentTarget.password.value;
-                    const inputNewEmail = e.currentTarget.email.value;
-                    setFormDataSingup({
-                      username: inputNewName,
-                      password: inputNewPassword,
-                      email: inputNewEmail,
-                      roles: "role_user"
-                    });
-                    setFormDataSingupAuth({
-                      username: inputNewName,
-                      password: inputNewPassword
-                    });
-                    signUpHandler();
-                    setOpen(false);
-
-                  }}>
-                    <Form.Field>
-                      <Label>User Name</Label>
-                      <Input placeholder="User Name" type="text" name="username" />
-                    </Form.Field>
-                    <Form.Field>
-                      <Label>Password</Label>
-                      <Input placeholder="Password" type="text" name="password" />
-                    </Form.Field>
-                    <Form.Field>
-                      <Label>Email</Label>
-                      <Input placeholder="Email" type="text" name="email" />
-                    </Form.Field>
-                    <Button type="submit" >Sign Up +</Button>
-                    <Button onClick={(e) => {
-                      e.preventDefault();
-                      setOpen(false);
-                    }}
-                    >Cancel</Button>
-                  </Form>
-                </Modal.Content>
-              </Modal>
-
-            </Grid>
-          </Grid>
         </Box>
+        <Grid container>
+          <Grid item xs>
+            <Link href="#" variant="body2">
+              Forgot password?
+            </Link>
+          </Grid>
+          <Grid item>
+
+            <Modal animation={false}
+              onClose={() => setOpen(false)}
+              onOpen={() => setOpen(true)}
+              open={open}
+              trigger={<Link variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>}>
+              <Modal.Header>Sign Up</Modal.Header>
+              <Modal.Content>
+                <Form onSubmit={(e) => {
+                  e.preventDefault();
+                  const inputNewName = e.currentTarget.username.value;
+                  console.log(inputNewName);
+                  const inputNewPassword = e.currentTarget.password.value;
+                  console.log(inputNewPassword);
+                  const inputNewEmail = e.currentTarget.email.value;
+                  console.log(inputNewEmail);
+                  setFormDataSingup({
+                    username: inputNewName,
+                    password: inputNewPassword,
+                    email: inputNewEmail,
+                    roles: "role_user"
+                  });
+                  setFormDataSingupAuth({
+                    username: inputNewName,
+                    password: inputNewPassword
+                  });
+                  signUpHandler();
+                  console.log(formDataSingupAuth);
+                  setOpen(false);
+
+                }}>
+                  <Form.Field>
+                    <Label>User Name</Label>
+                    <Input placeholder="User Name" type="text" name="username" />
+                  </Form.Field>
+                  <Form.Field>
+                    <Label>Password</Label>
+                    <Input placeholder="Password" type="password" name="password" />
+                  </Form.Field>
+                  <Form.Field>
+                    <Label>Email</Label>
+                    <Input placeholder="Email" type="text" name="email" />
+                  </Form.Field>
+                  <Button type="submit" >Sign Up +</Button>
+                  <Button onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                  }}
+                  >Cancel</Button>
+                </Form>
+              </Modal.Content>
+            </Modal>
+
+          </Grid>
+        </Grid>
+
       </Box>
     </Container>
 

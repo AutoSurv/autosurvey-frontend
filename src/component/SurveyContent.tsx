@@ -9,7 +9,7 @@ import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
-import { downloadExcel } from '@/helper/methods';
+import { SignOut, downloadExcel } from '@/helper/methods';
 
 
 export default function SurveyContent() {
@@ -37,7 +37,7 @@ export default function SurveyContent() {
         <Menu.Item> <Link href={"/"}>About</Link></Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-          <Button circular icon='sign out' color='blue' inverted></Button>
+          <Button circular icon='sign out' color='blue' inverted onClick={SignOut}></Button>
           </Menu.Item>
         </Menu.Menu>
       </Menu>
