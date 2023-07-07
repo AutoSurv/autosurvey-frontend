@@ -9,6 +9,7 @@ import { AutoSurvey } from '@/pages/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { downloadExcel } from '@/helper/methods';
+import { AutoSurveyHeader } from '@/component/AutoSurveyHeader';
 
 
 export default function SurveyDetails() {
@@ -29,19 +30,7 @@ export default function SurveyDetails() {
 
   return (
     <div className="specificsurvey-card-container">
-      <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
-        <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
-      </Header>
-      <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
-        <Menu.Item> <Link href={"/org/" + survey.orgId} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
-        <Menu.Item> <Link href={"/"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-        <Menu.Menu position='right'>
-          <Menu.Item>
-            <Button circular icon='sign out' color='blue' inverted></Button>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
+      <AutoSurveyHeader />
 
       <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">

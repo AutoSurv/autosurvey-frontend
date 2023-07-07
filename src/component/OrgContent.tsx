@@ -5,6 +5,7 @@ import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
+import { AutoSurveyHeader } from "./AutoSurveyHeader";
 
 
 export default function OrgContent() {
@@ -20,18 +21,7 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
-            <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
-                <Header.Content><Icon name='clipboard' /> AutoSurvey </Header.Content>
-            </Header>
-            <Menu size='small' color="blue" >
-                <Menu.Item> <Link href={"/org"} >Home</Link></Menu.Item>
-                <Menu.Item> <Link href={"/"} >About</Link></Menu.Item>
-                <Menu.Menu position='right'>
-                    <Menu.Item>
-                    <Button circular icon='sign out' color='blue' inverted></Button>
-                    </Menu.Item>
-                </Menu.Menu>
-            </Menu>
+            <AutoSurveyHeader />
             <Modal animation={false}
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}

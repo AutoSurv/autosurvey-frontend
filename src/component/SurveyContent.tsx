@@ -10,6 +10,7 @@ import Link from "next/link";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
 import { downloadExcel } from '@/helper/methods';
+import { AutoSurveyHeader } from './AutoSurveyHeader';
 
 
 export default function SurveyContent() {
@@ -28,19 +29,7 @@ export default function SurveyContent() {
 
   return (
     <div className="surveys-content">
-      <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
-        <Header.Content><Icon name='clipboard' /> AutoSurvey</Header.Content>
-      </Header>
-      <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"}>Home</Link></Menu.Item>
-        <Menu.Item> <Link href={"/org/" + organization.orgId}>Organization</Link></Menu.Item>
-        <Menu.Item> <Link href={"/"}>About</Link></Menu.Item>
-        <Menu.Menu position='right'>
-          <Menu.Item>
-          <Button circular icon='sign out' color='blue' inverted></Button>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
+      <AutoSurveyHeader />
 
       
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />

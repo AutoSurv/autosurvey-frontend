@@ -12,6 +12,11 @@ export interface OrgContextValue {
 
     setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>; 
 
+    isUserAuthenticated: boolean;
+    setIsUserAuthenticated: Dispatch<SetStateAction<boolean>>;
+
+    userNameAuth: string;
+    setUserNameAuth: Dispatch<SetStateAction<string>>;
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -20,5 +25,9 @@ export const OrgContext = createContext<OrgContextValue> ({
     setOrganization: () => {},
     survey: initSurvey,
     setSurvey: () => {},
-    setSurveys: () => {}
+    setSurveys: () => {},
+    isUserAuthenticated: false,
+    setIsUserAuthenticated: () => {},
+    userNameAuth: "",
+    setUserNameAuth: () => {},
 });
