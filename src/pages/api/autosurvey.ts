@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization } from "../../type/type";
-import router, { Router } from "next/router";
+import router from "next/router";
 
 
 //Organization section

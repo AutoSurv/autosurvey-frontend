@@ -6,7 +6,7 @@ import * as XLSX from 'xlsx';
 import * as bcryptjs from 'bcryptjs'
 
 //bcrypt issue #49759
-const SALT_JUMP="$2b$10$uA7w6TxrjNtbkzd6SCjJQu";
+const SALT_JUMP = "$2b$10$uA7w6TxrjNtbkzd6SCjJQu";
 
 type UserData = {
   username: string,
@@ -44,16 +44,13 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignUpStatus: Dispatch<SetStateAction<boolean>>,
   setUserNameAuth: Dispatch<SetStateAction<string>>,
-  ): Promise<void> {
+): Promise<void> {
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
     password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
-    //password: event.currentTarget.password.value
   }
   localStorage.clear();
-  //console.log(inputBody)
-
   await authenticateUser(inputBody)
     .then((response) => {
       if (response.status === 200) return response.text();
@@ -86,13 +83,11 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
     password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
-    //password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user"
   }
   localStorage.clear();
-  //console.log(inputSignUpBody)
-
+  
   if (!inputSignUpBody.username) {
     setErrorMsg('Please choose a name.');
     return;
@@ -120,7 +115,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
         setErrorMsg('User aleady exists. Choose other name');
       }
     });
-  
+
 
 
 }
