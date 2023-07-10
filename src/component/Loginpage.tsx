@@ -15,12 +15,16 @@ const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-
+  console.log(signUpStatus);
+  if (typeof window !== "undefined") {
+    setSignUpStatus(true);
+    setUserNameAuth(localStorage.getItem("username") as string);
+  }; 
   return (
 
     <Container component="main" maxWidth="xs">
 
-      {(signUpStatus === false) ? 
+      {(signUpStatus === false || !localStorage.getItem('jwt')) ? 
       <Box
         sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center", }} >
         <Box component="form" onSubmit={(e) => {

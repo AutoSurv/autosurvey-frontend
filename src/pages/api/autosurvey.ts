@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
 export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   const apiResponse = await fetch(BASE_ORG_URL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${jwt}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
   const data: Organization[] = await apiResponse.json();
@@ -23,7 +23,7 @@ export async function getOrganization(orgid: string | string[], setOrganization:
   const organizationURL = BASE_ORG_URL + `/${orgid}`;
   const apiResponse = await fetch(organizationURL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${jwt}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
   const data: Organization = await apiResponse.json();
@@ -46,7 +46,7 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
     body: JSON.stringify(reqBody),
     headers: {
       "content-type": "application/json",
-      Authorization: `Bearer ${jwt}`
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     },
   });
 
@@ -74,7 +74,7 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${jwt}`
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     },
     body: JSON.stringify(reqBody)
   };
@@ -90,7 +90,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
   const autosurveysURL = BASE_ORG_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${jwt}` }
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` }
   });
   await getOrganizations(setOrganizations);
 };
@@ -104,7 +104,7 @@ const BASE_SURVEY_URL = `http://localhost:8080/api/autosurveys`;
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${jwt}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
   const data: AutoSurvey[] = await apiResponse.json();
@@ -117,7 +117,7 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${jwt}` },
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
   const data: AutoSurvey = await apiResponse.json();
@@ -159,7 +159,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${jwt}`
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     },
     body: JSON.stringify(reqBody)
   };
@@ -211,7 +211,7 @@ export async function addImportedSurvey(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
       },
       body: JSON.stringify(reqBody)
     };
@@ -256,7 +256,7 @@ export async function updateSurvey(id: string | string[] | undefined, event: Rea
     body: JSON.stringify(reqBody),
     headers: {
       "content-type": "application/json",
-      Authorization: `Bearer ${jwt}`
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     },
   });
   await getSurvey(id, setSurvey);
@@ -269,7 +269,7 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
     headers: {
-       Authorization: `Bearer ${jwt}`
+       Authorization: `Bearer ${localStorage.getItem("jwt")}`
     }
   });
   await getSurveys(setSurveys);
@@ -306,6 +306,7 @@ export async function signUpUser(data: FormDataSingUp) {
 
 
 export async function authenticateUser(user: LoginUser) {
+  //console.log(user);
   const response = await fetch(AUTH_URL, {
     method: "POST",
     mode: "cors",

@@ -48,10 +48,11 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
-    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
+    //password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
+    password: event.currentTarget.password.value
   }
-
-  console.log(inputBody)
+  localStorage.clear();
+  //console.log(inputBody)
 
   await authenticateUser(inputBody)
     .then((response) => {
@@ -84,12 +85,13 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
-    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
+    //password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
+    password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user"
   }
-
-  console.log(inputSignUpBody)
+  localStorage.clear();
+  //console.log(inputSignUpBody)
 
   if (!inputSignUpBody.username) {
     setErrorMsg('Please choose a name.');
