@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization } from "../../type/type";
+import router, { Router } from "next/router";
 
 
 //Organization section
@@ -15,8 +16,20 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
-  const data: Organization[] = await apiResponse.json();
-  setOrganizations(data);
+
+  if (apiResponse.status === 200) {
+
+    const data: Organization[] = await apiResponse.json();
+    setOrganizations(data);
+    return data;
+
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
+
 };
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
@@ -26,9 +39,19 @@ export async function getOrganization(orgid: string | string[], setOrganization:
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
-  const data: Organization = await apiResponse.json();
-  setOrganization(data);
-  return data;
+  if (apiResponse.status === 200) {
+
+    const data: Organization = await apiResponse.json();
+    setOrganization(data);
+    return data;
+
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
+
 }
 
 export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
@@ -107,9 +130,18 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
-  const data: AutoSurvey[] = await apiResponse.json();
-  setSurveys(data);
-  return data;
+
+  if (apiResponse.status === 200) {
+    const data: AutoSurvey[] = await apiResponse.json();
+    setSurveys(data);
+    return data;
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
+
 };
 
 export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
@@ -120,8 +152,16 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
-  const data: AutoSurvey = await apiResponse.json();
-  setSurvey(data);
+  if (apiResponse.status === 200) {
+    const data: AutoSurvey = await apiResponse.json();
+    setSurvey(data);
+    return data;
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
@@ -269,7 +309,7 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
     headers: {
-       Authorization: `Bearer ${localStorage.getItem("jwt")}`
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     }
   });
   await getSurveys(setSurveys);
@@ -290,7 +330,7 @@ export async function signUpUser(data: FormDataSingUp) {
   ) {
     console.log("all empty fields");
     return null;
-  } 
+  }
   const response = await fetch(NEW_USER_URL, {
     method: "POST",
     mode: "cors",
@@ -300,7 +340,7 @@ export async function signUpUser(data: FormDataSingUp) {
     },
   });
   //setSignupSuccessMessage("Successfully signed up");
-  
+
   return response;
 }
 

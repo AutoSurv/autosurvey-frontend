@@ -64,9 +64,10 @@ const Login = () => {
           </Grid>
         </Grid>
       </Box>
-       :  
+       :<>  
       <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}
-        onClick={() => {SignOut(setSignUpStatus)}}> Sign Out User: {userNameAuth}</Button>}
+        onClick={() => {SignOut(setSignUpStatus)}}> Sign Out User: {userNameAuth}</Button>
+        <Button href="/org" fullWidth>Go to Organization</Button></>}
     </Container>
   );
 };
