@@ -48,8 +48,8 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
-    //password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
-    password: event.currentTarget.password.value
+    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
+    //password: event.currentTarget.password.value
   }
   localStorage.clear();
   //console.log(inputBody)
@@ -85,8 +85,8 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
-    //password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
-    password: event.currentTarget.password.value,
+    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
+    //password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user"
   }
