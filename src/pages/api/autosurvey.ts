@@ -124,7 +124,8 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 
 
 //Survey section
-const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
+//const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
+const BASE_SURVEY_URL = "http://localhost:8080/api/autosurveys"
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
