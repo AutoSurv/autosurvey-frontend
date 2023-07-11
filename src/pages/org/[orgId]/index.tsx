@@ -19,6 +19,7 @@ export default function OrgDetails() {
     
   }, [orgid])
 
+  console.log("router.query: ", router.query);
   return (
     <div>
       {orgid && 
