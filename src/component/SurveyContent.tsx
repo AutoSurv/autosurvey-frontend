@@ -41,6 +41,7 @@ export default function SurveyContent() {
       </Button>
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey: AutoSurvey, index: number) => {
+          console.log(organization.surveys);
           return (
             <SurveyCard key={index} organization={organization} survey={survey} />
           )
