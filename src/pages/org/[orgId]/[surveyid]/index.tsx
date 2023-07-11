@@ -22,15 +22,15 @@ export default function SurveyDetails() {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
-  }, [surveyid])
+  }, [setSurvey])
 
   const surveyArray: AutoSurvey[] = [survey];
 
   return (
     <div className="specificsurvey-card-container">
-      <AutoSurveyHeader />
+      {surveyid &&<AutoSurveyHeader />}
 
-      <TableContainer className="specificsurvey-table-container" component={Paper}>
+     {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
 
           <TableHead>
@@ -182,7 +182,7 @@ export default function SurveyDetails() {
 
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer>}
     </div>
   )
 }

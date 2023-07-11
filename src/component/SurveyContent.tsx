@@ -16,7 +16,6 @@ export default function SurveyContent() {
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   useEffect(() => {
     getSurveys(setSurveys);
-    console.log(surveys);
   }, []);
   const [open, setOpen] = useState(false);
 

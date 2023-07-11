@@ -22,7 +22,8 @@ export default function OrgDetails() {
 
   return (
     <div>
-      <SurveyContent />
+      {orgid && 
+      <SurveyContent />}
     </div>
   )
 }
