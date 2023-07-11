@@ -10,8 +10,10 @@ export default function OrgDetails() {
   const  router  = useRouter();
   const { orgid } = router.query;
   const { setOrganization} =useContext(OrgContext);
+  console.log("router.query before useEffect: ", router.query);
 
   useEffect(() => {
+    console.log("router.query in useEffect: ", router.query);
     if (orgid) {
       getOrganization(orgid, setOrganization);
      
@@ -19,7 +21,7 @@ export default function OrgDetails() {
     
   }, [orgid])
 
-  console.log("router.query: ", router.query);
+  console.log("router.query after useEffect: ", router.query);
   return (
     <div>
       {//orgid && 
