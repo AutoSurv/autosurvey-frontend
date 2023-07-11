@@ -125,7 +125,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
-  const apiResponse = await fetch(BASE_SURVEY_URL, {
+  const apiResponse = await fetch("https://autosurvey-backend-production.up.railway.app/api/autosurveys", {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
@@ -148,7 +148,7 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
 export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
 
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
-  const apiResponse = await fetch(autosurveysURL, {
+  const apiResponse = await fetch(`https://autosurvey-backend-production.up.railway.app/api/autosurveys/${surveyId}`, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
