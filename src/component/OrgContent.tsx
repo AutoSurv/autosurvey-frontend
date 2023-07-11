@@ -46,9 +46,9 @@ export default function OrgContent() {
                 </Modal.Content>
             </Modal>
             <div className="orgs-orgcard-box">
-                {organizations.map((organization) => {
+                {organizations.map((organization: Organization, index: number) => {
                     return (
-                        <OrgCard organization={organization} setOrganizations={setOrganizations} />
+                        <OrgCard key={index} organization={organization} setOrganizations={setOrganizations} />
                     )
                 })}
 

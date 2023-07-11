@@ -6,7 +6,6 @@ import * as XLSX from 'xlsx';
 import * as bcryptjs from 'bcryptjs'
 
 //bcrypt issue #49759
-const SALT_JUMP = "$2b$10$uA7w6TxrjNtbkzd6SCjJQu";
 
 type UserData = {
   username: string,
@@ -48,7 +47,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
-    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP)
+    password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP)
   }
   localStorage.clear();
   await authenticateUser(inputBody)
@@ -82,7 +81,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
-    password: bcryptjs.hashSync(event.currentTarget.password.value, SALT_JUMP),
+    password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP),
     email: event.currentTarget.email.value,
     roles: "role_user"
   }
