@@ -40,10 +40,10 @@ export default function SurveyContent() {
       <Button color="green"><CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> Export(CSV) Survey</CSVLink>
       </Button>
       <div className="surveys-surveycard-box">
-        {organization.surveys.map((survey: AutoSurvey, index: number) => {
+        {organization.surveys.map((survey) => {
           console.log(organization.surveys);
           return (
-            <SurveyCard key={index} organization={organization} survey={survey} />
+            <SurveyCard key={survey.id} organization={organization} survey={survey} />
           )
         })}
 
