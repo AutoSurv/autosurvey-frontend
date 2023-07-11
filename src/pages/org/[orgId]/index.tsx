@@ -8,25 +8,20 @@ import { useContext, useEffect } from "react";
 export default function OrgDetails() {
 
   const  router  = useRouter();
-  //const { orgid } = router.query;
+  const { orgid } = router.query;
   const { setOrganization} =useContext(OrgContext);
-  let orgId = "";
 
   useEffect(() => {
-    if (router.isReady) {
-      const { orgid } = router.query;
-      orgId = orgid as string;
-      console.log ("orgId: ", orgId);
-      if (orgId != undefined && orgId != "") {
-        getOrganization(orgId, setOrganization);
-      }
+    if (orgid) {
+      getOrganization(orgid, setOrganization);
+     
     }
     
-  }, [orgId])
+  }, [orgid])
 
   return (
     <div>
-      {orgId && 
+      {orgid && 
       <SurveyContent />}
     </div>
   )
