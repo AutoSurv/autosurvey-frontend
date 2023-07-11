@@ -10,7 +10,7 @@ export default function OrgDetails() {
 
   const  router  = useRouter();
   const { orgid } = router.query;
-  const { organization, setOrganization} =useContext(OrgContext);
+  const { setOrganization} =useContext(OrgContext);
 
   useEffect(() => {
     // if (orgid) {
