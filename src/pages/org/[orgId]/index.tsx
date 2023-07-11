@@ -15,6 +15,8 @@ export default function OrgDetails() {
   useEffect(() => {
     if (orgid) {
       getOrganization(orgid, setOrganization);
+      console.log(orgid);
+      console.log(organization);
     }
   }, [orgid])
 
