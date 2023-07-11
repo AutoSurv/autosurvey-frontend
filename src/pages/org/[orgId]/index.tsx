@@ -15,9 +15,9 @@ export default function OrgDetails() {
   useEffect(() => {
     const { orgid } = router.query;
     if (orgid) {
-      getOrganization(orgid, setOrganization);
-      console.log(orgid);
-      console.log(organization);
+      getOrganization(organization.orgId, setOrganization);
+      console.log("1 : ", orgid);
+      console.log("2 : ",organization);
     }
   }, [])
 
