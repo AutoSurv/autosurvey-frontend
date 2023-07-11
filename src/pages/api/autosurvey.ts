@@ -133,7 +133,6 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
 
   if (apiResponse.status === 200) {
     const data: AutoSurvey[] = await apiResponse.json();
-    console.log(data);
     setSurveys(data);
     return data;
   }
