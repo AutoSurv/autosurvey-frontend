@@ -22,7 +22,7 @@ export default function OrgDetails() {
   console.log("router.query: ", router.query);
   return (
     <div>
-      {orgid && 
+      {//orgid && 
       <SurveyContent />}
     </div>
   )
