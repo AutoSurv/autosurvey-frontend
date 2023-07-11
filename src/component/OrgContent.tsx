@@ -52,7 +52,6 @@ export default function OrgContent() {
                         <OrgCard key={index} organization={organization} setOrganizations={setOrganizations} />
                     )
                 })
-                :null
                 }
 
             </div>

@@ -90,8 +90,6 @@ export type LoginUser = {
 export type AuthUser = {
   username: string,
   isAuthorizes: boolean
-<<<<<<< HEAD:src/pages/type/type.ts
-=======
 }
 
 export type FormDataSingUp = {
@@ -99,5 +97,4 @@ export type FormDataSingUp = {
   password: string,
   email: string,
   roles: string
->>>>>>> main:src/type/type.ts
 }

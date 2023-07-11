@@ -3,8 +3,10 @@ import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, 
 import router from "next/router";
 
 
+const BASE_ORG_URL = `http://localhost:8080/api/organizations`;
+
 //Organization section
-const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
+//const BASE_ORG_URL = NEXT_PUBLIC_PORT + "/api/organizations"; //`${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 let jwt: any = "";
 if (typeof window !== "undefined") {
   jwt = localStorage.getItem("jwt");
@@ -317,8 +319,8 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
 
 //userSection
 
-const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
-const NEW_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users/new`;
+const AUTH_URL = "http://localhost:8080/authenticate";
+const NEW_USER_URL = "http://localhost:8080/users/new";
 
 
 export async function signUpUser(data: FormDataSingUp) {
