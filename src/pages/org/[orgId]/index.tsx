@@ -9,22 +9,22 @@ import { useContext, useEffect } from "react";
 export default function OrgDetails() {
 
   const  router  = useRouter();
-  const { orgid } = router.query;
+  const { orgId } = router.query;
   const { setOrganization} =useContext(OrgContext);
   console.log("router.query.orgId before useEffect: ", router.query.orgId);
-  console.log("orgid before useEffect: ", orgid);
+  console.log("orgid before useEffect: ", orgId);
   useEffect(() => {
     console.log("router.query.orgId in useEffect: ", router.query.orgId);
-    console.log("orgid before useEffect: ", orgid);
-    if (orgid) {
-      const organization =  getOrganization(orgid, setOrganization);
+    console.log("orgid before useEffect: ", orgId);
+    if (orgId) {
+      const organization =  getOrganization(orgId as string, setOrganization);
       console.log("organization: ", organization);
     }
     
-  }, [orgid])
+  }, [router.query.orgId])
 
   console.log("router.query.orgId after: ", router.query.orgId);
-  console.log("orgid before useEffect: ", orgid);
+  console.log("orgid before useEffect: ", orgId);
 
   return (
     <div>
