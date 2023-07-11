@@ -4,7 +4,7 @@ import router from "next/router";
 
 
 //Organization section
-const BASE_ORG_URL = `http://localhost:8080/api/organizations`;
+const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 let jwt: any = "";
 if (typeof window !== "undefined") {
   jwt = localStorage.getItem("jwt");
@@ -122,7 +122,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 
 
 //Survey section
-const BASE_SURVEY_URL = `http://localhost:8080/api/autosurveys`;
+const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
@@ -317,8 +317,8 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
 
 //userSection
 
-const AUTH_URL = "http://localhost:8080/authenticate";
-const NEW_USER_URL = "http://localhost:8080/users/new";
+const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
+const NEW_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users/new`;
 
 
 export async function signUpUser(data: FormDataSingUp) {
@@ -339,14 +339,12 @@ export async function signUpUser(data: FormDataSingUp) {
       "Content-type": "application/json",
     },
   });
-  //setSignupSuccessMessage("Successfully signed up");
 
   return response;
 }
 
 
 export async function authenticateUser(user: LoginUser) {
-  //console.log(user);
   const response = await fetch(AUTH_URL, {
     method: "POST",
     mode: "cors",
