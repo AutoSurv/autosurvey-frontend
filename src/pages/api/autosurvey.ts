@@ -25,10 +25,10 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
 
   }
 
-  if (apiResponse.status === 500) {
-    localStorage.clear();
-    router.push("/");
-  }
+  // if (apiResponse.status === 500) {
+  //   localStorage.clear();
+  //   router.push("/");
+  // }
 
 };
 
@@ -47,10 +47,10 @@ export async function getOrganization(orgid: string | string[], setOrganization:
 
   }
 
-  if (apiResponse.status === 500) {
-    localStorage.clear();
-    router.push("/");
-  }
+  // if (apiResponse.status === 500) {
+  //   localStorage.clear();
+  //   router.push("/");
+  // }
 
 }
 
