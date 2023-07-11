@@ -7,6 +7,7 @@ import { OrgContext } from '@/helper/context';
 import Link from 'next/link';
 
 type OrgCardProp = {
+  key: number;
   organization: Organization;
   setOrganizations: Dispatch<SetStateAction<Organization[]>>;
 }

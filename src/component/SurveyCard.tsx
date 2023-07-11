@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { AutoSurvey, Organization } from '@/type/type';
 
 type SurveyCardProp = {
+    key: number,
     organization: Organization,
     survey: AutoSurvey
 }
