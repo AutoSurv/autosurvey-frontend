@@ -13,13 +13,11 @@ export default function OrgDetails() {
   const { setOrganization} =useContext(OrgContext);
 
   useEffect(() => {
-    // if (orgid) {
-    //   getOrganization(orgid, setOrganization);
-    //   console.log("1 : ", orgid);
-    //   console.log("2 : ",organization);
-    // }
-    console.log("1 : ", orgid);
-    getOrganization(orgid!, setOrganization);
+    if (orgid) {
+      getOrganization(orgid, setOrganization);
+     
+    }
+    
   }, [orgid])
 
   return (
