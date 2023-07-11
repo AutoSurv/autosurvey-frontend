@@ -72,8 +72,6 @@ export type AutoSurveyUpdateDto = {
   orgId: string | string[] | undefined
 }
 
-
-
 export type Organization = {
   orgId: string,
   orgName: string,
@@ -92,4 +90,14 @@ export type LoginUser = {
 export type AuthUser = {
   username: string,
   isAuthorizes: boolean
+<<<<<<< HEAD:src/pages/type/type.ts
+=======
+}
+
+export type FormDataSingUp = {
+  username: string,
+  password: string,
+  email: string,
+  roles: string
+>>>>>>> main:src/type/type.ts
 }

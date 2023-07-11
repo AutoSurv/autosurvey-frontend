@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Organization } from '@/pages/type/type';
+import { Organization } from '@/type/type';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
 import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';

@@ -1,14 +1,16 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
-import { Organization } from "@/pages/type/type";
-import { useEffect, useState } from "react";
-import { Button, Form, Header, Icon, Input, Label, Menu, Modal, Segment } from "semantic-ui-react";
+import { Organization } from "@/type/type";
+import { useContext, useEffect, useState } from "react";
+import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
-import Link from "next/link";
+import { OrgContext } from "@/helper/context";
 import { AutoSurveyHeader } from "./AutoSurveyHeader";
 import { useSession } from "next-auth/react";
 
 
 export default function OrgContent() {
+    const { setOrganization, setSignUpStatus } = useContext(OrgContext);
+
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
         getOrganizations(setOrganizations);
@@ -45,8 +47,7 @@ export default function OrgContent() {
                 </Modal.Content>
             </Modal>
             <div className="orgs-orgcard-box">
-                {organizations ?
-                organizations.map((organization: Organization, index: number) => {
+                {organizations.map((organization: Organization, index: number) => {
                     return (
                         <OrgCard key={index} organization={organization} setOrganizations={setOrganizations} />
                     )

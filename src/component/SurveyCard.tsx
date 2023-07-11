@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Card, Image } from 'semantic-ui-react';
 import Link from 'next/link';
-
-import { AutoSurvey, Organization } from '@/pages/type/type';
+import { AutoSurvey, Organization } from '@/type/type';
 
 type SurveyCardProp = {
     organization: Organization,

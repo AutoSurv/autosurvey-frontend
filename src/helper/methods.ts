@@ -1,9 +1,11 @@
-import { authenticateUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, LoginUser } from '@/pages/type/type';
-import { useRouter } from 'next/navigation';
+import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
+import { AutoSurvey, FormDataSingUp, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
+import * as bcryptjs from 'bcryptjs'
+
+//bcrypt issue #49759
 
 type UserData = {
   username: string,
@@ -28,38 +30,29 @@ export const downloadExcel = (data: any) => {
   }
 };
 
-// export function SignOut(setFormDataSingup: Dispatch<SetStateAction<UserData>>): void {
-//   const formData = {
-//     username: "",
-//     password: "",
-//     email: "",
-//     roles: "role_user"
-//   }
-//   localStorage.clear();
-//   const myHeaders = new Headers();
-//   myHeaders.delete("Authorization");
-//   console.log(1);
-//   setFormDataSingup(formData);
-//   router.push("");
-//   console.log(2);
-// }
 
-export function SignOut(): void {
-  
+
+export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
+  setSignUpStatus(false);
   localStorage.clear();
   router.push("/");
- 
+
 }
 
-export async function jwtTokenHandler(event: React.FormEvent<HTMLFormElement>, setErrorMsg: Dispatch<SetStateAction<string>>, setUserNameAuth: Dispatch<SetStateAction<string>>){
-    
-  const user: LoginUser = {
-    username: event.currentTarget.username.value,
-    password: event.currentTarget.password.value,
-  }    
-  const serverResponse = authenticateUser(user);
+export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormElement>,
+  setErrorMsg: Dispatch<SetStateAction<string>>,
+  setSignUpStatus: Dispatch<SetStateAction<boolean>>,
+  setUserNameAuth: Dispatch<SetStateAction<string>>,
+): Promise<void> {
 
-  const userName = await serverResponse.then((response) => {
+  const inputBody: LoginUser = {
+    username: event.currentTarget.username.value,
+    //password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP)
+    password: event.currentTarget.password.value,
+  }
+  localStorage.clear();
+  await authenticateUser(inputBody)
+    .then((response) => {
       if (response.status === 200) return response.text();
       else if (response.status === 401 || response.status === 403) {
         setErrorMsg("Invalid username or password");
@@ -73,10 +66,57 @@ export async function jwtTokenHandler(event: React.FormEvent<HTMLFormElement>, s
       const jwtToken = data;
       if (jwtToken) {
         localStorage.setItem("jwt", jwtToken);
-        localStorage.setItem("username", user.username);
-        setUserNameAuth(user.username);
-        return user.username;
+        localStorage.setItem("username", inputBody.username);
+        setUserNameAuth(inputBody.username);
+        setSignUpStatus(true);
+        router.push("org");
       }
     });
-    return userName;
+}
+
+export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
+  setErrorMsg: Dispatch<SetStateAction<string>>,
+  setSignupSuccessMessage: Dispatch<SetStateAction<string>>,
+  setOpen: Dispatch<SetStateAction<boolean>>
+): Promise<void> {
+
+  const inputSignUpBody: FormDataSingUp = {
+    username: event.currentTarget.username.value,
+    //password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP),
+    password: event.currentTarget.password.value,
+    email: event.currentTarget.email.value,
+    roles: "role_user"
+  }
+  localStorage.clear();
+  
+  if (!inputSignUpBody.username) {
+    setErrorMsg('Please choose a name.');
+    return;
+  }
+  if (!inputSignUpBody.password) {
+    setErrorMsg('Please type your password.');
+    return;
+  }
+  if (!inputSignUpBody.email) {
+    setErrorMsg('Please type your email.');
+    return;
+  }
+
+
+  await signUpUser(inputSignUpBody)
+    .then((response) => {
+      if (response?.status == 200) {
+        setOpen(false);
+        setSignupSuccessMessage("Successfully signed up");
+        setErrorMsg(
+          ""
+        );
+        return;
+      } else {
+        setErrorMsg('User aleady exists. Choose other name');
+      }
+    });
+
+
+
 }

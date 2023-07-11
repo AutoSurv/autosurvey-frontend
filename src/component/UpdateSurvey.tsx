@@ -1,5 +1,5 @@
-import { addSurvey, updateSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Organization } from "@/pages/type/type";
+import { updateSurvey } from "@/pages/api/autosurvey";
+import { AutoSurvey } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
