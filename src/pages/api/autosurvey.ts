@@ -137,10 +137,10 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
     return data;
   }
 
-  if (apiResponse.status === 500) {
-    localStorage.clear();
-    router.push("/");
-  }
+  // if (apiResponse.status === 500) {
+  //   localStorage.clear();
+  //   router.push("/");
+  // }
 
 };
 
@@ -158,10 +158,10 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
     return data;
   }
 
-  if (apiResponse.status === 500) {
-    localStorage.clear();
-    router.push("/");
-  }
+  // if (apiResponse.status === 500) {
+  //   localStorage.clear();
+  //   router.push("/");
+  // }
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
