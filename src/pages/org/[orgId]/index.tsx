@@ -13,12 +13,13 @@ export default function OrgDetails() {
   const { organization, setOrganization} =useContext(OrgContext);
 
   useEffect(() => {
+    const { orgid } = router.query;
     if (orgid) {
       getOrganization(orgid, setOrganization);
       console.log(orgid);
       console.log(organization);
     }
-  }, [orgid])
+  }, [])
 
   return (
     <div>
