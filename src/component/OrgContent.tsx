@@ -21,7 +21,7 @@ export default function OrgContent() {
     return (
         <div className="orgs-content">
             <AutoSurveyHeader />
-            {//localStorage.getItem("role") !== "ROLE_USER" ?
+            {localStorage.getItem("role") !== "ROLE_USER" ?
                 <Modal animation={false}
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
@@ -46,7 +46,7 @@ export default function OrgContent() {
                         </Form>
                     </Modal.Content>
                 </Modal>
-                //: null
+                : null
             }    
             <div className="orgs-orgcard-box">
                 {organizations.map((organization) => {
