@@ -14,7 +14,7 @@ import { AutoSurveyHeader } from '@/component/AutoSurveyHeader';
 export default function SurveyDetails() {
 
   const router = useRouter();
-  const { orgid, surveyid } = router.query;
+  const { orgId, surveyid } = router.query;
   const {  survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
@@ -171,13 +171,13 @@ export default function SurveyDetails() {
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="left">
-              <UpdateSurvey surveyid={surveyid} orgid={orgid} setSurvey={setSurvey}/>
+              <UpdateSurvey surveyid={surveyid} orgid={orgId} setSurvey={setSurvey}/>
               </TableCell>
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
-                console.log("orgid: ", orgid)
-                window.location.href = "/org/" + orgid;
+                console.log("orgid: ", orgId) //undfined
+                window.location.href = "/org/" + orgId;
               }} color="orange" basic>Delete Survey</Button></TableCell>
             </TableRow>
 
