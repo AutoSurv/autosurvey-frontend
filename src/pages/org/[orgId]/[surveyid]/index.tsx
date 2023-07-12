@@ -18,6 +18,10 @@ export default function SurveyDetails() {
   const {  survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
+  console.log("router.query: ",router.query);
+  console.log("orgId: ",orgId);
+  console.log("surveyid: ",surveyid);
+
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
