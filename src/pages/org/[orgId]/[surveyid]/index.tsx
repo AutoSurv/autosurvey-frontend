@@ -18,9 +18,7 @@ export default function SurveyDetails() {
   const {  survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
-  console.log("router.query: ",router.query);
-  console.log("orgId: ",orgId);
-  console.log("surveyid: ",surveyid);
+
 
   useEffect(() => {
     if (surveyid) {
@@ -180,7 +178,6 @@ export default function SurveyDetails() {
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
-                console.log("orgid: ", orgId) //undfined
                 window.location.href = "/org/" + orgId;
               }} color="orange" basic>Delete Survey</Button></TableCell>
             </TableRow>
