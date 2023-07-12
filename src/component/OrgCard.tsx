@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Organization } from '@/type/type';
+import { Organization, User } from '@/type/type';
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
 import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
@@ -9,10 +9,11 @@ import Link from 'next/link';
 type OrgCardProp = {
   organization: Organization;
   setOrganizations: Dispatch<SetStateAction<Organization[]>>;
+  user: User;
 }
 
 export default function OrgCard(props: OrgCardProp) {
-  const { organization, setOrganizations } = props;
+  const { organization, setOrganizations, user } = props;
   const { setOrganization } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
@@ -32,13 +33,13 @@ export default function OrgCard(props: OrgCardProp) {
           </Card.Content>
 
         </Link>
-        <div className="org-card-btn-container">
+        {user.roles !== "ROLE_USER" ? <div className="org-card-btn-container">
         <Modal animation={false}
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           open={open}
           trigger={<Button className="org-modal-btn" basic color="blue"> Edit Name</Button>}>
-          <Modal.Header>Make Your Organization</Modal.Header>
+          <Modal.Header>Edit Your Organization</Modal.Header>
           <Modal.Content>
             <Form onSubmit={(e) => {
               e.preventDefault();
@@ -62,7 +63,7 @@ export default function OrgCard(props: OrgCardProp) {
           deleOrganization(organization.orgId, setOrganizations)
         }} color="orange" basic
         >Delete Org.</Button>
-        </div>
+        </div> : null}
       </Card>
 
     </div>

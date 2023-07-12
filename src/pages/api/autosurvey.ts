@@ -1,14 +1,38 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization } from "../../type/type";
+import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
 import router from "next/router";
 
 
-//Organization section
-const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
+
 let jwt: any = "";
 if (typeof window !== "undefined") {
   jwt = localStorage.getItem("jwt");
 }
+
+//User section
+const BASE_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users`;
+export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>> ) {
+ const userURL = BASE_USER_URL + `/${name}`;
+ const apiResponse = await fetch(userURL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    mode: "cors",
+  });
+  if (apiResponse.status === 200) {
+
+    const data: User = await apiResponse.json();
+    setUser(data);
+    return data;
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
+}
+
+//Organization section
+const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 
 export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   const apiResponse = await fetch(BASE_ORG_URL, {
@@ -125,7 +149,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
-  const apiResponse = await fetch("https://autosurvey-backend-production.up.railway.app/api/autosurveys", {
+  const apiResponse = await fetch(BASE_SURVEY_URL, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
@@ -147,7 +171,7 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
 export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
 
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
-  const apiResponse = await fetch(`https://autosurvey-backend-production.up.railway.app/api/autosurveys/${surveyId}`, {
+  const apiResponse = await fetch(autosurveysURL, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",

@@ -1,13 +1,16 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
-import { Organization } from "@/type/type";
+import { Organization, User } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import { AutoSurveyHeader } from "./AutoSurveyHeader";
 
+type OrgContentProp = {
+    user: User;
+   }
 
-export default function OrgContent() {
+export default function OrgContent(props: OrgContentProp) {
     const { setOrganization, setSignUpStatus } = useContext(OrgContext);
 
     const [organizations, setOrganizations] = useState<Organization[]>([]);
@@ -21,7 +24,7 @@ export default function OrgContent() {
     return (
         <div className="orgs-content">
             <AutoSurveyHeader />
-            <Modal animation={false}
+            {props.user.roles !== "ROLE_USER" ? <Modal animation={false}
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
@@ -44,11 +47,11 @@ export default function OrgContent() {
                         >Cancel</Button>
                     </Form>
                 </Modal.Content>
-            </Modal>
+            </Modal>: null }
             <div className="orgs-orgcard-box">
                 {organizations.map((organization) => {
                     return (
-                        <OrgCard key={organization.orgId} organization={organization} setOrganizations={setOrganizations} />
+                        <OrgCard key={organization.orgId} organization={organization} setOrganizations={setOrganizations} user={props.user} />
                     )
                 })}
 

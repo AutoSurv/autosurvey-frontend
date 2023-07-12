@@ -3,12 +3,13 @@ import { deleteSurvey, getSurvey } from "@/pages/api/autosurvey";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Header, Icon, Menu } from "semantic-ui-react";
 import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { downloadExcel } from '@/helper/methods';
 import { AutoSurveyHeader } from '@/component/AutoSurveyHeader';
+import Link from "next/link";
 
 
 export default function SurveyDetails() {
@@ -28,9 +29,8 @@ export default function SurveyDetails() {
 
   return (
     <div className="specificsurvey-card-container">
-      {surveyid &&<AutoSurveyHeader />}
-
-     {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
+      <AutoSurveyHeader />
+      {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
 
           <TableHead>

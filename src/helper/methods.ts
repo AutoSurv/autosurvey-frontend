@@ -1,7 +1,7 @@
-import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, FormDataSingUp, LoginUser } from '@/type/type';
+import { authenticateUser, getUser, signUpUser } from '@/pages/api/autosurvey';
+import { AutoSurvey, FormDataSingUp, LoginUser, User } from '@/type/type';
 import router from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import * as XLSX from 'xlsx';
 import * as bcryptjs from 'bcryptjs'
 
@@ -42,7 +42,7 @@ export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): voi
 export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormElement>,
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignUpStatus: Dispatch<SetStateAction<boolean>>,
-  setUserNameAuth: Dispatch<SetStateAction<string>>,
+  setUserNameAuth: Dispatch<SetStateAction<string>>
 ): Promise<void> {
 
   const inputBody: LoginUser = {
@@ -51,9 +51,13 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
     password: event.currentTarget.password.value
   }
   localStorage.clear();
+
   await authenticateUser(inputBody)
     .then((response) => {
-      if (response.status === 200) return response.text();
+      if (response.status === 200) {
+        
+        return response.text();
+      }
       else if (response.status === 401 || response.status === 403) {
         setErrorMsg("Invalid username or password");
       } else {
@@ -68,10 +72,11 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
         localStorage.setItem("jwt", jwtToken);
         localStorage.setItem("username", inputBody.username);
         setUserNameAuth(inputBody.username);
-        setSignUpStatus(true);
+        setSignUpStatus(true);    
         router.push("org");
       }
     });
+
 }
 
 export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
@@ -88,7 +93,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     roles: "role_user"
   }
   localStorage.clear();
-  
+
   if (!inputSignUpBody.username) {
     setErrorMsg('Please choose a name.');
     return;

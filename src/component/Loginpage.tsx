@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Message, Popup } from 'semantic-ui-react';
 import { SignOut, signInJwtTokenHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
@@ -10,16 +10,21 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { OrgContext } from "@/helper/context";
 import { SignUp } from "./SignUp";
+import { User } from "@/type/type";
+import router from "next/router";
 
 const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  
   console.log(signUpStatus);
   if (typeof window !== "undefined") {
     setSignUpStatus(true);
     setUserNameAuth(localStorage.getItem("username") as string);
   }; 
+  
+
   return (
 
     <Container component="main" maxWidth="xs">
@@ -29,7 +34,7 @@ const Login = () => {
         sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center", }} >
         <Box component="form" onSubmit={(e) => {
           e.preventDefault();
-          signInJwtTokenHandler(e, setErrorMsg, setSignUpStatus, setUserNameAuth);
+          signInJwtTokenHandler(e, setErrorMsg, setSignUpStatus, setUserNameAuth);      
         }} noValidate sx={{ mt: 1 }}>
           <TextField margin="normal" required fullWidth id="username" 
                     label="User Name" name="username" autoComplete="username" autoFocus
