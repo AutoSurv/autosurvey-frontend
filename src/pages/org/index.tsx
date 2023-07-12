@@ -11,8 +11,6 @@ export default function Orgs() {
     useEffect(() => {
         getOrganizations(setOrganizations);
         getUser(localStorage.getItem("username")!, setUser);
-        console.log(user.roles);
-        console.log(organizations);
 
     }, [])
 
