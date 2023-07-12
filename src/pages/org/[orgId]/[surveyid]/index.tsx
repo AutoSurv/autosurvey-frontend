@@ -176,6 +176,7 @@ export default function SurveyDetails() {
               <TableCell align="right"><Button onClick={(e) => {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
+                console.log("orgid: ", orgid)
                 window.location.href = "/org/" + orgid;
               }} color="orange" basic>Delete Survey</Button></TableCell>
             </TableRow>
