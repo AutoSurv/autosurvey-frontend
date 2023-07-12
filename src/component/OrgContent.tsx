@@ -21,30 +21,33 @@ export default function OrgContent() {
     return (
         <div className="orgs-content">
             <AutoSurveyHeader />
-            <Modal animation={false}
-                onClose={() => setOpen(false)}
-                onOpen={() => setOpen(true)}
-                open={open}
-                trigger={<Button className="org-modal-btn" color="green"> Create Organization +</Button>}>
-                <Modal.Header>Make Your Organization</Modal.Header>
-                <Modal.Content>
-                    <Form onSubmit={(e) => {
-                        e.preventDefault();
-                        addOrganization(e, setOrganizations, setOpen, setErrMessage);
-                    }}>
-                        <Form.Field>
-                            <Label>Organization Name</Label>
-                            <Input placeholder="Name your organization" type="text" name="orgname" />
-                        </Form.Field>
-                        <Button type="submit" color="green">Add Organization +</Button>
-                        <Button onClick={(e) => {
+            {localStorage.getItem("role") !== "ROLE_USER" ?
+                <Modal animation={false}
+                    onClose={() => setOpen(false)}
+                    onOpen={() => setOpen(true)}
+                    open={open}
+                    trigger={<Button className="org-modal-btn" color="green"> Create Organization +</Button>}>
+                    <Modal.Header>Make Your Organization</Modal.Header>
+                    <Modal.Content>
+                        <Form onSubmit={(e) => {
                             e.preventDefault();
-                            setOpen(false);
-                        }} color="orange"
-                        >Cancel</Button>
-                    </Form>
-                </Modal.Content>
-            </Modal>
+                            addOrganization(e, setOrganizations, setOpen, setErrMessage);
+                        }}>
+                            <Form.Field>
+                                <Label>Organization Name</Label>
+                                <Input placeholder="Name your organization" type="text" name="orgname" />
+                            </Form.Field>
+                            <Button type="submit" color="green">Add Organization +</Button>
+                            <Button onClick={(e) => {
+                                e.preventDefault();
+                                setOpen(false);
+                            }} color="orange"
+                            >Cancel</Button>
+                        </Form>
+                    </Modal.Content>
+                </Modal>
+                : null
+            }    
             <div className="orgs-orgcard-box">
                 {organizations.map((organization) => {
                     return (
