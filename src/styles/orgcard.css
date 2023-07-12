@@ -33,6 +33,12 @@
 }
 
 
+.ui.card.org-card:hover {
+    transform: scale(1.2);
+    border: rgb(223, 219, 219) 1px solid;
+}
+
+
 .MuiCardMedia-root.MuiCardMedia-media.MuiCardMedia-img.css-o69gx8-MuiCardMedia-root {
  width: 100%;
 

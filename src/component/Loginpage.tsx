@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Message, Popup } from 'semantic-ui-react';
 import { SignOut, signInJwtTokenHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
@@ -10,15 +10,11 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { OrgContext } from "@/helper/context";
 import { SignUp } from "./SignUp";
-import { User } from "@/type/type";
-import router from "next/router";
 
 const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  
-  console.log(signUpStatus);
   if (typeof window !== "undefined") {
     setSignUpStatus(true);
     setUserNameAuth(localStorage.getItem("username") as string);
@@ -49,8 +45,8 @@ const Login = () => {
             <p>{errorMsg}</p>
           </Message> : null}
           {(signupSuccessMessage.length > 0) ? <Message success>
-            <Message.Header>Your user registration was successful <br />If you whish to be added as manager for the organization, please contact the admins: 
-            <br />seongbong.hong@appliedtechnology.se or marco.debernardi@appliedtechnology.se.</Message.Header>
+            <Message.Header>Your user registration was successful <br />If you wish to be added as manager for the organization, please contact the admins: 
+            <br />seongbong.hong@appliedtechnology.se or marco.debernardi@appliedtechnology.se.</Message.Header><br />
             <Message.Content>You may now log-in with the username you have chosen</Message.Content>
           </Message> : null}
         </Box>

@@ -10,6 +10,11 @@
 
 }
 
+.ui.card:hover {
+    transform: scale(1.2);
+    border: rgb(223, 219, 219) 1px solid;
+}
+
 .surveys-surveycard-box {
     display: flex;
     flex-wrap: wrap;

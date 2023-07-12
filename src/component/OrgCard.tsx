@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Organization, User } from '@/type/type';
-import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { Organization } from '@/type/type';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
 import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
 import { OrgContext } from '@/helper/context';
@@ -9,16 +9,21 @@ import Link from 'next/link';
 type OrgCardProp = {
   organization: Organization;
   setOrganizations: Dispatch<SetStateAction<Organization[]>>;
-  user: User;
+
 }
 
 export default function OrgCard(props: OrgCardProp) {
-  const { organization, setOrganizations, user } = props;
+  const { organization, setOrganizations } = props;
   const { setOrganization } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState("");
   const [errMessage, setErrMessage] = useState<string>("");
   const orgLowerName: string = organization.orgName.toLowerCase();
 
+
+  useEffect(() => {
+    setRole(localStorage.getItem("role") as string);
+  }, []);
 
   return (
 
@@ -31,41 +36,43 @@ export default function OrgCard(props: OrgCardProp) {
             <Card.Header>{organization.orgName}</Card.Header>
             <Card.Meta>the number of surveys: {organization.surveys.length}</Card.Meta>
           </Card.Content>
-
         </Link>
-        {user.roles !== "ROLE_USER" ? <div className="org-card-btn-container">
-        <Modal animation={false}
-          onClose={() => setOpen(false)}
-          onOpen={() => setOpen(true)}
-          open={open}
-          trigger={<Button className="org-modal-btn" basic color="blue"> Edit Name</Button>}>
-          <Modal.Header>Edit Your Organization</Modal.Header>
-          <Modal.Content>
-            <Form onSubmit={(e) => {
-              e.preventDefault();
-              updateOrganizationName(organization.orgId, e, setOrganizations, setOrganization, setOpen, setErrMessage);
-            }}>
-              <Form.Field>
-                <Label>Organization Name</Label>
-                <Input placeholder="Name your organization" type="text" name="orgname" />
-              </Form.Field>
-              <Button type="submit" color="blue">Edit</Button>
-              <Button onClick={(e) => {
-                  e.preventDefault();
-                  setOpen(false);
-              }} color="orange"
-              >Cancel</Button>
-            </Form>
-          </Modal.Content>
-        </Modal>
-        <Button className="org-modal-btn" onClick={(e) => {
-          e.preventDefault();
-          deleOrganization(organization.orgId, setOrganizations)
-        }} color="orange" basic
-        >Delete Org.</Button>
-        </div> : null}
+        
+        {role !== "ROLE_USER" ?
+        <div className="org-card-btn-container">
+          <Modal animation={false}
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
+            open={open}
+            trigger={<Button className="org-modal-btn" basic color="blue"> Edit Name</Button>}>
+            <Modal.Header>Make Your Organization</Modal.Header>
+            <Modal.Content>
+              <Form onSubmit={(e) => {
+                e.preventDefault();
+                updateOrganizationName(organization.orgId, e, setOrganizations, setOrganization, setOpen, setErrMessage);
+              }}>
+                <Form.Field>
+                  <Label>Organization Name</Label>
+                  <Input placeholder="Name your organization" type="text" name="orgname" />
+                </Form.Field>
+                <Button type="submit" color="blue">Edit</Button>
+                <Button onClick={(e) => {
+                    e.preventDefault();
+                    setOpen(false);
+                }} color="orange"
+                >Cancel</Button>
+              </Form>
+            </Modal.Content>
+          </Modal>
+          <Button className="org-modal-btn" onClick={(e) => {
+            e.preventDefault();
+            deleOrganization(organization.orgId, setOrganizations)
+          }} color="orange" basic
+          >Delete Org.</Button>
+        </div>
+        : null
+      }
       </Card>
-
     </div>
   );
 }
