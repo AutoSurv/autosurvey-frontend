@@ -13,14 +13,15 @@ export default function OrgDetails() {
 
   useEffect(() => {
     if (orgId) {
-      getOrganization(orgId as string, setOrganization);
+      getOrganization(orgId, setOrganization);
+     
     }
     
-  }, [router.query.orgId])
+  }, [orgId])
 
   return (
     <div>
-      {//orgid && 
+      {orgId && 
       <SurveyContent />}
     </div>
   )
