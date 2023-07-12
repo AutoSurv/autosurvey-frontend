@@ -9,9 +9,10 @@ import { AutoSurveyHeader } from "./AutoSurveyHeader";
 
 export default function OrgContent() {
     const { setOrganization, setSignUpStatus } = useContext(OrgContext);
-
+    const [role, setRole] = useState("");
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
+        setRole(localStorage.getItem("role") as string);
         getOrganizations(setOrganizations);
     }, []);
 
@@ -21,7 +22,7 @@ export default function OrgContent() {
     return (
         <div className="orgs-content">
             <AutoSurveyHeader />
-            {localStorage.getItem("role") !== "ROLE_USER" ?
+            {role !== "ROLE_USER" ?
                 <Modal animation={false}
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
