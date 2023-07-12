@@ -43,7 +43,9 @@ const Login = () => {
             <p>{errorMsg}</p>
           </Message> : null}
           {(signupSuccessMessage.length > 0) ? <Message success
-            header='Your user registration was successful'
+            header='Your user registration was successful. 
+              If you whish to be added as manager for the organization, please contact the admins: 
+              seongbong.hong@appliedtechnology.se or marco.debernardi@appliedtechnology.se.'
             content='You may now log-in with the username you have chosen'
           >
           </Message> : null}
