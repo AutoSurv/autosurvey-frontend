@@ -12,7 +12,7 @@ export default function SurveyCard(props: SurveyCardProp) {
     const orgLowerName: string = props.survey.orgName.toLowerCase();
     return (
         <div className='survey-card-container'>
-            <Card >
+            <Card className="survey-card">
                 <Link href={"/org/" + props.organization.orgId + "/" + props.survey.id}  >
                     <Image className="org-card-image" src={`/${orgLowerName}.png`} alt={props.survey.country} size='large' />
                     <Card.Content>

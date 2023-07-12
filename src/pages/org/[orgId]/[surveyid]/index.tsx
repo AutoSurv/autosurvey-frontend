@@ -3,19 +3,20 @@ import { deleteSurvey, getSurvey } from "@/pages/api/autosurvey";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Header, Icon, Menu } from "semantic-ui-react";
 import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
-import { downloadExcel } from '@/helper/methods';
+import { SignOut, downloadExcel } from '@/helper/methods';
 import { AutoSurveyHeader } from '@/component/AutoSurveyHeader';
+import Link from "next/link";
 
 
 export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgid, surveyid } = router.query;
-  const {  survey, setSurvey, setSurveys } = useContext(OrgContext);
+  const {  survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   useEffect(() => {
@@ -27,9 +28,26 @@ export default function SurveyDetails() {
   const surveyArray: AutoSurvey[] = [survey];
 
   return (
+    <>
     <div className="specificsurvey-card-container">
-      <AutoSurveyHeader />
-
+      <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
+        <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
+      </Header>
+      <Menu size='small' color="blue">
+        <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
+        <Menu.Item> <Link href={"/org/" + orgid} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
+        <Menu.Menu position='right'>
+        <Menu.Item> <Link href={"/"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
+          <Menu.Item>
+            <Button onClick={() => {
+              setSignUpStatus(false);
+              SignOut(setSignUpStatus);
+          }}
+             circular icon='sign out' color='blue' inverted></Button>
+          </Menu.Item>
+        </Menu.Menu>
+      </Menu>
+    
       <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
 
@@ -184,6 +202,7 @@ export default function SurveyDetails() {
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+      </div>
+    </>
   )
 }
