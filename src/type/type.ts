@@ -101,6 +101,7 @@ export type FormDataSingUp = {
 
 export type LoggedUser = {
   username: string,
-  token: string,
-  role: string
+  role: string,
+  token: string
+  
 }
