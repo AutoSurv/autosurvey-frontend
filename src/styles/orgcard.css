@@ -32,7 +32,7 @@
     margin: 3%;
 }
 
-.ui.org-card: hover{
+.ui.card.org-card:hover{
     transform: scale(1.2);
     border: blue 1px solid;
 }
