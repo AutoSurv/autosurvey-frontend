@@ -1,5 +1,5 @@
 import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, FormDataSingUp, LoggedUser, LoginUser } from '@/type/type';
+import { AutoSurvey, FormDataSingUp, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
@@ -63,13 +63,11 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
       }
     })
     .then((data: any) => {
-      const loggedUser: LoggedUser = data;
-      if (loggedUser) {
-        localStorage.setItem("role", loggedUser.role);
-        localStorage.setItem("jwt", loggedUser.token);
-        localStorage.setItem("username", loggedUser.username);
-        setUserNameAuth(loggedUser.username);
-        
+      const jwtToken = data;
+      if (jwtToken) {
+        localStorage.setItem("jwt", jwtToken);
+        localStorage.setItem("username", inputBody.username);
+        setUserNameAuth(inputBody.username);
         setSignUpStatus(true);
         router.push("org");
       }
