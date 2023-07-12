@@ -43,10 +43,10 @@ const Login = () => {
           {(errorMsg.length > 0) ? <Message warning>
             <p>{errorMsg}</p>
           </Message> : null}
-          {(signupSuccessMessage.length > 0) ? <Message success
-            header='Your user registration was successful'
-            content='You may now log-in with the username you have chosen'
-          >
+          {(signupSuccessMessage.length > 0) ? <Message success>
+            <Message.Header>Your user registration was successful <br />If you whish to be added as manager for the organization, please contact the admins: 
+            <br />seongbong.hong@appliedtechnology.se or marco.debernardi@appliedtechnology.se.</Message.Header>
+            <Message.Content>You may now log-in with the username you have chosen</Message.Content>
           </Message> : null}
         </Box>
         <Grid container>
