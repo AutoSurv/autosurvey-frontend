@@ -9,20 +9,20 @@ export default function OrgDetails() {
 
 
   const  router  = useRouter();
-  const { orgid } = router.query;
+  const { orgId } = router.query;
   const { setOrganization} =useContext(OrgContext);
 
   useEffect(() => {
-    if (orgid) {
-      getOrganization(orgid, setOrganization);
+    if (orgId) {
+      getOrganization(orgId, setOrganization);
      
     }
     
-  }, [orgid])
+  }, [orgId])
 
   return (
     <div>
-      {orgid && 
+      {orgId && 
       <SurveyContent />}
     </div>
   )
