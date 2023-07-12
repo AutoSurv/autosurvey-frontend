@@ -10,19 +10,22 @@ import { useSession } from "next-auth/react";
 
 export default function OrgContent() {
     const { setOrganization, setSignUpStatus } = useContext(OrgContext);
-
+    const [role, setRole] = useState("");
+    //const role: String = localStorage.getItem("role") as string;
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
+        setRole(localStorage.getItem("role") as string);
         getOrganizations(setOrganizations);
     }, []);
 
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
+    
 
     return (
         <div className="orgs-content">
             <AutoSurveyHeader />
-            {localStorage.getItem("role") !== "ROLE_USER" ?
+            { role !== "ROLE_USER" ?
                 <Modal animation={false}
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
