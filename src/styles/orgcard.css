@@ -32,7 +32,7 @@
     margin: 3%;
 }
 
-.org-card-container: hover{
+.org-card: hover{
     transform: scale(1.2);
     border: blue 1px solid;
 }
