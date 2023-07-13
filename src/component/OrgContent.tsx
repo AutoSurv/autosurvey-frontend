@@ -23,9 +23,11 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
-            <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
-                <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
+            
+            <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
+             <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon"/></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content> 
             </Header>
+          
             <Menu size='small' color="blue">
                 <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
                 <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
