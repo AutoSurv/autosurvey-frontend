@@ -30,8 +30,8 @@ export default function OrgContent() {
 
             <Menu size='small' color="blue">
                 <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
-                <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
                 <Menu.Menu position='right'>
+                <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
                     <Menu.Item>
                         <Button onClick={() => {
                             setSignUpStatus(false);

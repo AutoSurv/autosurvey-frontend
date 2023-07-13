@@ -2,7 +2,7 @@ import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Header, Icon, Menu, Table } from "semantic-ui-react";
+import { Button, Dropdown, Header, Icon, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
@@ -29,9 +29,36 @@ export default function SurveyContent() {
       </Header>
       <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
-        <Menu.Item> <Link href={"/org/" + organization.orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
-        <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
+        <Menu.Item >
+            <Link href={"#"}>
+              <Dropdown text='Export / Import'>
+                <Dropdown.Menu>
+                  <Dropdown.Item >
+                    <Link href={"#"}>
+                      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link href={"#"} onClick={(e) => {
+                      e.preventDefault();
+                      downloadExcel(surveys.filter(s => s.orgName === organization.orgName));
+                    }} >Export Surveys (xlsx)
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <label >
+                      <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> 
+                        Export Survey (csv)
+                      </CSVLink>
+                    </label>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Link>
+          </Menu.Item>
+        
         <Menu.Menu position='right'>
+        <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
           <Menu.Item>
             <Button onClick={() => {
               setSignUpStatus(false);
