@@ -35,15 +35,15 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         }}>
         <Form.Field>
           <Label>Country Name</Label>
-          <Input placeholder={survey.country} type="text" name="country" />
+          <Input placeholder={survey.country} type="text" name="country" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Year</Label>
-          <Input placeholder={survey.year} type="text" name="year" />
+          <Input placeholder={survey.year} type="text" name="year" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Rent</Label>
-          <Input placeholder={survey.rent} type="text" name="rent" />
+          <Input placeholder={survey.rent} type="text" name="rent" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Utilities</Label>
@@ -51,11 +51,11 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Food</Label>
-          <Input placeholder={survey.food} type="text" name="food" />
+          <Input placeholder={survey.food} type="text" name="food" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Basic Items</Label>
-          <Input placeholder={survey.basicItems} type="text" name="basicItems" />
+          <Input placeholder={survey.basicItems} type="text" name="basicItems" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Transportation</Label>
@@ -71,51 +71,51 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Education Fee</Label>
-          <Input placeholder={survey.educationFee} type="text" name="educationFee" />
+          <Input placeholder={survey.educationFee} type="text" name="educationFee" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Education Type</Label>
-          <Input placeholder={survey.educationType} type="text" name="educationType" />
+          <Input placeholder={survey.educationType} type="text" name="educationType" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Accommodation Type</Label>
-          <Input placeholder={survey.accommodationType} type="text" name="accommodationType" />
+          <Input placeholder={survey.accommodationType} type="text" name="accommodationType" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Profession</Label>
-          <Input placeholder={survey.profession} type="text" name="profession" />
+          <Input placeholder={survey.profession} type="text" name="profession" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Location Given</Label>
-          <Input placeholder={survey.locationGiven} type="text" name="locationGiven" />
+          <Input placeholder={survey.locationGiven} type="text" name="locationGiven" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Location Clustered</Label>
-          <Input placeholder={survey.locationClustered} type="text" name="locationClustered" />
+          <Input placeholder={survey.locationClustered} type="text" name="locationClustered" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Number of Residents</Label>
-          <Input placeholder={survey.numResidents} type="text" name="numResidents" />
+          <Input placeholder={survey.numResidents} type="text" name="numResidents" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Number of Incomes</Label>
-          <Input placeholder={survey.numIncomes} type="text" name="numIncomes" />
+          <Input placeholder={survey.numIncomes} type="text" name="numIncomes" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Number of Full Incomes</Label>
-          <Input placeholder={survey.numFullIncomes} type="text" name="numFullIncomes" />
+          <Input placeholder={survey.numFullIncomes} type="text" name="numFullIncomes" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Number of Children</Label>
-          <Input placeholder={survey.numChildren} type="text" name="numChildren" />
+          <Input placeholder={survey.numChildren} type="text" name="numChildren" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Total Income</Label>
-          <Input placeholder={survey.totalIncome} type="text" name="totalIncome" />
+          <Input placeholder={survey.totalIncome} type="text" name="totalIncome" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Comments</Label>
-          <Input placeholder={survey.comments} type="text" name="comments" />
+          <Input placeholder={survey.comments} type="text" name="comments" pattern="^[a-zA-Z]*$"/>
         </Form.Field>
 
         <Button type="submit" color="blue">Edit Survey</Button>

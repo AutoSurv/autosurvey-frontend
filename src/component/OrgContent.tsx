@@ -55,7 +55,7 @@ export default function OrgContent() {
                         }}>
                             <Form.Field>
                                 <Label>Organization Name</Label>
-                                <Input placeholder="Name your organization" type="text" name="orgname" />
+                                <Input placeholder="Name your organization" type="text" name="orgname" pattern="^[a-zA-Z]*$"/>
                             </Form.Field>
                             <Button type="submit" color="green">Add Organization +</Button>
                             <Button onClick={(e) => {
