@@ -17,7 +17,6 @@ export default function SurveyContent() {
   useEffect(() => {
     getSurveys(setSurveys);
   }, []);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
 
