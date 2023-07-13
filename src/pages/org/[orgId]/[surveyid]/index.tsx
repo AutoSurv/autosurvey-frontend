@@ -1,9 +1,9 @@
 import { OrgContext } from "@/helper/context";
-import { deleteSurvey, getSurvey } from "@/pages/api/autosurvey";
+import { deleteSurvey, getSurvey, getSurveys } from "@/pages/api/autosurvey";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect } from "react";
-import { Button, Header, Icon, Menu } from "semantic-ui-react";
+import { useContext, useEffect, useState } from "react";
+import { Button, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
 import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
@@ -15,12 +15,14 @@ export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-  const {  survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSignUpStatus } = useContext(OrgContext);
+  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
 
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
+    getSurveys(setSurveys);
   }, [setSurvey])
 
   const surveyArray: AutoSurvey[] = [survey];
@@ -32,16 +34,38 @@ export default function SurveyDetails() {
             </Header>
             <Menu size='small' color="blue">
                 <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
-                <Menu.Item> <Link href={"/org/"+ orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
+                <Menu.Item>
+                  <Link href={"#"}>   
+                    <Dropdown text='Export Survey'>
+                      <Dropdown.Menu>
+                        <Dropdown.Item>
+                          <Link href={"#"} onClick={(e) => {
+                            e.preventDefault();
+                            downloadExcel(surveyArray);
+                          }} >Export Surveys (xlsx)
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                          <label >
+                            <CSVLink className="surveys-export-csv-link" filename={organization.orgName +"_" + survey.country + "_" +survey.id + ".csv"} data={surveyArray}> 
+                              Export Survey (csv)
+                            </CSVLink>
+                          </label>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Link>
+                </Menu.Item>
+                <Menu.Item> <Link href={"/org/"+ organization.orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
                 <Menu.Menu position='right'>
-                <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-                    <Menu.Item>
-                        <Button onClick={() => {
-                            setSignUpStatus(false);
-                            SignOut(setSignUpStatus);
-                        }}
-                            circular icon='sign out' color='blue' inverted></Button>
-                    </Menu.Item>
+                  <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
+                  <Menu.Item>
+                      <Button onClick={() => {
+                          setSignUpStatus(false);
+                          SignOut(setSignUpStatus);
+                      }}
+                          circular icon='sign out' color='blue' inverted></Button>
+                  </Menu.Item>
                 </Menu.Menu>
             </Menu>
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
@@ -50,15 +74,6 @@ export default function SurveyDetails() {
           <TableHead>
             <TableRow>
               <TableCell className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country}</TableCell>
-              <TableCell align="right"><Button onClick={(e) => {
-                e.preventDefault();
-                downloadExcel(surveyArray);
-              }} color="green">Export(Excel) Survey</Button>
-                <Button color="green">
-                  <CSVLink className="specificsurvey-export-csv-link" filename={"survey.csv"} data={surveyArray}> Export(CSV) Survey</CSVLink>
-                </Button>
-              </TableCell>
-
             </TableRow>
           </TableHead>
 
