@@ -56,7 +56,7 @@ export default function SurveyDetails() {
                     </Dropdown>
                   </Link>
                 </Menu.Item>
-                <Menu.Item> <Link href={"/org/"+ organization.orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
+                <Menu.Item> <Link href={"/org/"+ orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
                   <Menu.Item>
@@ -206,7 +206,7 @@ export default function SurveyDetails() {
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="center">
-              <UpdateSurvey surveyid={surveyid} orgid={orgId} setSurvey={setSurvey}/>
+              <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey}/>
               </TableCell>
               <TableCell align="right"><Button onClick={() => {
                 setOpenConfirm(true);
