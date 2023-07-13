@@ -113,3 +113,9 @@ export type User = {
   email: string,
   roles: string,
 }
+
+export enum ROLE {
+  user = "ROLE_USER",
+  manager = "ROLE_MANAGER",
+  admin = "ROLE_ADMIN"
+}

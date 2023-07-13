@@ -1,5 +1,5 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
-import { Organization } from "@/type/type";
+import { Organization, ROLE } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
@@ -39,7 +39,7 @@ export default function OrgContent() {
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>
-            {role !== "ROLE_USER" ?
+            {role !== ROLE.user ?
                 <Modal animation={false}
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}

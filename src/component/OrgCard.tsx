@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Organization } from '@/type/type';
+import { Organization, ROLE } from '@/type/type';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { Button, Form, Input, Label, Modal, Card, Image } from 'semantic-ui-react';
 import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
@@ -38,7 +38,7 @@ export default function OrgCard(props: OrgCardProp) {
           </Card.Content>
         </Link>
         
-        {role !== "ROLE_USER" ?
+        {role !== ROLE.user ?
         <div className="org-card-btn-container">
           <Modal animation={false}
             onClose={() => setOpen(false)}
