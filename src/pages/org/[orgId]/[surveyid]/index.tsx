@@ -79,133 +79,133 @@ export default function SurveyDetails() {
 
           <TableBody>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Country:
               </TableCell>
-              <TableCell align="right">{survey.country}</TableCell>
+              <TableCell align="center">{survey.country}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Year:
               </TableCell>
-              <TableCell align="right">{survey.year}</TableCell>
+              <TableCell align="center">{survey.year}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Location Given:
               </TableCell>
-              <TableCell align="right">{survey.locationGiven}</TableCell>
+              <TableCell align="center">{survey.locationGiven}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Location Cluestered:
               </TableCell>
-              <TableCell align="right">{survey.locationClustered}</TableCell>
+              <TableCell align="center">{survey.locationClustered}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Rent:
               </TableCell>
-              <TableCell align="right">{survey.rent}</TableCell>
+              <TableCell align="center">{survey.rent}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Utilities
               </TableCell>
-              <TableCell align="right">{survey.utilities}</TableCell>
+              <TableCell align="center">{survey.utilities}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Food:
               </TableCell>
-              <TableCell align="right">{survey.food}</TableCell>
+              <TableCell align="center">{survey.food}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Basic Items:
               </TableCell>
-              <TableCell align="right">{survey.basicItems}</TableCell>
+              <TableCell align="center">{survey.basicItems}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Transportaions:
               </TableCell>
-              <TableCell align="right">{survey.transportation}</TableCell>
+              <TableCell align="center">{survey.transportation}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Education Total:
               </TableCell>
-              <TableCell align="right">{survey.educationTotal}</TableCell>
+              <TableCell align="center">{survey.educationTotal}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Education Supplies:
               </TableCell>
-              <TableCell align="right">{survey.educationSupplies}</TableCell>
+              <TableCell align="center">{survey.educationSupplies}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Education Fee:
               </TableCell>
-              <TableCell align="right">{survey.educationFee}</TableCell>
+              <TableCell align="center">{survey.educationFee}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Education Type:
               </TableCell>
-              <TableCell align="right">{survey.educationType}</TableCell>
+              <TableCell align="center">{survey.educationType}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Accommodation Type:
               </TableCell>
-              <TableCell align="right">{survey.accommodationType}</TableCell>
+              <TableCell align="center">{survey.accommodationType}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Profession:
               </TableCell>
-              <TableCell align="right">{survey.profession}</TableCell>
+              <TableCell align="center">{survey.profession}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 The number of residents:
               </TableCell>
-              <TableCell align="right">{survey.numResidents}</TableCell>
+              <TableCell align="center">{survey.numResidents}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 The number of incomes:
               </TableCell>
-              <TableCell align="right">{survey.numIncomes}</TableCell>
+              <TableCell align="center">{survey.numIncomes}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 The number of full incomes:
               </TableCell>
-              <TableCell align="right">{survey.numFullIncomes}</TableCell>
+              <TableCell align="center">{survey.numFullIncomes}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 The number of children:
               </TableCell>
-              <TableCell align="right">{survey.numChildren}</TableCell>
+              <TableCell align="center">{survey.numChildren}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Total income:
               </TableCell>
-              <TableCell align="right">{survey.totalIncome}</TableCell>
+              <TableCell align="center">{survey.totalIncome}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
                 Comments:
               </TableCell>
-              <TableCell align="right">{survey.comments}</TableCell>
+              <TableCell align="center">{survey.comments}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="left">
+              <TableCell component="th" scope="row" align="center">
               <UpdateSurvey surveyid={surveyid} orgid={orgId} setSurvey={setSurvey}/>
               </TableCell>
               <TableCell align="right"><Button onClick={() => {
