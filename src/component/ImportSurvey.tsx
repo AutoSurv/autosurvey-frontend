@@ -50,7 +50,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button className="surveys-modal-btn" color="green"> Import Survey</Button>}>
+        trigger={<label className="surveys-modal-btn" color="green"> Import Survey</label>}>
         <Modal.Header>Make New Survey
         <Button onClick={(e) => {
           e.preventDefault();
