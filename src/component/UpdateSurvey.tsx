@@ -1,7 +1,7 @@
 import { updateSurvey } from "@/pages/api/autosurvey";
 import { AutoSurvey } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { Button, Form, Icon, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   surveyid: string | string[] | undefined;
@@ -20,7 +20,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button className="surveys-modal-btn" color="blue" basic> Edit Survey</Button>}>
+      trigger={<Button className="surveys-modal-btn" color="blue" basic>Edit Survey</Button>}>
       <Modal.Header>Edit Survey
         <Button onClick={(e) => {
             e.preventDefault();
@@ -36,6 +36,10 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         <Form.Field>
           <Label>Country Name</Label>
           <Input placeholder="Name your country" type="text" name="country" />
+        </Form.Field>
+        <Form.Field>
+          <Label>Year</Label>
+          <Input placeholder="Year" type="text" name="year" />
         </Form.Field>
         <Form.Field>
           <Label>Rent</Label>

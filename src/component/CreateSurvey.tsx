@@ -39,6 +39,10 @@ export default function CreateSurvey(props: CreateSurveyProps) {
               <Input placeholder="Name your country" type="text" name="country" />
             </Form.Field>
             <Form.Field>
+              <Label>Year</Label>
+              <Input placeholder="Year" type="text" name="year" />
+            </Form.Field>
+            <Form.Field>
               <Label>Rent</Label>
               <Input placeholder="Rent" type="text" name="rent" />
             </Form.Field>

@@ -193,6 +193,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: AutoSurveyRequestDto = {
     country: event.currentTarget.country.value,
+    year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
     utilities: event.currentTarget.utilities.value,
     food: event.currentTarget.food.value,
@@ -245,6 +246,7 @@ export async function addImportedSurvey(
   for (let i = 0; i < surveyArr.length; i++) {
     const reqBody: AutoSurveyRequestDto = {
       country: surveyArr[i].country,
+      year: surveyArr[i].year,
       rent: surveyArr[i].rent,
       utilities: surveyArr[i].utilities,
       food: surveyArr[i].food,
@@ -293,6 +295,7 @@ export async function updateSurvey(id: string | string[] | undefined, event: Rea
 
   const reqBody: AutoSurveyUpdateDto = {
     country: event.currentTarget.country.value,
+    year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
     utilities: event.currentTarget.utilities.value,
     food: event.currentTarget.food.value,

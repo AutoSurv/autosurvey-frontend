@@ -77,7 +77,7 @@ export default function OrgCard(props: OrgCardProp) {
               onConfirm={(e) => {
                 e.preventDefault();
                 deleOrganization(organization.orgId, setOrganizations);
-                setOpen(false);
+                setOpenConfirm(false);
               }}
             />
           </div>

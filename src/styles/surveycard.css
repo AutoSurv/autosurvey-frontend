@@ -33,3 +33,7 @@ a.surveys-export-csv-link:hover {
 .survey-card-container {
     margin: 3%;
 }
+
+.survey-link {
+    text-decoration: none;
+}

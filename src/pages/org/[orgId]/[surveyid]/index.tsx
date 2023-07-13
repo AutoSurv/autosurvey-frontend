@@ -2,8 +2,8 @@ import { OrgContext } from "@/helper/context";
 import { deleteSurvey, getSurvey } from "@/pages/api/autosurvey";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect } from "react";
-import { Button, Header, Icon, Menu } from "semantic-ui-react";
+import { useContext, useEffect, useState } from "react";
+import { Button, Confirm, Header, Icon, Menu } from "semantic-ui-react";
 import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
@@ -16,6 +16,7 @@ export default function SurveyDetails() {
   const router = useRouter();
   const { orgId, surveyid } = router.query;
   const {  survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   useEffect(() => {
     if (surveyid) {
@@ -68,6 +69,12 @@ export default function SurveyDetails() {
                 Country:
               </TableCell>
               <TableCell align="right">{survey.country}</TableCell>
+            </TableRow>
+            <TableRow className="survey-table-row">
+              <TableCell component="th" scope="row" align="left">
+                Year:
+              </TableCell>
+              <TableCell align="right">{survey.year}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="left">
@@ -187,11 +194,20 @@ export default function SurveyDetails() {
               <TableCell component="th" scope="row" align="left">
               <UpdateSurvey surveyid={surveyid} orgid={orgId} setSurvey={setSurvey}/>
               </TableCell>
-              <TableCell align="right"><Button onClick={(e) => {
+              <TableCell align="right"><Button onClick={() => {
+                setOpenConfirm(true);
+              }}  color="orange" basic>Delete Survey</Button><Confirm
+              open={openConfirm}
+              header='Remove your survey'
+              content='Are you sure you want to remove your survey?'
+              onCancel={() => setOpenConfirm(false)}
+              onConfirm={(e) => {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
+                setOpenConfirm(false);
                 window.location.href = "/org/" + orgId;
-              }} color="orange" basic>Delete Survey</Button></TableCell>
+              }}
+            /></TableCell>
             </TableRow>
 
           </TableBody>

@@ -1,6 +1,7 @@
 export type AutoSurvey = {
   id: string;
   country: string;
+  year: number;
   rent: number;
   utilities: number,
   food: number,
@@ -26,6 +27,7 @@ export type AutoSurvey = {
 
 export type AutoSurveyRequestDto = {
   country: string;
+  year: number;
   rent: number;
   utilities: number,
   food: number,
@@ -50,6 +52,7 @@ export type AutoSurveyRequestDto = {
 
 export type AutoSurveyUpdateDto = {
   country: string;
+  year: number;
   rent: number;
   utilities: number,
   food: number,

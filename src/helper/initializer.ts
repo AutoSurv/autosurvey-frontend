@@ -8,6 +8,7 @@ export const initOrg: Organization = {
 
 export const initSurvey: AutoSurvey = {
   country: "",
+  year: 0,
   rent: 0,
   utilities: 0,
   food: 0,
