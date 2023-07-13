@@ -38,9 +38,9 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
           </Form.Field>
           <Form.Field>
             <Label>Email</Label>
-            <Input placeholder="Email" type="text" name="email" />
+            <Input placeholder="Email" type="email" name="email" />
           </Form.Field>
-          <Button type="submit" >Sign Up +</Button>
+          <Button type="submit" >Sign Up</Button>
           <Button onClick={(e) => {
             e.preventDefault();
             setErrorMsg("");

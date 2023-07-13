@@ -36,83 +36,83 @@ export default function CreateSurvey(props: CreateSurveyProps) {
           }}>
             <Form.Field>
               <Label>Country Name</Label>
-              <Input placeholder="Name your country" type="text" name="country" />
+              <Input placeholder="Name your country" type="text" name="country" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Rent</Label>
-              <Input placeholder="Rent" type="text" name="rent" />
+              <Input placeholder="Rent" type="text" name="rent" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Utilities</Label>
-              <Input placeholder="Utilities" type="text" name="utilities" />
+              <Input placeholder="Utilities" type="text" name="utilities" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Food</Label>
-              <Input placeholder="Food" type="text" name="food" />
+              <Input placeholder="Food" type="text" name="food" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Basic Items</Label>
-              <Input placeholder="Basic Items" type="text" name="basicItems" />
+              <Input placeholder="Basic Items" type="text" name="basicItems" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Transportation</Label>
-              <Input placeholder="Transportation" type="text" name="transportation" />
+              <Input placeholder="Transportation" type="text" name="transportation" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Education Total</Label>
-              <Input placeholder="Education Total" type="text" name="educationTotal" />
+              <Input placeholder="Education Total" type="text" name="educationTotal" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Education Supplies</Label>
-              <Input placeholder="Education Supplies" type="text" name="educationSupplies" />
+              <Input placeholder="Education Supplies" type="text" name="educationSupplies" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Education Fee</Label>
-              <Input placeholder="Education Fee" type="text" name="educationFee" />
+              <Input placeholder="Education Fee" type="text" name="educationFee" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Education Type</Label>
-              <Input placeholder="Education Type" type="text" name="educationType" />
+              <Input placeholder="Education Type" type="text" name="educationType" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Accommodation Type</Label>
-              <Input placeholder="Accommodation Type" type="text" name="accommodationType" />
+              <Input placeholder="Accommodation Type" type="text" name="accommodationType" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Profession</Label>
-              <Input placeholder="Profession" type="text" name="profession" />
+              <Input placeholder="Profession" type="text" name="profession" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Location Given</Label>
-              <Input placeholder="Location Given" type="text" name="locationGiven" />
+              <Input placeholder="Location Given" type="text" name="locationGiven" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Location Clustered</Label>
-              <Input placeholder="Location Clustered" type="text" name="locationClustered" />
+              <Input placeholder="Location Clustered" type="text" name="locationClustered" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Number of Residents</Label>
-              <Input placeholder="Number of Residents" type="text" name="numResidents" />
+              <Input placeholder="Number of Residents" type="text" name="numResidents" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Number of Incomes</Label>
-              <Input placeholder="Number of Incomes" type="text" name="numIncomes" />
+              <Input placeholder="Number of Incomes" type="text" name="numIncomes" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Number of Full Incomes</Label>
-              <Input placeholder="Number of Full Incomes" type="text" name="numFullIncomes" />
+              <Input placeholder="Number of Full Incomes" type="text" name="numFullIncomes" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Number of Children</Label>
-              <Input placeholder="Number of Children" type="text" name="numChildren" />
+              <Input placeholder="Number of Children" type="text" name="numChildren" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Total Income</Label>
-              <Input placeholder="Total Income" type="text" name="totalIncome" />
+              <Input placeholder="Total Income" type="text" name="totalIncome" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Comments</Label>
-              <Input placeholder="Comments" type="text" name="comments" />
+              <Input placeholder="Comments" type="text" name="comments" pattern="^[0-9]*$"/>
             </Form.Field>
 
             <Button type="submit" color="green">Add Survey +</Button>

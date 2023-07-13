@@ -6,6 +6,11 @@
     
 }
 
+.orgs-content {
+    background-color:whitesmoke;
+    min-height: 100vh;
+}
+
 .org-card-btn-container {
     display: flex;
     justify-content: space-evenly;
@@ -18,16 +23,33 @@
 
 .ui.button.org-modal-btn {
     margin-left: 5%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    
 }
 
+
+.ui.blue.small.menu {
+    margin: 0px;
+}
+
+.ui.blue.icon.center.aligned.header.home-header {
+    margin: 0px;
+    padding-top: 5%;
+    padding-bottom: 1%;
+    background-color: whitesmoke;
+}
+
+.org-content-container {
+    background-color: whitesmoke;
+}
 
 .orgs-orgcard-box {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    background-color: whitesmoke;
 }
 
 .org-card-container {

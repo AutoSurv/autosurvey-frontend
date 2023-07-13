@@ -1,10 +1,11 @@
-import { updateSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey } from "@/type/type";
-import { Dispatch, SetStateAction, useState } from "react";
+import { initOrg, initSurvey } from "@/helper/initializer";
+import { getSurvey, updateSurvey } from "@/pages/api/autosurvey";
+import { AutoSurvey, Organization } from "@/type/type";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
-  surveyid: string | string[] | undefined;
+  survey: AutoSurvey;
   orgid: string | string[] | undefined;
   setSurvey: Dispatch<SetStateAction<AutoSurvey>>;
 }
@@ -13,8 +14,10 @@ export default function UpdSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
-  const { surveyid, setSurvey, orgid} = props;
+  const { survey, setSurvey, orgid} = props;
+  
 
+  
   return(
     <Modal animation={false}
       onClose={() => setOpen(false)}
@@ -31,11 +34,11 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       <Modal.Content>
         <Form onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(surveyid, e, setSurvey, setOpen, setErrMessage, orgid);
+          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, orgid);
         }}>
         <Form.Field>
           <Label>Country Name</Label>
-          <Input placeholder="Name your country" type="text" name="country" />
+          <Input placeholder={survey.country} type="text" name="country" />
         </Form.Field>
         <Form.Field>
           <Label>Rent</Label>

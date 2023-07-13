@@ -1,14 +1,16 @@
 import { OrgContext } from "@/helper/context";
-import { SignOut } from "@/helper/methods";
 import Link from "next/link";
 import { useContext } from "react";
 import { Button, Header, Icon, Menu } from "semantic-ui-react";
+import { SignOut } from '@/helper/methods';
 
 
-export function AutoSurveyHeader() {
-  const { setSignUpStatus} = useContext(OrgContext);
+export default function About() {
+  const { setSignUpStatus } = useContext(OrgContext);
+
   return(
     <>
+        <>
       <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
         <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
       </Header>
@@ -27,5 +29,10 @@ export function AutoSurveyHeader() {
         </Menu.Menu>
       </Menu>
 </>
+    <div>
+      seongbong.hong@appliedtechnology.se <br />
+      marco.debernardi@appliedtechnology.se <br />
+    </div>
+    </>
   )
 }

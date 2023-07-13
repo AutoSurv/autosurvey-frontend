@@ -23,11 +23,11 @@
 }
 
 a.surveys-export-csv-link {
-    color: white;
+    /* color: white; */
 }
 
 a.surveys-export-csv-link:hover {
-    color: white;
+    /* color: white; */
 }
 
 .survey-card-container {

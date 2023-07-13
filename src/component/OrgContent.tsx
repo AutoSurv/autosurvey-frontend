@@ -1,5 +1,5 @@
 import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
-import { Organization } from "@/type/type";
+import { Organization, ROLE } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
@@ -25,12 +25,12 @@ export default function OrgContent() {
     return (
         <div className="orgs-content">
             <AutoSurveyHeader />
-            { role !== "ROLE_USER" ?
+            { role !== ROLE.user ?
                 <Modal animation={false}
                     onClose={() => setOpen(false)}
                     onOpen={() => setOpen(true)}
                     open={open}
-                    trigger={<Button className="org-modal-btn" color="green"> Create Organization +</Button>}>
+                    trigger={<Button className="org-modal-btn" color="green"> Create Organization</Button>}>
                     <Modal.Header>Make Your Organization</Modal.Header>
                     <Modal.Content>
                         <Form onSubmit={(e) => {
@@ -39,9 +39,9 @@ export default function OrgContent() {
                         }}>
                             <Form.Field>
                                 <Label>Organization Name</Label>
-                                <Input placeholder="Name your organization" type="text" name="orgname" />
+                                <Input placeholder="Name your organization" type="text" name="orgname" pattern="^[a-zA-Z]*$"/>
                             </Form.Field>
-                            <Button type="submit" color="green">Add Organization +</Button>
+                            <Button type="submit" color="green" >Add Organization</Button>
                             <Button onClick={(e) => {
                                 e.preventDefault();
                                 setOpen(false);

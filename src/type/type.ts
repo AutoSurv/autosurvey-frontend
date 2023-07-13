@@ -104,3 +104,9 @@ export type LoggedUser = {
   role: string,
   token: string,
 }
+
+export enum ROLE {
+  user = "ROLE_USER",
+  admin = "ROLE_ADMIN",
+  manager = "ROLE_MANAGER",
+}
