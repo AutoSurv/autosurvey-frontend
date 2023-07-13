@@ -2,13 +2,12 @@ import { OrgContext } from "@/helper/context";
 import { deleteSurvey, getSurvey } from "@/pages/api/autosurvey";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Button, Header, Icon, Menu } from "semantic-ui-react";
 import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
-import { AutoSurveyHeader } from '@/component/AutoSurveyHeader';
 import Link from "next/link";
 
 
@@ -17,9 +16,6 @@ export default function SurveyDetails() {
   const router = useRouter();
   const { orgId, surveyid } = router.query;
   const {  survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
-  const [errMessage, setErrMessage] = useState<string>("");
-
-
 
   useEffect(() => {
     if (surveyid) {

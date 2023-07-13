@@ -1,6 +1,6 @@
 
 import {  useEffect, useState } from "react";
-import { getOrganizations, getUser } from "../api/autosurvey";
+import { getOrganizations } from "../api/autosurvey";
 import { Organization } from "../../type/type";
 import OrgContent from "@/component/OrgContent";
 

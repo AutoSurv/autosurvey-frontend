@@ -1,18 +1,9 @@
 import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
 import { AutoSurvey, FormDataSingUp, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
-import * as bcryptjs from 'bcryptjs'
 
-//bcrypt issue #49759
-
-type UserData = {
-  username: string,
-  password: string,
-  email: string,
-  roles: string
-}
 
 export const downloadExcel = (data: any) => {
 
@@ -47,7 +38,6 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
-    //password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP)
     password: event.currentTarget.password.value
   }
   localStorage.clear();
@@ -88,7 +78,6 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
-    //password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP),
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user"

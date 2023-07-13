@@ -8,7 +8,6 @@ import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
-import { AutoSurveyHeader } from './AutoSurveyHeader';
 import Link from "next/link";
 
 

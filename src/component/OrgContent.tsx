@@ -4,14 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Form, Header, Icon, Input, Label, Menu, Modal } from "semantic-ui-react";
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
-import { AutoSurveyHeader } from "./AutoSurveyHeader";
 import Link from "next/link";
 import { SignOut } from "@/helper/methods";
 
 
 
 export default function OrgContent() {
-    const { setOrganization, setSignUpStatus } = useContext(OrgContext);
+    const { setSignUpStatus } = useContext(OrgContext);
     const [role, setRole] = useState("");
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
