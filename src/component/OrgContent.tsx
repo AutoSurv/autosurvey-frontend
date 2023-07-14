@@ -10,7 +10,7 @@ import { SignOut } from "@/helper/methods";
 
 
 export default function OrgContent() {
-    const { setSignUpStatus } = useContext(OrgContext);
+    const { setSignUpStatus, userNameAuth } = useContext(OrgContext);
     const [role, setRole] = useState("");
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
@@ -51,7 +51,7 @@ export default function OrgContent() {
                     <Modal.Content>
                         <Form onSubmit={(e) => {
                             e.preventDefault();
-                            addOrganization(e, setOrganizations, setOpen, setErrMessage);
+                            addOrganization(e, setOrganizations, setOpen, setErrMessage, userNameAuth);
                         }}>
                             <Form.Field>
                                 <Label>Organization Name</Label>
