@@ -111,7 +111,8 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 export async function updateOrganizationName(id: string, event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
-    orgName: event.currentTarget.orgname.value
+    orgName: event.currentTarget.orgname.value,
+    creator: ""
   }
 
   if (!reqBody.orgName) {
