@@ -80,6 +80,7 @@ export type Organization = {
 
 export type OrgRequestDto = {
   orgName: string
+  creatorName: string
 }
 
 export type LoginUser = {

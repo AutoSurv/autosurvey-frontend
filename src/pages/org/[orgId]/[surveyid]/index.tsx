@@ -8,9 +8,8 @@ import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
-import { AutoSurveyHeader } from '@/component/AutoSurveyHeader';
 import Link from "next/link";
-import ImportSurvey from "@/component/ImportSurvey";
+import { initSurvey } from "@/helper/initializer";
 
 
 export default function SurveyDetails() {
@@ -22,6 +21,7 @@ export default function SurveyDetails() {
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
 
   useEffect(() => {
+    setSurvey(initSurvey);
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }

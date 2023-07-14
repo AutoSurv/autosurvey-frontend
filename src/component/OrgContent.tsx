@@ -9,11 +9,13 @@ import { useSession } from "next-auth/react";
 
 
 export default function OrgContent() {
-    const { setOrganization, setSignUpStatus } = useContext(OrgContext);
+    const { setOrganization, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
     const [role, setRole] = useState("");
     //const role: String = localStorage.getItem("role") as string;
     const [organizations, setOrganizations] = useState<Organization[]>([]);
+
     useEffect(() => {
+        setUserNameAuth(localStorage.getItem("username") as string);
         setRole(localStorage.getItem("role") as string);
         getOrganizations(setOrganizations);
     }, []);
@@ -35,7 +37,7 @@ export default function OrgContent() {
                     <Modal.Content>
                         <Form onSubmit={(e) => {
                             e.preventDefault();
-                            addOrganization(e, setOrganizations, setOpen, setErrMessage);
+                            addOrganization(e, setOrganizations, setOpen, setErrMessage, userNameAuth);
                         }}>
                             <Form.Field>
                                 <Label>Organization Name</Label>

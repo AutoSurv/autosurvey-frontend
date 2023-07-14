@@ -10,12 +10,14 @@ import ImportSurvey from "./ImportSurvey";
 import { downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { SignOut } from "@/helper/methods";
+import FilterSurvey from "./FilterSurvey";
 
 
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+  const [visibleSurveys, setVisibleSurveys] = useState<AutoSurvey[]>([]);
   useEffect(() => {
     getSurveys(setSurveys);
   }, []);
@@ -76,10 +78,8 @@ export default function SurveyContent() {
         </Menu>
       </>
 
-        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-
-
-
+      <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+      <FilterSurvey surveys={surveys} />
 
       <div className="surveys-surveycard-box">
         {organization.surveys.map((survey: AutoSurvey, index: number) => {

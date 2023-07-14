@@ -56,10 +56,12 @@ export async function getOrganization(orgid: string | string[], setOrganization:
 
 }
 
-export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>, username: string) {
 
+  console.log("username: ", username)
   const reqBody: OrgRequestDto = {
-    orgName: event.currentTarget.orgname.value
+    orgName: event.currentTarget.orgname.value,
+    creatorName: username
   };
 
   if (!reqBody.orgName) {
@@ -88,7 +90,8 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 export async function updateOrganizationName(id: string, event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
-    orgName: event.currentTarget.orgname.value
+    orgName: event.currentTarget.orgname.value,
+    creatorName: ""
   }
 
   if (!reqBody.orgName) {
