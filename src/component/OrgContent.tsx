@@ -10,10 +10,11 @@ import { SignOut } from "@/helper/methods";
 
 
 export default function OrgContent() {
-    const { setSignUpStatus, userNameAuth } = useContext(OrgContext);
+    const { setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
     const [role, setRole] = useState("");
     const [organizations, setOrganizations] = useState<Organization[]>([]);
     useEffect(() => {
+        setUserNameAuth(localStorage.getItem("username") as string);
         setRole(localStorage.getItem("role") as string);
         getOrganizations(setOrganizations);
     }, []);

@@ -83,7 +83,7 @@ export type Organization = {
 
 export type OrgRequestDto = {
   orgName: string,
-  creator: string
+  creatorName: string
 }
 
 export type LoginUser = {
