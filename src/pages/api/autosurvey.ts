@@ -82,7 +82,7 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value,
-    creator: username
+    creator: "TestUsername"
   };
 
   if (!reqBody.orgName) {
