@@ -73,7 +73,7 @@ export default function SurveyDetails() {
 
           <TableHead>
             <TableRow>
-              <TableCell className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country}</TableCell>
+              <TableCell colSpan={2} className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country} {survey.year}</TableCell>
             </TableRow>
           </TableHead>
 

@@ -9,7 +9,7 @@ type SurveyCardProp = {
 }
 
 export default function SurveyCard(props: SurveyCardProp) {
-    const orgLowerName: string = props.survey.orgName.toLowerCase();
+   // const orgLowerName: string = props.survey.orgName.toLowerCase();
 
     return (
         

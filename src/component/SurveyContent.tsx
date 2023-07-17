@@ -9,6 +9,9 @@ import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
+import ReactApexChart from 'react-apexcharts';
+import { ApexOptions } from "apexcharts";
+
 
 
 export default function SurveyContent() {
@@ -17,12 +20,47 @@ export default function SurveyContent() {
   useEffect(() => {
     getSurveys(setSurveys);
   }, []);
+  const options: ApexOptions = {
+    chart: {
+      height: 350,
+      stacked: true,
+      zoom: {
+        enabled: true
+      }
+    },
+    title: {
+      text: 'Monthly Living Costs by country'
+    }, 
+    xaxis: {
+      categories: surveys.map( (s) => s.country)
+      
+    },
 
-  useEffect(() => {
 
-  }, []);
+  };
 
-  return (
+  const series = [{
+    name: 'rent',
+    data: surveys.map( (s) => s.rent)
+  }, {
+    name: 'utilities',
+    data: surveys.map( (s) => s.utilities)
+  }, {
+    name: 'food',
+    data: surveys.map( (s) => s.food)
+  }, {
+    name: 'basic item',
+    data: surveys.map( (s) => s.basicItems)
+  }, {
+    name: 'transportation',
+    data: surveys.map( (s) => s.transportation)
+  }, {
+    name: 'education total',
+    data: surveys.map( (s) => s.educationTotal)
+  }
+]
+
+ return (
     <div className="surveys-content">
       <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
         <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
@@ -71,8 +109,15 @@ export default function SurveyContent() {
 
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-
+      
+      <ReactApexChart
+        type="bar"
+        options={options}
+        series={series}
+        height={350}
+      />
       <div className="surveys-surveycard-box">
+      
         <Table celled striped>
           <Table.Header>
             <Table.Row>
