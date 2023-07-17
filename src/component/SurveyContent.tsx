@@ -11,7 +11,9 @@ import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from "apexcharts";
+import dynamic from 'next/dynamic'
 
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 
 export default function SurveyContent() {
@@ -110,11 +112,10 @@ export default function SurveyContent() {
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
       
-      <ReactApexChart
+      <Chart
         type="bar"
         options={options}
         series={series}
-        height={350}
       />
       <div className="surveys-surveycard-box">
       
