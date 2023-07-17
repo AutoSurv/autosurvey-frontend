@@ -1,32 +1,67 @@
 import { AutoSurvey } from '@/type/type';
-import React, { Dispatch, SetStateAction } from 'react'
-import { Dropdown } from 'semantic-ui-react'
+import { FormControl, InputLabel, ListItemText, OutlinedInput, SelectChangeEvent } from '@mui/material';
+import React, { Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from 'react'
+import { Checkbox, Dropdown, MenuItem, Select } from 'semantic-ui-react'
 
 
 type FilterProps = {
   surveys: AutoSurvey[];
-  //setVisibleSurveys: Dispatch<SetStateAction<AutoSurvey[]>>
+  setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
+  setFilteredCountry: Dispatch<SetStateAction<string[]>>
 }
 
-
-
-export default function FilterSurvey( { surveys } : FilterProps) {
-  const stateOptions = surveys.map( (survey, index) => ({
-    key: survey.id[index],
+export default function FilterSurvey( { surveys, setFilteredSurvey, setFilteredCountry } : FilterProps) {
+  const [filterCountry, setFilterCountry] = useState<string[]>([]);
+  const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
+  
+  const stateOptions = surveys.sort().map( (survey, index) => ({
+    key: index,
     text: survey.country,
-    value: survey.country[index],
+    value: survey.country,
   }));
 
-  //setVisibleSurveys(stateOptions);
+  console.log("surveys: ", surveys);
+  
+  const handleChange = (event: any, {value}: any) => {
+    setFilterCountry(typeof value === 'string' ? value.split(',') : value);
+
+    setFilterSurvey(
+    surveys.filter((survey: AutoSurvey) => {  
+      if (filterCountry.length > 0) {
+        return filterCountry.some((country) => {
+          if (country == "" || country == null) {
+            return survey.country;
+          } else {
+            return survey.country.toLowerCase().includes(country.toLowerCase());
+          }
+        })
+      } else {
+        return survey;
+      }
+    })
+    )
+    
+  };
+
+  setFilteredCountry?.(filterCountry);
+
+  useEffect(() => {
+    setFilterSurvey(surveys);
+    console.log("filterSurvey: ", filterSurvey);
+  },[filterSurvey.length])
+
+  
 
   return (
     <Dropdown
-      placeholder='State'
-      fluid
-      multiple
-      search
-      selection
-      options={stateOptions}
+    placeholder='Country'
+    fluid
+    multiple
+    search
+    selection
+    options={stateOptions}
+    onChange={handleChange}
     />
-)
-  }
+  )
+
+}

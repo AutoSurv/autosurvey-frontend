@@ -17,15 +17,11 @@ import FilterSurvey from "./FilterSurvey";
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
-  const [visibleSurveys, setVisibleSurveys] = useState<AutoSurvey[]>([]);
+  const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
+  const [filteredCountry, setFilteredCountry] = useState<string[]>([]);
+
   useEffect(() => {
     getSurveys(setSurveys);
-  }, []);
-
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-
   }, []);
 
   return (
@@ -56,7 +52,7 @@ export default function SurveyContent() {
                   <Dropdown.Item>
                     <label >
                       <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> 
-                        Export Survey (csv)
+                        Export Surveys (csv)
                       </CSVLink>
                     </label>
                   </Dropdown.Item>
@@ -79,17 +75,28 @@ export default function SurveyContent() {
       </>
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey surveys={surveys} />
+      
+      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey} setFilteredCountry={setFilteredCountry}/>
 
       <div className="surveys-surveycard-box">
-        {organization.surveys.map((survey: AutoSurvey, index: number) => {
-          return (
-            <SurveyCard key={index} organization={organization} survey={survey} />
-          )
-        })}
-
+        { 
+          surveys.filter((survey: AutoSurvey) => {  
+            if (filteredCountry.length > 0) {
+              return filteredCountry.some((country) => {
+                if (country == "" || country == null) {
+                  return survey.country;
+                } else {
+                  return survey.country.toLowerCase().includes(country.toLowerCase());
+                }
+              })
+            } else {
+              return survey;
+            }
+          }).map((matchingSurvey: AutoSurvey, index: number) => {
+            return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
+          })  
+        }         
       </div>
-
     </div>
   )
 

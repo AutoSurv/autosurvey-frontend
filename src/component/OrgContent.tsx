@@ -22,7 +22,6 @@ export default function OrgContent() {
 
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
-    console.log("role: ", role);
 
     return (
         <div className="orgs-content">

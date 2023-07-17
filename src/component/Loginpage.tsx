@@ -15,7 +15,7 @@ const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  console.log(signUpStatus);
+
   if (typeof window !== "undefined") {
     setSignUpStatus(true);
     setUserNameAuth(localStorage.getItem("username") as string);
