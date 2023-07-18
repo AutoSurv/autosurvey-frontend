@@ -3,6 +3,11 @@
     min-height: 100vh;
 }
 
+.ui.card.survey-card:hover{
+    transform: scale(1.1);
+    border: gray 1px solid;
+}
+
 .ui.button.surveys-modal-btn {
     margin-left: 5%;
     margin-top: 5%;

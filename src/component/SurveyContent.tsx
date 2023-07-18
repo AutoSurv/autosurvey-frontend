@@ -11,7 +11,11 @@ import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
+<<<<<<< HEAD
 import CountryFilter from "./CountryFilter";
+=======
+import FilterSurvey from "./FilterSurvey";
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -19,6 +23,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+<<<<<<< HEAD
   const [filterValue, setFilterValue] = useState<string[]>([]);
   const filterChanged = (value: string[]) => {
     setFilterValue(value);
@@ -28,6 +33,11 @@ export default function SurveyContent() {
   surveys.forEach((s) => country_list.add(s.country));
   const country_arr = Array.from(country_list);
 
+=======
+  const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
+  
+  
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
   useEffect(() => {
     getSurveys(setSurveys);
   }, []);
@@ -44,8 +54,13 @@ export default function SurveyContent() {
       text: 'Monthly Living Costs by country'
     },
     xaxis: {
+<<<<<<< HEAD
       categories: country_arr
 
+=======
+      categories: filteredSurvey.map( (s) => s.country)
+      
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
     },
 
 
@@ -115,6 +130,7 @@ export default function SurveyContent() {
 
   const series = [{
     name: 'rent',
+<<<<<<< HEAD
     data: five_data.rent
   }, {
     name: 'utilities',
@@ -131,6 +147,24 @@ export default function SurveyContent() {
   }, {
     name: 'education total',
     data: five_data.educationTotal
+=======
+    data: filteredSurvey.map( (s) => s.rent)
+  }, {
+    name: 'utilities',
+    data: filteredSurvey.map( (s) => s.utilities)
+  }, {
+    name: 'food',
+    data: filteredSurvey.map( (s) => s.food)
+  }, {
+    name: 'basic item',
+    data: filteredSurvey.map( (s) => s.basicItems)
+  }, {
+    name: 'transportation',
+    data: filteredSurvey.map( (s) => s.transportation)
+  }, {
+    name: 'education total',
+    data: filteredSurvey.map( (s) => s.educationTotal)
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
   }
   ];
 
@@ -142,6 +176,7 @@ export default function SurveyContent() {
       <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item >
+<<<<<<< HEAD
           <Link href={"#"}>
             <Dropdown text='Export / Import'>
               <Dropdown.Menu>
@@ -167,6 +202,35 @@ export default function SurveyContent() {
           </Link>
         </Menu.Item>
 
+=======
+            <Link href={"#"}>
+              <Dropdown text='Export / Import'>
+                <Dropdown.Menu>
+                  <Dropdown.Item >
+                    <Link href={"#"}>
+                      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link href={"#"} onClick={(e) => {
+                      e.preventDefault();
+                      downloadExcel(filteredSurvey.filter(s => s.orgName === organization.orgName));
+                    }} >Export Surveys (xlsx)
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <label >
+                      <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurvey.filter(s => s.orgName === organization.orgName)}> 
+                        Export Survey (csv)
+                      </CSVLink>
+                    </label>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Link>
+          </Menu.Item>
+        
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
         <Menu.Menu position='right'>
           <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
           <Menu.Item>
@@ -181,8 +245,13 @@ export default function SurveyContent() {
 
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+<<<<<<< HEAD
       <CountryFilter country_arr={country_arr} filterChanged={filterChanged} filterValue={filterValue} />
 
+=======
+      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey}/>
+      
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
       <Chart
         type="bar"
         options={options}
@@ -203,12 +272,21 @@ export default function SurveyContent() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
+<<<<<<< HEAD
             {organization.surveys.filter((s) => filterValue.includes(s.country)).map((survey) => {
              
               return (
                 <SurveyCard key={survey.id} organization={organization} survey={survey} />
               )
             })}
+=======
+            {
+              filteredSurvey
+              .map((matchingSurvey: AutoSurvey, index: number) => {
+                return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
+              })
+            }
+>>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
           </Table.Body>
         </Table>
       </div>

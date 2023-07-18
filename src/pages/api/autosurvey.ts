@@ -3,7 +3,6 @@ import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, 
 import router from "next/router";
 
 
-
 let jwt: any = "";
 if (typeof window !== "undefined") {
   jwt = localStorage.getItem("jwt");
@@ -57,6 +56,7 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
 };
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
+  
   const organizationURL = BASE_ORG_URL + `/${orgid}`;
   const apiResponse = await fetch(organizationURL, {
     cache: 'no-store',
@@ -148,6 +148,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 
 //Survey section
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
+//const BASE_SURVEY_URL = "http://localhost:8080/api/autosurveys"
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
@@ -346,7 +347,7 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
 //userSection
 
 const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
-const NEW_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users/new`;
+const NEW_USER_URL = `${process.env.NEXT_PUBLIC_PORT}//users/new`;
 
 
 export async function signUpUser(data: FormDataSingUp) {

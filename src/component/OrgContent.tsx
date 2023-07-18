@@ -13,6 +13,7 @@ export default function OrgContent() {
     const { setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
     const [role, setRole] = useState("");
     const [organizations, setOrganizations] = useState<Organization[]>([]);
+
     useEffect(() => {
         setUserNameAuth(localStorage.getItem("username") as string);
         setRole(localStorage.getItem("role") as string);
@@ -74,7 +75,8 @@ export default function OrgContent() {
                     return (
                         <OrgCard key={organization.orgId} organization={organization} setOrganizations={setOrganizations} />
                     )
-                })}
+                })
+                }
 
             </div>
 
