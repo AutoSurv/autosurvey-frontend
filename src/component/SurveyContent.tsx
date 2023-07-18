@@ -37,7 +37,7 @@ export default function SurveyContent() {
       text: 'Monthly Living Costs by country'
     }, 
     xaxis: {
-      categories: surveys.map( (s) => s.country)
+      categories: filteredSurvey.map( (s) => s.country)
       
     },
 
@@ -46,22 +46,22 @@ export default function SurveyContent() {
 
   const series = [{
     name: 'rent',
-    data: surveys.map( (s) => s.rent)
+    data: filteredSurvey.map( (s) => s.rent)
   }, {
     name: 'utilities',
-    data: surveys.map( (s) => s.utilities)
+    data: filteredSurvey.map( (s) => s.utilities)
   }, {
     name: 'food',
-    data: surveys.map( (s) => s.food)
+    data: filteredSurvey.map( (s) => s.food)
   }, {
     name: 'basic item',
-    data: surveys.map( (s) => s.basicItems)
+    data: filteredSurvey.map( (s) => s.basicItems)
   }, {
     name: 'transportation',
-    data: surveys.map( (s) => s.transportation)
+    data: filteredSurvey.map( (s) => s.transportation)
   }, {
     name: 'education total',
-    data: surveys.map( (s) => s.educationTotal)
+    data: filteredSurvey.map( (s) => s.educationTotal)
   }
 ]
 
