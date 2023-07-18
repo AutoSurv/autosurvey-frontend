@@ -1,6 +1,7 @@
 export type AutoSurvey = {
   id: string;
   country: string;
+  year: number;
   rent: number;
   utilities: number,
   food: number,
@@ -26,6 +27,7 @@ export type AutoSurvey = {
 
 export type AutoSurveyRequestDto = {
   country: string;
+  year: number;
   rent: number;
   utilities: number,
   food: number,
@@ -50,6 +52,7 @@ export type AutoSurveyRequestDto = {
 
 export type AutoSurveyUpdateDto = {
   country: string;
+  year: number;
   rent: number;
   utilities: number,
   food: number,
@@ -79,7 +82,7 @@ export type Organization = {
 }
 
 export type OrgRequestDto = {
-  orgName: string
+  orgName: string,
   creatorName: string
 }
 
@@ -103,11 +106,20 @@ export type FormDataSingUp = {
 export type LoggedUser = {
   username: string,
   role: string,
-  token: string,
+  token: string
+  
+}
+
+export type User = {
+  userId: string,
+  username: string,
+  password: string,
+  email: string,
+  roles: string,
 }
 
 export enum ROLE {
   user = "ROLE_USER",
-  admin = "ROLE_ADMIN",
   manager = "ROLE_MANAGER",
+  admin = "ROLE_ADMIN"
 }

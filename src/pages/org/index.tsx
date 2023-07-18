@@ -7,7 +7,6 @@ import OrgContent from "@/component/OrgContent";
 export default function Orgs() {
 
     const [organizations, setOrganizations] = useState<Organization[]>([]);
-
     useEffect(() => {
         getOrganizations(setOrganizations);
     }, [])
@@ -15,7 +14,7 @@ export default function Orgs() {
     return (
         <main className="org-main">
             <div className="org-content-container">
-              <OrgContent/>
+              <OrgContent />
              
             </div>
         </main>

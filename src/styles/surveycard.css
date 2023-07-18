@@ -15,6 +15,11 @@
 
 }
 
+.ui.card:hover {
+    transform: scale(1.2);
+    border: rgb(223, 219, 219) 1px solid;
+}
+
 .surveys-surveycard-box {
     display: flex;
     flex-wrap: wrap;
@@ -32,4 +37,8 @@ a.surveys-export-csv-link:hover {
 
 .survey-card-container {
     margin: 3%;
+}
+
+.survey-link {
+    text-decoration: none;
 }

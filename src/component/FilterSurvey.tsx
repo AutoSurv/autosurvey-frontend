@@ -13,41 +13,53 @@ type FilterProps = {
 export default function FilterSurvey( { surveys, setFilteredSurvey, setFilteredCountry } : FilterProps) {
   const [filterCountry, setFilterCountry] = useState<string[]>([]);
   const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
-  
-  const stateOptions = surveys.sort().map( (survey, index) => ({
-    key: index,
-    text: survey.country,
-    value: survey.country,
-  }));
 
-  console.log("surveys: ", surveys);
+  const uniqueSurveyCountryArray: string[] = [];
+
+  surveys.map(survey => {
+    if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
+      uniqueSurveyCountryArray.push(survey.country);
+    }
+  })
+  
+  // const stateOptions = surveys.sort().map( (survey, index) => ({
+  //   key: index,
+  //   text: survey.country,
+  //   value: survey.country,
+  // }));
+
+  const stateOptions = uniqueSurveyCountryArray.sort().map( (country, index: number) => ({
+    key: index,
+    text: country,
+    value: country,
+  }));
   
   const handleChange = (event: any, {value}: any) => {
     setFilterCountry(typeof value === 'string' ? value.split(',') : value);
 
-    setFilterSurvey(
-    surveys.filter((survey: AutoSurvey) => {  
-      if (filterCountry.length > 0) {
-        return filterCountry.some((country) => {
-          if (country == "" || country == null) {
-            return survey.country;
-          } else {
-            return survey.country.toLowerCase().includes(country.toLowerCase());
-          }
-        })
-      } else {
-        return survey;
-      }
-    })
-    )
+    // setFilterSurvey(
+    // surveys.filter((survey: AutoSurvey) => {  
+    //   if (filterCountry.length > 0) {
+    //     return filterCountry.some((country) => {
+    //       if (country == "" || country == null) {
+    //         return survey.country;
+    //       } else {
+    //         return survey.country.toLowerCase().includes(country.toLowerCase());
+    //       }
+    //     })
+    //   } else {
+    //     return survey;
+    //   }
+    // })
+    // )
     
   };
 
   setFilteredCountry?.(filterCountry);
 
   useEffect(() => {
-    setFilterSurvey(surveys);
-    console.log("filterSurvey: ", filterSurvey);
+    // setFilterSurvey(surveys);
+    // console.log("filterSurvey: ", filterSurvey);
   },[filterSurvey.length])
 
   

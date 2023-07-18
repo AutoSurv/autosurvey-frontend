@@ -1,16 +1,37 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization } from "../../type/type";
+import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
 import router from "next/router";
 
 
-const BASE_ORG_URL = `http://localhost:8080/api/organizations`;
-
-//Organization section
-//const BASE_ORG_URL = NEXT_PUBLIC_PORT + "/api/organizations"; //`${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 let jwt: any = "";
 if (typeof window !== "undefined") {
   jwt = localStorage.getItem("jwt");
 }
+
+//User section
+const BASE_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users`;
+export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>> ) {
+ const userURL = BASE_USER_URL + `/${name}`;
+ const apiResponse = await fetch(userURL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    mode: "cors",
+  });
+  if (apiResponse.status === 200) {
+
+    const data: User = await apiResponse.json();
+    setUser(data);
+    return data;
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
+}
+
+//Organization section
+const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 
 export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   const apiResponse = await fetch(BASE_ORG_URL, {
@@ -35,6 +56,7 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
 };
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
+  
   const organizationURL = BASE_ORG_URL + `/${orgid}`;
   const apiResponse = await fetch(organizationURL, {
     cache: 'no-store',
@@ -57,7 +79,6 @@ export async function getOrganization(orgid: string | string[], setOrganization:
 }
 
 export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>, username: string) {
-
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value,
     creatorName: username
@@ -126,8 +147,8 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 
 
 //Survey section
-//const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
-const BASE_SURVEY_URL = "http://localhost:8080/api/autosurveys"
+const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
+//const BASE_SURVEY_URL = "http://localhost:8080/api/autosurveys"
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
@@ -174,6 +195,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: AutoSurveyRequestDto = {
     country: event.currentTarget.country.value,
+    year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
     utilities: event.currentTarget.utilities.value,
     food: event.currentTarget.food.value,
@@ -226,6 +248,7 @@ export async function addImportedSurvey(
   for (let i = 0; i < surveyArr.length; i++) {
     const reqBody: AutoSurveyRequestDto = {
       country: surveyArr[i].country,
+      year: surveyArr[i].year,
       rent: surveyArr[i].rent,
       utilities: surveyArr[i].utilities,
       food: surveyArr[i].food,
@@ -274,6 +297,7 @@ export async function updateSurvey(id: string | string[] | undefined, event: Rea
 
   const reqBody: AutoSurveyUpdateDto = {
     country: event.currentTarget.country.value,
+    year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
     utilities: event.currentTarget.utilities.value,
     food: event.currentTarget.food.value,
@@ -322,8 +346,8 @@ export async function deleteSurvey(id: string | string[] | undefined, setSurveys
 
 //userSection
 
-const AUTH_URL = "http://localhost:8080/authenticate";
-const NEW_USER_URL = "http://localhost:8080/users/new";
+const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
+const NEW_USER_URL = `${process.env.NEXT_PUBLIC_PORT}//users/new`;
 
 
 export async function signUpUser(data: FormDataSingUp) {

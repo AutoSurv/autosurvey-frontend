@@ -3,16 +3,7 @@ import { AutoSurvey, FormDataSingUp, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
-import * as bcryptjs from 'bcryptjs'
 
-//bcrypt issue #49759
-
-type UserData = {
-  username: string,
-  password: string,
-  email: string,
-  roles: string
-}
 
 export const downloadExcel = (data: any) => {
 
@@ -42,18 +33,21 @@ export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): voi
 export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormElement>,
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignUpStatus: Dispatch<SetStateAction<boolean>>,
-  setUserNameAuth: Dispatch<SetStateAction<string>>,
+  setUserNameAuth: Dispatch<SetStateAction<string>>
 ): Promise<void> {
 
   const inputBody: LoginUser = {
     username: event.currentTarget.username.value,
-    //password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP)
-    password: event.currentTarget.password.value,
+    password: event.currentTarget.password.value
   }
   localStorage.clear();
+
   await authenticateUser(inputBody)
     .then((response) => {
-      if (response.status === 200) return response.text();
+      if (response.status === 200) {
+        
+        return response.text();
+      }
       else if (response.status === 401 || response.status === 403) {
         setErrorMsg("Invalid username or password");
       } else {
@@ -65,7 +59,6 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
     .then((data: any) => {
       const loggedUser: LoggedUser = JSON.parse(data);
       if (loggedUser) {
-        
         localStorage.setItem("role", loggedUser.role);
         localStorage.setItem("jwt", loggedUser.token);
         localStorage.setItem("username", loggedUser.username);
@@ -74,6 +67,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
         router.push("org");
       }
     });
+
 }
 
 export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
@@ -84,13 +78,12 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
-    //password: bcryptjs.hashSync(event.currentTarget.password.value, process.env.SALT_JUMP),
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user"
   }
   localStorage.clear();
-  
+
   if (!inputSignUpBody.username) {
     setErrorMsg('Please choose a name.');
     return;

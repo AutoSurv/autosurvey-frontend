@@ -12,7 +12,7 @@ export default function Home() {
 
 
         <div className="home-body">
-          <Header className="home-header" as='h1' icon textAlign='center' color='blue' inverted>
+          <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
             <Icon name='clipboard' />
             <Header.Content>Welcome to AutoSurvey</Header.Content>
           </Header>

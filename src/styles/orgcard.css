@@ -13,7 +13,7 @@
 
 .org-card-btn-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
 }
 
 .ui.card.org-card:hover{
@@ -55,6 +55,20 @@
 .org-card-container {
 
     margin: 3%;
+}
+
+.header.org-card-header {
+    margin-left: 5%;
+    font-size:x-large;
+}
+
+.meta.org-card-meta {
+    margin-left: 2%;
+}
+
+.ui.card.org-card:hover {
+    transform: scale(1.05);
+    border: rgb(223, 219, 219) 1px solid;
 }
 
 

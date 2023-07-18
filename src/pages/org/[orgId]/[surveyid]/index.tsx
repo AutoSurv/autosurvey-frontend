@@ -3,84 +3,92 @@ import { deleteSurvey, getSurvey, getSurveys } from "@/pages/api/autosurvey";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
+import { Button, Confirm, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
 import { AutoSurvey } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
-import { initSurvey } from "@/helper/initializer";
 
 
 export default function SurveyDetails() {
 
   const router = useRouter();
-  const { orgid, surveyid } = router.query;
-  const { organization, setOrganization, survey, setSurvey, setSignUpStatus } = useContext(OrgContext);
-  const [errMessage, setErrMessage] = useState<string>("");
-  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+  const { orgId, surveyid } = router.query;
+  const { organization, survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
+  const [openConfirm, setOpenConfirm] = useState(false);
 
   useEffect(() => {
-    setSurvey(initSurvey);
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
     getSurveys(setSurveys);
-  }, [surveyid])
+  }, [setSurvey])
 
   const surveyArray: AutoSurvey[] = [survey];
 
   return (
-    <>
     <div className="specificsurvey-card-container">
       <Header className="home-header" as='h1' icon textAlign='center' color='blue' >
-        <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
-      </Header>
-      <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Home</Link></Menu.Item>
-        <Menu.Item>
-          <Link href={"#"}>   
-            <Dropdown text='Export Survey'>
-              <Dropdown.Menu>
-                <Dropdown.Item>
-                  <Link href={"#"} onClick={(e) => {
-                    e.preventDefault();
-                    downloadExcel(surveyArray);
-                  }} >Export Surveys (xlsx)
+                <Header.Content><Icon name='clipboard' />AutoSurvey</Header.Content>
+            </Header>
+            <Menu size='small' color="blue">
+                <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
+                <Menu.Item>
+                  <Link href={"#"}>   
+                    <Dropdown text='Export Survey'>
+                      <Dropdown.Menu>
+                        <Dropdown.Item>
+                          <Link href={"#"} onClick={(e) => {
+                            e.preventDefault();
+                            downloadExcel(surveyArray);
+                          }} >Export Surveys (xlsx)
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                          <label >
+                            <CSVLink className="surveys-export-csv-link" filename={organization.orgName +"_" + survey.country + "_" +survey.id + ".csv"} data={surveyArray}> 
+                              Export Survey (csv)
+                            </CSVLink>
+                          </label>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </Link>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <label >
-                    <CSVLink className="surveys-export-csv-link" filename={organization.orgName +"_" + survey.country + "_" +survey.id + ".csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> 
-                      Export Survey (csv)
-                    </CSVLink>
-                  </label>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Link>
-        </Menu.Item>
-        <Menu.Item> <Link href={"/org/" + orgid} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
-        <Menu.Menu position='right'>
-        <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-          <Menu.Item>
-            <Button onClick={() => {
-              setSignUpStatus(false);
-              SignOut(setSignUpStatus);
-          }}
-             circular icon='sign out' color='blue' inverted></Button>
-          </Menu.Item>
-        </Menu.Menu>
-      </Menu>
-    
-      <TableContainer className="specificsurvey-table-container" component={Paper}>
+                </Menu.Item>
+                <Menu.Item> <Link href={"/org/"+ orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
+                <Menu.Menu position='right'>
+                  <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
+                  <Menu.Item>
+                      <Button onClick={() => {
+                          setSignUpStatus(false);
+                          SignOut(setSignUpStatus);
+                      }}
+                          circular icon='sign out' color='blue' inverted></Button>
+                  </Menu.Item>
+                </Menu.Menu>
+            </Menu>
+      {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
+
+          <TableHead>
+            <TableRow>
+              <TableCell colSpan={2} className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country} {survey.year}</TableCell>
+            </TableRow>
+          </TableHead>
+
           <TableBody>
             <TableRow className="survey-table-row">
-              <TableCell component="th" scope="row" align="center" >
+              <TableCell component="th" scope="row" align="center">
                 Country:
               </TableCell>
               <TableCell align="center">{survey.country}</TableCell>
+            </TableRow>
+            <TableRow className="survey-table-row">
+              <TableCell component="th" scope="row" align="center">
+                Year:
+              </TableCell>
+              <TableCell align="center">{survey.year}</TableCell>
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="center">
@@ -198,20 +206,27 @@ export default function SurveyDetails() {
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="center">
-              <UpdateSurvey survey={survey} orgid={orgid} setSurvey={setSurvey}/>
+              <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey}/>
               </TableCell>
-              <TableCell align="center"><Button onClick={(e) => {
+              <TableCell align="right"><Button onClick={() => {
+                setOpenConfirm(true);
+              }}  color="orange" basic>Delete Survey</Button><Confirm
+              open={openConfirm}
+              header='Remove your survey'
+              content='Are you sure you want to remove your survey?'
+              onCancel={() => setOpenConfirm(false)}
+              onConfirm={(e) => {
                 e.preventDefault();
                 deleteSurvey(surveyid, setSurveys);
-                window.location.href = "/org/" + orgid;
-              }} color="orange" basic>Delete Survey</Button></TableCell>
+                setOpenConfirm(false);
+                window.location.href = "/org/" + orgId;
+              }}
+            /></TableCell>
             </TableRow>
-            
-          
+
           </TableBody>
         </Table>
-      </TableContainer>
-      </div>
-    </>
+      </TableContainer>}
+    </div>
   )
 }

@@ -1,6 +1,13 @@
+.whole-html {
+    background-color:whitesmoke;
+}
+
+.whole-body {
+    background-color:whitesmoke;
+}
+
 .home-body {
     
-    background-color: whitesmoke;
     min-height: 100vh;
 }
 
@@ -20,4 +27,14 @@
     margin-top: 15%;
     margin-bottom: 1%;
     text-align: center;
+}
+
+
+.MuiGrid-root.MuiGrid-item.css-13i4rnv-MuiGrid-root:hover {
+    cursor: pointer;
+}
+
+.ui.blue.icon.center.aligned.header.home-header {
+    width: 30%;
+    margin-top: 5%;
 }
