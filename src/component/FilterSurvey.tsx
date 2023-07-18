@@ -1,79 +1,38 @@
-import { AutoSurvey } from '@/type/type';
-import { FormControl, InputLabel, ListItemText, OutlinedInput, SelectChangeEvent } from '@mui/material';
-import React, { Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from 'react'
-import { Checkbox, Dropdown, MenuItem, Select } from 'semantic-ui-react'
-
+import { AutoSurvey } from "@/type/type";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import FilterCountry from "./FilterCountry";
 
 type FilterProps = {
   surveys: AutoSurvey[];
   setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
-  setFilteredCountry: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterSurvey( { surveys, setFilteredSurvey, setFilteredCountry } : FilterProps) {
-  const [filterCountry, setFilterCountry] = useState<string[]>([]);
-  const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
+export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
+  const [filteredCountry, setFilteredCountry] = useState<string[]>([]);
 
-  const uniqueSurveyCountryArray: string[] = [];
-
-  surveys.map(survey => {
-    if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
-      uniqueSurveyCountryArray.push(survey.country);
-    }
+  useEffect (() => {
+    setFilteredSurvey(
+    surveys.filter((survey: AutoSurvey) => {  
+      if (filteredCountry.length > 0) {
+        return filteredCountry.some((country) => {
+          if (country == "" || country == null) {
+            return survey.country;
+          } else {
+            return survey.country.toLowerCase().includes(country.toLowerCase());
+          }
+        })
+      } else {
+        return survey;
+      }
+    })
+    )
   })
-  
-  // const stateOptions = surveys.sort().map( (survey, index) => ({
-  //   key: index,
-  //   text: survey.country,
-  //   value: survey.country,
-  // }));
 
-  const stateOptions = uniqueSurveyCountryArray.sort().map( (country, index: number) => ({
-    key: index,
-    text: country,
-    value: country,
-  }));
-  
-  const handleChange = (event: any, {value}: any) => {
-    setFilterCountry(typeof value === 'string' ? value.split(',') : value);
-
-    // setFilterSurvey(
-    // surveys.filter((survey: AutoSurvey) => {  
-    //   if (filterCountry.length > 0) {
-    //     return filterCountry.some((country) => {
-    //       if (country == "" || country == null) {
-    //         return survey.country;
-    //       } else {
-    //         return survey.country.toLowerCase().includes(country.toLowerCase());
-    //       }
-    //     })
-    //   } else {
-    //     return survey;
-    //   }
-    // })
-    // )
+  return(
     
-  };
+    <section >
 
-  setFilteredCountry?.(filterCountry);
-
-  useEffect(() => {
-    // setFilterSurvey(surveys);
-    // console.log("filterSurvey: ", filterSurvey);
-  },[filterSurvey.length])
-
-  
-
-  return (
-    <Dropdown
-    placeholder='Country'
-    fluid
-    multiple
-    search
-    selection
-    options={stateOptions}
-    onChange={handleChange}
-    />
+      <FilterCountry surveys={surveys}  setFilteredCountry={setFilteredCountry} />
+    </section>
   )
-
 }

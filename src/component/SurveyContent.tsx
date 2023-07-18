@@ -21,7 +21,6 @@ export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
-  const [filteredCountry, setFilteredCountry] = useState<string[]>([]); 
   
   
   useEffect(() => {
@@ -40,7 +39,7 @@ export default function SurveyContent() {
       text: 'Monthly Living Costs by country'
     }, 
     xaxis: {
-      categories: surveys.map( (s) => s.country)
+      categories: filteredSurvey.map( (s) => s.country)
       
     },
 
@@ -49,22 +48,22 @@ export default function SurveyContent() {
 
   const series = [{
     name: 'rent',
-    data: surveys.map( (s) => s.rent)
+    data: filteredSurvey.map( (s) => s.rent)
   }, {
     name: 'utilities',
-    data: surveys.map( (s) => s.utilities)
+    data: filteredSurvey.map( (s) => s.utilities)
   }, {
     name: 'food',
-    data: surveys.map( (s) => s.food)
+    data: filteredSurvey.map( (s) => s.food)
   }, {
     name: 'basic item',
-    data: surveys.map( (s) => s.basicItems)
+    data: filteredSurvey.map( (s) => s.basicItems)
   }, {
     name: 'transportation',
-    data: surveys.map( (s) => s.transportation)
+    data: filteredSurvey.map( (s) => s.transportation)
   }, {
     name: 'education total',
-    data: surveys.map( (s) => s.educationTotal)
+    data: filteredSurvey.map( (s) => s.educationTotal)
   }
 ]
 
@@ -87,13 +86,13 @@ export default function SurveyContent() {
                   <Dropdown.Item>
                     <Link href={"#"} onClick={(e) => {
                       e.preventDefault();
-                      downloadExcel(surveys.filter(s => s.orgName === organization.orgName));
+                      downloadExcel(filteredSurvey.filter(s => s.orgName === organization.orgName));
                     }} >Export Surveys (xlsx)
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <label >
-                      <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}> 
+                      <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurvey.filter(s => s.orgName === organization.orgName)}> 
                         Export Survey (csv)
                       </CSVLink>
                     </label>
@@ -117,7 +116,7 @@ export default function SurveyContent() {
 
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey} setFilteredCountry={setFilteredCountry} />
+      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey}/>
       
       <Chart
         type="bar"
@@ -140,19 +139,8 @@ export default function SurveyContent() {
           </Table.Header>
           <Table.Body>
             {
-              surveys.filter((survey: AutoSurvey) => {  
-                if (filteredCountry.length > 0) {
-                  return filteredCountry.some((country) => {
-                    if (country == "" || country == null) {
-                      return survey.country;
-                    } else {
-                      return survey.country.toLowerCase().includes(country.toLowerCase());
-                    }
-                  })
-                } else {
-                  return survey;
-                }
-              }).map((matchingSurvey: AutoSurvey, index: number) => {
+              filteredSurvey
+              .map((matchingSurvey: AutoSurvey, index: number) => {
                 return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
               })
             }
