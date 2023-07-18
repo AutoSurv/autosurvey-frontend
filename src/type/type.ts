@@ -123,3 +123,12 @@ export enum ROLE {
   manager = "ROLE_MANAGER",
   admin = "ROLE_ADMIN"
 }
+
+export interface Data {
+  rent: number[];
+  utilities: number[];
+  food: number[];
+  basicItems: number[];
+  transportation: number[];
+  educationTotal: number[];
+};
