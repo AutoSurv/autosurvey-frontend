@@ -9,13 +9,11 @@ import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
-import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
@@ -39,7 +37,7 @@ export default function SurveyContent() {
       text: 'Monthly Living Costs by country'
     }, 
     xaxis: {
-      categories: filteredSurvey.map( (s) => s.country)
+      categories: surveys.map( (s) => s.country)
       
     },
 
@@ -48,22 +46,22 @@ export default function SurveyContent() {
 
   const series = [{
     name: 'rent',
-    data: filteredSurvey.map( (s) => s.rent)
+    data: surveys.map( (s) => s.rent)
   }, {
     name: 'utilities',
-    data: filteredSurvey.map( (s) => s.utilities)
+    data: surveys.map( (s) => s.utilities)
   }, {
     name: 'food',
-    data: filteredSurvey.map( (s) => s.food)
+    data: surveys.map( (s) => s.food)
   }, {
     name: 'basic item',
-    data: filteredSurvey.map( (s) => s.basicItems)
+    data: surveys.map( (s) => s.basicItems)
   }, {
     name: 'transportation',
-    data: filteredSurvey.map( (s) => s.transportation)
+    data: surveys.map( (s) => s.transportation)
   }, {
     name: 'education total',
-    data: filteredSurvey.map( (s) => s.educationTotal)
+    data: surveys.map( (s) => s.educationTotal)
   }
 ]
 
