@@ -1,6 +1,7 @@
 import { AutoSurvey } from "@/type/type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import FilterCountry from "./FilterCountry";
+import FilterSurveyByCountry from "./FilterSurveyByCountry";
+import FilterLocation from "./FilterLocation";
 
 type FilterProps = {
   surveys: AutoSurvey[];
@@ -8,31 +9,44 @@ type FilterProps = {
 }
 
 export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
-  const [filteredCountry, setFilteredCountry] = useState<string[]>([]);
+  const [filterLocation, setFilterLocation] = useState<string[]>([]);
+  const [filterCountry, setFilterCountry] = useState<string[]>([]);
+  const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
 
   useEffect (() => {
     setFilteredSurvey(
-    surveys.filter((survey: AutoSurvey) => {  
-      if (filteredCountry.length > 0) {
-        return filteredCountry.some((country) => {
-          if (country == "" || country == null) {
-            return survey.country;
+      filterSurvey.filter((survey: AutoSurvey) => {  
+
+      if (filterLocation.length > 0) {
+        return filterLocation.some((location) => {
+          if (location == "" || location == null) {
+            return survey.locationClustered;
           } else {
-            return survey.country.toLowerCase().includes(country.toLowerCase());
+            return survey.locationClustered.toLowerCase().includes(location.toLowerCase());
           }
         })
-      } else {
-        return survey;
+      } 
+      else {
+         return survey;
       }
     })
+
     )
-  },[surveys.length, filteredCountry.length])
+  }, [filterSurvey.length, filterLocation.length])
 
   return(
     
     <section >
+      
+      {
+        <FilterSurveyByCountry surveys={surveys}  setFilteredSurvey={setFilterSurvey} setFilteredCountry={setFilterCountry}/>
+      }
 
-      <FilterCountry surveys={surveys}  setFilteredCountry={setFilteredCountry} />
+      {
+        filterCountry.length > 0 ?
+        <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} filteredCountry={filterCountry}/>
+        : null
+      }  
     </section>
   )
 }
