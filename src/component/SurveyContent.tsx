@@ -20,6 +20,7 @@ export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
+  
   let country_list = new Set<string>([]);
   filteredSurvey.forEach((s) => country_list.add(s.country));
   const country_arr = Array.from(country_list);
