@@ -15,8 +15,6 @@ export default function FilterLocation( { surveys, setFilteredLocation } : Filte
 
   const uniqueSurveyCountryArray: string[] = [];
 
-  console.log("filteredSurvey:", filteredSurvey);
-
   filteredSurvey.map(survey => {
     if (uniqueSurveyCountryArray.indexOf(survey.locationClustered) === -1) {
       uniqueSurveyCountryArray.push(survey.locationClustered);
@@ -44,7 +42,9 @@ export default function FilterLocation( { surveys, setFilteredLocation } : Filte
 
   return (
     <>
-    <FilterSurveyByCountry surveys={surveys}  setFilteredSurvey={setFilteredSurvey} />
+    {
+      //<FilterSurveyByCountry surveys={surveys}  setFilteredSurvey={setFilteredSurvey} />
+    }
     <Dropdown
       placeholder='Location'
       fluid

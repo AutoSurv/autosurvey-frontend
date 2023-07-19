@@ -30,11 +30,10 @@ export default function FilterCountry( { surveys, setFilteredCountry } : FilterP
    
   };
 
+  
 
-  setFilteredCountry(filterCountry);
-    
   useEffect(() => {
-    
+    setFilteredCountry(filterCountry);
   },[filterCountry.length])
 
   

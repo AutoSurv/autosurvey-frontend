@@ -28,7 +28,7 @@ export default function FilterSurveyByCountry( { surveys, setFilteredSurvey } : 
       }
     })
     )
-  }, [])
+  }, [surveys.length, filteredCountry])
 
   return(
     

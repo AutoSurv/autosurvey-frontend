@@ -14,15 +14,41 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
 
   
   useEffect (() => {
-    console.log("--")
+    console.log("filteredLocation: ", filteredLocation)
     setFilteredSurvey(
     surveys.filter((survey: AutoSurvey) => {  
       if (filteredCountry.length > 0) {
-        return filteredCountry.some((country) => {
-          if (country == "" || country == null) {
-            return survey.country;
+        if (filteredLocation.length > 0) {
+          return filteredLocation.some((location) => {
+            if (location == "" || location == null) {
+              return survey.locationClustered;
+            } else {
+              return survey.locationClustered.toLowerCase().includes(location.toLowerCase());
+            }
+          })
+        } else {
+          return survey;
+        }} 
+          else {
+          return filteredCountry.some((country) => {
+            if (country == "" || country == null) {
+              return survey.country;
+            } else {
+              return survey.country.toLowerCase().includes(country.toLowerCase());
+            }
+            })
+            
+      } else {
+        return survey;
+      }
+
+      
+      if (filteredLocation.length > 0) {
+        return filteredLocation.some((location) => {
+          if (location == "" || location == null) {
+            return survey.locationClustered;
           } else {
-            return survey.country.toLowerCase().includes(country.toLowerCase());
+            return survey.locationClustered.toLowerCase().includes(location.toLowerCase());
           }
         })
       } else {
@@ -30,7 +56,7 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
       }
     })
     )
-  }, [surveys.length, filteredCountry.length])
+  }, [surveys.length, filteredLocation.length])
 
   return(
     
@@ -42,7 +68,7 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
         <FilterCountry surveys={surveys}  setFilteredCountry={setFilteredCountry} />
       }
       {
-        //<FilterLocation surveys={surveys} setFilteredLocation={setFilteredLocation}/>
+        <FilterLocation surveys={surveys} setFilteredLocation={setFilteredLocation}/>
       }  
     </section>
   )
