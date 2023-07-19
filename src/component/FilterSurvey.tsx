@@ -12,14 +12,12 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
   const [filteredCountry, setFilteredCountry] = useState<string[]>([]);
   const [filteredLocation, setFilteredLocation] = useState<string[]>([]);
 
-  console.log("FilterSurvey.filteredCountry: ", filteredCountry.length)
   
   useEffect (() => {
-    console.log("in useEffetct: ")
+    console.log("--")
     setFilteredSurvey(
     surveys.filter((survey: AutoSurvey) => {  
       if (filteredCountry.length > 0) {
-        console.log("length > 0 ")
         return filteredCountry.some((country) => {
           if (country == "" || country == null) {
             return survey.country;
@@ -28,12 +26,11 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
           }
         })
       } else {
-        console.log("show every survey: ")
         return survey;
       }
     })
     )
-  }, [surveys.length])
+  }, [surveys.length, filteredCountry.length])
 
   return(
     
