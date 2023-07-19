@@ -43,29 +43,30 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
               return survey.locationClustered.toLowerCase().includes(location.toLowerCase());
             }
           })
-        } else {
-          return survey;
+        } 
+        else {
+           return survey;
         }
       })
 
 
 
     )
-  }, [filterSurvey.length, filterLocation.length, filterCountry.length])
+  }, [filterSurvey.length, filterLocation.length])
 
   return(
     
     <section >
       
       {
-        <FilterSurveyByCountry surveys={surveys}  setFilteredSurvey={setFilterSurvey} />
+        <FilterSurveyByCountry surveys={surveys}  setFilteredSurvey={setFilterSurvey} setFilteredCountry={setFilterCountry}/>
       }
 
       {
         //<FilterCountry surveys={surveys}  setFilteredCountry={setFilterCountry} />
       }
       {
-        <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation}/>
+        <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} filteredCountry={filterCountry}/>
       }  
     </section>
   )

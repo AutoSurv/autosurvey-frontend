@@ -7,21 +7,23 @@ import FilterSurveyByCountry from './FilterSurveyByCountry';
 type FilterProps = {
   surveys: AutoSurvey[];
   setFilteredLocation: Dispatch<SetStateAction<string[]>>
-
+  filteredCountry: string[]
 }
 
-export default function FilterLocation( { surveys, setFilteredLocation } : FilterProps) {
+export default function FilterLocation( { surveys, setFilteredLocation, filteredCountry } : FilterProps) {
   const [filterLocation, setFilterLocation] = useState<string[]>([]);
   const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
   
   const uniqueSurveyCountryArray: string[] = [];
-    surveys
-    //filterSurvey
-   .filter(survey => {
-    if (uniqueSurveyCountryArray.indexOf(survey.locationClustered) === -1) {
-      uniqueSurveyCountryArray.push(survey.locationClustered);
-    }
-  })
+    if (filteredCountry.length > 0) {
+      surveys
+      //filterSurvey
+    .filter(survey => {
+      if (uniqueSurveyCountryArray.indexOf(survey.locationClustered) === -1) {
+        uniqueSurveyCountryArray.push(survey.locationClustered);
+      }
+    })
+  }
   
   
   const stateOptions = uniqueSurveyCountryArray.sort().map( (locationClustered, index: number) => ({

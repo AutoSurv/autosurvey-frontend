@@ -5,18 +5,19 @@ import FilterCountry from "./FilterCountry";
 type FilterProps = {
   surveys: AutoSurvey[];
   setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
-
+  setFilteredCountry: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterSurveyByCountry( { surveys, setFilteredSurvey } : FilterProps) {
-  const [filteredCountry, setFilteredCountry] = useState<string[]>([]);
+export default function FilterSurveyByCountry( { surveys, setFilteredSurvey, setFilteredCountry } : FilterProps) {
+  const [filterCountry, setFilterCountry] = useState<string[]>([]);
   
 
   useEffect (() => {
+    setFilteredCountry(filterCountry);
     setFilteredSurvey(
     surveys.filter((survey: AutoSurvey) => {  
-      if (filteredCountry.length > 0) {
-        return filteredCountry.some((country) => {
+      if (filterCountry.length > 0) {
+        return filterCountry.some((country) => {
           if (country == "" || country == null) {
             return survey.country;
           } else {
@@ -28,7 +29,7 @@ export default function FilterSurveyByCountry( { surveys, setFilteredSurvey } : 
       }
     })
     )
-  }, [surveys.length, filteredCountry.length])
+  }, [surveys.length, filterCountry.length])
 
   return(
     
@@ -38,7 +39,7 @@ export default function FilterSurveyByCountry( { surveys, setFilteredSurvey } : 
 
     
       {
-        <FilterCountry surveys={surveys}  setFilteredCountry={setFilteredCountry} />
+        <FilterCountry surveys={surveys}  setFilteredCountry={setFilterCountry} />
       }
   
 
