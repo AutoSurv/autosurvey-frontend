@@ -11,11 +11,7 @@ import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
-<<<<<<< HEAD
-import CountryFilter from "./CountryFilter";
-=======
 import FilterSurvey from "./FilterSurvey";
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -23,21 +19,11 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
-<<<<<<< HEAD
-  const [filterValue, setFilterValue] = useState<string[]>([]);
-  const filterChanged = (value: string[]) => {
-    setFilterValue(value);
-  }
-
+  const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
   let country_list = new Set<string>([]);
-  surveys.forEach((s) => country_list.add(s.country));
+  filteredSurvey.forEach((s) => country_list.add(s.country));
   const country_arr = Array.from(country_list);
 
-=======
-  const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
-  
-  
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
   useEffect(() => {
     getSurveys(setSurveys);
   }, []);
@@ -54,13 +40,7 @@ export default function SurveyContent() {
       text: 'Monthly Living Costs by country'
     },
     xaxis: {
-<<<<<<< HEAD
       categories: country_arr
-
-=======
-      categories: filteredSurvey.map( (s) => s.country)
-      
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
     },
 
 
@@ -68,7 +48,7 @@ export default function SurveyContent() {
 
 
   const five_var: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
- 
+
   let five_data: Data = {
     rent: [],
     utilities: [],
@@ -77,60 +57,61 @@ export default function SurveyContent() {
     transportation: [],
     educationTotal: []
   };
-  if (surveys.filter((s) => filterValue.includes(s.country))) {}
+  //if (surveys.filter((s) => filterValue.includes(s.country))) {}
   for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize = surveys.filter((s) => filterValue.includes(s.country) && country_arr[i] === s.country && s.rent).map((s) => s.rent).length;
-    const result = surveys.filter((s) => filterValue.includes(s.country) && country_arr[i] === s.country && s.rent).map((s) => s.rent).reduce(function add(sum, rent) {
+    const filteredSize_rent = filteredSurvey.filter((s) => s.rent && country_arr[i] === s.country).map((s) => s.rent).length;
+    const result_rent = filteredSurvey.filter((s) => s.rent && country_arr[i] === s.country).map((s) => s.rent).reduce(function add(sum, rent) {
       return sum + rent;
-    }, 0) / filteredSize;
-    five_data.rent.push(parseInt(result.toFixed(2)));
-  };
+    }, 0) / filteredSize_rent;
+    five_data.rent.push(parseInt(result_rent.toFixed(2)));
+  }
 
   for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize = surveys.filter((s) => country_arr[i] === s.country && s.utilities).map((s) => s.utilities).length;
-    const result = surveys.filter((s) => country_arr[i] === s.country && s.utilities).map((s) => s.utilities).reduce(function add(sum, utilities) {
+    const filteredSize_util = filteredSurvey.filter((s) => s.utilities && country_arr[i] === s.country).map((s) => s.utilities).length;
+    const result_util = filteredSurvey.filter((s) => s.utilities && country_arr[i] === s.country).map((s) => s.utilities).reduce(function add(sum, utilities) {
       return sum + utilities;
-    }, 0) / filteredSize;
-    five_data.utilities.push(parseFloat(result.toFixed(2)));
-  };
+    }, 0) / filteredSize_util;
+    five_data.utilities.push(parseFloat(result_util.toFixed(2)));
+  }
 
   for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize = surveys.filter((s) => country_arr[i] === s.country && s.food).map((s) => s.food).length;
-    const result = surveys.filter((s) => country_arr[i] === s.country && s.food).map((s) => s.food).reduce(function add(sum, food) {
+    const filteredSize_food = filteredSurvey.filter((s) => s.food && country_arr[i] === s.country).map((s) => s.food).length;
+    const result_food = surveys.filter((s) => s.food && country_arr[i] === s.country).map((s) => s.food).reduce(function add(sum, food) {
       return sum + food;
-    }, 0) / filteredSize;
-    five_data.food.push(parseFloat(result.toFixed(2)));
-  };
+    }, 0) / filteredSize_food;
+    five_data.food.push(parseFloat(result_food.toFixed(2)));
+  }
 
   for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize = surveys.filter((s) => country_arr[i] === s.country && s.basicItems).map((s) => s.basicItems).length;
-    const result = surveys.filter((s) => country_arr[i] === s.country && s.basicItems).map((s) => s.basicItems).reduce(function add(sum, basicItems) {
+    const filteredSize_basicItem = filteredSurvey.filter((s) => s.basicItems && country_arr[i] === s.country).map((s) => s.basicItems).length;
+    const result_basicItem = filteredSurvey.filter((s) => s.basicItems && country_arr[i] === s.country).map((s) => s.basicItems).reduce(function add(sum, basicItems) {
       return sum + basicItems;
-    }, 0) / filteredSize;
-    five_data.basicItems.push(parseFloat(result.toFixed(2)));
-  };
-  
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize = surveys.filter((s) => country_arr[i] === s.country && s.transportation).map((s) => s.transportation).length;
-    const result = surveys.filter((s) => country_arr[i] === s.country && s.transportation).map((s) => s.transportation).reduce(function add(sum, transportation) {
-      return sum + transportation;
-    }, 0) / filteredSize;
-    five_data.transportation.push(parseFloat(result.toFixed(2)));
-  };
+    }, 0) / filteredSize_basicItem;
+    five_data.basicItems.push(parseFloat(result_basicItem.toFixed(2)));
+  }
 
   for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize = surveys.filter((s) => country_arr[i] === s.country && s.educationTotal).map((s) => s.educationTotal).length;
-    const result = surveys.filter((s) => country_arr[i] === s.country && s.educationTotal).map((s) => s.educationTotal).reduce(function add(sum, educationTotal) {
+    const filteredSize_tranport = filteredSurvey.filter((s) => s.transportation && country_arr[i] === s.country).map((s) => s.transportation).length;
+    const result_transport = filteredSurvey.filter((s) => s.transportation && country_arr[i] === s.country).map((s) => s.transportation).reduce(function add(sum, transportation) {
+      return sum + transportation;
+    }, 0) / filteredSize_tranport;
+    five_data.transportation.push(parseFloat(result_transport.toFixed(2)));
+  }
+
+
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_edu = filteredSurvey.filter((s) => s.educationTotal && country_arr[i] === s.country).map((s) => s.educationTotal).length;
+    const result_edu = filteredSurvey.filter((s) => s.educationTotal && country_arr[i] === s.country).map((s) => s.educationTotal).reduce(function add(sum, educationTotal) {
       return sum + educationTotal;
-    }, 0) / filteredSize;
-    five_data.educationTotal.push(parseFloat(result.toFixed(2)));
-  };
+    }, 0) / filteredSize_edu;
+    five_data.educationTotal.push(parseFloat(result_edu.toFixed(2)));
+  }
+
 
 
 
   const series = [{
     name: 'rent',
-<<<<<<< HEAD
     data: five_data.rent
   }, {
     name: 'utilities',
@@ -147,52 +128,37 @@ export default function SurveyContent() {
   }, {
     name: 'education total',
     data: five_data.educationTotal
-=======
-    data: filteredSurvey.map( (s) => s.rent)
-  }, {
-    name: 'utilities',
-    data: filteredSurvey.map( (s) => s.utilities)
-  }, {
-    name: 'food',
-    data: filteredSurvey.map( (s) => s.food)
-  }, {
-    name: 'basic item',
-    data: filteredSurvey.map( (s) => s.basicItems)
-  }, {
-    name: 'transportation',
-    data: filteredSurvey.map( (s) => s.transportation)
-  }, {
-    name: 'education total',
-    data: filteredSurvey.map( (s) => s.educationTotal)
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
   }
   ];
 
   return (
     <div className="surveys-content">
-      <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
-        <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
-      </Header>
+      <div className="home-header-container">
+        <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
+          <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
+        </Header>
+      </div>
       <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item >
-<<<<<<< HEAD
           <Link href={"#"}>
             <Dropdown text='Export / Import'>
               <Dropdown.Menu>
                 <Dropdown.Item >
-                  <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+                  <Link href={"#"}>
+                    <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+                  </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <Link href={"#"} onClick={(e) => {
                     e.preventDefault();
-                    downloadExcel(surveys.filter(s => s.orgName === organization.orgName));
+                    downloadExcel(filteredSurvey.filter(s => s.orgName === organization.orgName));
                   }} >Export Surveys (xlsx)
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <label >
-                    <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={surveys.filter(s => s.orgName === organization.orgName)}>
+                    <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurvey.filter(s => s.orgName === organization.orgName)}>
                       Export Survey (csv)
                     </CSVLink>
                   </label>
@@ -202,35 +168,6 @@ export default function SurveyContent() {
           </Link>
         </Menu.Item>
 
-=======
-            <Link href={"#"}>
-              <Dropdown text='Export / Import'>
-                <Dropdown.Menu>
-                  <Dropdown.Item >
-                    <Link href={"#"}>
-                      <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link href={"#"} onClick={(e) => {
-                      e.preventDefault();
-                      downloadExcel(filteredSurvey.filter(s => s.orgName === organization.orgName));
-                    }} >Export Surveys (xlsx)
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <label >
-                      <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurvey.filter(s => s.orgName === organization.orgName)}> 
-                        Export Survey (csv)
-                      </CSVLink>
-                    </label>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Link>
-          </Menu.Item>
-        
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
         <Menu.Menu position='right'>
           <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
           <Menu.Item>
@@ -245,13 +182,8 @@ export default function SurveyContent() {
 
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-<<<<<<< HEAD
-      <CountryFilter country_arr={country_arr} filterChanged={filterChanged} filterValue={filterValue} />
+      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey} />
 
-=======
-      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey}/>
-      
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
       <Chart
         type="bar"
         options={options}
@@ -272,21 +204,12 @@ export default function SurveyContent() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-<<<<<<< HEAD
-            {organization.surveys.filter((s) => filterValue.includes(s.country)).map((survey) => {
-             
-              return (
-                <SurveyCard key={survey.id} organization={organization} survey={survey} />
-              )
-            })}
-=======
             {
               filteredSurvey
-              .map((matchingSurvey: AutoSurvey, index: number) => {
-                return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
-              })
+                .map((matchingSurvey: AutoSurvey, index: number) => {
+                  return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
+                })
             }
->>>>>>> c8a148098d48ccf4dbc6649412055837001a9dc0
           </Table.Body>
         </Table>
       </div>

@@ -12,10 +12,12 @@ export default function Home() {
 
 
         <div className="home-body">
+          <div className='home-header-container'>
           <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
             <Icon name='clipboard' />
             <Header.Content>Welcome to AutoSurvey</Header.Content>
           </Header>
+          </div>
 
           <Loginpage></Loginpage>
 
