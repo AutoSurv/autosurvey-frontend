@@ -1,4 +1,4 @@
-import { AutoSurvey, Organization } from "@/type/type";
+import { AutoSurvey, Data, Organization } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",
@@ -32,3 +32,12 @@ export const initSurvey: AutoSurvey = {
   orgId: "",
   orgName: ""
 }
+
+export const initData: Data = {
+  rent: [],
+  utilities: [],
+  food: [],
+  basicItems: [],
+  transportation: [],
+  educationTotal: []
+};

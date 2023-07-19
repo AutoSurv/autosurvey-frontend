@@ -1,8 +1,9 @@
 import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, FormDataSingUp, LoggedUser, LoginUser } from '@/type/type';
+import { AutoSurvey, Data, FormDataSingUp, ImportedAutosurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
+import { initData } from './initializer';
 
 
 export const downloadExcel = (data: any) => {
@@ -74,7 +75,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignupSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>
-): Promise<void> {
+  ): Promise<void> {
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
@@ -111,7 +112,93 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
         setErrorMsg('User aleady exists. Choose other name');
       }
     });
+}
+
+export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
+
+  data.forEach((survey) => {
+    if (survey.country === null) { survey.country = "";}  
+    if (typeof survey.year !== 'number') { survey.year = 0;}  
+    if (typeof survey.rent !== 'number') { survey.rent = 0;}  
+    if (typeof survey.utilities !== 'number') { survey.utilities = 0;}  
+    if (typeof survey.food !== 'number') { survey.food = 0;}  
+    if (typeof survey.basicItems !== 'number') { survey.basicItems = 0;}  
+    if (typeof survey.transportation !== 'number') { survey.transportation = 0;}  
+    if (typeof survey.educationTotal !== 'number') { survey.educationTotal = 0;}  
+    if (typeof survey.educationSupplies !== 'number') { survey.educationSupplies = 0;}   
+    if (typeof survey.educationFee !== 'number') { survey.educationFee = 0;}  
+    if (survey.educationType == null) { survey.educationType = "";}  
+    if (survey.accommodationType === null) { survey.accommodationType = "";}  
+    if (survey.profession === null) { survey.profession = "";}  
+    if (survey.locationGiven === null) { survey.locationGiven = "";}  
+    if (survey.locationClustered == null) { survey.locationClustered = "";}  
+    if (typeof survey.numResidents !== 'number') { survey.numResidents = 0;}  
+    if (typeof survey.numIncomes !== 'number') { survey.numIncomes = 0;}  
+    if (typeof survey.numFullIncomes !== 'number') { survey.numFullIncomes = 0;}  
+    if (typeof survey.numChildren !== 'number') { survey.numChildren = 0;}  
+    if (typeof survey.totalIncome !== 'number') { survey.totalIncome = 0;}  
+    if (survey.comments == null) { survey.comments = "";}  
+  })
+
+  return data;
+}
+
+export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[], five_data: Data, five_var: string[]){
+  let resultsData: Data = initData;
 
 
+  five_var.forEach((f) => {
+    filteredSurvey.filter((s) => (s.hasOwnProperty))
+  });
 
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_rent = filteredSurvey.filter((s) => s.rent && country_arr[i] === s.country).map((s) => s.rent).length;
+    const result_rent = filteredSurvey.filter((s) => s.rent && country_arr[i] === s.country).map((s) => s.rent).reduce(function add(sum, rent) {
+      return sum + rent;
+    }, 0) / filteredSize_rent;
+    resultsData.rent.push(parseInt(result_rent.toFixed(2)));
+  }
+
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_util = filteredSurvey.filter((s) => s.utilities && country_arr[i] === s.country).map((s) => s.utilities).length;
+    const result_util = filteredSurvey.filter((s) => s.utilities && country_arr[i] === s.country).map((s) => s.utilities).reduce(function add(sum, utilities) {
+      return sum + utilities;
+    }, 0) / filteredSize_util;
+    resultsData.utilities.push(parseFloat(result_util.toFixed(2)));
+  }
+
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_food = filteredSurvey.filter((s) => s.food && country_arr[i] === s.country).map((s) => s.food).length;
+    const result_food = filteredSurvey.filter((s) => s.food && country_arr[i] === s.country).map((s) => s.food).reduce(function add(sum, food) {
+      return sum + food;
+    }, 0) / filteredSize_food;
+    resultsData.food.push(parseFloat(result_food.toFixed(2)));
+  }
+
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_basicItem = filteredSurvey.filter((s) => s.basicItems && country_arr[i] === s.country).map((s) => s.basicItems).length;
+    const result_basicItem = filteredSurvey.filter((s) => s.basicItems && country_arr[i] === s.country).map((s) => s.basicItems).reduce(function add(sum, basicItems) {
+      return sum + basicItems;
+    }, 0) / filteredSize_basicItem;
+    resultsData.basicItems.push(parseFloat(result_basicItem.toFixed(2)));
+  }
+
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_tranport = filteredSurvey.filter((s) => s.transportation && country_arr[i] === s.country).map((s) => s.transportation).length;
+    const result_transport = filteredSurvey.filter((s) => s.transportation && country_arr[i] === s.country).map((s) => s.transportation).reduce(function add(sum, transportation) {
+      return sum + transportation;
+    }, 0) / filteredSize_tranport;
+    resultsData.transportation.push(parseFloat(result_transport.toFixed(2)));
+  }
+
+
+  for (let i = 0; i < country_arr.length; i++) {
+    const filteredSize_edu = filteredSurvey.filter((s) => s.educationTotal && country_arr[i] === s.country).map((s) => s.educationTotal).length;
+    const result_edu = filteredSurvey.filter((s) => s.educationTotal && country_arr[i] === s.country).map((s) => s.educationTotal).reduce(function add(sum, educationTotal) {
+      return sum + educationTotal;
+    }, 0) / filteredSize_edu;
+    resultsData.educationTotal.push(parseFloat(result_edu.toFixed(2)));
+  }
+  
+  return resultsData
 }

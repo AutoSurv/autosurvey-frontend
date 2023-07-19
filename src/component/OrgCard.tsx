@@ -21,14 +21,11 @@ export default function OrgCard(props: OrgCardProp) {
   const orgLowerName: string = organization.orgName.toLowerCase();
   const [openConfirm, setOpenConfirm] = useState(false);
 
-
   useEffect(() => {
     setRole(localStorage.getItem("role") as string);
   }, []);
 
   return (
-
-
     <div className="org-card-container">
       <Card className="org-card" >
         <Link href={"/org/" + organization.orgId} >
@@ -83,6 +80,7 @@ export default function OrgCard(props: OrgCardProp) {
           </div>
           : null
         }
+        
       </Card>
     </div>
   );

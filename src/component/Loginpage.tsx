@@ -18,8 +18,7 @@ const Login = () => {
   if (typeof window !== "undefined") {
     setSignUpStatus(true);
     setUserNameAuth(localStorage.getItem("username") as string);
-  }; 
-  
+  };   
 
   return (
 

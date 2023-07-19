@@ -2,7 +2,6 @@ import { AutoSurvey } from '@/type/type';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
-
 type FilterProps = {
   surveys: AutoSurvey[];
   setFilteredCountry: Dispatch<SetStateAction<string[]>>
@@ -12,7 +11,6 @@ export default function FilterCountry( { surveys, setFilteredCountry } : FilterP
   const [filterCountry, setFilterCountry] = useState<string[]>([]);
 
   const uniqueSurveyCountryArray: string[] = [];
-
   surveys.map(survey => {
     if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
       uniqueSurveyCountryArray.push(survey.country);
@@ -27,16 +25,11 @@ export default function FilterCountry( { surveys, setFilteredCountry } : FilterP
   
   const handleChange = (event: any, {value}: any) => {
     setFilterCountry(typeof value === 'string' ? value.split(',') : value);
-   
   };
-
-  
 
   useEffect(() => {
     setFilteredCountry(filterCountry);
   },[filterCountry.length])
-
-  
 
   return (
     <Dropdown

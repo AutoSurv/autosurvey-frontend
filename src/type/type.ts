@@ -75,6 +75,30 @@ export type AutoSurveyUpdateDto = {
   orgId: string | string[] | undefined
 }
 
+export type ImportedAutosurvey = {
+  country: string;
+  year: number;
+  rent: number | string;
+  utilities: number | string,
+  food: number | string,
+  basicItems: number | string,
+  transportation: number | string,
+  educationTotal: number | string,
+  educationSupplies: number | string,
+  educationFee: number | string,
+  educationType: string,
+  accommodationType: string,
+  profession: string,
+  locationGiven: string,
+  locationClustered: string,
+  numResidents: number | string,
+  numIncomes: number | string,
+  numFullIncomes: number | string,
+  numChildren: number | string,
+  totalIncome: number | string,
+  comments: string,
+}
+
 export type Organization = {
   orgId: string,
   orgName: string,
@@ -123,3 +147,12 @@ export enum ROLE {
   manager = "ROLE_MANAGER",
   admin = "ROLE_ADMIN"
 }
+
+export interface Data {
+  rent: number[];
+  utilities: number[];
+  food: number[];
+  basicItems: number[];
+  transportation: number[];
+  educationTotal: number[];
+};

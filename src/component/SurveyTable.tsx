@@ -9,10 +9,8 @@ type SurveyCardProp = {
 }
 
 export default function SurveyRecord(props: SurveyCardProp) {
-   // const orgLowerName: string = props.survey.orgName.toLowerCase();
 
-    return (
-        
+    return (        
         <Table.Row>
             <Table.Cell >
             <Link className='survey-link' href={"/org/" + props.organization.orgId + "/" + props.survey.id}>{props.survey.id}</Link>

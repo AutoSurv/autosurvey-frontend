@@ -1,5 +1,6 @@
+import { checkImportedSurveyFields } from "@/helper/methods";
 import { addImportedSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Organization } from "@/type/type";
+import { AutoSurvey, ImportedAutosurvey, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
@@ -11,14 +12,11 @@ type ImportSurveyProps = {
 }
 
 export default function ImportSurvey(props: ImportSurveyProps) {
-
   const { organization, setOrganization, setSurveys } = props;
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
   const [data, setData] = useState<AutoSurvey[]>([]);
-
-
 
   const handleFileUpload = (e: any) => {
     if (e != null) {
@@ -30,9 +28,12 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         const workbook = XLSX.read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
-        const json = XLSX.utils.sheet_to_json(worksheet);
+        const json: ImportedAutosurvey[] = XLSX.utils.sheet_to_json(worksheet);
+        console.log("json: ", json)
         
-        if (typeof json[0] === "object"){
+        const valuetedData = checkImportedSurveyFields(json);
+
+        if (typeof valuetedData[0] === "object"){
           const surveyArr: AutoSurvey[] = JSON.parse(JSON.stringify(json));
           setData(surveyArr);
         }

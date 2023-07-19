@@ -29,6 +29,10 @@
     text-align: center;
 }
 
+.home-header-container{
+    display: flex;
+    justify-content: center;
+}
 
 .MuiGrid-root.MuiGrid-item.css-13i4rnv-MuiGrid-root:hover {
     cursor: pointer;
