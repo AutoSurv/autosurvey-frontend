@@ -12,6 +12,7 @@ import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
+import SurveyRecord from "./SurveyTable";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -116,11 +117,12 @@ export default function SurveyContent() {
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
       <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey}/>
       
-      <Chart
+      { <Chart
         type="bar"
         options={options}
         series={series}
       />
+       }
       <div className="surveys-surveycard-box">
       
         <Table celled striped>
@@ -137,9 +139,9 @@ export default function SurveyContent() {
           </Table.Header>
           <Table.Body>
             {
-              filteredSurvey
+              filteredSurvey            
               .map((matchingSurvey: AutoSurvey, index: number) => {
-                return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
+                return <SurveyRecord key={index} organization={organization} survey={matchingSurvey} />
               })
             }
           </Table.Body>

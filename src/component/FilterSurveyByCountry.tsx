@@ -8,18 +8,14 @@ type FilterProps = {
   setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
 }
 
-export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
+export default function FilterSurveyByCountry( { surveys, setFilteredSurvey } : FilterProps) {
   const [filteredCountry, setFilteredCountry] = useState<string[]>([]);
   const [filteredLocation, setFilteredLocation] = useState<string[]>([]);
-
-  console.log("FilterSurvey.filteredCountry: ", filteredCountry.length)
   
   useEffect (() => {
-    console.log("in useEffetct: ")
     setFilteredSurvey(
     surveys.filter((survey: AutoSurvey) => {  
       if (filteredCountry.length > 0) {
-        console.log("length > 0 ")
         return filteredCountry.some((country) => {
           if (country == "" || country == null) {
             return survey.country;
@@ -28,12 +24,11 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
           }
         })
       } else {
-        console.log("show every survey: ")
         return survey;
       }
     })
     )
-  }, [surveys.length])
+  }, [])
 
   return(
     
@@ -41,12 +36,10 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
       
       
 
-      {
-        <FilterCountry surveys={surveys}  setFilteredCountry={setFilteredCountry} />
-      }
-      {
-        //<FilterLocation surveys={surveys} setFilteredLocation={setFilteredLocation}/>
-      }  
+    
+      <FilterCountry surveys={surveys}  setFilteredCountry={setFilteredCountry} />
+  
+
     </section>
   )
 }

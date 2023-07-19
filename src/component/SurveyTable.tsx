@@ -8,7 +8,7 @@ type SurveyCardProp = {
     survey: AutoSurvey
 }
 
-export default function SurveyCard(props: SurveyCardProp) {
+export default function SurveyRecord(props: SurveyCardProp) {
    // const orgLowerName: string = props.survey.orgName.toLowerCase();
 
     return (
