@@ -33,6 +33,10 @@
 .MuiGrid-root.MuiGrid-item.css-13i4rnv-MuiGrid-root:hover {
     cursor: pointer;
 }
+.home-header-container{
+    display: flex;
+    justify-content: center;
+}
 
 .ui.blue.icon.center.aligned.header.home-header {
     width: 30%;

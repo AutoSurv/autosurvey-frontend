@@ -25,22 +25,22 @@ export default function OrgContent() {
 
     return (
         <div className="orgs-content">
-
-            <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
-                <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
-            </Header>
-
+            <div className="home-header-container">
+                <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
+                    <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
+                </Header>
+            </div>
             <Menu size='small' color="blue">
                 <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
                 <Menu.Menu position='right'>
-                <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-                <Menu.Item>
-                    <Button onClick={() => {
-                        setSignUpStatus(false);
-                        SignOut(setSignUpStatus);
-                    }}
-                        circular icon='sign out' color='blue' inverted></Button>
-                </Menu.Item>
+                    <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
+                    <Menu.Item>
+                        <Button onClick={() => {
+                            setSignUpStatus(false);
+                            SignOut(setSignUpStatus);
+                        }}
+                            circular icon='sign out' color='blue' inverted></Button>
+                    </Menu.Item>
                 </Menu.Menu>
             </Menu>
             {role !== ROLE.user ?
@@ -57,7 +57,7 @@ export default function OrgContent() {
                         }}>
                             <Form.Field>
                                 <Label>Organization Name</Label>
-                                <Input placeholder="Name your organization" type="text" name="orgname" pattern="^[a-zA-Z]*$"/>
+                                <Input placeholder="Name your organization" type="text" name="orgname" pattern="^[a-zA-Z]*$" />
                             </Form.Field>
                             <Button type="submit" color="green">Add Organization +</Button>
                             <Button onClick={(e) => {

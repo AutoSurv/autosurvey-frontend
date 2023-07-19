@@ -3,12 +3,13 @@ import {  Table } from 'semantic-ui-react';
 import Link from 'next/link';
 import { AutoSurvey, Organization } from '@/type/type';
 
-type SurveyCardProp = {
+type SurveyTableProp = {
     organization: Organization,
-    survey: AutoSurvey
+    survey: AutoSurvey,
+    
 }
 
-export default function SurveyCard(props: SurveyCardProp) {
+export default function SurveyTable(props: SurveyTableProp) {
    // const orgLowerName: string = props.survey.orgName.toLowerCase();
 
     return (

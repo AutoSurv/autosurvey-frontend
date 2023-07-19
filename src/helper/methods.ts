@@ -6,9 +6,9 @@ import * as XLSX from 'xlsx';
 
 
 export const downloadExcel = (data: any) => {
-
-  const surneyAsString: string = JSON.stringify(data[0]);
-  const survey: AutoSurvey = JSON.parse(surneyAsString);
+  console.log(data)
+  const surveyAsString: string = JSON.stringify(data[0]);
+  const survey: AutoSurvey = JSON.parse(surveyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
   const workbook = XLSX.utils.book_new();
