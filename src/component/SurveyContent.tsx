@@ -23,6 +23,7 @@ export default function SurveyContent() {
   
   
   useEffect(() => {
+
     getSurveys(setSurveys);
   }, []);
 

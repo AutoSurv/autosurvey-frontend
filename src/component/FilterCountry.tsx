@@ -1,5 +1,5 @@
 import { AutoSurvey } from '@/type/type';
-import React, { Dispatch, SetStateAction, SyntheticEvent, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 
@@ -41,7 +41,6 @@ export default function FilterCountry( { surveys, setFilteredCountry } : FilterP
   return (
     <Dropdown
     placeholder='Country'
-    fluid
     multiple
     search
     selection
