@@ -66,7 +66,9 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
         //<FilterCountry surveys={surveys}  setFilteredCountry={setFilterCountry} />
       }
       {
+        filterCountry.length > 0 ?
         <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} filteredCountry={filterCountry}/>
+        : null
       }  
     </section>
   )

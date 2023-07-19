@@ -33,16 +33,8 @@ export default function FilterSurveyByCountry( { surveys, setFilteredSurvey, set
 
   return(
     
-    <section >
-      
-      
-
     
-      {
         <FilterCountry surveys={surveys}  setFilteredCountry={setFilterCountry} />
-      }
-  
-
-    </section>
+      
   )
 }

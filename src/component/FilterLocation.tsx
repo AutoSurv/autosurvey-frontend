@@ -15,7 +15,7 @@ export default function FilterLocation( { surveys, setFilteredLocation, filtered
   const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
   
   const uniqueSurveyCountryArray: string[] = [];
-    if (filteredCountry.length > 0) {
+    
       surveys
       //filterSurvey
     .filter(survey => {
@@ -23,7 +23,6 @@ export default function FilterLocation( { surveys, setFilteredLocation, filtered
         uniqueSurveyCountryArray.push(survey.locationClustered);
       }
     })
-  }
   
   
   const stateOptions = uniqueSurveyCountryArray.sort().map( (locationClustered, index: number) => ({
