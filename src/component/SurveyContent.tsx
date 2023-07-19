@@ -146,9 +146,9 @@ export default function SurveyContent() {
             <Dropdown text='Export / Import'>
               <Dropdown.Menu>
                 <Dropdown.Item >
-                  <Link href={"#"}>
+                  
                     <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-                  </Link>
+                  
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <Link href={"#"} onClick={(e) => {
