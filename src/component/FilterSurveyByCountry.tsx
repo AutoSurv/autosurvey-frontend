@@ -15,7 +15,7 @@ export default function FilterSurveyByCountry( { surveys, setFilteredSurvey, set
   useEffect (() => {
     setFilteredCountry(filterCountry);
     setFilteredSurvey(
-    surveys.filter((survey: AutoSurvey) => {  
+      surveys.filter((survey: AutoSurvey) => {  
       if (filterCountry.length > 0) {
         return filterCountry.some((country) => {
           if (country == "" || country == null) {

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
+import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, Data, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
 import router from "next/router";
 
 
@@ -129,7 +129,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 //Survey section
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
-export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
@@ -137,8 +137,10 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<AutoSurvey[
   });
 
   if (apiResponse.status === 200) {
-    const data: AutoSurvey[] = await apiResponse.json();
-    setSurveys(data);
+    const data: Data = await apiResponse.json();
+    setDatas(data);
+    setSurveys(data.surveys);
+    console.log("data from BE: ", data)
     return data;
   }
 

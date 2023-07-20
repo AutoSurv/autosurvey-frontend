@@ -34,10 +34,10 @@ export const initSurvey: AutoSurvey = {
 }
 
 export const initData: Data = {
-  rent: [0],
-  utilities: [0],
-  food: [0],
-  basicItems: [0],
-  transportation: [0],
-  educationTotal: [0]
+  first: true, 
+  last: false,
+  numberOfElements: 1,
+  pageSize: 100,
+  surveys: [],
+  totalPages: 1
 }

@@ -12,12 +12,15 @@ import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
+import { initData } from "@/helper/initializer";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+  const [datas, setDatas] = useState<Data>(initData);
+  
   const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
   
   let country_list = new Set<string>([]);
@@ -25,7 +28,7 @@ export default function SurveyContent() {
   const country_arr = Array.from(country_list);
 
   useEffect(() => {
-      getSurveys(setSurveys);
+      getSurveys(setDatas, setSurveys);
   }, []);
 
   const options: ApexOptions = {
@@ -138,12 +141,17 @@ export default function SurveyContent() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
+          <label>first: {datas.first}</label>
+          <label>last: {datas.last}</label>
             {
-              filteredSurvey
+              datas.surveys.sort()
                 .map((matchingSurvey: AutoSurvey, index: number) => {
                   return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
                 })
             }
+            <label>number of elements{datas.numberOfElements}</label>
+            <label>page size{datas.pageSize}</label>
+            <label>total pages{datas.totalPages}</label>
           </Table.Body>
         </Table>
       </div>

@@ -149,10 +149,11 @@ export enum ROLE {
 }
 
 export interface Data {
-  rent: number[];
-  utilities: number[];
-  food: number[];
-  basicItems: number[];
-  transportation: number[];
-  educationTotal: number[];
+  first: boolean, 
+  last: boolean,
+  numberOfElements: number,
+  pageSize: number,
+  surveys: AutoSurvey[],
+  totalPages: number
 };
+
