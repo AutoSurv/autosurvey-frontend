@@ -10,18 +10,14 @@ type FilterProps = {
 
 export default function FilterLocation( { surveys, setFilteredLocation, filteredCountry } : FilterProps) {
   const [filterLocation, setFilterLocation] = useState<string[]>([]);
-  const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
   
-  const uniqueSurveyCountryArray: string[] = [];
-    
-      surveys
-      //filterSurvey
+  const uniqueSurveyCountryArray: string[] = [];    
+  surveys
     .filter(survey => {
       if (uniqueSurveyCountryArray.indexOf(survey.locationClustered) === -1) {
         uniqueSurveyCountryArray.push(survey.locationClustered);
       }
-    })
-  
+    })  
   
   const stateOptions = uniqueSurveyCountryArray.sort().map( (locationClustered, index: number) => ({
     key: index,
@@ -36,9 +32,7 @@ export default function FilterLocation( { surveys, setFilteredLocation, filtered
 
   useEffect(() => {
     setFilteredLocation(filterLocation);
-  },[filterLocation.length])
-
-  
+  },[filterLocation.length])  
 
   return (
     <>
@@ -50,5 +44,4 @@ export default function FilterLocation( { surveys, setFilteredLocation, filtered
       options={stateOptions}
       onChange={handleChange} /></>
   )
-
 }

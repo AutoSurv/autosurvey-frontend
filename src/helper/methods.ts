@@ -1,9 +1,8 @@
 import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, FormDataSingUp, LoggedUser, LoginUser } from '@/type/type';
+import { AutoSurvey, FormDataSingUp, ImportedAutosurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
-
 
 export const downloadExcel = (data: any) => {
 
@@ -74,7 +73,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignupSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>
-): Promise<void> {
+  ): Promise<void> {
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
@@ -111,7 +110,68 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
         setErrorMsg('User aleady exists. Choose other name');
       }
     });
+}
 
+export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
 
+  data.forEach((survey) => {
+    if (survey.country === null) { survey.country = "";}  
+    if (typeof survey.year !== 'number') { survey.year = 0;}  
+    if (typeof survey.rent !== 'number') { survey.rent = 0;}  
+    if (typeof survey.utilities !== 'number') { survey.utilities = 0;}  
+    if (typeof survey.food !== 'number') { survey.food = 0;}  
+    if (typeof survey.basicItems !== 'number') { survey.basicItems = 0;}  
+    if (typeof survey.transportation !== 'number') { survey.transportation = 0;}  
+    if (typeof survey.educationTotal !== 'number') { survey.educationTotal = 0;}  
+    if (typeof survey.educationSupplies !== 'number') { survey.educationSupplies = 0;}   
+    if (typeof survey.educationFee !== 'number') { survey.educationFee = 0;}  
+    if (survey.educationType == null) { survey.educationType = "";}  
+    if (survey.accommodationType === null) { survey.accommodationType = "";}  
+    if (survey.profession === null) { survey.profession = "";}  
+    if (survey.locationGiven === null) { survey.locationGiven = "";}  
+    if (survey.locationClustered == null) { survey.locationClustered = "";}  
+    if (typeof survey.numResidents !== 'number') { survey.numResidents = 0;}  
+    if (typeof survey.numIncomes !== 'number') { survey.numIncomes = 0;}  
+    if (typeof survey.numFullIncomes !== 'number') { survey.numFullIncomes = 0;}  
+    if (typeof survey.numChildren !== 'number') { survey.numChildren = 0;}  
+    if (typeof survey.totalIncome !== 'number') { survey.totalIncome = 0;}  
+    if (survey.comments == null) { survey.comments = "";}  
+  })
 
+  return data;
+}
+
+export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[]) {
+
+  const fiveVar: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
+
+  let dataForGraph: number[][] = []; 
+
+  for (let fiveVarIndex= 0; fiveVarIndex < fiveVar.length; fiveVarIndex++) {
+    let data: number[] = []; 
+    const prop = fiveVar[fiveVarIndex];
+
+    for (let i = 0; i < country_arr.length; i++) {
+      const lowerPart = filteredSurvey
+      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && country_arr[i] === s.country; }})
+      .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; }})
+      .length;
+
+      const totalResult = filteredSurvey
+      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && country_arr[i] === s.country; }})
+      .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } else {return 0}})
+      .reduce(function add(sum, rent) { return sum + rent; }, 0) / lowerPart;
+      
+      data.push(parseFloat(totalResult.toFixed(2)));
+    }
+    dataForGraph.push(data);
+  }
+  return dataForGraph;
+}
+
+function isSurveyKey <T>(
+  prop: string,
+  survey: AutoSurvey
+): prop is keyof Omit<T, number | symbol> {
+  return prop in survey;
 }

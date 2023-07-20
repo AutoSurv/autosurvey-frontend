@@ -7,14 +7,13 @@ import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
-import { SignOut, downloadExcel } from '@/helper/methods';
+import { SignOut, calculateMeanValues, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
@@ -26,7 +25,7 @@ export default function SurveyContent() {
   const country_arr = Array.from(country_list);
 
   useEffect(() => {
-    getSurveys(setSurveys);
+      getSurveys(setSurveys);
   }, []);
 
   const options: ApexOptions = {
@@ -43,92 +42,28 @@ export default function SurveyContent() {
     xaxis: {
       categories: country_arr
     },
-
-
   };
 
-
-  const five_var: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
-
-  let five_data: Data = {
-    rent: [],
-    utilities: [],
-    food: [],
-    basicItems: [],
-    transportation: [],
-    educationTotal: []
-  };
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_rent = filteredSurvey.filter((s) => s.rent && s.rent !== 0 && country_arr[i] === s.country).map((s) => s.rent).length;
-    const result_rent = filteredSurvey.filter((s) => s.rent && s.rent !== 0 && country_arr[i] === s.country).map((s) => s.rent).reduce(function add(sum, rent) {
-      return sum + rent;
-    }, 0) / filteredSize_rent;
-    five_data.rent.push(parseInt(result_rent.toFixed(2)));
-  }
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_util = filteredSurvey.filter((s) => s.utilities && s.utilities !== 0 && country_arr[i] === s.country).map((s) => s.utilities).length;
-    const result_util = filteredSurvey.filter((s) => s.utilities && s.utilities !== 0 && country_arr[i] === s.country).map((s) => s.utilities).reduce(function add(sum, utilities) {
-      return sum + utilities;
-    }, 0) / filteredSize_util;
-    five_data.utilities.push(parseFloat(result_util.toFixed(2)));
-  }
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_food = filteredSurvey.filter((s) => s.food && s.food !== 0 && country_arr[i] === s.country).map((s) => s.food).length;
-    const result_food = surveys.filter((s) => s.food && s.food !== 0 && country_arr[i] === s.country).map((s) => s.food).reduce(function add(sum, food) {
-      return sum + food;
-    }, 0) / filteredSize_food;
-    five_data.food.push(parseFloat(result_food.toFixed(2)));
-  }
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_basicItem = filteredSurvey.filter((s) => s.basicItems && s.basicItems !== 0 && country_arr[i] === s.country).map((s) => s.basicItems).length;
-    const result_basicItem = filteredSurvey.filter((s) => s.basicItems && s.basicItems !== 0 && country_arr[i] === s.country).map((s) => s.basicItems).reduce(function add(sum, basicItems) {
-      return sum + basicItems;
-    }, 0) / filteredSize_basicItem;
-    five_data.basicItems.push(parseFloat(result_basicItem.toFixed(2)));
-  }
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_tranport = filteredSurvey.filter((s) => s.transportation && s.transportation !== 0 && country_arr[i] === s.country).map((s) => s.transportation).length;
-    const result_transport = filteredSurvey.filter((s) => s.transportation && s.transportation !== 0 && country_arr[i] === s.country).map((s) => s.transportation).reduce(function add(sum, transportation) {
-      return sum + transportation;
-    }, 0) / filteredSize_tranport;
-    five_data.transportation.push(parseFloat(result_transport.toFixed(2)));
-  }
-
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_edu = filteredSurvey.filter((s) => s.educationTotal && s.educationTotal !== 0 && country_arr[i] === s.country).map((s) => s.educationTotal).length;
-    const result_edu = filteredSurvey.filter((s) => s.educationTotal && s.educationTotal !== 0 && country_arr[i] === s.country).map((s) => s.educationTotal).reduce(function add(sum, educationTotal) {
-      return sum + educationTotal;
-    }, 0) / filteredSize_edu;
-    five_data.educationTotal.push(parseFloat(result_edu.toFixed(2)));
-  }
-
-
-
+  const resultData = calculateMeanValues(country_arr, filteredSurvey);
 
   const series = [{
     name: 'rent',
-    data: five_data.rent
+    data: resultData[0]
   }, {
     name: 'utilities',
-    data: five_data.utilities
+    data: resultData[1]
   }, {
     name: 'food',
-    data: five_data.food
+    data: resultData[2]
   }, {
     name: 'basic item',
-    data: five_data.basicItems
+    data: resultData[3]
   }, {
     name: 'transportation',
-    data: five_data.transportation
+    data: resultData[4]
   }, {
     name: 'education total',
-    data: five_data.educationTotal
+    data: resultData[5]
   }
   ];
 
@@ -188,6 +123,7 @@ export default function SurveyContent() {
         options={options}
         series={series}
       />
+       
       <div className="surveys-surveycard-box">
 
         <Table celled striped>
