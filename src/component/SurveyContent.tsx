@@ -30,7 +30,6 @@ export default function SurveyContent() {
 
   const options: ApexOptions = {
     chart: {
-      height: 350,
       stacked: true,
       zoom: {
         enabled: true
