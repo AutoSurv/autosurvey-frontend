@@ -1,5 +1,6 @@
+import { initData } from "@/helper/initializer";
 import { updateSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey } from "@/type/type";
+import { AutoSurvey, Data } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Icon, Input, Label, Modal } from "semantic-ui-react";
 

@@ -4,11 +4,12 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Confirm, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
-import { AutoSurvey } from '@/type/type';
+import { AutoSurvey, Data } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
+import { initData } from "@/helper/initializer";
 
 
 export default function SurveyDetails() {
@@ -17,12 +18,14 @@ export default function SurveyDetails() {
   const { orgId, surveyid } = router.query;
   const { organization, survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
   const [openConfirm, setOpenConfirm] = useState(false);
+  const [datas, setDatas] = useState<Data>(initData);
+
 
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
-    getSurveys(setSurveys);
+    getSurveys(setDatas, setSurveys);
   }, [setSurvey])
 
   const surveyArray: AutoSurvey[] = [survey];
@@ -219,7 +222,7 @@ export default function SurveyDetails() {
                   onCancel={() => setOpenConfirm(false)}
                   onConfirm={(e) => {
                     e.preventDefault();
-                    deleteSurvey(surveyid, setSurveys);
+                    deleteSurvey(surveyid, setDatas, setSurveys);
                     setOpenConfirm(false);
                     window.location.href = "/org/" + orgId;
                   }}

@@ -1,5 +1,6 @@
+import { initData } from "@/helper/initializer";
 import { addSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Organization } from "@/type/type";
+import { AutoSurvey, Data, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
@@ -12,6 +13,7 @@ type CreateSurveyProps = {
 export default function CreateSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
+  const [datas, setDatas] = useState<Data>(initData);
 
   const { organization, setOrganization, setSurveys } = props;
 
@@ -32,7 +34,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey(e, organization.orgId, setSurveys, setOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization.orgId, setDatas, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>

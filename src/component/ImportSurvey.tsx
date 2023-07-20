@@ -1,6 +1,7 @@
+import { initData } from "@/helper/initializer";
 import { checkImportedSurveyFields } from "@/helper/methods";
 import { addImportedSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, ImportedAutosurvey, Organization } from "@/type/type";
+import { AutoSurvey, Data, ImportedAutosurvey, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
@@ -13,6 +14,7 @@ type ImportSurveyProps = {
 
 export default function ImportSurvey(props: ImportSurveyProps) {
   const { organization, setOrganization, setSurveys } = props;
+  const [datas, setDatas] = useState<Data>(initData);
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
@@ -42,7 +44,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(data, organization.orgId, setErrMessage, setOpen, setSurveys, setOrganization)
+    addImportedSurvey(data, organization.orgId, setDatas, setErrMessage, setOpen, setSurveys, setOrganization)
   }
   
   return (
