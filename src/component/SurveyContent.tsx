@@ -47,7 +47,7 @@ export default function SurveyContent() {
 
   };
 
-  const resultData: Data = testCalculation(country_arr, filteredSurvey);
+  const resultData: Data = calculateMeanValues(country_arr, filteredSurvey);
 
   const series = [{
     name: 'rent',

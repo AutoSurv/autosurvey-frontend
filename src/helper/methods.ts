@@ -143,65 +143,7 @@ export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
   return data;
 }
 
-export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[]){
-  let resultsData: Data = {
-    rent: [],
-    utilities: [],
-    food: [],
-    basicItems: [],
-    transportation: [],
-    educationTotal: []
-  };
-
-
-  for (let i = 0; i < country_arr.length; i++) {
-    const filteredSize_rent = filteredSurvey
-    .filter((s) => s.rent && country_arr[i] === s.country)
-    .map((s) => s.rent).length;
-    const result_rent = filteredSurvey
-    .filter((s) => s.rent && country_arr[i] === s.country)
-    .map((s) => s.rent)
-    .reduce(function add(sum, rent) {
-      return sum + rent;
-    }, 0) / filteredSize_rent;
-    
-    resultsData.rent.push(parseInt(result_rent.toFixed(2)));
-
-    const filteredSize_util = filteredSurvey.filter((s) => s.utilities && country_arr[i] === s.country).map((s) => s.utilities).length;
-    const result_util = filteredSurvey.filter((s) => s.utilities && country_arr[i] === s.country).map((s) => s.utilities).reduce(function add(sum, utilities) {
-      return sum + utilities;
-    }, 0) / filteredSize_util;
-    resultsData.utilities.push(parseFloat(result_util.toFixed(2)));
-
-    const filteredSize_food = filteredSurvey.filter((s) => s.food && country_arr[i] === s.country).map((s) => s.food).length;
-    const result_food = filteredSurvey.filter((s) => s.food && country_arr[i] === s.country).map((s) => s.food).reduce(function add(sum, food) {
-      return sum + food;
-    }, 0) / filteredSize_food;
-    resultsData.food.push(parseFloat(result_food.toFixed(2)));
-
-    const filteredSize_basicItem = filteredSurvey.filter((s) => s.basicItems && country_arr[i] === s.country).map((s) => s.basicItems).length;
-    const result_basicItem = filteredSurvey.filter((s) => s.basicItems && country_arr[i] === s.country).map((s) => s.basicItems).reduce(function add(sum, basicItems) {
-      return sum + basicItems;
-    }, 0) / filteredSize_basicItem;
-    resultsData.basicItems.push(parseFloat(result_basicItem.toFixed(2)));
-
-    const filteredSize_tranport = filteredSurvey.filter((s) => s.transportation && country_arr[i] === s.country).map((s) => s.transportation).length;
-    const result_transport = filteredSurvey.filter((s) => s.transportation && country_arr[i] === s.country).map((s) => s.transportation).reduce(function add(sum, transportation) {
-      return sum + transportation;
-    }, 0) / filteredSize_tranport;
-    resultsData.transportation.push(parseFloat(result_transport.toFixed(2)));
-
-    const filteredSize_edu = filteredSurvey.filter((s) => s.educationTotal && country_arr[i] === s.country).map((s) => s.educationTotal).length;
-    const result_edu = filteredSurvey.filter((s) => s.educationTotal && country_arr[i] === s.country).map((s) => s.educationTotal).reduce(function add(sum, educationTotal) {
-      return sum + educationTotal;
-    }, 0) / filteredSize_edu;
-    resultsData.educationTotal.push(parseFloat(result_edu.toFixed(2)));
-  }
-  
-  return resultsData
-}
-
-export function testCalculation(country_arr: string[], filteredSurvey: AutoSurvey[]) {
+export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[]) {
   let resultsData: Data = {
     rent: [],
     utilities: [],
