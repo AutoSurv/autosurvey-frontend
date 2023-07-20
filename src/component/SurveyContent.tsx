@@ -7,12 +7,11 @@ import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
-import { SignOut, calculateMeanValues, downloadExcel } from '@/helper/methods';
+import { SignOut, calculateMeanValues, downloadExcel, testCalculation } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
-import SurveyRecord from "./SurveyTable";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -25,9 +24,9 @@ export default function SurveyContent() {
   filteredSurvey.forEach((s) => country_list.add(s.country));
   const country_arr = Array.from(country_list);
 
-  useEffect(() => {
 
-    getSurveys(setSurveys);
+  useEffect(() => {
+      getSurveys(setSurveys);
   }, []);
 
   const options: ApexOptions = {
@@ -48,38 +47,26 @@ export default function SurveyContent() {
 
   };
 
-  const five_var: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
-
-  let five_data: Data = {
-    rent: [],
-    utilities: [],
-    food: [],
-    basicItems: [],
-    transportation: [],
-    educationTotal: []
-  };
-  //if (surveys.filter((s) => filterValue.includes(s.country))) {}
-  const resultsArray: Data = calculateMeanValues(country_arr, filteredSurvey, five_data, five_var);
-
+  const resultData: Data = testCalculation(country_arr, filteredSurvey);
 
   const series = [{
     name: 'rent',
-    data: five_data.rent
+    data: resultData.rent
   }, {
     name: 'utilities',
-    data: five_data.utilities
+    data: resultData.utilities
   }, {
     name: 'food',
-    data: five_data.food
+    data: resultData.food
   }, {
     name: 'basic item',
-    data: five_data.basicItems
+    data: resultData.basicItems
   }, {
     name: 'transportation',
-    data: five_data.transportation
+    data: resultData.transportation
   }, {
     name: 'education total',
-    data: five_data.educationTotal
+    data: resultData.educationTotal
   }
   ];
 

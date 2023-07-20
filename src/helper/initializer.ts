@@ -40,4 +40,4 @@ export const initData: Data = {
   basicItems: [],
   transportation: [],
   educationTotal: []
-};
+}
