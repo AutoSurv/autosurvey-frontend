@@ -135,7 +135,6 @@ export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSu
     const data: Data = await apiResponse.json();
     setDatas(data);
     setSurveys(data.surveys);
-    console.log("data from BE: ", data)
     return data;
   }
 
