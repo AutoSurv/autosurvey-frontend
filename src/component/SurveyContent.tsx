@@ -2,7 +2,7 @@ import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Data } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
+import { Button, Dropdown, Header, Icon, Label, Menu, Pagination, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
@@ -13,6 +13,7 @@ import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
 import { initData } from "@/helper/initializer";
+import { TablePagination } from "@mui/material";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -32,16 +33,29 @@ export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   const [datas, setDatas] = useState<Data>(initData);
-  
+  const [page, setPage] = useState(0);
+  const [rowPage, setRowPage] = useState(10);
+
   const [filteredSurveys, setFilteredSurveys] = useState<AutoSurvey[]>([]);
-  
+
   let country_list = new Set<string>(filteredSurveys.map(({ country }) => country));
   //filteredSurveys.forEach((s) => country_list.add(s.country));
   const country_arr = Array.from(country_list);
 
   useEffect(() => {
-      getSurveys(setDatas, setSurveys);
+    getSurveys(setDatas, setSurveys);
   }, []);
+
+  function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
+    setPage(newpage);
+  }
+
+  function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement> ) {
+    setRowPage(parseInt(event.target.value, 10));
+    setPage(0);
+}
+
+
 
   const options: ApexOptions = {
     chart: {
@@ -136,7 +150,7 @@ export default function SurveyContent() {
         options={options}
         series={series}
       />
-       
+
       <div className="surveys-surveycard-box">
 
         <Table celled striped color="violet">
@@ -152,24 +166,25 @@ export default function SurveyContent() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-          <label>first: {datas.first}</label>
-          <label>last: {datas.last}</label>
             {
-              datas.surveys.sort()
-                .map((matchingSurvey: AutoSurvey, index: number) => {
+              //datas.surveys.sort()
+                filteredSurveys.slice(page*rowPage, page*rowPage +rowPage).map((matchingSurvey: AutoSurvey, index: number) => {
                   return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
                 })
             }
-            <label>number of elements{datas.numberOfElements}</label>
-            <label>page size{datas.pageSize}</label>
-            <label>total pages{datas.totalPages}</label>
           </Table.Body>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={filteredSurveys.length}
+            rowsPerPage={rowPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
         </Table>
       </div>
 
     </div>
   )
-
-
-
 }
