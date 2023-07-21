@@ -1,7 +1,8 @@
 import { AutoSurvey } from "@/type/type";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import FilterSurveyByCountry from "./FilterSurveyByCountry";
 import FilterLocation from "./FilterLocation";
+import { OrgContext } from "@/helper/context";
 
 type FilterProps = {
   surveys: AutoSurvey[];
@@ -9,8 +10,8 @@ type FilterProps = {
 }
 
 export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
-  const [filterLocation, setFilterLocation] = useState<string[]>([]);
-  const [filterCountry, setFilterCountry] = useState<string[]>([]);
+  const {filterLocation, setFilterLocation} = useContext(OrgContext);
+    const [filterCountry, setFilterCountry] = useState<string[]>([]);
   const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
 
   useEffect (() => {

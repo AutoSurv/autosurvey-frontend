@@ -17,6 +17,9 @@ export interface OrgContextValue {
     signUpStatus: boolean;
     setSignUpStatus: Dispatch<SetStateAction<boolean>>; 
 
+    filterLocation: string[];
+    setFilterLocation: Dispatch<SetStateAction<string[]>>; 
+
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -29,5 +32,8 @@ export const OrgContext = createContext<OrgContextValue> ({
     userNameAuth: "",
     setUserNameAuth: () => {},
     signUpStatus: false,
-    setSignUpStatus: () => {}
+    setSignUpStatus: () => {},
+    filterLocation: [],
+    setFilterLocation: () => {}
+
 });

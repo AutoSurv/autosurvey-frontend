@@ -2,7 +2,7 @@ import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Data } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Header, Icon, Label, Menu, Pagination, Table } from "semantic-ui-react";
+import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
@@ -30,17 +30,21 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
  */
 
 export default function SurveyContent() {
-  const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
+  const { organization, setOrganization, setSignUpStatus, filterLocation } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   const [datas, setDatas] = useState<Data>(initData);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
 
   const [filteredSurveys, setFilteredSurveys] = useState<AutoSurvey[]>([]);
-
-  let country_list = new Set<string>(filteredSurveys.map(({ country }) => country));
-  //filteredSurveys.forEach((s) => country_list.add(s.country));
-  const country_arr = Array.from(country_list);
+  let country_arr: string[] = [];
+  let countryLocation_list = new Set<string>();
+  filteredSurveys.forEach((s) => countryLocation_list.add(s.country));
+  country_arr = Array.from(countryLocation_list)
+  if (filterLocation.length !== 0) {
+    filteredSurveys.forEach((s) => countryLocation_list.add(s.locationClustered));
+    country_arr = Array.from(countryLocation_list)
+  }
 
   useEffect(() => {
     getSurveys(setDatas, setSurveys);
@@ -50,12 +54,10 @@ export default function SurveyContent() {
     setPage(newpage);
   }
 
-  function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement| HTMLTextAreaElement> ) {
+  function handleChangeRowsPerPage(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setRowPage(parseInt(event.target.value, 10));
     setPage(0);
-}
-
-
+  }
 
   const options: ApexOptions = {
     chart: {
@@ -168,9 +170,9 @@ export default function SurveyContent() {
           <Table.Body>
             {
               //datas.surveys.sort()
-                filteredSurveys.slice(page*rowPage, page*rowPage +rowPage).map((matchingSurvey: AutoSurvey, index: number) => {
-                  return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
-                })
+              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: AutoSurvey, index: number) => {
+                return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
+              })
             }
           </Table.Body>
           <TablePagination
