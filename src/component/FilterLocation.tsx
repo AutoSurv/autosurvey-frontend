@@ -11,15 +11,14 @@ type FilterProps = {
 export default function FilterLocation( { surveys, setFilteredLocation } : FilterProps) {
   const {filterLocation, setFilterLocation} = useContext(OrgContext);
   
-  const uniqueSurveyCountryArray: string[] = [];    
-  surveys
-    .filter(survey => {
-      if (uniqueSurveyCountryArray.indexOf(survey.locationClustered) === -1) {
-        uniqueSurveyCountryArray.push(survey.locationClustered);
+  const uniqueSurveyLoacationArray: string[] = [];    
+  surveys.filter(survey => {
+      if (uniqueSurveyLoacationArray.indexOf(survey.locationClustered) === -1) {
+        uniqueSurveyLoacationArray.push(survey.locationClustered);
       }
     })  
   
-  const stateOptions = uniqueSurveyCountryArray.sort().map( (locationClustered, index: number) => ({
+  const stateOptions = uniqueSurveyLoacationArray.sort().map( (locationClustered, index: number) => ({
     key: index,
     text: locationClustered,
     value: locationClustered,
@@ -35,13 +34,13 @@ export default function FilterLocation( { surveys, setFilteredLocation } : Filte
   },[filterLocation.length])  
 
   return (
-    <>
+
     <Dropdown
       placeholder='Location'
       multiple
       search
       selection
       options={stateOptions}
-      onChange={handleChange} /></>
+      onChange={handleChange} />
   )
 }

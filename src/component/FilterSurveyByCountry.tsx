@@ -11,7 +11,6 @@ type FilterProps = {
 export default function FilterSurveyByCountry( { surveys, setFilteredSurvey, setFilteredCountry } : FilterProps) {
   const [filterCountry, setFilterCountry] = useState<string[]>([]);
   
-
   useEffect (() => {
     setFilteredCountry(filterCountry);
     setFilteredSurvey(

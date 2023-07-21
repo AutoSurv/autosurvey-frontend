@@ -20,6 +20,7 @@ export interface OrgContextValue {
     filterLocation: string[];
     setFilterLocation: Dispatch<SetStateAction<string[]>>; 
 
+
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -34,6 +35,6 @@ export const OrgContext = createContext<OrgContextValue> ({
     signUpStatus: false,
     setSignUpStatus: () => {},
     filterLocation: [],
-    setFilterLocation: () => {}
+    setFilterLocation: () => {},
 
 });

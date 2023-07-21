@@ -11,9 +11,7 @@ type FilterProps = {
 export default function FilterSurveyByYear( { surveys, setFilteredSurvey } : FilterProps) {
   const [filterYear, setFilterYear] = useState<string[]>([]);
   
-
   useEffect (() => {
-
     setFilteredSurvey(
       surveys.filter((survey: AutoSurvey) => { 
         if (filterYear.length > 0) {
@@ -31,10 +29,7 @@ export default function FilterSurveyByYear( { surveys, setFilteredSurvey } : Fil
     )
   }, [surveys.length, filterYear.length])
 
-  return(
-    
-    
-        <FilterYear surveys={surveys}  setFilteredYear={setFilterYear} />
-      
-  )
+  return(    
+    <FilterYear surveys={surveys}  setFilteredYear={setFilterYear} />
+    )
 }

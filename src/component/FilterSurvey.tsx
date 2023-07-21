@@ -4,6 +4,7 @@ import FilterSurveyByCountry from "./FilterSurveyByCountry";
 import FilterLocation from "./FilterLocation";
 import { OrgContext } from "@/helper/context";
 import FilterSurveyByYear from "./FilterSurveyByYear";
+import FilterYear from "./FilterYear";
 
 type FilterProps = {
   surveys: AutoSurvey[];
@@ -12,12 +13,14 @@ type FilterProps = {
 
 export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
   const {filterLocation, setFilterLocation} = useContext(OrgContext);
-    const [filterCountry, setFilterCountry] = useState<string[]>([]);
+  const [filterCountry, setFilterCountry] = useState<string[]>([]);
+  const [filterYear, setFilterYear] = useState<string[]>([]);
   const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
 
   useEffect (() => {
     setFilteredSurvey(
-      filterSurvey.filter((survey: AutoSurvey) => { 
+      filterSurvey
+      .filter((survey: AutoSurvey) => { 
         if (filterLocation.length > 0) {
           return filterLocation.some((location) => {
             if (location == "" || location == null) {
@@ -41,7 +44,9 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
         filterCountry.length > 0 ?
         <>
           <FilterSurveyByYear surveys={filterSurvey} setFilteredSurvey={setFilterSurvey} />
+          
           <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} />
+            
         </>
         : null
       }  

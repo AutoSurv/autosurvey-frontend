@@ -20,7 +20,13 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
   return (
 
-      <OrgContext.Provider value={{ organization, setOrganization, survey, setSurvey, setSurveys, setSignUpStatus, signUpStatus, userNameAuth, setUserNameAuth, filterLocation, setFilterLocation}}>
+      <OrgContext.Provider value={{ 
+        organization, setOrganization, 
+        survey, setSurvey, setSurveys, setSignUpStatus, 
+        signUpStatus, 
+        userNameAuth, setUserNameAuth, 
+        filterLocation, setFilterLocation,
+        }}>
       <Component {...pageProps} />
       </OrgContext.Provider>
 

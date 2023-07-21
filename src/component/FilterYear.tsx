@@ -17,7 +17,8 @@ export default function FilterYear( { surveys, setFilteredYear } : FilterProps) 
     }
   })
 
-  
+  console.log("uniqueSurveyYearArray: ", uniqueSurveyYearArray);
+
   const stateOptions = uniqueSurveyYearArray.sort().map( (year, index: number) => ({
     key: index,
     text: year,
@@ -25,6 +26,7 @@ export default function FilterYear( { surveys, setFilteredYear } : FilterProps) 
   }));
   
   const handleChange = (event: any, {value}: any) => {
+    
     setFilterYear(typeof value === 'string' ? value.split(',') : value);
   };
 
@@ -35,7 +37,7 @@ export default function FilterYear( { surveys, setFilteredYear } : FilterProps) 
   return (
     <Dropdown
     placeholder='Year'
-    multiple
+    //multiple
     search
     selection
     options={stateOptions}
