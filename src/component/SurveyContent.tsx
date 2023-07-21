@@ -1,7 +1,7 @@
 import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Data } from "@/type/type";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
@@ -27,7 +27,30 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
   }, []);
   return {status, data, error};
 }
- */
+
+function tableSortReducer(state: { column?: string; data: AutoSurvey[]; direction?: "ascending" | "descending"; }, action: { type: any; column?: string; }) {
+  switch (action.type) {
+    case 'CHANGE_SORT':
+      if (state.column === action.column) {
+        return {
+          ...state,
+          data: state.data.slice().reverse(),
+          direction:
+            state.direction === 'ascending' ? 'descending' : 'ascending',
+        }
+      }
+
+      return {
+        column: action.column,
+        data: state.data.sort(), //_.sortBy(state.data, [action.column]),
+        direction: 'ascending',
+      }
+    default:
+      throw new Error()
+  }
+}
+*/
+
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus, filterLocation } = useContext(OrgContext);
@@ -35,7 +58,6 @@ export default function SurveyContent() {
   const [datas, setDatas] = useState<Data>(initData);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
-
   const [filteredSurveys, setFilteredSurveys] = useState<AutoSurvey[]>([]);
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
@@ -58,6 +80,33 @@ export default function SurveyContent() {
     setRowPage(parseInt(event.target.value, 10));
     setPage(0);
   }
+  /*
+  interface State {
+    column: string,
+    data: AutoSurvey[],
+    direction: "ascending" | "descending",
+  }
+  const [state, setState] = useState<State>({column: "",
+  data: filteredSurveys,
+  direction: "ascending"})
+  const { column, data, direction } = state
+  function handleSort(clickedColumn: string) {
+    
+
+    if (column !== clickedColumn) {
+      setState({
+        column: clickedColumn,
+        data: data.sort(), //_.sortBy(data, [clickedColumn]),
+        direction: 'ascending',
+      })
+      return
+    }
+    setState({
+      ...state,
+      data: data.reverse(),
+      direction: direction === 'ascending' ? 'descending' : 'ascending',
+    })
+  }*/
 
   const options: ApexOptions = {
     chart: {
@@ -96,6 +145,8 @@ export default function SurveyContent() {
     data: meanValues[5]
   }
   ];
+
+
 
   return (
     <div className="surveys-content">
@@ -155,7 +206,7 @@ export default function SurveyContent() {
 
       <div className="surveys-surveycard-box">
 
-        <Table celled striped color="violet">
+        <Table celled striped color="violet" selectable sortable>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
@@ -170,7 +221,8 @@ export default function SurveyContent() {
           <Table.Body>
             {
               //datas.surveys.sort()
-              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: AutoSurvey, index: number) => {
+              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).sort((a, b) => {
+                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).map((matchingSurvey: AutoSurvey, index: number) => {
                 return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
               })
             }
