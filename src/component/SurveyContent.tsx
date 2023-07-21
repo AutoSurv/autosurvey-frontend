@@ -2,7 +2,7 @@ import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
 import { AutoSurvey, Data } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Header, Icon, Menu, Table } from "semantic-ui-react";
+import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
@@ -16,24 +16,17 @@ import { initData } from "@/helper/initializer";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const useSurveys = () => {
+/* const useSurveys = () => {
   const [status, setStatus] = useState("LOADING");
   const [data, setData] = useState<{id: number} | null>(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setData({id: 1});
-
-
-
-
   }, []);
-
-
-
   return {status, data, error};
 }
-
+ */
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
@@ -135,7 +128,6 @@ export default function SurveyContent() {
         </Menu.Menu>
       </Menu>
 
-
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
       <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurveys} />
 
@@ -147,10 +139,10 @@ export default function SurveyContent() {
        
       <div className="surveys-surveycard-box">
 
-        <Table celled striped>
+        <Table celled striped color="violet">
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colSpan='4'>{organization.orgName}</Table.HeaderCell>
+              <Table.HeaderCell colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
             </Table.Row>
             <Table.Row>
               <Table.HeaderCell >Survey ID</Table.HeaderCell>
