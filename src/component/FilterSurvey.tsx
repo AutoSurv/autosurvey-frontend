@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react
 import FilterSurveyByCountry from "./FilterSurveyByCountry";
 import FilterLocation from "./FilterLocation";
 import { OrgContext } from "@/helper/context";
+import FilterSurveyByYear from "./FilterSurveyByYear";
 
 type FilterProps = {
   surveys: AutoSurvey[];
@@ -38,7 +39,10 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
       { <FilterSurveyByCountry surveys={surveys} setFilteredSurvey={setFilterSurvey} setFilteredCountry={setFilterCountry}/> }
       {
         filterCountry.length > 0 ?
-        <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} filteredCountry={filterCountry}/>
+        <>
+          <FilterSurveyByYear surveys={filterSurvey} setFilteredSurvey={setFilterSurvey} />
+          <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} />
+        </>
         : null
       }  
     </section>

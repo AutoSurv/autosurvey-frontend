@@ -6,15 +6,14 @@ import FilterYear from "./FilterYear";
 type FilterProps = {
   surveys: AutoSurvey[];
   setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
-  setFilteredYears: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterSurveyByYear( { surveys, setFilteredSurvey, setFilteredYears } : FilterProps) {
+export default function FilterSurveyByYear( { surveys, setFilteredSurvey } : FilterProps) {
   const [filterYear, setFilterYear] = useState<string[]>([]);
   
 
   useEffect (() => {
-    setFilteredYears(filterYear);
+
     setFilteredSurvey(
       surveys.filter((survey: AutoSurvey) => { 
         if (filterYear.length > 0) {

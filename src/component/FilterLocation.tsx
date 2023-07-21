@@ -6,10 +6,9 @@ import { Dropdown } from 'semantic-ui-react'
 type FilterProps = {
   surveys: AutoSurvey[];
   setFilteredLocation: Dispatch<SetStateAction<string[]>>
-  filteredCountry: string[]
 }
 
-export default function FilterLocation( { surveys, setFilteredLocation, filteredCountry } : FilterProps) {
+export default function FilterLocation( { surveys, setFilteredLocation } : FilterProps) {
   const {filterLocation, setFilterLocation} = useContext(OrgContext);
   
   const uniqueSurveyCountryArray: string[] = [];    
