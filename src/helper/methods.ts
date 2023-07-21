@@ -141,7 +141,14 @@ export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
   return data;
 }
 
+//make it nicer with "key in"
+const data = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"] as const;
+type Data = typeof data;
+//type DataKey = Data[ke];
+
 export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[]) {
+
+//  const key: DataKey = ""
 
   const fiveVar: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
 

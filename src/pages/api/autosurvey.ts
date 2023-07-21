@@ -8,8 +8,6 @@ if (typeof window !== "undefined") {
   jwt = localStorage.getItem("jwt");
 }
 
-
-
 //Organization section
 const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 
@@ -43,18 +41,15 @@ export async function getOrganization(orgid: string | string[], setOrganization:
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
     mode: "cors",
   });
-  if (apiResponse.status === 200) {
 
-    const data: Organization = await apiResponse.json();
-    setOrganization(data);
-    return data;
-
-  }
-
-  if (apiResponse.status === 500) {
+  if (apiResponse.status !== 200) {
     localStorage.clear();
     router.push("/");
-  }
+  }   
+
+  const data: Organization = await apiResponse.json();
+  setOrganization(data);
+  return data;
 
 }
 

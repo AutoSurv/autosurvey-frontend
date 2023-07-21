@@ -16,15 +16,34 @@ import { initData } from "@/helper/initializer";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
+const useSurveys = () => {
+  const [status, setStatus] = useState("LOADING");
+  const [data, setData] = useState<{id: number} | null>(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setData({id: 1});
+
+
+
+
+  }, []);
+
+
+
+  return {status, data, error};
+}
+
+
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
   const [datas, setDatas] = useState<Data>(initData);
   
-  const [filteredSurvey, setFilteredSurvey] = useState<AutoSurvey[]>([]);
+  const [filteredSurveys, setFilteredSurveys] = useState<AutoSurvey[]>([]);
   
-  let country_list = new Set<string>([]);
-  filteredSurvey.forEach((s) => country_list.add(s.country));
+  let country_list = new Set<string>(filteredSurveys.map(({ country }) => country));
+  //filteredSurveys.forEach((s) => country_list.add(s.country));
   const country_arr = Array.from(country_list);
 
   useEffect(() => {
@@ -46,26 +65,26 @@ export default function SurveyContent() {
     },
   };
 
-  const resultData = calculateMeanValues(country_arr, filteredSurvey);
+  const meanValues = calculateMeanValues(country_arr, filteredSurveys);
 
   const series = [{
     name: 'rent',
-    data: resultData[0]
+    data: meanValues[0]
   }, {
     name: 'utilities',
-    data: resultData[1]
+    data: meanValues[1]
   }, {
     name: 'food',
-    data: resultData[2]
+    data: meanValues[2]
   }, {
     name: 'basic item',
-    data: resultData[3]
+    data: meanValues[3]
   }, {
     name: 'transportation',
-    data: resultData[4]
+    data: meanValues[4]
   }, {
     name: 'education total',
-    data: resultData[5]
+    data: meanValues[5]
   }
   ];
 
@@ -88,13 +107,13 @@ export default function SurveyContent() {
                 <Dropdown.Item>
                   <Link href={"#"} onClick={(e) => {
                     e.preventDefault();
-                    downloadExcel(filteredSurvey.filter(s => s.orgName === organization.orgName));
+                    downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName));
                   }} >Export Surveys (xlsx)
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <label >
-                    <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurvey.filter(s => s.orgName === organization.orgName)}>
+                    <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
                       Export Survey (csv)
                     </CSVLink>
                   </label>
@@ -118,7 +137,7 @@ export default function SurveyContent() {
 
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurvey} />
+      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurveys} />
 
       <Chart
         type="bar"
