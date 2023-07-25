@@ -7,18 +7,18 @@ import FilterSurveyByYear from "./FilterSurveyByYear";
 import FilterYear from "./FilterYear";
 
 type FilterProps = {
-  surveys: Survey[];
-  setFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
+  propSurveys: Survey[];
+  propSetFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
 }
 
-export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
+export default function FilterSurvey( { propSurveys, propSetFilteredSurvey } : FilterProps) {
   const {filterLocation, setFilterLocation} = useContext(OrgContext);
   const [filterCountry, setFilterCountry] = useState<string[]>([]);
   const [filterYear, setFilterYear] = useState<string[]>([]);
   const [filterSurvey, setFilterSurvey] = useState<Survey[]>([]);
 
   useEffect (() => {
-    setFilteredSurvey(
+    propSetFilteredSurvey(
       filterSurvey
       .filter((survey: Survey) => { 
         if (filterLocation.length > 0) {
@@ -39,13 +39,13 @@ export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterPro
 
   return(
     <section >
-      { <FilterSurveyByCountry surveys={surveys} setFilteredSurvey={setFilterSurvey} setFilteredCountry={setFilterCountry}/> }
+      { <FilterSurveyByCountry propSurveys={propSurveys} propSetFilteredSurvey={setFilterSurvey} propSetFilteredCountry={setFilterCountry}/> }
       {
         filterCountry.length > 0 ?
         <>
-          <FilterSurveyByYear surveys={filterSurvey} setFilteredSurvey={setFilterSurvey} />
+          <FilterSurveyByYear propSurveys={filterSurvey} propSetFilteredSurvey={setFilterSurvey} />
           
-          <FilterLocation surveys={filterSurvey} setFilteredLocation={setFilterLocation} />
+          <FilterLocation propSurveys={filterSurvey} propSetFilteredLocation={setFilterLocation} />
             
         </>
         : null

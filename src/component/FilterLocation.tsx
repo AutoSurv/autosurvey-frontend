@@ -4,15 +4,15 @@ import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
-  surveys: Survey[];
-  setFilteredLocation: Dispatch<SetStateAction<string[]>>
+  propSurveys: Survey[];
+  propSetFilteredLocation: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterLocation( { surveys, setFilteredLocation } : FilterProps) {
+export default function FilterLocation( { propSurveys, propSetFilteredLocation } : FilterProps) {
   const {filterLocation, setFilterLocation} = useContext(OrgContext);
   
   const uniqueSurveyLoacationArray: string[] = [];    
-  surveys.filter(survey => {
+  propSurveys.filter(survey => {
       if (uniqueSurveyLoacationArray.indexOf(survey.locationClustered) === -1) {
         uniqueSurveyLoacationArray.push(survey.locationClustered);
       }
@@ -30,7 +30,7 @@ export default function FilterLocation( { surveys, setFilteredLocation } : Filte
   };
 
   useEffect(() => {
-    setFilteredLocation(filterLocation);
+    propSetFilteredLocation(filterLocation);
   },[filterLocation.length])  
 
   return (

@@ -145,7 +145,7 @@ export default function SurveyContent() {
       </Menu>
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurveys} />
+      <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurvey={setFilteredSurveys} />
 
       <Chart
         type="bar"

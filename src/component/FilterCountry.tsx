@@ -3,15 +3,15 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
-  surveys: Survey[];
-  setFilteredCountry: Dispatch<SetStateAction<string[]>>
+  propSurveys: Survey[];
+  propSetFilteredCountry: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterCountry( { surveys, setFilteredCountry } : FilterProps) {
+export default function FilterCountry( { propSurveys, propSetFilteredCountry } : FilterProps) {
   const [filterCountry, setFilterCountry] = useState<string[]>([]);
 
   const uniqueSurveyCountryArray: string[] = [];
-  surveys.map(survey => {
+  propSurveys.map(survey => {
     if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
       uniqueSurveyCountryArray.push(survey.country);
     }
@@ -28,7 +28,7 @@ export default function FilterCountry( { surveys, setFilteredCountry } : FilterP
   };
 
   useEffect(() => {
-    setFilteredCountry(filterCountry);
+    propSetFilteredCountry(filterCountry);
   },[filterCountry.length])
 
   return (

@@ -3,15 +3,15 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
-  surveys: Survey[];
-  setFilteredYear: Dispatch<SetStateAction<string[]>>
+  propSurveys: Survey[];
+  propSetFilteredYear: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterYear( { surveys, setFilteredYear } : FilterProps) {
+export default function FilterYear( { propSurveys, propSetFilteredYear } : FilterProps) {
   const [filterYear, setFilterYear] = useState<string[]>([]);
 
   const uniqueSurveyYearArray: number[] = [];
-  surveys.filter(survey => {
+  propSurveys.filter(survey => {
     if (uniqueSurveyYearArray.indexOf(survey.year) === -1) {
       uniqueSurveyYearArray.push(survey.year);
     }
@@ -31,7 +31,7 @@ export default function FilterYear( { surveys, setFilteredYear } : FilterProps) 
   };
 
   useEffect(() => {
-    setFilteredYear(filterYear);
+    propSetFilteredYear(filterYear);
   },[filterYear.length])
 
   return (
