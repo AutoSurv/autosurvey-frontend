@@ -3,9 +3,9 @@ import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, O
 import router from "next/router";
 
 
-let jwt: any = "";
+let jwt: string = "";
 if (typeof window !== "undefined") {
-  jwt = localStorage.getItem("jwt");
+  jwt = localStorage.getItem("jwt")!;
 }
 
 //Organization section
@@ -383,6 +383,6 @@ export async function authenticateUser(user: LoginUser) {
       "Content-type": "application/json",
     },
   })
-
+  console.log("response: ", response);
   return response;
 }

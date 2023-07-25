@@ -2,7 +2,7 @@ import { initData } from "@/helper/initializer";
 import { checkImportedSurveyFields } from "@/helper/methods";
 import { addImportedSurvey } from "@/pages/api/autosurvey";
 import { Survey, Data, ImportedSurvey, Organization } from "@/type/type";
-import { Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
 
@@ -20,11 +20,14 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   const [errMessage, setErrMessage] = useState<string>("");
   const [dataFromImportedSurvey, setDataFromImportedSurvey] = useState<Survey[]>([]);
 
-  const handleFileUpload = (e: any) => {
-    if (e != null) {
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
 
       const reader = new FileReader();
+      //ChangeEvent<HTMLInputElement>
       reader.readAsArrayBuffer(e.target.files[0]);
+      //reader.readAsArrayBuffer(e.target.files[0]);
+
       reader.onload = (e) => {
         const data = e.target!.result;
         const workbook = XLSX.read(data, { type: "array" });

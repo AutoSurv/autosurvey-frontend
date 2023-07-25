@@ -23,7 +23,7 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
     value: country,
   }));
   
-  const handleChange = (event: any, {value}: any) => {
+  const handleChange = (event: React.SyntheticEvent<HTMLElement, Event>, {value}: any) => {
     setFilterCountries(typeof value === 'string' ? value.split(',') : value);
   };
 

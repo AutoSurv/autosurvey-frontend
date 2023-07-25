@@ -24,7 +24,7 @@ export default function FilterLocation( { propSurveys, propSetFilteredLocations 
     value: locationClustered,
   }));
   
-  const handleChange = (event: any, {value}: any) => {
+  const handleChange = (event: React.SyntheticEvent<HTMLElement, Event>, {value}: any) => {
     setFilterLocations(typeof value === 'string' ? value.split(',') : value);
    
   };
