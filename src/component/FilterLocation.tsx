@@ -1,10 +1,10 @@
 import { OrgContext } from '@/helper/context';
-import { AutoSurvey } from '@/type/type';
+import { Survey } from '@/type/type';
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
-  surveys: AutoSurvey[];
+  surveys: Survey[];
   setFilteredLocation: Dispatch<SetStateAction<string[]>>
 }
 

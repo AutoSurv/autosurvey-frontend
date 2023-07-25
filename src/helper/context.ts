@@ -1,4 +1,4 @@
-import { AutoSurvey, Organization } from "@/type/type";
+import { Survey, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, createContext } from "react";
 import { initSurvey } from "./initializer";
 
@@ -7,9 +7,9 @@ export interface OrgContextValue {
     organization: Organization;
     setOrganization: Dispatch<SetStateAction<Organization>>;  
 
-    survey: AutoSurvey;
-    setSurvey: Dispatch<SetStateAction<AutoSurvey>>; 
-    setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>; 
+    survey: Survey;
+    setSurvey: Dispatch<SetStateAction<Survey>>; 
+    setSurveys: Dispatch<SetStateAction<Survey[]>>; 
 
     userNameAuth: string;
     setUserNameAuth: Dispatch<SetStateAction<string>>;    

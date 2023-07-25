@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {  Table } from 'semantic-ui-react';
 import Link from 'next/link';
-import { AutoSurvey, Organization } from '@/type/type';
+import { Survey, Organization } from '@/type/type';
 
 type SurveyCardProp = {
     organization: Organization,
-    survey: AutoSurvey
+    survey: Survey
 }
 
 export default function SurveyRecord(props: SurveyCardProp) {

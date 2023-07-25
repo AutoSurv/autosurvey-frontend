@@ -1,6 +1,6 @@
 import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
-import { AutoSurvey, Data } from "@/type/type";
+import { Survey, Data } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
@@ -31,12 +31,12 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus, filterLocation } = useContext(OrgContext);
-  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
+  const [surveys, setSurveys] = useState<Survey[]>([]);
   const [datas, setDatas] = useState<Data>(initData);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
 
-  const [filteredSurveys, setFilteredSurveys] = useState<AutoSurvey[]>([]);
+  const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
   filteredSurveys.forEach((s) => countryLocation_list.add(s.country));
@@ -170,7 +170,7 @@ export default function SurveyContent() {
           <Table.Body>
             {
               //datas.surveys.sort()
-              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: AutoSurvey, index: number) => {
+              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
                 return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
               })
             }

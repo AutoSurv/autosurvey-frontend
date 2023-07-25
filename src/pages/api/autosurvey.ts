@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { AutoSurvey, AutoSurveyRequestDto, AutoSurveyUpdateDto, Data, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
+import { Survey, SurveyRequestDto, SurveyUpdateDto, Data, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
 import router from "next/router";
 
 
@@ -124,7 +124,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 //Survey section
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
-export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<Survey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
@@ -145,7 +145,7 @@ export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSu
 
 };
 
-export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<AutoSurvey>>) {
+export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<Survey>>) {
 
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, {
@@ -154,7 +154,7 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
     mode: "cors",
   });
   if (apiResponse.status === 200) {
-    const data: AutoSurvey = await apiResponse.json();
+    const data: Survey = await apiResponse.json();
     setSurvey(data);
     return data;
   }
@@ -166,9 +166,9 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  orgId: string, setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
+  orgId: string, setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
-  const reqBody: AutoSurveyRequestDto = {
+  const reqBody: SurveyRequestDto = {
     country: event.currentTarget.country.value,
     year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
@@ -213,16 +213,16 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 }
 
 export async function addImportedSurvey(
-  surveyArr: AutoSurvey[],
+  surveyArr: Survey[],
   orgId: string,
   setDatas: Dispatch<SetStateAction<Data>>,
   setErrMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
-  setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>,
+  setSurveys: Dispatch<SetStateAction<Survey[]>>,
   setOrganization: Dispatch<SetStateAction<Organization>>) {
 
   for (let i = 0; i < surveyArr.length; i++) {
-    const reqBody: AutoSurveyRequestDto = {
+    const reqBody: SurveyRequestDto = {
       country: surveyArr[i].country,
       year: surveyArr[i].year,
       rent: surveyArr[i].rent,
@@ -270,10 +270,10 @@ export async function addImportedSurvey(
 export async function updateSurvey(
   id: string | string[] | undefined, 
   event: React.FormEvent<HTMLFormElement>,
-  setSurvey: Dispatch<SetStateAction<AutoSurvey>>, setOpen: Dispatch<SetStateAction<boolean>>,
+  setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
   setErrMessage: Dispatch<SetStateAction<string>>, orgid: string | string[] | undefined) {
 
-  const reqBody: AutoSurveyUpdateDto = {
+  const reqBody: SurveyUpdateDto = {
     country: event.currentTarget.country.value,
     year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
@@ -314,7 +314,7 @@ export async function updateSurvey(
 export async function deleteSurvey(
   id: string | string[] | undefined, 
   setDatas: Dispatch<SetStateAction<Data>>,
-  setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>) {
+  setSurveys: Dispatch<SetStateAction<Survey[]>>) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",

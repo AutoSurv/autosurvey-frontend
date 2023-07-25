@@ -1,9 +1,9 @@
-import { AutoSurvey } from '@/type/type';
+import { Survey } from '@/type/type';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
-  surveys: AutoSurvey[];
+  surveys: Survey[];
   setFilteredCountry: Dispatch<SetStateAction<string[]>>
 }
 

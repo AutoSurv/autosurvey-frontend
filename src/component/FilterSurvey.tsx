@@ -1,4 +1,4 @@
-import { AutoSurvey } from "@/type/type";
+import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import FilterSurveyByCountry from "./FilterSurveyByCountry";
 import FilterLocation from "./FilterLocation";
@@ -7,20 +7,20 @@ import FilterSurveyByYear from "./FilterSurveyByYear";
 import FilterYear from "./FilterYear";
 
 type FilterProps = {
-  surveys: AutoSurvey[];
-  setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
+  surveys: Survey[];
+  setFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
 }
 
 export default function FilterSurvey( { surveys, setFilteredSurvey } : FilterProps) {
   const {filterLocation, setFilterLocation} = useContext(OrgContext);
   const [filterCountry, setFilterCountry] = useState<string[]>([]);
   const [filterYear, setFilterYear] = useState<string[]>([]);
-  const [filterSurvey, setFilterSurvey] = useState<AutoSurvey[]>([]);
+  const [filterSurvey, setFilterSurvey] = useState<Survey[]>([]);
 
   useEffect (() => {
     setFilteredSurvey(
       filterSurvey
-      .filter((survey: AutoSurvey) => { 
+      .filter((survey: Survey) => { 
         if (filterLocation.length > 0) {
           return filterLocation.some((location) => {
             if (location == "" || location == null) {

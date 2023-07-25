@@ -1,11 +1,11 @@
-import { AutoSurvey } from "@/type/type";
+import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import FilterCountry from "./FilterCountry";
 import FilterYear from "./FilterYear";
 
 type FilterProps = {
-  surveys: AutoSurvey[];
-  setFilteredSurvey: Dispatch<SetStateAction<AutoSurvey[]>>
+  surveys: Survey[];
+  setFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
 }
 
 export default function FilterSurveyByYear( { surveys, setFilteredSurvey } : FilterProps) {
@@ -13,7 +13,7 @@ export default function FilterSurveyByYear( { surveys, setFilteredSurvey } : Fil
   
   useEffect (() => {
     setFilteredSurvey(
-      surveys.filter((survey: AutoSurvey) => { 
+      surveys.filter((survey: Survey) => { 
         if (filterYear.length > 0) {
           return filterYear.some((year) => {
             if (year == "" || year == null) {

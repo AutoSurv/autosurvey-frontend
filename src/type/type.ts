@@ -1,4 +1,4 @@
-export type AutoSurvey = {
+export type Survey = {
   id: string;
   country: string;
   year: number;
@@ -25,7 +25,7 @@ export type AutoSurvey = {
   orgName: string
 }
 
-export type AutoSurveyRequestDto = {
+export type SurveyRequestDto = {
   country: string;
   year: number;
   rent: number;
@@ -50,7 +50,7 @@ export type AutoSurveyRequestDto = {
   orgId: string
 }
 
-export type AutoSurveyUpdateDto = {
+export type SurveyUpdateDto = {
   country: string;
   year: number;
   rent: number;
@@ -75,7 +75,7 @@ export type AutoSurveyUpdateDto = {
   orgId: string | string[] | undefined
 }
 
-export type ImportedAutosurvey = {
+export type ImportedSurvey = {
   country: string;
   year: number;
   rent: number | string;
@@ -102,7 +102,7 @@ export type ImportedAutosurvey = {
 export type Organization = {
   orgId: string,
   orgName: string,
-  surveys: AutoSurvey[]
+  surveys: Survey[]
 }
 
 export type OrgRequestDto = {
@@ -153,7 +153,7 @@ export interface Data {
   last: boolean,
   numberOfElements: number,
   pageSize: number,
-  surveys: AutoSurvey[],
+  surveys: Survey[],
   totalPages: number
 };
 

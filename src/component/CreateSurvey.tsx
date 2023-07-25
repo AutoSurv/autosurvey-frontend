@@ -1,13 +1,13 @@
 import { initData } from "@/helper/initializer";
 import { addSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Data, Organization } from "@/type/type";
+import { Survey, Data, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   organization: Organization;
   setOrganization: Dispatch<SetStateAction<Organization>>;
-  setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>;
+  setSurveys: Dispatch<SetStateAction<Survey[]>>;
 }
 
 export default function CreateSurvey(props: CreateSurveyProps) {

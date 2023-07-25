@@ -1,5 +1,5 @@
 import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, FormDataSingUp, ImportedAutosurvey, LoggedUser, LoginUser } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
@@ -7,7 +7,7 @@ import * as XLSX from 'xlsx';
 export const downloadExcel = (data: any) => {
 
   const surneyAsString: string = JSON.stringify(data[0]);
-  const survey: AutoSurvey = JSON.parse(surneyAsString);
+  const survey: Survey = JSON.parse(surneyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
   const workbook = XLSX.utils.book_new();
@@ -112,7 +112,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     });
 }
 
-export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
+export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   data.forEach((survey) => {
     if (survey.country === null) { survey.country = "";}  
@@ -146,7 +146,7 @@ const data = ["rent", "utilities", "food", "basicItems", "transportation", "educ
 type Data = typeof data;
 //type DataKey = Data[ke];
 
-export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[]) {
+export function calculateMeanValues(country_arr: string[], filteredSurvey: Survey[]) {
 
 //  const key: DataKey = ""
 
@@ -178,7 +178,7 @@ export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoS
 
 function isSurveyKey <T>(
   prop: string,
-  survey: AutoSurvey
+  survey: Survey
 ): prop is keyof Omit<T, number | symbol> {
   return prop in survey;
 }
