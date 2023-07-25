@@ -4,19 +4,19 @@ import FilterCountry from "./FilterCountry";
 
 type FilterProps = {
   propSurveys: Survey[];
-  propSetFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
-  propSetFilteredCountry: Dispatch<SetStateAction<string[]>>
+  propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
+  propSetFilteredCountries: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurvey, propSetFilteredCountry } : FilterProps) {
-  const [filterCountry, setFilterCountry] = useState<string[]>([]);
+export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurveys, propSetFilteredCountries } : FilterProps) {
+  const [filterCountries, setFilterCountries] = useState<string[]>([]);
   
   useEffect (() => {
-    propSetFilteredCountry(filterCountry);
-    propSetFilteredSurvey(
+    propSetFilteredCountries(filterCountries);
+    propSetFilteredSurveys(
       propSurveys.filter((survey: Survey) => {  
-      if (filterCountry.length > 0) {
-        return filterCountry.some((country) => {
+      if (filterCountries.length > 0) {
+        return filterCountries.some((country) => {
           if (country == "" || country == null) {
             return survey.country;
           } else {
@@ -28,12 +28,12 @@ export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSur
       }
     })
     )
-  }, [propSurveys.length, filterCountry.length])
+  }, [propSurveys.length, filterCountries.length])
 
   return(
     
     
-        <FilterCountry propSurveys={propSurveys}  propSetFilteredCountry={setFilterCountry} />
+        <FilterCountry propSurveys={propSurveys}  propSetFilteredCountry={setFilterCountries} />
       
   )
 }

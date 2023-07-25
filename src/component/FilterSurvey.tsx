@@ -4,25 +4,23 @@ import FilterSurveyByCountry from "./FilterSurveyByCountry";
 import FilterLocation from "./FilterLocation";
 import { OrgContext } from "@/helper/context";
 import FilterSurveyByYear from "./FilterSurveyByYear";
-import FilterYear from "./FilterYear";
 
 type FilterProps = {
   propSurveys: Survey[];
-  propSetFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
+  propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
 }
 
-export default function FilterSurvey( { propSurveys, propSetFilteredSurvey } : FilterProps) {
-  const {filterLocation, setFilterLocation} = useContext(OrgContext);
-  const [filterCountry, setFilterCountry] = useState<string[]>([]);
-  const [filterYear, setFilterYear] = useState<string[]>([]);
-  const [filterSurvey, setFilterSurvey] = useState<Survey[]>([]);
+export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : FilterProps) {
+  const {filterLocations, setFilterLocations} = useContext(OrgContext);
+  const [filterCountries, setFilterCountries] = useState<string[]>([]);
+  const [filterSurveys, setFilterSurveys] = useState<Survey[]>([]);
 
   useEffect (() => {
-    propSetFilteredSurvey(
-      filterSurvey
+    propSetFilteredSurveys(
+      filterSurveys
       .filter((survey: Survey) => { 
-        if (filterLocation.length > 0) {
-          return filterLocation.some((location) => {
+        if (filterLocations.length > 0) {
+          return filterLocations.some((location) => {
             if (location == "" || location == null) {
               return survey.locationClustered;
             } else {
@@ -35,17 +33,17 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurvey } : F
         }
       })
     )
-  }, [filterSurvey.length, filterLocation.length])
+  }, [filterSurveys.length, filterLocations.length])
 
   return(
     <section >
-      { <FilterSurveyByCountry propSurveys={propSurveys} propSetFilteredSurvey={setFilterSurvey} propSetFilteredCountry={setFilterCountry}/> }
+      { <FilterSurveyByCountry propSurveys={propSurveys} propSetFilteredSurveys={setFilterSurveys} propSetFilteredCountries={setFilterCountries}/> }
       {
-        filterCountry.length > 0 ?
+        filterCountries.length > 0 ?
         <>
-          <FilterSurveyByYear propSurveys={filterSurvey} propSetFilteredSurvey={setFilterSurvey} />
+          <FilterSurveyByYear propSurveys={filterSurveys} propSetFilteredSurvey={setFilterSurveys} />
           
-          <FilterLocation propSurveys={filterSurvey} propSetFilteredLocation={setFilterLocation} />
+          <FilterLocation propSurveys={filterSurveys} propSetFilteredLocations={setFilterLocations} />
             
         </>
         : null

@@ -148,7 +148,7 @@ export enum ROLE {
   admin = "ROLE_ADMIN"
 }
 
-export interface Data {
+export interface Pagination {
   first: boolean, 
   last: boolean,
   numberOfElements: number,

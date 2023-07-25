@@ -1,6 +1,5 @@
 import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import FilterCountry from "./FilterCountry";
 import FilterYear from "./FilterYear";
 
 type FilterProps = {
@@ -9,13 +8,13 @@ type FilterProps = {
 }
 
 export default function FilterSurveyByYear( { propSurveys, propSetFilteredSurvey } : FilterProps) {
-  const [filterYear, setFilterYear] = useState<string[]>([]);
+  const [filterYears, setFilterYears] = useState<string[]>([]);
   
   useEffect (() => {
     propSetFilteredSurvey(
       propSurveys.filter((survey: Survey) => { 
-        if (filterYear.length > 0) {
-          return filterYear.some((year) => {
+        if (filterYears.length > 0) {
+          return filterYears.some((year) => {
             if (year == "" || year == null) {
               return survey.country;
             } else {
@@ -27,9 +26,9 @@ export default function FilterSurveyByYear( { propSurveys, propSetFilteredSurvey
         } 
     })
     )
-  }, [propSurveys.length, filterYear.length])
+  }, [propSurveys.length, filterYears.length])
 
   return(    
-    <FilterYear propSurveys={propSurveys}  propSetFilteredYear={setFilterYear} />
+    <FilterYear propSurveys={propSurveys}  propSetFilteredYears={setFilterYears} />
     )
 }

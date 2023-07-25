@@ -2,6 +2,7 @@ import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
 import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
+import { json } from 'stream/consumers';
 import * as XLSX from 'xlsx';
 
 export const downloadExcel = (data: any) => {
@@ -19,6 +20,21 @@ export const downloadExcel = (data: any) => {
     XLSX.writeFile(workbook, survey.orgName + ".xlsx");
   }
 };
+
+// export const getDataFromImportedSurvey = (e: any) => {
+
+//   const reader = new FileReader();
+//   reader.readAsArrayBuffer(e.target.files[0]);
+//   reader.onload = (e) => {
+//     const data = e.target!.result;
+//     const workbook = XLSX.read(data, { type: "array" });
+//     const sheetName = workbook.SheetNames[0];
+//     const worksheet = workbook.Sheets[sheetName];
+//     const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
+//   }
+  
+//   return json;
+// };
 
 
 

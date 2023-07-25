@@ -1,4 +1,4 @@
-import { Survey, Data, Organization } from "@/type/type";
+import { Survey, Data, Organization, Pagination } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",
@@ -33,7 +33,7 @@ export const initSurvey: Survey = {
   orgName: ""
 }
 
-export const initData: Data = {
+export const initPagination: Pagination = {
   first: true, 
   last: false,
   numberOfElements: 1,

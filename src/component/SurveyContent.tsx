@@ -1,6 +1,6 @@
 import { CSVLink } from "react-csv";
 import { getSurveys } from "@/pages/api/autosurvey";
-import { Survey, Data } from "@/type/type";
+import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
@@ -12,8 +12,8 @@ import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
-import { initData } from "@/helper/initializer";
 import { TablePagination } from "@mui/material";
+import { initPagination } from "@/helper/initializer";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -30,9 +30,9 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
  */
 
 export default function SurveyContent() {
-  const { organization, setOrganization, setSignUpStatus, filterLocation } = useContext(OrgContext);
+  const { organization, setOrganization, setSignUpStatus, filterLocations } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
-  const [datas, setDatas] = useState<Data>(initData);
+  const [datas, setDatas] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
 
@@ -41,7 +41,7 @@ export default function SurveyContent() {
   let countryLocation_list = new Set<string>();
   filteredSurveys.forEach((s) => countryLocation_list.add(s.country));
   country_arr = Array.from(countryLocation_list)
-  if (filterLocation.length !== 0) {
+  if (filterLocations.length !== 0) {
     filteredSurveys.forEach((s) => countryLocation_list.add(s.locationClustered));
     country_arr = Array.from(countryLocation_list)
   }
@@ -145,7 +145,7 @@ export default function SurveyContent() {
       </Menu>
 
       <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurvey={setFilteredSurveys} />
+      <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
 
       <Chart
         type="bar"

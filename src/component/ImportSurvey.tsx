@@ -18,7 +18,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  const [data, setData] = useState<Survey[]>([]);
+  const [dataFromImportedSurvey, setDataFromImportedSurvey] = useState<Survey[]>([]);
 
   const handleFileUpload = (e: any) => {
     if (e != null) {
@@ -31,20 +31,21 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
+        
         console.log("json: ", json)
         
         const valuetedData = checkImportedSurveyFields(json);
 
         if (typeof valuetedData[0] === "object"){
           const surveyArr: Survey[] = JSON.parse(JSON.stringify(json));
-          setData(surveyArr);
+          setDataFromImportedSurvey(surveyArr);
         }
       };
     }  
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(data, organization.orgId, setDatas, setErrMessage, setOpen, setSurveys, setOrganization)
+    addImportedSurvey(dataFromImportedSurvey, organization.orgId, setDatas, setErrMessage, setOpen, setSurveys, setOrganization)
   }
   
   return (

@@ -16,7 +16,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [signUpStatus, setSignUpStatus] =useState<boolean>(false);
   const [userNameAuth, setUserNameAuth] = useState<string>("");
-  const [filterLocation, setFilterLocation] = useState<string[]>([]);
+  const [filterLocations, setFilterLocations] = useState<string[]>([]);
 
   return (
 
@@ -25,7 +25,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         survey, setSurvey, setSurveys, setSignUpStatus, 
         signUpStatus, 
         userNameAuth, setUserNameAuth, 
-        filterLocation, setFilterLocation,
+        filterLocations, setFilterLocations,
         }}>
       <Component {...pageProps} />
       </OrgContext.Provider>

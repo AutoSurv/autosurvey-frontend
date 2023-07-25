@@ -5,11 +5,11 @@ import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
   propSurveys: Survey[];
-  propSetFilteredLocation: Dispatch<SetStateAction<string[]>>
+  propSetFilteredLocations: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterLocation( { propSurveys, propSetFilteredLocation } : FilterProps) {
-  const {filterLocation, setFilterLocation} = useContext(OrgContext);
+export default function FilterLocation( { propSurveys, propSetFilteredLocations } : FilterProps) {
+  const {filterLocations, setFilterLocations} = useContext(OrgContext);
   
   const uniqueSurveyLoacationArray: string[] = [];    
   propSurveys.filter(survey => {
@@ -25,13 +25,13 @@ export default function FilterLocation( { propSurveys, propSetFilteredLocation }
   }));
   
   const handleChange = (event: any, {value}: any) => {
-    setFilterLocation(typeof value === 'string' ? value.split(',') : value);
+    setFilterLocations(typeof value === 'string' ? value.split(',') : value);
    
   };
 
   useEffect(() => {
-    propSetFilteredLocation(filterLocation);
-  },[filterLocation.length])  
+    propSetFilteredLocations(filterLocations);
+  },[filterLocations.length])  
 
   return (
 

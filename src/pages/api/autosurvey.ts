@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Survey, SurveyRequestDto, SurveyUpdateDto, Data, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User } from "../../type/type";
+import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination } from "../../type/type";
 import router from "next/router";
 
 
@@ -124,7 +124,7 @@ export async function deleOrganization(id: string, setOrganizations: Dispatch<Se
 //Survey section
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
-export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<Survey[]>>) {
+export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>) {
   const apiResponse = await fetch(BASE_SURVEY_URL, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
@@ -132,8 +132,8 @@ export async function getSurveys(setDatas: Dispatch<SetStateAction<Data>>, setSu
   });
 
   if (apiResponse.status === 200) {
-    const data: Data = await apiResponse.json();
-    setDatas(data);
+    const data: Pagination = await apiResponse.json();
+    setPagination(data);
     setSurveys(data.surveys);
     return data;
   }
@@ -166,7 +166,7 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  orgId: string, setDatas: Dispatch<SetStateAction<Data>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
+  orgId: string, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: SurveyRequestDto = {
     country: event.currentTarget.country.value,
@@ -206,7 +206,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     body: JSON.stringify(reqBody)
   };
   const response = await fetch(BASE_SURVEY_URL, reqOptions);
-  await getSurveys(setDatas, setSurveys);
+  await getSurveys(setPagination, setSurveys);
   await getOrganization(orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
@@ -215,7 +215,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 export async function addImportedSurvey(
   surveyArr: Survey[],
   orgId: string,
-  setDatas: Dispatch<SetStateAction<Data>>,
+  setPagination: Dispatch<SetStateAction<Pagination>>,
   setErrMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
@@ -260,7 +260,7 @@ export async function addImportedSurvey(
       body: JSON.stringify(reqBody)
     };
     const response = await fetch(BASE_SURVEY_URL, reqOptions);
-    await getSurveys(setDatas,setSurveys);
+    await getSurveys(setPagination,setSurveys);
     await getOrganization(orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
@@ -313,7 +313,7 @@ export async function updateSurvey(
 
 export async function deleteSurvey(
   id: string | string[] | undefined, 
-  setDatas: Dispatch<SetStateAction<Data>>,
+  setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
@@ -322,7 +322,7 @@ export async function deleteSurvey(
       Authorization: `Bearer ${localStorage.getItem("jwt")}`
     }
   });
-  await getSurveys(setDatas, setSurveys);
+  await getSurveys(setPagination, setSurveys);
 };
 
 //userSection

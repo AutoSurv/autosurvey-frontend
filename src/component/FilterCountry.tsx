@@ -8,7 +8,7 @@ type FilterProps = {
 }
 
 export default function FilterCountry( { propSurveys, propSetFilteredCountry } : FilterProps) {
-  const [filterCountry, setFilterCountry] = useState<string[]>([]);
+  const [filterCountries, setFilterCountries] = useState<string[]>([]);
 
   const uniqueSurveyCountryArray: string[] = [];
   propSurveys.map(survey => {
@@ -24,12 +24,12 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
   }));
   
   const handleChange = (event: any, {value}: any) => {
-    setFilterCountry(typeof value === 'string' ? value.split(',') : value);
+    setFilterCountries(typeof value === 'string' ? value.split(',') : value);
   };
 
   useEffect(() => {
-    propSetFilteredCountry(filterCountry);
-  },[filterCountry.length])
+    propSetFilteredCountry(filterCountries);
+  },[filterCountries.length])
 
   return (
     <Dropdown

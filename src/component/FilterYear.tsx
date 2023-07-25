@@ -4,11 +4,11 @@ import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
   propSurveys: Survey[];
-  propSetFilteredYear: Dispatch<SetStateAction<string[]>>
+  propSetFilteredYears: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterYear( { propSurveys, propSetFilteredYear } : FilterProps) {
-  const [filterYear, setFilterYear] = useState<string[]>([]);
+export default function FilterYear( { propSurveys, propSetFilteredYears } : FilterProps) {
+  const [filterYears, setFilterYears] = useState<string[]>([]);
 
   const uniqueSurveyYearArray: number[] = [];
   propSurveys.filter(survey => {
@@ -27,17 +27,17 @@ export default function FilterYear( { propSurveys, propSetFilteredYear } : Filte
   
   const handleChange = (event: any, {value}: any) => {
     
-    setFilterYear(typeof value === 'string' ? value.split(',') : value);
+    setFilterYears(typeof value === 'string' ? value.split(',') : value);
   };
 
   useEffect(() => {
-    propSetFilteredYear(filterYear);
-  },[filterYear.length])
+    propSetFilteredYears(filterYears);
+  },[filterYears.length])
 
   return (
     <Dropdown
     placeholder='Year'
-    //multiple
+    multiple
     search
     selection
     options={stateOptions}

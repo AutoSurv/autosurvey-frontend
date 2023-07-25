@@ -1,6 +1,6 @@
-import { initData } from "@/helper/initializer";
+import { initPagination } from "@/helper/initializer";
 import { addSurvey } from "@/pages/api/autosurvey";
-import { Survey, Data, Organization } from "@/type/type";
+import { Survey, Organization, Pagination } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
@@ -13,7 +13,7 @@ type CreateSurveyProps = {
 export default function CreateSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  const [pagination, setPagination] = useState<Data>(initData);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
 
   const { organization, setOrganization, setSurveys } = props;
 
