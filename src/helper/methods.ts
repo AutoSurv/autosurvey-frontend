@@ -1,8 +1,7 @@
-import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
+import { authenticateUser, signUpUser } from '@/helper/apiService';
 import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { json } from 'stream/consumers';
 import * as XLSX from 'xlsx';
 
 export const downloadExcel = (data: any) => {

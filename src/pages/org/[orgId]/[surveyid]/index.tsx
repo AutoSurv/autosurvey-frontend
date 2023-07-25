@@ -1,15 +1,15 @@
 import { OrgContext } from "@/helper/context";
-import { deleteSurvey, getSurvey, getSurveys } from "@/pages/api/autosurvey";
+import { deleteSurvey, getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Confirm, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
-import { AutoSurvey, Data } from '@/type/type';
+import { Survey, Pagination } from '@/type/type';
 import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/UpdateSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
-import { initData } from "@/helper/initializer";
+import { initPagination } from "@/helper/initializer";
 
 
 export default function SurveyDetails() {
@@ -18,17 +18,17 @@ export default function SurveyDetails() {
   const { orgId, surveyid } = router.query;
   const { organization, survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [datas, setDatas] = useState<Data>(initData);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
 
 
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
-    getSurveys(setDatas, setSurveys);
+    getSurveys(setPagination, setSurveys);
   }, [setSurvey])
 
-  const surveyArray: AutoSurvey[] = [survey];
+  const surveyArray: Survey[] = [survey];
 
   return (
     <div className="specificsurvey-card-container">
@@ -222,7 +222,7 @@ export default function SurveyDetails() {
                   onCancel={() => setOpenConfirm(false)}
                   onConfirm={(e) => {
                     e.preventDefault();
-                    deleteSurvey(surveyid, setDatas, setSurveys);
+                    deleteSurvey(surveyid, setPagination, setSurveys);
                     setOpenConfirm(false);
                     window.location.href = "/org/" + orgId;
                   }}

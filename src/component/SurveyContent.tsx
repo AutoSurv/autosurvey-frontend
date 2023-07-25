@@ -1,5 +1,5 @@
 import { CSVLink } from "react-csv";
-import { getSurveys } from "@/pages/api/autosurvey";
+import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
@@ -32,7 +32,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 export default function SurveyContent() {
   const { organization, setOrganization, setSignUpStatus, filterLocations } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
-  const [datas, setDatas] = useState<Pagination>(initPagination);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
 
@@ -47,7 +47,7 @@ export default function SurveyContent() {
   }
 
   useEffect(() => {
-    getSurveys(setDatas, setSurveys);
+    getSurveys(setPagination, setSurveys);
   }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {

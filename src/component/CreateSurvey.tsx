@@ -1,5 +1,5 @@
 import { initPagination } from "@/helper/initializer";
-import { addSurvey } from "@/pages/api/autosurvey";
+import { addSurvey } from "@/helper/apiService";
 import { Survey, Organization, Pagination } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";

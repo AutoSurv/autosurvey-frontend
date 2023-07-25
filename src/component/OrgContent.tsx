@@ -1,4 +1,4 @@
-import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
+import { addOrganization, getOrganizations } from "@/helper/apiService";
 import { Organization, ROLE } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import {

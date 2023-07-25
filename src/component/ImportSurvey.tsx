@@ -1,7 +1,7 @@
-import { initData } from "@/helper/initializer";
+import { initPagination } from "@/helper/initializer";
 import { checkImportedSurveyFields } from "@/helper/methods";
-import { addImportedSurvey } from "@/pages/api/autosurvey";
-import { Survey, Data, ImportedSurvey, Organization } from "@/type/type";
+import { addImportedSurvey } from "@/helper/apiService";
+import { Survey, Pagination, ImportedSurvey, Organization } from "@/type/type";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
@@ -14,7 +14,7 @@ type ImportSurveyProps = {
 
 export default function ImportSurvey(props: ImportSurveyProps) {
   const { organization, setOrganization, setSurveys } = props;
-  const [datas, setDatas] = useState<Data>(initData);
+  const [datas, setDatas] = useState<Pagination>(initPagination);
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");

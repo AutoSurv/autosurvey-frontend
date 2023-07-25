@@ -1,6 +1,6 @@
 import SurveyContent from "@/component/SurveyContent";
 import { OrgContext } from "@/helper/context";
-import { getOrganization } from "@/pages/api/autosurvey";
+import { getOrganization } from "@/helper/apiService";
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react";
 

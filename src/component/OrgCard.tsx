@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Organization, ROLE } from '@/type/type';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { Button, Form, Input, Label, Modal, Card, Image, Confirm, Icon } from 'semantic-ui-react';
-import { deleOrganization, updateOrganizationName } from '@/pages/api/autosurvey';
+import { deleteOrganization, updateOrganizationName } from '@/helper/apiService';
 import { OrgContext } from '@/helper/context';
 import Link from 'next/link';
 
@@ -73,7 +73,7 @@ export default function OrgCard(props: OrgCardProp) {
               onCancel={() => setOpenConfirm(false)}
               onConfirm={(e) => {
                 e.preventDefault();
-                deleOrganization(organization.orgId, setOrganizations);
+                deleteOrganization(organization.orgId, setOrganizations);
                 setOpenConfirm(false);
               }}
             />

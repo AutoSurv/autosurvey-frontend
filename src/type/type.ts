@@ -157,3 +157,11 @@ export interface Pagination {
   totalPages: number
 };
 
+export type ReqOptions = {
+  method: string,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: string
+  },
+  body: string
+};

@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
-import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination } from "../../type/type";
+import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
 import router from "next/router";
+import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
 let jwt: string = "";
@@ -9,21 +10,14 @@ if (typeof window !== "undefined") {
 }
 
 //Organization section
-const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 
 export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
-  const apiResponse = await fetch(BASE_ORG_URL, {
-    cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-    mode: "cors",
-  });
+  const apiResponse = await getOrganizationsApi();
 
   if (apiResponse.status === 200) {
-
     const data: Organization[] = await apiResponse.json();
     setOrganizations(data);
     return data;
-
   }
 
   if (apiResponse.status === 500) {
@@ -35,12 +29,7 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
   
-  const organizationURL = BASE_ORG_URL + `/${orgid}`;
-  const apiResponse = await fetch(organizationURL, {
-    cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-    mode: "cors",
-  });
+  const apiResponse = await getOrganizationApi(orgid);
 
   if (apiResponse.status !== 200) {
     localStorage.clear();
@@ -59,18 +48,13 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
     creatorName: username
   };
 
+  const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
+
   if (!reqBody.orgName) {
     setErrMessage('Please choose a name for your organization');
   }
 
-  const response = await fetch(BASE_ORG_URL, {
-    method: "POST",
-    body: JSON.stringify(reqBody),
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
-    },
-  });
+  const response = await addOrganizationApi(reqOptions);
 
   if (response.ok) {
     await getOrganizations(setOrganizations);
@@ -93,43 +77,24 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
     setErrMessage("Please edit name");
   }
 
-  const reqOptions = {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
-    },
-    body: JSON.stringify(reqBody)
-  };
+  const reqOptions = setRequestOptions("PATCH", reqBody);
 
-  const response = await fetch(`${BASE_ORG_URL}/${id}`, reqOptions);
+  const responseApi = updateOrganizationNameApi(id, reqOptions)
   await getOrganization(id, setOrganization);
   await getOrganizations(setOrganizations);
   setOpen(false);
   setErrMessage('');
 };
 
-export async function deleOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
-  const autosurveysURL = BASE_ORG_URL + `/${id}`;
-  const response = await fetch(autosurveysURL, {
-    method: "DELETE",
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` }
-  });
+export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
+  const response = await deleteOrganizationApi(id);
   await getOrganizations(setOrganizations);
 };
 
-
-
-
 //Survey section
-const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
 export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>) {
-  const apiResponse = await fetch(BASE_SURVEY_URL, {
-    cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-    mode: "cors",
-  });
+  const apiResponse = await getSurveysApi();
 
   if (apiResponse.status === 200) {
     const data: Pagination = await apiResponse.json();
@@ -142,17 +107,11 @@ export async function getSurveys(setPagination: Dispatch<SetStateAction<Paginati
     localStorage.clear();
     router.push("/");
   }
-
 };
 
 export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<Survey>>) {
 
-  const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
-  const apiResponse = await fetch(autosurveysURL, {
-    cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-    mode: "cors",
-  });
+  const apiResponse = await getSurveyApi(surveyId);
   if (apiResponse.status === 200) {
     const data: Survey = await apiResponse.json();
     setSurvey(data);
@@ -197,15 +156,10 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     setErrMessage('Please fill the form.');
     return;
   }
-  const reqOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
-    },
-    body: JSON.stringify(reqBody)
-  };
-  const response = await fetch(BASE_SURVEY_URL, reqOptions);
+
+  const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
+
+  const response = await addSurveyApi(reqOptions);
   await getSurveys(setPagination, setSurveys);
   await getOrganization(orgId, setOrganization)
   setOpen(false);
@@ -251,15 +205,9 @@ export async function addImportedSurvey(
       setErrMessage('Please fill the form.');
       return;
     }
-    const reqOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`
-      },
-      body: JSON.stringify(reqBody)
-    };
-    const response = await fetch(BASE_SURVEY_URL, reqOptions);
+
+    const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
+    const response = await addImportedSurveyApi(reqOptions);
     await getSurveys(setPagination,setSurveys);
     await getOrganization(orgId, setOrganization)
     setOpen(false);
@@ -297,15 +245,9 @@ export async function updateSurvey(
     comments: event.currentTarget.comments.value,
     orgId: orgid
   };
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const response = await fetch(autosurveysURL, {
-    method: "PATCH",
-    body: JSON.stringify(reqBody),
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
-    },
-  });
+
+  const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
+  const response = await updateSurveyApi(id, reqOptions);
   await getSurvey(id, setSurvey);
   setOpen(false);
   setErrMessage('');
@@ -315,29 +257,13 @@ export async function deleteSurvey(
   id: string | string[] | undefined, 
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
-  const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const response = await fetch(autosurveysURL, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
-    }
-  });
+  const response = await deleteSurveyApi(id);
   await getSurveys(setPagination, setSurveys);
 };
 
 //userSection
-const BASE_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users`;
-const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
-const NEW_USER_URL = `${BASE_USER_URL}/new`;
-
-
 export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>> ) {
- const userURL = BASE_USER_URL + `/${name}`;
- const apiResponse = await fetch(userURL, {
-    cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-    mode: "cors",
-  });
+ const apiResponse = await getUserApi(name);
   if (apiResponse.status === 200) {
 
     const data: User = await apiResponse.json();
@@ -361,28 +287,29 @@ export async function signUpUser(data: FormDataSingUp) {
     console.log("all empty fields");
     return null;
   }
-  const response = await fetch(NEW_USER_URL, {
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-type": "application/json",
-    },
-  });
+  const response = await signUpUserApi(data);
 
   return response;
 }
 
-
 export async function authenticateUser(user: LoginUser) {
-  const response = await fetch(AUTH_URL, {
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify(user),
-    headers: {
-      "Content-type": "application/json",
-    },
-  })
+  const response = await authenticateUserApi(user)
   console.log("response: ", response);
   return response;
+}
+
+export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
+  const reqOptions: ReqOptions = {
+    method: typeOfRequest,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
+    },
+    body: JSON.stringify(reqBody)
+  };
+  return reqOptions;
+}
+
+function fetchgetUserApi(name: string) {
+  throw new Error("Function not implemented.");
 }
