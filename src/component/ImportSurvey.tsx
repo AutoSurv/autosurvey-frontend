@@ -14,7 +14,7 @@ type ImportSurveyProps = {
 
 export default function ImportSurvey(props: ImportSurveyProps) {
   const { organization, setOrganization, setSurveys } = props;
-  const [datas, setDatas] = useState<Pagination>(initPagination);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
 
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
@@ -48,7 +48,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(dataFromImportedSurvey, organization.orgId, setDatas, setErrMessage, setOpen, setSurveys, setOrganization)
+    addImportedSurvey(dataFromImportedSurvey, organization.orgId, setPagination, setErrMessage, setOpen, setSurveys, setOrganization)
   }
   
   return (

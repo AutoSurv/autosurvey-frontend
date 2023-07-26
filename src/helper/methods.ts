@@ -20,23 +20,6 @@ export const downloadExcel = (data: any) => {
   }
 };
 
-// export const getDataFromImportedSurvey = (e: any) => {
-
-//   const reader = new FileReader();
-//   reader.readAsArrayBuffer(e.target.files[0]);
-//   reader.onload = (e) => {
-//     const data = e.target!.result;
-//     const workbook = XLSX.read(data, { type: "array" });
-//     const sheetName = workbook.SheetNames[0];
-//     const worksheet = workbook.Sheets[sheetName];
-//     const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
-//   }
-  
-//   return json;
-// };
-
-
-
 export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
   setSignUpStatus(false);
   localStorage.clear();
@@ -81,7 +64,6 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
         router.push("org");
       }
     });
-
 }
 
 export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
@@ -110,7 +92,6 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     setErrorMsg('Please type your email.');
     return;
   }
-
 
   await signUpUser(inputSignUpBody)
     .then((response) => {
@@ -159,11 +140,11 @@ export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 //make it nicer with "key in"
 const data = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"] as const;
 type Data = typeof data;
-//type DataKey = Data[ke];
+type DataKey = keyof Data;
+// const dataKey: DataKey = ;
+// console.log("Datakey: ", dataKey);
 
 export function calculateMeanValues(country_arr: string[], filteredSurvey: Survey[]) {
-
-//  const key: DataKey = ""
 
   const fiveVar: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
 
