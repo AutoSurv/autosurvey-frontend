@@ -1,4 +1,4 @@
-import { Survey, Data, Organization, Pagination } from "@/type/type";
+import { Survey, Organization, Pagination } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",

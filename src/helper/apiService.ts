@@ -79,7 +79,7 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
 
   const reqOptions = setRequestOptions("PATCH", reqBody);
 
-  const responseApi = updateOrganizationNameApi(id, reqOptions)
+  updateOrganizationNameApi(id, reqOptions)
   await getOrganization(id, setOrganization);
   await getOrganizations(setOrganizations);
   setOpen(false);
@@ -87,7 +87,7 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
 };
 
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
-  const response = await deleteOrganizationApi(id);
+  await deleteOrganizationApi(id);
   await getOrganizations(setOrganizations);
 };
 
@@ -159,7 +159,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 
   const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
-  const response = await addSurveyApi(reqOptions);
+  await addSurveyApi(reqOptions);
   await getSurveys(setPagination, setSurveys);
   await getOrganization(orgId, setOrganization)
   setOpen(false);
@@ -207,7 +207,7 @@ export async function addImportedSurvey(
     }
 
     const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
-    const response = await addImportedSurveyApi(reqOptions);
+    await addImportedSurveyApi(reqOptions);
     await getSurveys(setPagination,setSurveys);
     await getOrganization(orgId, setOrganization)
     setOpen(false);
@@ -247,7 +247,7 @@ export async function updateSurvey(
   };
 
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
-  const response = await updateSurveyApi(id, reqOptions);
+  await updateSurveyApi(id, reqOptions);
   await getSurvey(id, setSurvey);
   setOpen(false);
   setErrMessage('');
@@ -257,7 +257,7 @@ export async function deleteSurvey(
   id: string | string[] | undefined, 
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
-  const response = await deleteSurveyApi(id);
+   await deleteSurveyApi(id);
   await getSurveys(setPagination, setSurveys);
 };
 
@@ -310,6 +310,3 @@ export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
   return reqOptions;
 }
 
-function fetchgetUserApi(name: string) {
-  throw new Error("Function not implemented.");
-}
