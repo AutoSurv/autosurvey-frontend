@@ -95,17 +95,20 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 
   await signUpUser(inputSignUpBody)
     .then((response) => {
-      if (response?.status == 200) {
+      if (response?.status == 201) {
         setOpen(false);
         setSignupSuccessMessage("Successfully signed up");
         setErrorMsg(
           ""
         );
         return;
-      } else {
+      } else if (response?.status == 409) {
         setErrorMsg('User aleady exists. Choose other name');
+      } else {
+        setErrorMsg('General error: ' + response?.status);
       }
-    });
+    }  
+  );
 }
 
 export function checkImportedSurveyFields(data: ImportedSurvey[]) {

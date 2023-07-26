@@ -278,7 +278,6 @@ export async function getUser(name: string, setUser: Dispatch<SetStateAction<Use
 }
 
 export async function signUpUser(data: FormDataSingUp) {
-
   if (
     !data.username &&
     !data.password &&
@@ -287,8 +286,12 @@ export async function signUpUser(data: FormDataSingUp) {
     console.log("all empty fields");
     return null;
   }
-  const response = await signUpUserApi(data);
 
+  // const userReponse = await getUserApi(data.username);
+  // console.log("userReponse from getUeserApoi: ", userReponse);
+  // if (userReponse.status  == 200) return null;
+
+  const response = await signUpUserApi(data);
   return response;
 }
 
