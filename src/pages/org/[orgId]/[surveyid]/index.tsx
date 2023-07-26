@@ -10,6 +10,7 @@ import UpdateSurvey from "@/component/UpdateSurvey";
 import { SignOut, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { initPagination } from "@/helper/initializer";
+import UserOptions from "@/component/UserOptions";
 
 
 export default function SurveyDetails() {
@@ -64,13 +65,7 @@ export default function SurveyDetails() {
         <Menu.Item> <Link href={"/org/" + orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-          <Menu.Item>
-            <Button onClick={() => {
-              setSignUpStatus(false);
-              SignOut(setSignUpStatus);
-            }}
-              circular icon='sign out' color='blue' inverted></Button>
-          </Menu.Item>
+          <UserOptions />
         </Menu.Menu>
       </Menu>
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>

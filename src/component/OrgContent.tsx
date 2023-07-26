@@ -15,6 +15,7 @@ import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import { SignOut } from "@/helper/methods";
+import UserOptions from "./UserOptions";
 
 export default function OrgContent() {
   const { setSignUpStatus, userNameAuth, setUserNameAuth } =
@@ -60,24 +61,8 @@ export default function OrgContent() {
           </Link>
         </Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item>
-            {" "}
-            <Link href={"/about"} style={{ textDecoration: "none" }}>
-              About
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Button
-              onClick={() => {
-                setSignUpStatus(false);
-                SignOut(setSignUpStatus);
-              }}
-              circular
-              icon="sign out"
-              color="blue"
-              inverted
-            ></Button>
-          </Menu.Item>
+          
+        <UserOptions />
         </Menu.Menu>
       </Menu>
       {role !== ROLE.user ? (

@@ -297,7 +297,6 @@ export async function signUpUser(data: FormDataSingUp) {
 
 export async function authenticateUser(user: LoginUser) {
   const response = await authenticateUserApi(user)
-  console.log("response: ", response);
   return response;
 }
 

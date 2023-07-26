@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic'
 import FilterSurvey from "./FilterSurvey";
 import { TablePagination } from "@mui/material";
 import { initPagination } from "@/helper/initializer";
+import UserOptions from "./UserOptions";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -133,14 +134,14 @@ export default function SurveyContent() {
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-          <Menu.Item>
-            <Button onClick={() => {
-              setSignUpStatus(false);
-              SignOut(setSignUpStatus);
-            }}
-              circular icon='sign out' color='blue' inverted></Button>
+          <Menu.Item> 
+            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
           </Menu.Item>
+
+          
+            <UserOptions />
+          
+
         </Menu.Menu>
       </Menu>
 
