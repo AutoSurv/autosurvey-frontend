@@ -136,9 +136,7 @@ export default function SurveyContent() {
         <Menu.Menu position='right'>
           <Menu.Item> 
             <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
-          </Menu.Item>
-
-          
+          </Menu.Item>         
             <UserOptions />
           
 

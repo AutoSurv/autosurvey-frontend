@@ -61,7 +61,9 @@ export default function OrgContent() {
           </Link>
         </Menu.Item>
         <Menu.Menu position="right">
-          
+        <Menu.Item> 
+          <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
+        </Menu.Item> 
         <UserOptions />
         </Menu.Menu>
       </Menu>
