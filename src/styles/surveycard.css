@@ -9,15 +9,23 @@
 }
 
 .ui.button.surveys-modal-btn {
-    margin-left: 5%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin: auto;
+    margin-right: 2%;
+}
 
+.surveys-management {
+    margin: 2%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .ui.card:hover {
     transform: scale(1.2);
     border: rgb(223, 219, 219) 1px solid;
+}
+
+.surveys-charts {
+    align-item: center;
 }
 
 .surveys-surveycard-box {

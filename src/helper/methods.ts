@@ -150,21 +150,20 @@ type DataKey = keyof Data;
 export function calculateMeanValues(country_arr: string[], filteredSurvey: Survey[]) {
 
   const fiveVar: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
-
   let dataForGraph: number[][] = []; 
 
   for (let fiveVarIndex= 0; fiveVarIndex < fiveVar.length; fiveVarIndex++) {
     let data: number[] = []; 
     const prop = fiveVar[fiveVarIndex];
 
-    for (let i = 0; i < country_arr.length; i++) {
+    for (let countryIndex = 0; countryIndex < country_arr.length; countryIndex++) {
       const lowerPart = filteredSurvey
-      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[i] === (s.locationClustered) || country_arr[i] === (s.country)); }})
+      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); }})
       .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; }})
       .length;
 
       const totalResult = filteredSurvey
-      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[i] === ( s.locationClustered) || country_arr[i] === (s.country)); }})
+      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); }})
       .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } else {return 0}})
       .reduce(function add(sum, rent) { return sum + rent; }, 0) / lowerPart;
       

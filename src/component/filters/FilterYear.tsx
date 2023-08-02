@@ -8,16 +8,14 @@ type FilterProps = {
 }
 
 export default function FilterYear( { propSurveys, propSetFilteredYears } : FilterProps) {
-  const [filterYears, setFilterYears] = useState<string[]>([]);
 
+  const [filterYears, setFilterYears] = useState<string[]>([]);
   const uniqueSurveyYearArray: number[] = [];
   propSurveys.filter(survey => {
     if (uniqueSurveyYearArray.indexOf(survey.year) === -1) {
       uniqueSurveyYearArray.push(survey.year);
     }
   })
-
-  console.log("uniqueSurveyYearArray: ", uniqueSurveyYearArray);
 
   const stateOptions = uniqueSurveyYearArray.sort().map( (year, index: number) => ({
     key: index,
@@ -26,8 +24,9 @@ export default function FilterYear( { propSurveys, propSetFilteredYears } : Filt
   }));
   
   const handleChange = (event: React.SyntheticEvent<HTMLElement, Event>, {value}: any) => {
-    
-    setFilterYears(typeof value === 'string' ? value.split(',') : value);
+
+      setFilterYears(typeof value === 'string' ? value.split(',') : value);
+
   };
 
   useEffect(() => {
@@ -38,6 +37,7 @@ export default function FilterYear( { propSurveys, propSetFilteredYears } : Filt
     <Dropdown
     placeholder='Year'
     multiple
+    clearable
     search
     selection
     options={stateOptions}

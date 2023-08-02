@@ -2,19 +2,19 @@ import { CSVLink } from "react-csv";
 import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
+import { Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
-import { SignOut, calculateMeanValues, downloadExcel } from '@/helper/methods';
+import { calculateMeanValues, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
-import FilterSurvey from "./FilterSurvey";
+import FilterSurvey from "../filters/FilterSurvey";
 import { TablePagination } from "@mui/material";
 import { initPagination } from "@/helper/initializer";
-import UserOptions from "./UserOptions";
+import UserOptions from "../UserOptions";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -31,17 +31,20 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
  */
 
 export default function SurveyContent() {
-  const { organization, setOrganization, setSignUpStatus, filterLocations } = useContext(OrgContext);
+  const { organization, setOrganization, filterLocations } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
 
   const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
+
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
+  
   filteredSurveys.forEach((s) => countryLocation_list.add(s.country));
   country_arr = Array.from(countryLocation_list)
+
   if (filterLocations.length !== 0) {
     filteredSurveys.forEach((s) => countryLocation_list.add(s.locationClustered));
     country_arr = Array.from(countryLocation_list)
@@ -68,7 +71,7 @@ export default function SurveyContent() {
       }
     },
     title: {
-      text: 'Monthly Living Costs by country'
+      text: 'Monthly Living Costs by country '
     },
     xaxis: {
       categories: country_arr
@@ -143,17 +146,22 @@ export default function SurveyContent() {
         </Menu.Menu>
       </Menu>
 
-      <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
+      <section className="surveys-management">
+        <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
+        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+      </section>
 
-      <Chart
-        type="bar"
-        options={options}
-        series={series}
-      />
+      <section className="surveys-charts">
+        <Chart
+          height={750}
+          //width={2000}
+          type="bar"
+          options={options}
+          series={series}
+        />
+      </section>
 
       <div className="surveys-surveycard-box">
-
         <Table celled striped color="violet">
           <Table.Header>
             <Table.Row>

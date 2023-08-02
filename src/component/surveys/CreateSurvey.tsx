@@ -23,7 +23,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
+        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey</Button>}>
         <Modal.Header>Make New Survey
         <Button onClick={(e) => {
           e.preventDefault();
@@ -42,7 +42,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
             </Form.Field>
             <Form.Field>
               <Label>Year</Label>
-              <Input placeholder="Year" type="text" name="year" />
+              <Input placeholder="Year" type="text" name="year" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Rent</Label>
@@ -121,7 +121,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
               <Input placeholder="Comments" type="text" name="comments" pattern="^[0-9]*$"/>
             </Form.Field>
 
-            <Button type="submit" color="green">Add Survey +</Button>
+            <Button type="submit" color="green">Add Survey</Button>
             <Button onClick={(e) => {
               e.preventDefault();
               setOpen(false);

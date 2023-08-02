@@ -6,8 +6,8 @@ import { useContext, useEffect, useState } from "react";
 import { Button, Confirm, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
 import { Survey, Pagination } from '@/type/type';
 import { CSVLink } from 'react-csv';
-import UpdateSurvey from "@/component/UpdateSurvey";
-import { SignOut, downloadExcel } from '@/helper/methods';
+import UpdateSurvey from "@/component/surveys/UpdateSurvey";
+import { downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { initPagination } from "@/helper/initializer";
 import UserOptions from "@/component/UserOptions";
@@ -17,7 +17,7 @@ export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-  const { organization, survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
 

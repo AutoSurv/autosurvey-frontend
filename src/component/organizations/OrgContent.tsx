@@ -15,7 +15,7 @@ import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import { SignOut } from "@/helper/methods";
-import UserOptions from "./UserOptions";
+import UserOptions from "../UserOptions";
 
 export default function OrgContent() {
   const { setSignUpStatus, userNameAuth, setUserNameAuth } =
@@ -76,7 +76,7 @@ export default function OrgContent() {
           trigger={
             <Button className="org-modal-btn" color="green">
               {" "}
-              Create Organization +
+              Create Organization
             </Button>
           }
         >
@@ -104,7 +104,7 @@ export default function OrgContent() {
                 />
               </Form.Field>
               <Button type="submit" color="green">
-                Add Organization +
+                Add Organization
               </Button>
               <Button
                 onClick={(e) => {

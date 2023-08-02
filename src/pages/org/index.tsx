@@ -2,7 +2,7 @@
 import {  useEffect, useState } from "react";
 import { getOrganizations } from "../../helper/apiService";
 import { Organization } from "../../type/type";
-import OrgContent from "@/component/OrgContent";
+import OrgContent from "@/component/organizations/OrgContent";
 
 export default function Orgs() {
 

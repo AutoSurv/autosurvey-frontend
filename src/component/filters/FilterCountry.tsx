@@ -9,6 +9,7 @@ type FilterProps = {
 
 export default function FilterCountry( { propSurveys, propSetFilteredCountry } : FilterProps) {
   const [filterCountries, setFilterCountries] = useState<string[]>([]);
+  console.log("propSurveys counttry: ", propSurveys)
 
   const uniqueSurveyCountryArray: string[] = [];
   propSurveys.map(survey => {
@@ -16,6 +17,8 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
       uniqueSurveyCountryArray.push(survey.country);
     }
   })
+
+  console.log("uniqueSurveyCountryArray:",  uniqueSurveyCountryArray);
   
   const stateOptions = uniqueSurveyCountryArray.sort().map( (country, index: number) => ({
     key: index,
@@ -24,6 +27,7 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
   }));
   
   const handleChange = (event: React.SyntheticEvent<HTMLElement, Event>, {value}: any) => {
+    console.log("country value: ", value)
     setFilterCountries(typeof value === 'string' ? value.split(',') : value);
   };
 
@@ -35,10 +39,12 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
     <Dropdown
     placeholder='Country'
     multiple
+    clearable
     search
     selection
     options={stateOptions}
     onChange={handleChange}
+
     />
   )
 

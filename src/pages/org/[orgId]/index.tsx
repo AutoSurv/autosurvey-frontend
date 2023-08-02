@@ -1,4 +1,4 @@
-import SurveyContent from "@/component/SurveyContent";
+import SurveyContent from "@/component/surveys/SurveyContent";
 import { OrgContext } from "@/helper/context";
 import { getOrganization } from "@/helper/apiService";
 import { useRouter } from "next/router"
