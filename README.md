@@ -8,7 +8,7 @@
 - [Credits](#credits)
 
 ## How to run the application:
-- Click on the vercel link: [autosurvey-frontend.vercel.app]
+- Click on the vercel link: https://autosurvey.vercel.app/
   or
 - After cloning the repository, install all the dependencies: npm install
 - Be sure that autosurvey-backend is running (see https://github.com/AutoSurv/autosurvey-backend readme)
@@ -18,29 +18,29 @@
 
 ### Landing page / login form:
 - When landing on the page, user must sign up:
-  <img src="assets/login.png">
-  <img src="assets/signUp.png">
+  <img src="assets/login.png" width="600">
+  <img src="assets/signUp.png" width="600">
 - After signing up the user can sign in
 
 ### Organizations page
 - In the Organizations page:
   - Managers can create new organizations
   - User and Managers can access to the organizations they are part of
-  <img src="assets/organizations.png">
+  <img src="assets/organizations.png" width="600">
 
 ### Surveys Page
 - In the Surveys page:
   - User and Managers can visualize the data from all the surveys
-  <img src="assets/surveysGraph.png">
+  <img src="assets/surveysGraph.png" width="600">
   - User and Managers can use filters to focus on a specific year/country/city
-  <img src="assets/graphNfilters.png">
+  <img src="assets/graphNfilters.png" width="600">
   - User and Managers can access the specifi survey from the table
-  <img src="assets/surveysTable.png">
+  <img src="assets/surveysTable.png" width="600">
 
 ### Survey Details page
 - In the Surveys Details page:
   - User and Managers can visualize the data from the surveys
-  <img src="assets/surveyDetails.png">
+  <img src="assets/surveyDetails.png" width="600">
   - User and Managers can delete or modify the selected survey
 
 ## Tech stack, Frameworks and libriaries
@@ -64,5 +64,5 @@
 
   - About Marco:
 
-  
+
 ## Credits
