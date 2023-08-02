@@ -11,16 +11,12 @@ type FilterProps = {
 export default function FilterLocation( { propSurveys, propSetFilteredLocations } : FilterProps) {
   const {filterLocations, setFilterLocations} = useContext(OrgContext);
   
-  console.log("propSurveys locaitons: ", propSurveys)
-
   const uniqueSurveyLoacationArray: string[] = [];    
   propSurveys.filter(survey => {
       if (uniqueSurveyLoacationArray.indexOf(survey.locationClustered) === -1) {
         uniqueSurveyLoacationArray.push(survey.locationClustered);
       }
     })  
-
-    //console.log("uniqueSurveyLoacationArray:",  uniqueSurveyLoacationArray);
   
   const stateOptions = uniqueSurveyLoacationArray.sort().map( (locationClustered, index: number) => ({
     key: index,

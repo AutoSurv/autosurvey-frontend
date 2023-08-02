@@ -118,7 +118,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
             </Form.Field>
             <Form.Field>
               <Label>Comments</Label>
-              <Input placeholder="Comments" type="text" name="comments" pattern="^[0-9]*$"/>
+              <Input placeholder="Comments" type="text" name="comments" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
 
             <Button type="submit" color="green">Add Survey</Button>

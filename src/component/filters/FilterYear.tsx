@@ -24,9 +24,7 @@ export default function FilterYear( { propSurveys, propSetFilteredYears } : Filt
   }));
   
   const handleChange = (event: React.SyntheticEvent<HTMLElement, Event>, {value}: any) => {
-
       setFilterYears(typeof value === 'string' ? value.split(',') : value);
-
   };
 
   useEffect(() => {

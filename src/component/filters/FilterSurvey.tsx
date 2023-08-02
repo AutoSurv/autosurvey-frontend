@@ -24,7 +24,16 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
 
   const [filterSurveys, setFilterSurveys] = useState<Survey[]>([]);
 
+  console.log("filterYears: ", filterYears)
+  console.log("filterCountries: ", filterCountries)
+  console.log("filterLocations: ", filterLocations)
+
   useEffect (() => {
+    if (filterYears.length == 0) {
+      setFilterCountries([])
+      setFilterLocations([])
+      setFilterSurveys(propSurveys)
+    }
     propSetFilteredSurveys(
       filterSurveys
 /*        .filter((survey: Survey) => { 
@@ -41,7 +50,7 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
           return survey;
         }
       }) */ 
-      .filter((survey: Survey) => { 
+/*       .filter((survey: Survey) => { 
         if (filterCountries.length > 0) {
           return filterCountries.some((country) => {
             if (country == "" || country == null) {
@@ -54,8 +63,8 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
         else {
           return survey;
         }
-      }) 
-      .filter((survey: Survey) => { 
+      })  */
+/*       .filter((survey: Survey) => { 
       if (filterLocations.length > 0) {
         return filterLocations.some((location) => {
           if (location == "" || location == null) {
@@ -68,14 +77,14 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
       else {
         return survey;
       }
-    })   
+    })  */  
     )  
-  }, [filterSurveys.length, filterYears.length, filterCountries.length, filterLocations.length]) 
+  }, [propSurveys.length, filterSurveys.length, filterYears.length, filterCountries.length, filterLocations.length]) 
 
   return(
     <section >
       { 
-        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFilterSurveys} propFilteredYears={setFilterYears} />
+        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFromYear} propFilteredYears={setFilterYears} />
       //  <FilterSurveyByCountry propSurveys={propSurveys} propSetFilteredSurveys={setFilterSurveys} propSetFilteredCountries={setFilterCountries}/> 
       // <FilterYear propSurveys={propSurveys}  propSetFilteredYears={setFilterYears} />
       }
@@ -85,15 +94,15 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
         <>
           {
           //  <FilterSurveyByYear propSurveys={filterSurveys} propSetFilteredSurvey={setFilterSurveys} propFilteredYears={setFilterYears} />
-          //  <FilterSurveyByCountry propSurveys={filterSurveys} propSetFilteredSurveys={setFilterSurveys} propSetFilteredCountries={setFilterCountries}/>
-            <FilterCountry propSurveys={filterSurveys}  propSetFilteredCountry={setFilterCountries} />
+            <FilterSurveyByCountry propSurveys={fromYear} propSetFilteredSurveys={setFromCountry} propSetFilteredCountries={setFilterCountries}/>
+          //  <FilterCountry propSurveys={filterSurveys}  propSetFilteredCountry={setFilterCountries} />
           }
           {/*           {
             filterCountries.length > 0 ?
             <> */}
             {
-            //  <FilterSurveyByLocation propSurveys={filterSurveys} propSetFilteredSurveys={setFilterSurveys} propSetFilteredLocations={setFilterLocations}/>
-              <FilterLocation propSurveys={filterSurveys} propSetFilteredLocations={setFilterLocations} />
+              <FilterSurveyByLocation propSurveys={fromCountry} propSetFilteredSurveys={setFilterSurveys} propSetFilteredLocations={setFilterLocations}/>
+            //  <FilterLocation propSurveys={filterSurveys} propSetFilteredLocations={setFilterLocations} />
             }
           {/*             </>
             : null

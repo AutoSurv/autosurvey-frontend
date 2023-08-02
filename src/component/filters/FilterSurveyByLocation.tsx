@@ -11,8 +11,6 @@ type FilterProps = {
 export default function FilterSurveyByLocation( { propSurveys, propSetFilteredSurveys, propSetFilteredLocations } : FilterProps) {
   const [filterLocation, setFilterLocation] = useState<string[]>([]);
   
-  console.log("propSurveys byLocaitons: ", propSurveys)
-
   useEffect (() => {
     propSetFilteredLocations(filterLocation);
     propSetFilteredSurveys(
