@@ -18,18 +18,6 @@ import UserOptions from "../UserOptions";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-/* const useSurveys = () => {
-  const [status, setStatus] = useState("LOADING");
-  const [data, setData] = useState<{id: number} | null>(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setData({id: 1});
-  }, []);
-  return {status, data, error};
-}
- */
-
 export default function SurveyContent() {
   const { organization, setOrganization, filterLocations } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
@@ -153,7 +141,7 @@ export default function SurveyContent() {
 
       <section className="surveys-charts">
         <Chart
-          height={750}
+          height={850}
           //width={2000}
           type="bar"
           options={options}
