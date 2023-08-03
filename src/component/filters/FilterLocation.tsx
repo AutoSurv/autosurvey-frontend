@@ -42,6 +42,8 @@ export default function FilterLocation( { propSurveys, propSetFilteredLocations 
       search
       selection
       options={stateOptions}
-      onChange={handleChange} />
+      onChange={handleChange} 
+      value={filterLocations}
+    />
   )
 }

@@ -19,7 +19,7 @@ import UserOptions from "../UserOptions";
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
-  const { organization, setOrganization, filterLocations } = useContext(OrgContext);
+  const { organization, setOrganization, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
@@ -99,18 +99,17 @@ export default function SurveyContent() {
       <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item >
-          <Link href={"#"}>
             <Dropdown className="exp-imp-items" text='Export / Import'>
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={"#"} onClick={(e) => {
+                  <label onClick={(e) => {
                     e.preventDefault();
-                    downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName));
-                  }} >Export Surveys (xlsx)
-                  </Link>
+                    downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations);
+                  }} style={{ textDecoration: 'none' }} >Export Surveys (xlsx)
+                  </label>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <label >
@@ -121,7 +120,6 @@ export default function SurveyContent() {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </Link>
         </Menu.Item>
 
         <Menu.Menu position='right'>

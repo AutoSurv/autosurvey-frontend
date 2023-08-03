@@ -8,12 +8,11 @@ export default function UserOptions() {
   const { userNameAuth, setSignUpStatus } = useContext(OrgContext);
 
 return (
-  <Menu.Item >
-    <Link href={"#"}>
+  <Menu.Item>
       <Dropdown className="exp-imp-items" text={userNameAuth}>
         <Dropdown.Menu>
           <Dropdown.Item>
-            <Link href={"/userInfo"} style={{ textDecoration: 'none' }}>Info</Link>
+            <Link href={"/userInfo"} style={{ textDecoration: 'none' }} >Info</Link>
           </Dropdown.Item>
           <Dropdown.Item>
             <Label onClick={() => {
@@ -23,7 +22,6 @@ return (
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-    </Link>
   </Menu.Item>
 )
 }

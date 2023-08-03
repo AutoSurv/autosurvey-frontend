@@ -1,5 +1,6 @@
+import { OrgContext } from '@/helper/context';
 import { Survey } from '@/type/type';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
@@ -8,7 +9,7 @@ type FilterProps = {
 }
 
 export default function FilterCountry( { propSurveys, propSetFilteredCountry } : FilterProps) {
-  const [filterCountries, setFilterCountries] = useState<string[]>([]);
+  const {filterCountries, setFilterCountries} = useContext(OrgContext);
 
   const uniqueSurveyCountryArray: string[] = [];
   propSurveys.map(survey => {
@@ -40,7 +41,7 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
     selection
     options={stateOptions}
     onChange={handleChange}
-
+    value={filterCountries}
     />
   )
 

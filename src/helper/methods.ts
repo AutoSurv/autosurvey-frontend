@@ -4,7 +4,7 @@ import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
-export const downloadExcel = (data: any) => {
+export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[]) => {
 
   const surneyAsString: string = JSON.stringify(data[0]);
   const survey: Survey = JSON.parse(surneyAsString);
@@ -13,10 +13,25 @@ export const downloadExcel = (data: any) => {
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
+  console.log("data: ", data)
+  console.log("worksheet: ", worksheet)
+
   if (data.length == 1) {
-    XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.id + ".xlsx");
+    XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else {
-    XLSX.writeFile(workbook, survey.orgName + ".xlsx");
+    if (filterYears.length == 1) {
+      if (filterCountries.length == 1) {
+        if (filterLocations.length == 1) {
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered +  "_" + survey.id + ".xlsx");
+        } else {
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country +  "_" + survey.id + ".xlsx");
+        }  
+      } else {
+        XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.id + ".xlsx"); 
+      }      
+    } else {
+      XLSX.writeFile(workbook, survey.orgName + ".xlsx");
+    }
   }
 };
 

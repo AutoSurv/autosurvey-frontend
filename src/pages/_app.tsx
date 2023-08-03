@@ -16,16 +16,22 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [signUpStatus, setSignUpStatus] =useState<boolean>(false);
   const [userNameAuth, setUserNameAuth] = useState<string>("");
+  const [filterYears, setFilterYears] = useState<string[]>([]);
+  const [filterCountries, setFilterCountries] = useState<string[]>([]);
   const [filterLocations, setFilterLocations] = useState<string[]>([]);
 
   return (
 
       <OrgContext.Provider value={{ 
         organization, setOrganization, 
-        survey, setSurvey, setSurveys, setSignUpStatus, 
+        survey, setSurvey, 
+        surveys, setSurveys, setSignUpStatus, 
         signUpStatus, 
         userNameAuth, setUserNameAuth, 
+        filterYears, setFilterYears,
+        filterCountries, setFilterCountries,
         filterLocations, setFilterLocations,
+
         }}>
       <Component {...pageProps} />
       </OrgContext.Provider>

@@ -5,14 +5,14 @@ import FilterCountry from "./FilterCountry";
 type FilterProps = {
   propSurveys: Survey[];
   propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
-  propSetFilteredCountries: Dispatch<SetStateAction<string[]>>
+  //propSetFilteredCountries: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurveys, propSetFilteredCountries } : FilterProps) {
+export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurveys } : FilterProps) {
   const [filterCountries, setFilterCountries] = useState<string[]>([]);
   
   useEffect (() => {
-    propSetFilteredCountries(filterCountries);
+    //propSetFilteredCountries(filterCountries);
     propSetFilteredSurveys(
       propSurveys.filter((survey: Survey) => {  
       if (filterCountries.length > 0) {

@@ -9,6 +9,8 @@ export interface OrgContextValue {
 
     survey: Survey;
     setSurvey: Dispatch<SetStateAction<Survey>>; 
+
+    surveys: Survey[]
     setSurveys: Dispatch<SetStateAction<Survey[]>>; 
 
     userNameAuth: string;
@@ -17,8 +19,14 @@ export interface OrgContextValue {
     signUpStatus: boolean;
     setSignUpStatus: Dispatch<SetStateAction<boolean>>; 
 
+    filterYears: string[];
+    setFilterYears: Dispatch<SetStateAction<string[]>>; 
+
+    filterCountries: string[];
+    setFilterCountries: Dispatch<SetStateAction<string[]>>;
+
     filterLocations: string[];
-    setFilterLocations: Dispatch<SetStateAction<string[]>>; 
+    setFilterLocations: Dispatch<SetStateAction<string[]>>;
 
 
 }
@@ -29,11 +37,16 @@ export const OrgContext = createContext<OrgContextValue> ({
     setOrganization: () => {},
     survey: initSurvey,
     setSurvey: () => {},
+    surveys: [],
     setSurveys: () => {},
     userNameAuth: "",
     setUserNameAuth: () => {},
     signUpStatus: false,
     setSignUpStatus: () => {},
+    filterYears: [],
+    setFilterYears: () => {},
+    filterCountries: [],
+    setFilterCountries: () => {},
     filterLocations: [],
     setFilterLocations: () => {},
 
