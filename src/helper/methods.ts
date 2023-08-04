@@ -163,7 +163,7 @@ export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoS
       .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[i] === (s.locationClustered) || country_arr[i] === (s.country)); }})
       .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; }})
       .length;
-
+      
       const totalResult = filteredSurvey
       .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[i] === ( s.locationClustered) || country_arr[i] === (s.country)); }})
       .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } else {return 0}})

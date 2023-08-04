@@ -67,7 +67,7 @@ export default function SurveyContent() {
     filteredSurveys.forEach((s) => countryLocation_list.add(s.locationClustered));
     country_arr = Array.from(countryLocation_list)
   }
-
+  
   useEffect(() => {
     getSurveys(setDatas, setSurveys);
   }, []);
@@ -123,7 +123,7 @@ export default function SurveyContent() {
     },
   };
 
-  const meanValues = calculateMeanValues(country_arr, filteredSurveys);
+  const meanValues = calculateMeanValues(country_arr, organization.surveys);
 
   const series = [{
     name: 'rent',
