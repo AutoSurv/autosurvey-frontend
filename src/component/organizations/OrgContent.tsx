@@ -14,7 +14,6 @@ import {
 import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
-import { SignOut } from "@/helper/methods";
 import UserOptions from "../UserOptions";
 
 export default function OrgContent() {

@@ -3,7 +3,6 @@ import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import { Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
-import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
@@ -15,6 +14,7 @@ import FilterSurvey from "../filters/FilterSurvey";
 import { TablePagination } from "@mui/material";
 import { initPagination } from "@/helper/initializer";
 import UserOptions from "../UserOptions";
+import SurveyTable from "./SurveyTable";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -66,7 +66,7 @@ export default function SurveyContent() {
     },
   };
 
-  const meanValues = calculateMeanValues(country_arr, filteredSurveys);
+  const meanValues = calculateMeanValues(country_arr, organization.surveys);
 
   const series = [{
     name: 'rent',
@@ -108,7 +108,7 @@ export default function SurveyContent() {
                   <label onClick={(e) => {
                     e.preventDefault();
                     downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations);
-                  }} style={{ textDecoration: 'none' }} >Export Surveys (xlsx)
+                  }} style={{ textDecoration: 'none' , color: '#4183c4'}} >Export Surveys (xlsx)
                   </label>
                 </Dropdown.Item>
                 <Dropdown.Item>
@@ -163,8 +163,9 @@ export default function SurveyContent() {
           <Table.Body>
             {
               //datas.surveys.sort()
-              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
-                return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
+              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).sort((a, b) => {
+                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).map((matchingSurvey: Survey, index: number) => {
+                return <SurveyTable key={index} organization={organization} survey={matchingSurvey} />
               })
             }
           </Table.Body>          
