@@ -21,8 +21,12 @@ export default function SurveyDetails() {
   const { organization, survey, setSurvey, setSurveys, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
+  const {setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
   useEffect(() => {
+    setFilterCountries([])
+    setFilterLocations([])
+    setFilterYears([])
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
@@ -30,6 +34,9 @@ export default function SurveyDetails() {
   }, [setSurvey])
 
   const surveyArray: Survey[] = [survey];
+  const yearsArray: string[] = [survey.year.toString()];
+  const countriesArray: string[] = [survey.country];
+  const locationsArray: string[] = [survey.locationClustered];
 
   return (
     <div className="specificsurvey-card-container">
@@ -47,7 +54,7 @@ export default function SurveyDetails() {
                 <Dropdown.Item>
                   <Link href={"#"} onClick={(e) => {
                     e.preventDefault();
-                    downloadExcel(surveyArray);
+                    downloadExcel(surveyArray, yearsArray, countriesArray, locationsArray);
                   }} >Export Surveys (xlsx)
                   </Link>
                 </Dropdown.Item>

@@ -13,8 +13,6 @@ export const downloadExcel = (data: any, filterYears: string[], filterCountries:
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-  console.log("worksheet: ", worksheet)
-
   if (data.length == 1) {
     XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else {

@@ -41,7 +41,6 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
     selection
     options={stateOptions}
     onChange={handleChange}
-    value={filterCountries}
     />
   )
 

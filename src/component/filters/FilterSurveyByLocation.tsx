@@ -5,14 +5,16 @@ import FilterLocation from "./FilterLocation";
 type FilterProps = {
   propSurveys: Survey[];
   propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
-  //propSetFilteredLocations: Dispatch<SetStateAction<string[]>>
+  //propSetFilter: Dispatch<SetStateAction<string[]>>
 }
 
-export default function FilterSurveyByLocation( { propSurveys, propSetFilteredSurveys } : FilterProps) {
+export default function FilterSurveyByLocation( { propSurveys, propSetFilteredSurveys
+  //, propSetFilter 
+} : FilterProps) {
   const [filterLocation, setFilterLocation] = useState<string[]>([]);
   
   useEffect (() => {
-    //propSetFilteredLocations(filterLocation);
+    //propSetFilter(filterLocation);
     propSetFilteredSurveys(
       propSurveys.filter((survey: Survey) => {  
       if (filterLocation.length > 0) {

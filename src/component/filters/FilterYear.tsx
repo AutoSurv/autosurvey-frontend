@@ -41,7 +41,6 @@ export default function FilterYear( { propSurveys, propSetFilteredYears } : Filt
     selection
     options={stateOptions}
     onChange={handleChange}
-    value={filterYears}
     />
   )
 

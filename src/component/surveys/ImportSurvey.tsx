@@ -34,9 +34,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
-        
-        console.log("json: ", json)
-        
+            
         const valuetedData = checkImportedSurveyFields(json);
 
         if (typeof valuetedData[0] === "object"){

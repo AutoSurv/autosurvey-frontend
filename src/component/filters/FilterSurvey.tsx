@@ -15,19 +15,12 @@ type FilterProps = {
 
 export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : FilterProps) {
   const {filterYears, filterCountries, filterLocations} = useContext(OrgContext);
-  //const [filterCountries, setFilterCountries] = useState<string[]>([]);
-  //const [filterYears, setFilterYears] = useState<string[]>([]);
+  
   const [fromYear, setFromYear] = useState<Survey[]>([]);
   const [fromCountry, setFromCountry] = useState<Survey[]>([]);
-  //const [fromLocation, setFromLocation] = useState<Survey[]>([]);
-
   const [filterSurveys, setFilterSurveys] = useState<Survey[]>([]);
 
   useEffect (() => {
-    console.log("filterYears.length: ", filterYears.length)
-    console.log("filterCountries.length: ", filterCountries.length)
-    console.log("filterLocations.length: ", filterLocations.length)
-
     if (filterYears.length == 0 && filterCountries.length == 0 && filterLocations.length == 0) {
       setFilterSurveys(propSurveys)
     } 
@@ -44,17 +37,23 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
 
   return(
     <section >      
-        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFromYear}  />    
+        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFromYear} 
+        //propSetFilter={setFilterYears}
+        />    
       {
         filterYears.length > 0 ?
         <>
           {
             <>
-            <FilterSurveyByCountry propSurveys={fromYear} propSetFilteredSurveys={setFromCountry} />
+            <FilterSurveyByCountry propSurveys={fromYear} propSetFilteredSurveys={setFromCountry} 
+            //propSetFilter={setFilterCountries}
+            />
             {
               filterCountries.length > 0 ?
               <>
-              <FilterSurveyByLocation propSurveys={fromCountry} propSetFilteredSurveys={setFilterSurveys} />
+              <FilterSurveyByLocation propSurveys={fromCountry} propSetFilteredSurveys={setFilterSurveys} 
+              //propSetFilter={setFilterLocations}
+              />
               </>
               : null
             }  

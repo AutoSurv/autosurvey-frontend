@@ -43,7 +43,6 @@ export default function FilterLocation( { propSurveys, propSetFilteredLocations 
       selection
       options={stateOptions}
       onChange={handleChange} 
-      value={filterLocations}
     />
   )
 }
