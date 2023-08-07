@@ -287,10 +287,6 @@ export async function signUpUser(data: FormDataSingUp) {
     return null;
   }
 
-  // const userReponse = await getUserApi(data.username);
-  // console.log("userReponse from getUeserApoi: ", userReponse);
-  // if (userReponse.status  == 200) return null;
-
   const response = await signUpUserApi(data);
   return response;
 }

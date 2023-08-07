@@ -24,19 +24,27 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
   const [filterSurveys, setFilterSurveys] = useState<Survey[]>([]);
 
   useEffect (() => {
-    if (filterYears.length == 0) {
+    console.log("filterYears.length: ", filterYears.length)
+    console.log("filterCountries.length: ", filterCountries.length)
+    console.log("filterLocations.length: ", filterLocations.length)
+
+    if (filterYears.length == 0 && filterCountries.length == 0 && filterLocations.length == 0) {
       setFilterSurveys(propSurveys)
-    }
+    } 
+    if (filterYears.length != 0 && filterCountries.length == 0 && filterLocations.length == 0) {
+      setFilterSurveys(fromYear)
+    } 
+    if (filterYears.length != 0 && filterCountries.length != 0 && filterLocations.length == 0) {
+      setFilterSurveys(fromCountry)
+    } 
     propSetFilteredSurveys(
       filterSurveys
     )  
-  }, [propSurveys.length, filterSurveys.length, filterYears.length, filterCountries.length, filterLocations.length]) 
+  }, [propSurveys.length, filterSurveys.length, fromYear.length, fromCountry.length, filterLocations.length]) 
 
   return(
-    <section >
-      { 
-        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFromYear}  />
-      }
+    <section >      
+        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFromYear}  />    
       {
         filterYears.length > 0 ?
         <>

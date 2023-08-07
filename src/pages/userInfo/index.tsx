@@ -13,7 +13,6 @@ export default function UserInfo() {
    const apiResponse = await getUserApi(userNameAuth);
    if (apiResponse.status === 200) {
      const data: User = await apiResponse.json();
-     //console.log("data: ", data);
      setUser(data);
    }
   }

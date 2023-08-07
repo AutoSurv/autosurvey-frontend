@@ -22,10 +22,6 @@ export default function SurveyDetails() {
   const [openConfirm, setOpenConfirm] = useState(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
 
-  console.log("filterYears: ", filterYears)
-  console.log("filterCountries: ", filterCountries)
-  console.log("filterLocations: ", filterLocations)
-
   useEffect(() => {
     if (surveyid) {
       getSurvey(surveyid, setSurvey);

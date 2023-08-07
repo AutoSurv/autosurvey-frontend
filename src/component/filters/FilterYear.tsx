@@ -1,6 +1,6 @@
 import { OrgContext } from '@/helper/context';
 import { Survey } from '@/type/type';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
@@ -10,7 +10,7 @@ type FilterProps = {
 
 export default function FilterYear( { propSurveys, propSetFilteredYears } : FilterProps) {
   const {filterYears, setFilterYears} = useContext(OrgContext);
-  //const [filterYears, setFilterYears] = useState<string[]>([]);
+
   const uniqueSurveyYearArray: number[] = [];
   propSurveys.filter(survey => {
     if (uniqueSurveyYearArray.indexOf(survey.year) === -1) {
