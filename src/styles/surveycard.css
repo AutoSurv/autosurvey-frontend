@@ -24,10 +24,6 @@
     border: rgb(223, 219, 219) 1px solid;
 }
 
-.surveys-charts {
-    align-item: center;
-}
-
 .surveys-surveycard-box {
     display: flex;
     flex-wrap: wrap;
