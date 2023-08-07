@@ -69,14 +69,16 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
       }
     })
     .then((data: any) => {
-      const loggedUser: LoggedUser = JSON.parse(data);
-      if (loggedUser) {
-        localStorage.setItem("role", loggedUser.role);
-        localStorage.setItem("jwt", loggedUser.token);
-        localStorage.setItem("username", loggedUser.username);
-        setUserNameAuth(loggedUser.username);
-        setSignUpStatus(true);
-        router.push("org");
+      if (data) {
+        const loggedUser: LoggedUser = JSON.parse(data);
+        if (loggedUser) {
+          localStorage.setItem("role", loggedUser.role);
+          localStorage.setItem("jwt", loggedUser.token);
+          localStorage.setItem("username", loggedUser.username);
+          setUserNameAuth(loggedUser.username);
+          setSignUpStatus(true);
+          router.push("org");
+        }
       }
     });
 }

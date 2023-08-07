@@ -167,8 +167,9 @@ export default function SurveyContent() {
                 return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
               })
             }
-          </Table.Body>
-          <TablePagination
+          </Table.Body>          
+        </Table>
+        <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={filteredSurveys.length}
@@ -177,7 +178,6 @@ export default function SurveyContent() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Table>
       </div>
 
     </div>
