@@ -18,7 +18,7 @@ export default function SurveyDetails() {
   const router = useRouter();
   const { orgId, surveyid } = router.query;
 
-  const { organization, survey, setSurvey, setSurveys, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const {setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);

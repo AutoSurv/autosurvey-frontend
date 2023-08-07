@@ -19,7 +19,7 @@ export default function UserInfo() {
   
   useEffect(() => {
     getUserInfo();
-  })
+  },[])
 
   return (
     
