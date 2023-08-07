@@ -1,26 +1,36 @@
-import { authenticateUser, signUpUser } from '@/pages/api/autosurvey';
-import { AutoSurvey, FormDataSingUp, ImportedAutosurvey, LoggedUser, LoginUser } from '@/type/type';
+import { authenticateUser, signUpUser } from '@/helper/apiService';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
-export const downloadExcel = (data: any) => {
+export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[]) => {
 
   const surneyAsString: string = JSON.stringify(data[0]);
-  const survey: AutoSurvey = JSON.parse(surneyAsString);
+  const survey: Survey = JSON.parse(surneyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
   if (data.length == 1) {
-    XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.id + ".xlsx");
+    XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else {
-    XLSX.writeFile(workbook, survey.orgName + ".xlsx");
+    if (filterYears.length == 1) {
+      if (filterCountries.length == 1) {
+        if (filterLocations.length == 1) {
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered +  "_" + survey.id + ".xlsx");
+        } else {
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country +  "_" + survey.id + ".xlsx");
+        }  
+      } else {
+        XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.id + ".xlsx"); 
+      }      
+    } else {
+      XLSX.writeFile(workbook, survey.orgName + ".xlsx");
+    }
   }
 };
-
-
 
 export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
   setSignUpStatus(false);
@@ -56,17 +66,18 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
       }
     })
     .then((data: any) => {
-      const loggedUser: LoggedUser = JSON.parse(data);
-      if (loggedUser) {
-        localStorage.setItem("role", loggedUser.role);
-        localStorage.setItem("jwt", loggedUser.token);
-        localStorage.setItem("username", loggedUser.username);
-        setUserNameAuth(loggedUser.username);
-        setSignUpStatus(true);
-        router.push("org");
+      if (data) {
+        const loggedUser: LoggedUser = JSON.parse(data);
+        if (loggedUser) {
+          localStorage.setItem("role", loggedUser.role);
+          localStorage.setItem("jwt", loggedUser.token);
+          localStorage.setItem("username", loggedUser.username);
+          setUserNameAuth(loggedUser.username);
+          setSignUpStatus(true);
+          router.push("org");
+        }
       }
     });
-
 }
 
 export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
@@ -96,23 +107,25 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     return;
   }
 
-
   await signUpUser(inputSignUpBody)
     .then((response) => {
-      if (response?.status == 200) {
+      if (response?.status == 201) {
         setOpen(false);
         setSignupSuccessMessage("Successfully signed up");
         setErrorMsg(
           ""
         );
         return;
-      } else {
+      } else if (response?.status == 409) {
         setErrorMsg('User aleady exists. Choose other name');
+      } else {
+        setErrorMsg('General error: ' + response?.status);
       }
-    });
+    }  
+  );
 }
 
-export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
+export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   data.forEach((survey) => {
     if (survey.country === null) { survey.country = "";}  
@@ -144,28 +157,27 @@ export function checkImportedSurveyFields(data: ImportedAutosurvey[]) {
 //make it nicer with "key in"
 const data = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"] as const;
 type Data = typeof data;
-//type DataKey = Data[ke];
+type DataKey = keyof Data;
+// const dataKey: DataKey = ;
+// console.log("Datakey: ", dataKey);
 
-export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoSurvey[]) {
-
-//  const key: DataKey = ""
+export function calculateMeanValues(country_arr: string[], filteredSurvey: Survey[]) {
 
   const fiveVar: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
-
   let dataForGraph: number[][] = []; 
 
   for (let fiveVarIndex= 0; fiveVarIndex < fiveVar.length; fiveVarIndex++) {
     let data: number[] = []; 
     const prop = fiveVar[fiveVarIndex];
 
-    for (let i = 0; i < country_arr.length; i++) {
+    for (let countryIndex = 0; countryIndex < country_arr.length; countryIndex++) {
       const lowerPart = filteredSurvey
-      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[i] === (s.locationClustered) || country_arr[i] === (s.country)); }})
+      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); }})
       .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; }})
       .length;
       
       const totalResult = filteredSurvey
-      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[i] === ( s.locationClustered) || country_arr[i] === (s.country)); }})
+      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); }})
       .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } else {return 0}})
       .reduce(function add(sum, rent) { return sum + rent; }, 0) / lowerPart;
       
@@ -178,7 +190,7 @@ export function calculateMeanValues(country_arr: string[], filteredSurvey: AutoS
 
 function isSurveyKey <T>(
   prop: string,
-  survey: AutoSurvey
+  survey: Survey
 ): prop is keyof Omit<T, number | symbol> {
   return prop in survey;
 }

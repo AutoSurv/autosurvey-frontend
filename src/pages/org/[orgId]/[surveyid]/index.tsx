@@ -1,34 +1,42 @@
 import { OrgContext } from "@/helper/context";
-import { deleteSurvey, getSurvey, getSurveys } from "@/pages/api/autosurvey";
+import { deleteSurvey, getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react";
 import { Button, Confirm, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
-import { AutoSurvey, Data } from '@/type/type';
+import { Survey, Pagination } from '@/type/type';
 import { CSVLink } from 'react-csv';
-import UpdateSurvey from "@/component/UpdateSurvey";
-import { SignOut, downloadExcel } from '@/helper/methods';
+import UpdateSurvey from "@/component/surveys/UpdateSurvey";
+import { downloadExcel } from '@/helper/methods';
 import Link from "next/link";
-import { initData } from "@/helper/initializer";
+import { initPagination } from "@/helper/initializer";
+import UserOptions from "@/component/UserOptions";
 
 
 export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-  const { organization, survey, setSurvey, setSurveys, setSignUpStatus } = useContext(OrgContext);
-  const [openConfirm, setOpenConfirm] = useState(false);
-  const [datas, setDatas] = useState<Data>(initData);
 
+  const { organization, survey, setSurvey, setSurveys, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
+  const {setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
   useEffect(() => {
+    setFilterCountries([])
+    setFilterLocations([])
+    setFilterYears([])
     if (surveyid) {
       getSurvey(surveyid, setSurvey);
     }
-    getSurveys(setDatas, setSurveys);
+    getSurveys(setPagination, setSurveys);
   }, [setSurvey])
 
-  const surveyArray: AutoSurvey[] = [survey];
+  const surveyArray: Survey[] = [survey];
+  const yearsArray: string[] = [survey.year.toString()];
+  const countriesArray: string[] = [survey.country];
+  const locationsArray: string[] = [survey.locationClustered];
 
   return (
     <div className="specificsurvey-card-container">
@@ -46,7 +54,7 @@ export default function SurveyDetails() {
                 <Dropdown.Item>
                   <Link href={"#"} onClick={(e) => {
                     e.preventDefault();
-                    downloadExcel(surveyArray);
+                    downloadExcel(surveyArray, yearsArray, countriesArray, locationsArray);
                   }} >Export Surveys (xlsx)
                   </Link>
                 </Dropdown.Item>
@@ -64,13 +72,7 @@ export default function SurveyDetails() {
         <Menu.Item> <Link href={"/org/" + orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-          <Menu.Item>
-            <Button onClick={() => {
-              setSignUpStatus(false);
-              SignOut(setSignUpStatus);
-            }}
-              circular icon='sign out' color='blue' inverted></Button>
-          </Menu.Item>
+          <UserOptions />
         </Menu.Menu>
       </Menu>
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
@@ -222,7 +224,7 @@ export default function SurveyDetails() {
                   onCancel={() => setOpenConfirm(false)}
                   onConfirm={(e) => {
                     e.preventDefault();
-                    deleteSurvey(surveyid, setDatas, setSurveys);
+                    deleteSurvey(surveyid, setPagination, setSurveys);
                     setOpenConfirm(false);
                     window.location.href = "/org/" + orgId;
                   }}

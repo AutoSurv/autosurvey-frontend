@@ -1,75 +1,45 @@
 import { CSVLink } from "react-csv";
-import { getSurveys } from "@/pages/api/autosurvey";
-import { AutoSurvey, Data } from "@/type/type";
-import { useContext, useEffect, useReducer, useState } from "react";
-import { Button, Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
+import { getSurveys } from "@/helper/apiService";
+import { Pagination, Survey } from "@/type/type";
+import { useContext, useEffect, useState } from "react";
+import { Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
 import SurveyCard from "./SurveyTable";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import ImportSurvey from "./ImportSurvey";
-import { SignOut, calculateMeanValues, downloadExcel } from '@/helper/methods';
+import { calculateMeanValues, downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
-import FilterSurvey from "./FilterSurvey";
-import { initData } from "@/helper/initializer";
+import FilterSurvey from "../filters/FilterSurvey";
 import { TablePagination } from "@mui/material";
+import { initPagination } from "@/helper/initializer";
+import UserOptions from "../UserOptions";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-/* const useSurveys = () => {
-  const [status, setStatus] = useState("LOADING");
-  const [data, setData] = useState<{id: number} | null>(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    setData({id: 1});
-  }, []);
-  return {status, data, error};
-}
-
-function tableSortReducer(state: { column?: string; data: AutoSurvey[]; direction?: "ascending" | "descending"; }, action: { type: any; column?: string; }) {
-  switch (action.type) {
-    case 'CHANGE_SORT':
-      if (state.column === action.column) {
-        return {
-          ...state,
-          data: state.data.slice().reverse(),
-          direction:
-            state.direction === 'ascending' ? 'descending' : 'ascending',
-        }
-      }
-
-      return {
-        column: action.column,
-        data: state.data.sort(), //_.sortBy(state.data, [action.column]),
-        direction: 'ascending',
-      }
-    default:
-      throw new Error()
-  }
-}
-*/
-
-
 export default function SurveyContent() {
-  const { organization, setOrganization, setSignUpStatus, filterLocation } = useContext(OrgContext);
-  const [surveys, setSurveys] = useState<AutoSurvey[]>([]);
-  const [datas, setDatas] = useState<Data>(initData);
+  const { organization, setOrganization, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
+  const [surveys, setSurveys] = useState<Survey[]>([]);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
-  const [filteredSurveys, setFilteredSurveys] = useState<AutoSurvey[]>([]);
+
+  const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
+
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
+  
   filteredSurveys.forEach((s) => countryLocation_list.add(s.country));
   country_arr = Array.from(countryLocation_list)
-  if (filterLocation.length !== 0) {
+
+  if (filterLocations.length !== 0) {
     filteredSurveys.forEach((s) => countryLocation_list.add(s.locationClustered));
     country_arr = Array.from(countryLocation_list)
   }
-  
+
   useEffect(() => {
-    getSurveys(setDatas, setSurveys);
+    getSurveys(setPagination, setSurveys);
   }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
@@ -80,33 +50,6 @@ export default function SurveyContent() {
     setRowPage(parseInt(event.target.value, 10));
     setPage(0);
   }
-  /*
-  interface State {
-    column: string,
-    data: AutoSurvey[],
-    direction: "ascending" | "descending",
-  }
-  const [state, setState] = useState<State>({column: "",
-  data: filteredSurveys,
-  direction: "ascending"})
-  const { column, data, direction } = state
-  function handleSort(clickedColumn: string) {
-    
-
-    if (column !== clickedColumn) {
-      setState({
-        column: clickedColumn,
-        data: data.sort(), //_.sortBy(data, [clickedColumn]),
-        direction: 'ascending',
-      })
-      return
-    }
-    setState({
-      ...state,
-      data: data.reverse(),
-      direction: direction === 'ascending' ? 'descending' : 'ascending',
-    })
-  }*/
 
   const options: ApexOptions = {
     chart: {
@@ -116,14 +59,14 @@ export default function SurveyContent() {
       }
     },
     title: {
-      text: 'Monthly Living Costs by country'
+      text: 'Monthly Living Costs by country '
     },
     xaxis: {
       categories: country_arr
     },
   };
 
-  const meanValues = calculateMeanValues(country_arr, organization.surveys);
+  const meanValues = calculateMeanValues(country_arr, filteredSurveys);
 
   const series = [{
     name: 'rent',
@@ -146,8 +89,6 @@ export default function SurveyContent() {
   }
   ];
 
-
-
   return (
     <div className="surveys-content">
       <div className="home-header-container">
@@ -158,18 +99,17 @@ export default function SurveyContent() {
       <Menu size='small' color="blue">
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item >
-          <Link href={"#"}>
             <Dropdown className="exp-imp-items" text='Export / Import'>
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={"#"} onClick={(e) => {
+                  <label onClick={(e) => {
                     e.preventDefault();
-                    downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName));
-                  }} >Export Surveys (xlsx)
-                  </Link>
+                    downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations);
+                  }} style={{ textDecoration: 'none' }} >Export Surveys (xlsx)
+                  </label>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <label >
@@ -180,33 +120,35 @@ export default function SurveyContent() {
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </Link>
         </Menu.Item>
 
         <Menu.Menu position='right'>
-          <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-          <Menu.Item>
-            <Button onClick={() => {
-              setSignUpStatus(false);
-              SignOut(setSignUpStatus);
-            }}
-              circular icon='sign out' color='blue' inverted></Button>
-          </Menu.Item>
+          <Menu.Item> 
+            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
+          </Menu.Item>         
+            <UserOptions />
+          
+
         </Menu.Menu>
       </Menu>
 
-      <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-      <FilterSurvey surveys={organization.surveys} setFilteredSurvey={setFilteredSurveys} />
+      <section className="surveys-management">
+        <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
+        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+      </section>
 
-      <Chart
-        type="bar"
-        options={options}
-        series={series}
-      />
+      <section className="surveys-charts">
+        <Chart
+          height={850}
+          //width={2000}
+          type="bar"
+          options={options}
+          series={series}
+        />
+      </section>
 
       <div className="surveys-surveycard-box">
-
-        <Table celled striped color="violet" selectable sortable>
+        <Table celled striped color="violet">
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
@@ -221,13 +163,13 @@ export default function SurveyContent() {
           <Table.Body>
             {
               //datas.surveys.sort()
-              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).sort((a, b) => {
-                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).map((matchingSurvey: AutoSurvey, index: number) => {
+              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
                 return <SurveyCard key={index} organization={organization} survey={matchingSurvey} />
               })
             }
-          </Table.Body>
-          <TablePagination
+          </Table.Body>          
+        </Table>
+        <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={filteredSurveys.length}
@@ -236,9 +178,7 @@ export default function SurveyContent() {
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-        </Table>
       </div>
-
-    </div>
-  )
-}
+    </div> 
+  ) 
+}    

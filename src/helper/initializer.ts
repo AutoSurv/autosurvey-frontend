@@ -1,4 +1,4 @@
-import { AutoSurvey, Data, Organization } from "@/type/type";
+import { Survey, Organization, Pagination } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",
@@ -6,7 +6,7 @@ export const initOrg: Organization = {
   surveys: []
 }
 
-export const initSurvey: AutoSurvey = {
+export const initSurvey: Survey = {
   country: "",
   year: 0,
   rent: 0,
@@ -33,7 +33,7 @@ export const initSurvey: AutoSurvey = {
   orgName: ""
 }
 
-export const initData: Data = {
+export const initPagination: Pagination = {
   first: true, 
   last: false,
   numberOfElements: 1,

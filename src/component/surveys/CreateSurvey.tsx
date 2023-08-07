@@ -1,19 +1,19 @@
-import { initData } from "@/helper/initializer";
-import { addSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Data, Organization } from "@/type/type";
+import { initPagination } from "@/helper/initializer";
+import { addSurvey } from "@/helper/apiService";
+import { Survey, Organization, Pagination } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   organization: Organization;
   setOrganization: Dispatch<SetStateAction<Organization>>;
-  setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>;
+  setSurveys: Dispatch<SetStateAction<Survey[]>>;
 }
 
 export default function CreateSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  const [datas, setDatas] = useState<Data>(initData);
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
 
   const { organization, setOrganization, setSurveys } = props;
 
@@ -23,7 +23,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         open={open}
-        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey +</Button>}>
+        trigger={<Button className="surveys-modal-btn" color="green"> Create Survey</Button>}>
         <Modal.Header>Make New Survey
         <Button onClick={(e) => {
           e.preventDefault();
@@ -34,7 +34,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey(e, organization.orgId, setDatas, setSurveys, setOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization.orgId, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>
@@ -42,7 +42,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
             </Form.Field>
             <Form.Field>
               <Label>Year</Label>
-              <Input placeholder="Year" type="text" name="year" />
+              <Input placeholder="Year" type="text" name="year" pattern="^[0-9]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Rent</Label>
@@ -118,10 +118,10 @@ export default function CreateSurvey(props: CreateSurveyProps) {
             </Form.Field>
             <Form.Field>
               <Label>Comments</Label>
-              <Input placeholder="Comments" type="text" name="comments" pattern="^[0-9]*$"/>
+              <Input placeholder="Comments" type="text" name="comments" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
 
-            <Button type="submit" color="green">Add Survey +</Button>
+            <Button type="submit" color="green">Add Survey</Button>
             <Button onClick={(e) => {
               e.preventDefault();
               setOpen(false);

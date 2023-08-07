@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Message, Popup } from 'semantic-ui-react';
 import { SignOut, signInJwtTokenHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
@@ -15,10 +15,14 @@ const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-  if (typeof window !== "undefined") {
-    setSignUpStatus(true);
-    setUserNameAuth(localStorage.getItem("username") as string);
-  };   
+  
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setSignUpStatus(true);
+      setUserNameAuth(localStorage.getItem("username") as string);
+    };  
+  }, [])
+ 
 
   return (
 

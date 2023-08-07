@@ -1,4 +1,4 @@
-import { addOrganization, getOrganizations } from "@/pages/api/autosurvey";
+import { addOrganization, getOrganizations } from "@/helper/apiService";
 import { Organization, ROLE } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -15,6 +15,7 @@ import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import { SignOut } from "@/helper/methods";
+import UserOptions from "../UserOptions";
 
 export default function OrgContent() {
   const { setSignUpStatus, userNameAuth, setUserNameAuth } =
@@ -60,24 +61,10 @@ export default function OrgContent() {
           </Link>
         </Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item>
-            {" "}
-            <Link href={"/about"} style={{ textDecoration: "none" }}>
-              About
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Button
-              onClick={() => {
-                setSignUpStatus(false);
-                SignOut(setSignUpStatus);
-              }}
-              circular
-              icon="sign out"
-              color="blue"
-              inverted
-            ></Button>
-          </Menu.Item>
+        <Menu.Item> 
+          <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
+        </Menu.Item> 
+        <UserOptions />
         </Menu.Menu>
       </Menu>
       {role !== ROLE.user ? (
@@ -89,7 +76,7 @@ export default function OrgContent() {
           trigger={
             <Button className="org-modal-btn" color="green">
               {" "}
-              Create Organization +
+              Create Organization
             </Button>
           }
         >
@@ -117,7 +104,7 @@ export default function OrgContent() {
                 />
               </Form.Field>
               <Button type="submit" color="green">
-                Add Organization +
+                Add Organization
               </Button>
               <Button
                 onClick={(e) => {

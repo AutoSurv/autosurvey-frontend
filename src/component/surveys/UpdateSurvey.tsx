@@ -1,13 +1,12 @@
-import { initData } from "@/helper/initializer";
-import { updateSurvey } from "@/pages/api/autosurvey";
-import { AutoSurvey, Data } from "@/type/type";
+import { updateSurvey } from "@/helper/apiService";
+import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Button, Form, Icon, Input, Label, Modal } from "semantic-ui-react";
+import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
-  survey: AutoSurvey;
+  survey: Survey;
   orgid: string | string[] | undefined;
-  setSurvey: Dispatch<SetStateAction<AutoSurvey>>;
+  setSurvey: Dispatch<SetStateAction<Survey>>;
 }
 
 export default function UpdSurvey(props: CreateSurveyProps) {

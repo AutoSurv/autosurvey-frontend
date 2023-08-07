@@ -1,4 +1,4 @@
-import { AutoSurvey, Organization } from "@/type/type";
+import { Survey, Organization } from "@/type/type";
 import { Dispatch, SetStateAction, createContext } from "react";
 import { initSurvey } from "./initializer";
 
@@ -7,9 +7,11 @@ export interface OrgContextValue {
     organization: Organization;
     setOrganization: Dispatch<SetStateAction<Organization>>;  
 
-    survey: AutoSurvey;
-    setSurvey: Dispatch<SetStateAction<AutoSurvey>>; 
-    setSurveys: Dispatch<SetStateAction<AutoSurvey[]>>; 
+    survey: Survey;
+    setSurvey: Dispatch<SetStateAction<Survey>>; 
+
+    surveys: Survey[]
+    setSurveys: Dispatch<SetStateAction<Survey[]>>; 
 
     userNameAuth: string;
     setUserNameAuth: Dispatch<SetStateAction<string>>;    
@@ -17,8 +19,15 @@ export interface OrgContextValue {
     signUpStatus: boolean;
     setSignUpStatus: Dispatch<SetStateAction<boolean>>; 
 
-    filterLocation: string[];
-    setFilterLocation: Dispatch<SetStateAction<string[]>>; 
+    filterYears: string[];
+    setFilterYears: Dispatch<SetStateAction<string[]>>; 
+
+    filterCountries: string[];
+    setFilterCountries: Dispatch<SetStateAction<string[]>>;
+
+    filterLocations: string[];
+    setFilterLocations: Dispatch<SetStateAction<string[]>>;
+
 
 }
 
@@ -28,12 +37,17 @@ export const OrgContext = createContext<OrgContextValue> ({
     setOrganization: () => {},
     survey: initSurvey,
     setSurvey: () => {},
+    surveys: [],
     setSurveys: () => {},
     userNameAuth: "",
     setUserNameAuth: () => {},
     signUpStatus: false,
     setSignUpStatus: () => {},
-    filterLocation: [],
-    setFilterLocation: () => {}
+    filterYears: [],
+    setFilterYears: () => {},
+    filterCountries: [],
+    setFilterCountries: () => {},
+    filterLocations: [],
+    setFilterLocations: () => {},
 
 });

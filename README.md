@@ -1,38 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Autosurvey Project (Frontend)
 
-## Getting Started
+##  Table of content
+- [How to run the application](#how-to-run-the-application)
+- [The application](#the-application)
+- [Tech stack and frameworks](#tech-stack-and-frameworks)
+- [About us](#about-us)
+- [Credits](#credits)
 
-First, run the development server:
+## How to run the application:
+- Click on the vercel link: https://autosurvey.vercel.app/
+  or
+- After cloning the repository, install all the dependencies: npm install
+- Be sure that autosurvey-backend is running (see https://github.com/AutoSurv/autosurvey-backend readme)
+- Run the application: npm run dev
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## The Application
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Landing page / login form:
+- When landing on the page, user must sign up:
+  <img src="assets/login.png" width="600">
+  <img src="assets/signUp.png" width="600">
+- After signing up the user can sign in
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Organizations page
+- In the Organizations page:
+  - Managers can create new organizations
+  - User and Managers can access to the organizations they are part of
+  <img src="assets/organizations.png" width="600">
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+### Surveys Page
+- In the Surveys page:
+  - User and Managers can visualize the data from all the surveys
+  <img src="assets/surveysGraph.png" width="600">
+  - User and Managers can use filters to focus on a specific year/country/city
+  <img src="assets/graphNfilters.png" width="600">
+  - User and Managers can access the specifi survey from the table
+  <img src="assets/surveysTable.png" width="600">
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Survey Details page
+- In the Surveys Details page:
+  - User and Managers can visualize the data from the surveys
+  <img src="assets/surveyDetails.png" width="600">
+  - User and Managers can delete or modify the selected survey
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Tech stack, Frameworks and libriaries
+### Tech
+  - Java
+  - TypeScript
+  - MongoDb
 
-## Learn More
+### Frameworks
+  - Spring Boot / Web
+  - Next.js 
 
-To learn more about Next.js, take a look at the following resources:
+### Libraries
+  - Spring security
+  - Apex Charts 
+  - Semantic UI 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## About us
+  - About Simon:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+  - About Marco:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Credits
