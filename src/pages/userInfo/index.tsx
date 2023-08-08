@@ -19,7 +19,6 @@ export default function UserInfo() {
   }
 
   useEffect(() => {
-    console.log(userNameAuth)
     getUserInfo();
   }, [])
 
