@@ -62,23 +62,44 @@ export default function About() {
       
         <main className="org-main">
           <section className="about-project">
-            <h1>The project</h1>
+            <h1 className="about-project-title">The project</h1>
 
-            <section className="about-table-section">
+            <section className="about-project-table-section">
               <Table className="about-table">
                 <TableHead>
                   <TableRow>
                     <TableCell colSpan={2} className="about-table-head" align="left" size="medim"></TableCell>
                   </TableRow>
                 </TableHead>
-
                 <TableBody>
-                  <TableRow className="survey-table-row">
+                  <TableRow className="about-table-row">
                     <TableCell component="th" scope="row" align="left">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <p className="about-project-p">
+                          Hello everyone and thanks for using <strong>Autosurvey!</strong> The 
+                          project started in 2023 by <strong>Simon H.</strong> and <strong>Marco D.
+                          </strong> as a tool to help NGO collecting, store and manage data in a 
+                          centralized way. 
+                        </p>
+                        <p className="about-project-p">  
+                          Many NGO collects data maually (door to door, by paper, phone, etc.). 
+                          The process itself is very time and effort consuming and is not so 
+                          efficient. Futhermore human interactions can lead to an increase of 
+                          errors, fake data and redundancy. 
+                        </p>
+                        <p className="about-project-p">  
+                          With <strong>Autosurvey</strong> we can automatically import several 
+                          survey in and use them globally, decreasing the time and the resources 
+                          needed. With one standardized entry point for data collection we aim to 
+                          boost the quality (efficiency, consistency) and the quantity of  
+                          collected data.
+                        </p>
+                        <p className="about-project-p">  
+                          Operators and managers can check the data collected thanks to a centralized
+                          charts.
+                        </p>
                     </TableCell>
                     <TableCell align="center">
-                      fdgfsfffd
+                      <img className="about-project-img" src="https://humansofdata.atlan.com/wp-content/uploads/2018/02/stefan-stefancik-257625-2.jpg" alt="collecting data"/>
                     </TableCell>
                   </TableRow>
                 </TableBody>  
@@ -88,9 +109,36 @@ export default function About() {
           </section>  
           <section className="about-us">
             <h1>The team</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?
-            </p>  
+
+            <section className="about-team-table-section">
+              <Table className="about-table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell colSpan={2} className="about-table-head" align="left" size="medim"></TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  <TableRow className="about-table-row">
+                    <TableCell component="th" scope="row" align="left">
+                      picture
+                    </TableCell>
+                    <TableCell align="center">
+                      simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon simon 
+                    </TableCell>
+                  </TableRow>
+
+                  <TableRow className="survey-table-row">
+                    <TableCell component="th" scope="row" align="left">
+                      picture
+                    </TableCell>
+                    <TableCell align="center">
+                      marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco marco 
+                    </TableCell>
+                  </TableRow>
+                </TableBody>  
+              </Table>
+            </section> 
           </section> 
         </main>
         </>
