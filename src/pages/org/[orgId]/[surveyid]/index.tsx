@@ -18,7 +18,7 @@ export default function SurveyDetails() {
   const router = useRouter();
   const { orgId, surveyid } = router.query;
 
-  const { organization, survey, setSurvey, setSurveys, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSurveys } = useContext(OrgContext);
   const [openConfirm, setOpenConfirm] = useState(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const {setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
@@ -49,32 +49,29 @@ export default function SurveyDetails() {
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item> <Link href={"/org/" + orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
         <Menu.Item>
-          <Link href={"#"}>
-            <Dropdown text='Export Survey'>
-              <Dropdown.Menu>
-                <Dropdown.Item>
-                  <Link href={"#"} onClick={(e) => {
-                    e.preventDefault();
-                    downloadExcel(surveyArray, yearsArray, countriesArray, locationsArray);
-                  }} >Export Surveys (xlsx)
-                  </Link>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <label >
-                    <CSVLink className="surveys-export-csv-link" filename={organization.orgName + "_" + survey.country + "_" + survey.id + ".csv"} data={surveyArray}>
-                      Export Survey (csv)
-                    </CSVLink>
-                  </label>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Link>
+          <Dropdown text='Export Survey'>
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={(e) => {
+                  e.preventDefault();
+                  downloadExcel(surveyArray, yearsArray, countriesArray, locationsArray);
+                }} >Export Surveys (xlsx)                  
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <label >
+                  <CSVLink className="surveys-export-csv-link" filename={organization.orgName + "_" + survey.country + "_" + survey.id + ".csv"} data={surveyArray}>
+                    Export Survey (csv)
+                  </CSVLink>
+                </label>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
           <UserOptions />
         </Menu.Menu>
       </Menu>
+      
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
 
