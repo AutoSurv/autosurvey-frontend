@@ -1,13 +1,23 @@
-.user-info-section {
-  margin: auto;
-  margin-top: 3vh;
-  width: 50vw;
+.user-card-container {
+  display: flex;
+  justify-content: center;
 }
 
 .ui.card.user-card {
-  margin: auto;
-  width: 50vw;
-  font-size: 2rem;
+  pointer-events: none;
+  justify-content: center;
+  margin-top: 5%;
+  width: 50%;
+  font-size: 1rem;
+}
+
+.content.user-header {
+  padding-bottom: 0%;
+}
+
+.meta.user-role {
+ margin-left: 5%;
+ margin-bottom: 3%;
 }
 
 .user-card-content {
@@ -21,6 +31,7 @@
 
 .ui.table.user-table {
   margin: 0;
+
 }
 
 

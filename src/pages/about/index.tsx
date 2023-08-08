@@ -132,7 +132,7 @@ export default function About() {
                 <Card.Header>Simon</Card.Header>
                 <Card.Meta>Started in June 2023</Card.Meta>
                 <Card.Description>
-                  I’m a Korean living in Oslo with a passion for coding & start-ups.
+                  I am a Korean living in Oslo with a passion for coding & start-ups.
                   Handling data from various sources and setting up code is one of my passions.
                   Previously worked as a Data Researcher/analyst & changed my career to follow my passion for web development.
                 </Card.Description>

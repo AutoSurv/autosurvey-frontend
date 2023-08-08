@@ -10,23 +10,23 @@ import { TableHead } from "@mui/material";
 export default function UserInfo() {
   const { userNameAuth, organization } = useContext(OrgContext);
   const [user, setUser] = useState<User>();
-   
+
   const getUserInfo = async () => {
-   const apiResponse = await getUserApi(userNameAuth);
-   if (apiResponse.status === 200) {
-     const data: User = await apiResponse.json();
-     setUser(data);
-   }
+    const apiResponse = await getUserApi(userNameAuth);
+    if (apiResponse.status === 200) {
+      const data: User = await apiResponse.json();
+      setUser(data);
+    }
   }
-  
+
   useEffect(() => {
     getUserInfo();
-  },[])
+  }, [])
 
   return (
-    
-      <main className="org-main">
-        <div className="home-header-container">
+
+    <main className="org-main">
+      <div className="home-header-container">
         <Header
           className="home-header"
           as="h1"
@@ -70,39 +70,35 @@ export default function UserInfo() {
         </Menu.Menu>
       </Menu>
 
-      <section className="user-info-section">
-          <Card className="user-card" >
-            <Table className="user-table">
-              <TableBody>
-                <TableRow className="user-table-row">
-                  <TableCell component="th" scope="row" align="left">
-                    Username:
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" class="right aligned">
-                    {user?.username}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="user-table-row">
-                  <TableCell component="th" scope="row" align="left">
-                    Email:
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" class="right aligned">
-                    {user?.email}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="user-table-row">
-                  <TableCell component="th" scope="row" align="left">
-                    Role:
-                  </TableCell>
-                  <TableCell component="th" scope="row" align="right" class="right aligned">
-                    {user?.roles}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Card>
-        </section>
-      </main>
+      <div className="user-card-container">
+        <Card className="user-card" >
+          <Card.Content className="user-header" header='User Profile' />
+          <Table className="user-table">
+            <TableBody>
+              <TableRow className="user-table-row">
+                <TableCell component="th" scope="row" align="left">
+                  Username:
+                </TableCell>
+                <TableCell component="th" scope="row" align="right" class="right aligned">
+                  {user?.username}
+                </TableCell>
+              </TableRow>
+              <TableRow className="user-table-row">
+                <TableCell component="th" scope="row" align="left">
+                  Email:
+                </TableCell>
+                <TableCell component="th" scope="row" align="right" class="right aligned">
+                  {user?.email}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+          <Card.Content extra className="user-table-role">
+            #{user?.roles}
+          </Card.Content>
+        </Card>
+      </div>
+    </main>
 
   )
 
