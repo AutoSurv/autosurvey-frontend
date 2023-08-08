@@ -7,10 +7,11 @@ import { Paper, TableHead } from "@mui/material";
 
 
 export default function About() {
-  const { organization } = useContext(OrgContext);
+  const { organization } =
+    useContext(OrgContext);
 
   return (
-    <div>
+    <>
       <div className="home-header-container">
         <Header
           className="home-header"
@@ -32,12 +33,21 @@ export default function About() {
 
       <Menu size="small" color="blue">
         <Menu.Item>
-          {" "}
           <Link href={"/org"} style={{ textDecoration: "none" }}>
-            Organization
+            Back to Organizations
           </Link>
         </Menu.Item>
-        <Menu.Item> <Link href={"/org/" + organization.orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
+        {
+          organization.orgId.length > 0 ?
+            <>
+              <Menu.Item>
+                <Link href={"/org/" + organization.orgId} style={{ textDecoration: "none" }}>
+                  Back to Surveys
+                </Link>
+              </Menu.Item>
+            </>
+            : null
+        }
         <Menu.Menu position="right">
           <Menu.Item>
             <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
@@ -48,66 +58,66 @@ export default function About() {
 
       <main className="org-main">
         <section className="about-project">
-          <Paper>
-            <Header as="h1">The AutoSurvey Project</Header>
-
-            <section className="about-project-table-section">
-              <Table className="about-table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell colSpan={2} className="about-table-head" align="left" size="medim"></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow className="about-table-row">
-                    <TableCell component="th" scope="row" align="left">
-                      <p className="about-project-p">
-                        Hello everyone and thanks for using <strong>Autosurvey!</strong> The
-                        project started in 2023 by <strong>Simon H.</strong> and <strong>Marco D.
-                        </strong> as a tool to help NGO collecting, store and manage data in a
-                        centralized way.
-                      </p>
-                      <p className="about-project-p">
-                        Many NGO collects data maually (door to door, by paper, phone, etc.).
-                        The process itself is very time and effort consuming and is not so
-                        efficient. Futhermore human interactions can lead to an increase of
-                        errors, fake data and redundancy.
-                      </p>
-                      <p className="about-project-p">
-                        With <strong>Autosurvey</strong> we can automatically import several
-                        survey in and use them globally, decreasing the time and the resources
-                        needed. With one standardized entry point for data collection we aim to
-                        boost the quality (efficiency, consistency) and the quantity of
-                        collected data.
-                      </p>
-                      <p className="about-project-p">
-                        Operators and managers can check the data collected thanks to a centralized
-                        charts.
-                      </p>
-                    </TableCell>
-                    <TableCell align="center">
-                      <img className="about-project-img" src="https://humansofdata.atlan.com/wp-content/uploads/2018/02/stefan-stefancik-257625-2.jpg" alt="collecting data" />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </section>
-          </Paper>
-
+          <h1 className="about-project-title">The project</h1>
+          <section className="about-project-table-section">
+            <Table className="about-table">
+              <TableHead>
+                <TableRow>
+                  <TableCell colSpan={2} className="about-table-head" align="left" size="medim"></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow className="about-table-row">
+                  <TableCell component="th" scope="row" align="left">
+                    <img className="about-project-img" src="dataColleciton.jpg" alt="collecting data" />
+                  </TableCell>
+                  <TableCell align="center">
+                    <p className="about-project-p">
+                      Hello everyone and thanks for using <b>Autosurvey!</b> The
+                      project started in 2023 by <b>Simon H.</b> and <b>Marco D.
+                      </b> as a tool to help NGO collecting, store and manage data in a
+                      centralized way.
+                    </p>
+                    <p className="about-project-p">
+                      Many NGO collects data maually (door to door, by paper, phone, etc.).
+                      The process itself is very <i>time and effort consuming</i> and is
+                      <i>not efficient</i>not efficient. Futhermore human interactions can lead to an increase
+                      of errors, fake data and redundancy.
+                    </p>
+                    <p className="about-project-p">
+                      With <b>Autosurvey</b> we can automatically import several
+                      survey in and use them globally, <i>decreasing the time and the resources
+                      </i> needed. With one standardized entry point for data collection we aim
+                      to <i>boost the quality (efficiency, consistency)</i> and the quantity of
+                      collected data.
+                    </p>
+                    <p className="about-project-p">
+                      Operators and managers can check the data collected thanks to a centralized
+                      charts.
+                    </p>
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </section>
         </section>
+
         <section className="about-us">
-          <Paper>
-            <Header as="h1">The Team Developers</Header>
-            <Card>
+
+          <Header as="h1" className="about-project-title">The Team Developers</Header>
+          <Card.Group className="about-team-card-container">
+            <Card className="about-team-card">
               <Image src='marco2.png' wrapped ui={false} />
               <Card.Content>
                 <Card.Header>Marco</Card.Header>
                 <Card.Meta>Started in June 2023</Card.Meta>
                 <Card.Description>
-                  Daniel is a comedian living in Nashville.
+                  I am a 40 years old guy that moved to Stockholm less than a year ago. I have a 30 years old passion for coding and creating new things.
+                  I love to create applications from scratch and improve my knowledge.
+                  Previously worked as field and validation tester in telecommunications.
                 </Card.Description>
               </Card.Content>
-              <Card.Content extra>
+              <Card.Content extra className="about-team-card-link">
                 <a href="https://www.linkedin.com/in/marco-debernardi-0292a3146/">
                   <img src="https://img.shields.io/badge/Marco-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white" alt="LinkedIn Badge" />
                 </a>
@@ -116,16 +126,18 @@ export default function About() {
                 </a>
               </Card.Content>
             </Card>
-            <Card>
+            <Card className="about-team-card">
               <Image src='simon.jpg' wrapped ui={false} />
               <Card.Content>
                 <Card.Header>Simon</Card.Header>
                 <Card.Meta>Started in June 2023</Card.Meta>
                 <Card.Description>
-                  Daniel is a comedian living in Nashville.
+                  I’m a Korean living in Oslo with a passion for coding & start-ups.
+                  Handling data from various sources and setting up code is one of my passions.
+                  Previously worked as a Data Researcher/analyst & changed my career to follow my passion for web development.
                 </Card.Description>
               </Card.Content>
-              <Card.Content extra>
+              <Card.Content extra className="about-team-card-link">
                 <a href="https://www.linkedin.com/in/seongbong-hong-080293121">
                   <img src="https://img.shields.io/badge/Simon-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white" alt="LinkedIn Badge" />
                 </a>
@@ -134,10 +146,11 @@ export default function About() {
                 </a>
               </Card.Content>
             </Card>
-          </Paper>
+          </Card.Group>
+
         </section>
       </main>
-    </div>
+    </>
   )
 
 }
