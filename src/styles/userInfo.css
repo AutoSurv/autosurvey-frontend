@@ -1,0 +1,27 @@
+.user-info-section {
+  margin: auto;
+  margin-top: 3vh;
+  width: 50vw;
+}
+
+.ui.card.user-card {
+  margin: auto;
+  width: 50vw;
+  font-size: 2rem;
+}
+
+.user-card-content {
+  width: 50vw;
+}
+
+.header.user-card-header {
+  margin: auto;
+  text-align: center;
+}
+
+.ui.table.user-table {
+  margin: 0;
+}
+
+
+
