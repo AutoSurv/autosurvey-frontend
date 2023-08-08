@@ -8,18 +8,20 @@ import UserOptions from "@/component/UserOptions";
 import { TableHead } from "@mui/material";
 
 export default function UserInfo() {
-  const { userNameAuth, organization } = useContext(OrgContext);
+  const { setUserNameAuth, organization } = useContext(OrgContext);
   const [user, setUser] = useState<User>();
    
   const getUserInfo = async () => {
-   const apiResponse = await getUserApi(userNameAuth);
-   if (apiResponse.status === 200) {
-     const data: User = await apiResponse.json();
-     setUser(data);
-   }
+    const userName: string = window.localStorage.getItem("username") as string
+    const apiResponse = await getUserApi(userName);
+    if (apiResponse.status === 200) {
+      const data: User = await apiResponse.json();
+      setUser(data);
+    }
   }
   
   useEffect(() => {
+    setUserNameAuth(localStorage.getItem("username") as string);
     getUserInfo();
   },[])
 
@@ -78,7 +80,7 @@ export default function UserInfo() {
                   <TableCell component="th" scope="row" align="left">
                     Username:
                   </TableCell>
-                  <TableCell component="th" scope="row" align="right" class="right aligned">
+                  <TableCell component="th" scope="row" align="right">
                     {user?.username}
                   </TableCell>
                 </TableRow>
@@ -86,7 +88,7 @@ export default function UserInfo() {
                   <TableCell component="th" scope="row" align="left">
                     Email:
                   </TableCell>
-                  <TableCell component="th" scope="row" align="right" class="right aligned">
+                  <TableCell component="th" scope="row" align="right">
                     {user?.email}
                   </TableCell>
                 </TableRow>
@@ -94,7 +96,7 @@ export default function UserInfo() {
                   <TableCell component="th" scope="row" align="left">
                     Role:
                   </TableCell>
-                  <TableCell component="th" scope="row" align="right" class="right aligned">
+                  <TableCell component="th" scope="row" align="right">
                     {user?.roles}
                   </TableCell>
                 </TableRow>
