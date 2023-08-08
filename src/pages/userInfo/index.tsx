@@ -3,9 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { getUserApi } from "../api/surveyAPI";
 import { User } from "@/type/type";
 import Link from "next/link";
-import { Button, Card, Header, Icon, Label, Menu, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
+import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
 import UserOptions from "@/component/UserOptions";
-import { TableHead } from "@mui/material";
 
 export default function UserInfo() {
   const { userNameAuth, organization } = useContext(OrgContext);
@@ -20,6 +19,7 @@ export default function UserInfo() {
   }
 
   useEffect(() => {
+    console.log(userNameAuth)
     getUserInfo();
   }, [])
 
