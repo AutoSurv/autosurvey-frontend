@@ -19,7 +19,7 @@ import SurveyTable from "./SurveyTable";
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
-  const { organization, setOrganization, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
+  const { organization, setOrganization, setUserNameAuth, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
@@ -39,6 +39,7 @@ export default function SurveyContent() {
   }
 
   useEffect(() => {
+    setUserNameAuth(localStorage.getItem("username") as string);
     getSurveys(setPagination, setSurveys);
   }, []);
 

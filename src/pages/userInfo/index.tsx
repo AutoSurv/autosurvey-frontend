@@ -7,11 +7,12 @@ import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow } from 
 import UserOptions from "@/component/UserOptions";
 
 export default function UserInfo() {
-  const { userNameAuth, organization } = useContext(OrgContext);
+  const { setUserNameAuth, organization } = useContext(OrgContext);
   const [user, setUser] = useState<User>();
 
   const getUserInfo = async () => {
-    const apiResponse = await getUserApi(userNameAuth);
+    const userName: string = window.localStorage.getItem("username") as string
+    const apiResponse = await getUserApi(userName);
     if (apiResponse.status === 200) {
       const data: User = await apiResponse.json();
       setUser(data);
@@ -19,6 +20,7 @@ export default function UserInfo() {
   }
 
   useEffect(() => {
+    setUserNameAuth(localStorage.getItem("username") as string);
     getUserInfo();
   }, [])
 
