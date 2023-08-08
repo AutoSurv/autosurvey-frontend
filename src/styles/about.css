@@ -7,3 +7,17 @@
 .ui.table.about-table {
   background-color: whitesmoke;
 }
+
+.about-project-title{
+  font-size: 40px;
+  margin: 10px;
+  text-align: center;
+}
+
+.about-project-img {
+  width: 40vw
+}
+
+.about-project-p {
+  font-size: 24px;
+}
