@@ -1,16 +1,14 @@
-
-
-.about-table-section {
-  width: 50%
-}
-
 .ui.table.about-table {
+  margin: 1rem;
+  padding: 1rem;
   background-color: whitesmoke;
+  width: 98%
 }
 
 .about-project-title{
-  font-size: 40px;
-  margin: 10px;
+  font-size: 2.5rem;
+  margin: 5px;
+  padding: 1rem;
   text-align: center;
 }
 
@@ -19,5 +17,23 @@
 }
 
 .about-project-p {
-  font-size: 24px;
+  font-size: 1.5vw;
 }
+
+@media only screen and (max-width: 767px) {
+  .ui.table.about-table {
+    margin: 1rem;
+    padding: 1rem;
+    background-color: whitesmoke;
+    width: 90%
+  }
+
+  .about-project-p {
+    font-size: 3.5vw;
+  }
+
+  .about-project-img {
+    width: 80vw
+  }
+}
+
