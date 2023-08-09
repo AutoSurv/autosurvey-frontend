@@ -80,13 +80,13 @@ export default function About() {
                     </p>
                     <p className="about-project-p">
                       Many NGO collects data maually (door to door, by paper, phone, etc.).
-                      The process itself is very <i>time and effort consuming</i> and is
+                      The process itself is very <i>time and effort consuming</i> and is 
                       <i>not efficient</i>not efficient. Futhermore human interactions can lead to an increase
                       of errors, fake data and redundancy.
                     </p>
                     <p className="about-project-p">
                       With <b>Autosurvey</b> we can automatically import several
-                      survey in and use them globally, <i>decreasing the time and the resources
+                      survey and use them globally, <i>decreasing the time and the resources
                       </i> needed. With one standardized entry point for data collection we aim
                       to <i>boost the quality (efficiency, consistency)</i> and the quantity of
                       collected data.
