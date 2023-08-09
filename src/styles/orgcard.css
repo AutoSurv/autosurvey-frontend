@@ -12,8 +12,10 @@
 }
 
 .org-card-btn-container {
-    display: flex;
-    justify-content: flex-end;
+    text-align: end;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    
 }
 
 .ui.card.org-card:hover{
@@ -23,9 +25,12 @@
 
 .org-modal-btn-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
+.ui.grey.mini.icon.button.org-modal-btn {
+    margin-right: 1%;
+}
 
 .ui.button.org-modal-btn {
    margin: auto;

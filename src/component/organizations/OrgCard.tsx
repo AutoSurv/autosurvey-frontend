@@ -42,7 +42,7 @@ export default function OrgCard(props: OrgCardProp) {
               onClose={() => setOpen(false)}
               onOpen={() => setOpen(true)}
               open={open}
-              trigger={<Button className="org-modal-btn" color="grey"  icon size='mini' ><Icon name="edit" /></Button>}>
+              trigger={<Button className="org-modal-btn" color="grey" icon size='mini' ><Icon name="edit" /></Button>}>
               <Modal.Header>Rename Your Organization</Modal.Header>
               <Modal.Content>
                 <Form onSubmit={(e) => {
@@ -64,8 +64,8 @@ export default function OrgCard(props: OrgCardProp) {
             </Modal>
             <Button className="org-modal-btn" onClick={() => {
               setOpenConfirm(true);
-            }}  icon size='mini'
-            ><Icon name="remove circle" inverted /></Button>
+            }}  icon size='mini' color="grey"
+            ><Icon name="trash alternate" /></Button>
             <Confirm
               open={openConfirm}
               header='Remove your organization'
