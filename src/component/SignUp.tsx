@@ -44,6 +44,7 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
           <Button onClick={(e) => {
             e.preventDefault();
             setErrorMsg("");
+            setOpen(false);
           }}
           >Cancel</Button>
         </Form>
