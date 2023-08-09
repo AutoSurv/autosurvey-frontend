@@ -140,7 +140,7 @@ export default function SurveyContent() {
 
       <section className="surveys-charts">
         <Chart
-          height={850}
+          height={450}
           //width={2000}
           type="bar"
           options={options}
