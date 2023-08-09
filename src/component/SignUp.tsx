@@ -17,7 +17,7 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Link variant="body2">
+      trigger={<Link className="login-signup" variant="body2">
         {"Don't have an account? Sign Up"}
       </Link>}>
       <Modal.Header>Sign Up</Modal.Header>
@@ -44,6 +44,7 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
           <Button onClick={(e) => {
             e.preventDefault();
             setErrorMsg("");
+            setOpen(false);
           }}
           >Cancel</Button>
         </Form>
