@@ -79,9 +79,9 @@ export default function About() {
                       centralized way.
                     </p>
                     <p className="about-project-p">
-                      Many NGO collects data maually (door to door, by paper, phone, etc.).
-                      The process itself is very <i>time and effort consuming</i> and is 
-                      <i>not efficient</i>not efficient. Futhermore human interactions can lead to an increase
+                      Many NGO collects data maually (door to door, paper, phone, email, etc.).
+                      The process itself is very <i>time and effort consuming</i> and is <i>not efficient</i>.
+                      Futhermore human interactions can lead to an increase
                       of errors, fake data and redundancy.
                     </p>
                     <p className="about-project-p">

@@ -173,9 +173,9 @@ export default function SurveyContent() {
           <Table.Body>
             {
               //datas.surveys.sort()
-              filteredSurveys.slice(page * rowPage, page * rowPage + rowPage).sort((a, b) => {
-                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).map((matchingSurvey: Survey, index: number) => {
-                return <SurveyTable key={index} organization={organization} survey={matchingSurvey} />
+              filteredSurveys.sort((a, b) => {
+                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
+                  return <SurveyTable key={index} organization={organization} survey={matchingSurvey} />
               })
             }
           </Table.Body>          
