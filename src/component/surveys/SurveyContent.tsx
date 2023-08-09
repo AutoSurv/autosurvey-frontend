@@ -39,6 +39,7 @@ export default function SurveyContent() {
   }
 
   useEffect(() => {
+    setOrganization(organization);
     setUserNameAuth(localStorage.getItem("username") as string);
     getSurveys(setPagination, setSurveys);
   }, []);
