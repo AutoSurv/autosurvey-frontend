@@ -21,6 +21,7 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
   const [filterSurveys, setFilterSurveys] = useState<Survey[]>([]);
 
   useEffect (() => {
+    console.log("filterCountries.length: ", filterCountries.length)
     if (filterYears.length == 0 && filterCountries.length == 0 && filterLocations.length == 0) {
       setFilterSurveys(propSurveys)
     } 
@@ -33,7 +34,7 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : 
     propSetFilteredSurveys(
       filterSurveys
     )  
-  }, [propSurveys.length, filterSurveys.length, fromYear.length, fromCountry.length, filterLocations.length]) 
+  }, [propSurveys.length, filterSurveys.length, fromYear.length, fromCountry.length, filterLocations.length, filterCountries.length]) 
 
   return(
     <section >      
