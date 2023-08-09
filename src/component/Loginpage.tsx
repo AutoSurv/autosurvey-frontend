@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { OrgContext } from "@/helper/context";
 import { SignUp } from "./SignUp";
+import { textTransform } from "@mui/system";
 
 const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
@@ -60,9 +61,9 @@ const Login = () => {
                 onClose={() => setOpen(false)}
                 onOpen={() => setOpen(true)}
                 open={open}
-                trigger={<Link className="login-forgotpassword" variant="body2">
+                trigger={<Button className="login-forgotpassword" variant="text" size="small" style={{textTransform: 'none'}}>
                   Forgot password?
-                </Link>}
+                </Button>}
               >
                 <Modal.Header>Forgot password?</Modal.Header>
                 <Modal.Content>Contact: <br /> <i>seonbong.hong@appliedtechnology.se</i> <br /> or <br /> <i>marco.debernardi@appliedtechnology.se</i></Modal.Content>
@@ -74,15 +75,6 @@ const Login = () => {
                   </Button>
                 </Modal.Actions>
               </Modal>
-
-
-              {/* <Popup
-                trigger={<Link variant="body2">
-                  Forgot password?
-                </Link>}
-                content='Contact simonhong85@gmail.com'
-                position='bottom center'
-              /> */}
             </Grid>
             <Grid item>
               <SignUp setErrorMsg={setErrorMsg} setSignupSuccessMessage={setSignupSuccessMessage} />
