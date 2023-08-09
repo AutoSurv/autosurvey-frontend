@@ -2,6 +2,7 @@ import * as React from 'react';
 import {  Table } from 'semantic-ui-react';
 import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
+import { useEffect } from 'react';
 
 type SurveyCardProp = {
     organization: Organization,
@@ -9,7 +10,7 @@ type SurveyCardProp = {
 }
 
 export default function SurveyRecord(props: SurveyCardProp) {
-
+   
     return (        
         <Table.Row>
             <Table.Cell >
