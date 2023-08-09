@@ -52,6 +52,12 @@ export default function SurveyContent() {
     setPage(0);
   }
 
+  let meanValues: number[][] = []
+  if (filteredSurveys.length != organization.surveys.length) {
+    meanValues = calculateMeanValues(country_arr, organization.surveys);
+  } else {
+    country_arr = ["world countries and cities"];
+  }
   const options: ApexOptions = {
     chart: {
       stacked: true,
@@ -67,10 +73,7 @@ export default function SurveyContent() {
     },
   };
 
-  let meanValues: number[][] = []
-  if (filteredSurveys.length != organization.surveys.length) {
-    meanValues = calculateMeanValues(country_arr, organization.surveys);
-  }
+
   
 
   const series = [{
