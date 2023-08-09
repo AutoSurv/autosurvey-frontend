@@ -80,7 +80,7 @@ export default function UserInfo() {
                 <TableCell component="th" scope="row" align="left">
                   Username:
                 </TableCell>
-                <TableCell component="th" scope="row" align="right" class="right aligned">
+                <TableCell component="th" scope="row" align="right" >
                   {user?.username}
                 </TableCell>
               </TableRow>
@@ -88,7 +88,7 @@ export default function UserInfo() {
                 <TableCell component="th" scope="row" align="left">
                   Email:
                 </TableCell>
-                <TableCell component="th" scope="row" align="right" class="right aligned">
+                <TableCell component="th" scope="row" align="right" >
                   {user?.email}
                 </TableCell>
               </TableRow>

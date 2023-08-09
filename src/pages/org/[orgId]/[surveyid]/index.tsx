@@ -49,12 +49,12 @@ export default function SurveyDetails() {
         <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
         <Menu.Item> <Link href={"/org/" + orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
         <Menu.Item>
-          <Dropdown text='Export Survey'>
+          <Dropdown text='Export Survey' style={{ textDecoration: 'none' , color: '#4183c4'}}>
             <Dropdown.Menu>
-              <Dropdown.Item onClick={(e) => {
+              <Dropdown.Item> <label onClick={(e) => {
                   e.preventDefault();
                   downloadExcel(surveyArray, yearsArray, countriesArray, locationsArray);
-                }} >Export Surveys (xlsx)                  
+                }} style={{ textDecoration: 'none' , color: '#4183c4'}}>Export Surveys (xlsx)</label>                    
               </Dropdown.Item>
               <Dropdown.Item>
                 <label >

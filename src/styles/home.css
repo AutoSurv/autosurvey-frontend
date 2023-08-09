@@ -4,6 +4,7 @@
 
 .whole-body {
     background-color:whitesmoke;
+    min-width: 100vh;
 }
 
 .home-body {

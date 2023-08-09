@@ -34,6 +34,9 @@
 
 .ui.blue.small.menu {
     margin: 0px;
+    width: 100%;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
 .ui.blue.icon.center.aligned.header.home-header {

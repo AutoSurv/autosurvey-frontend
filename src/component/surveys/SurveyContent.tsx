@@ -123,7 +123,7 @@ export default function SurveyContent() {
             </Dropdown>
         </Menu.Item>
 
-        <Menu.Menu position='right'>
+        <Menu.Menu position='right' className="menu-nav-about-user">
           <Menu.Item> 
             <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
           </Menu.Item>         

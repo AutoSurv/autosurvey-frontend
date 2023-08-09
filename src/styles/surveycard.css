@@ -42,3 +42,8 @@
 .surveys-modal-btn {
     color: #4183c4;
 }
+
+.right.menu.menu-nav-about-user{
+    justify-content:flex-end;
+
+}
