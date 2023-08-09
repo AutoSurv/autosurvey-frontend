@@ -58,6 +58,7 @@ export default function SurveyContent() {
   } else {
     country_arr = ["world countries and cities"];
   }
+
   const options: ApexOptions = {
     chart: {
       stacked: true,
@@ -72,9 +73,6 @@ export default function SurveyContent() {
       categories: country_arr
     },
   };
-
-
-  
 
   const series = [{
     name: 'rent',

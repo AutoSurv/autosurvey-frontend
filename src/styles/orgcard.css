@@ -21,10 +21,15 @@
     border: gray 1px solid;
 }
 
+.org-modal-btn-container{
+    display: flex;
+    justify-content: center;
+}
+
+
 .ui.button.org-modal-btn {
-    margin-left: 5%;
-    margin-top: 1%;
-    margin-bottom: 1%;
+   margin: auto;
+   margin-top: 2%;
     
 }
 

@@ -60,24 +60,24 @@ export default function OrgContent() {
           </Link>
         </Menu.Item>
         <Menu.Menu position="right">
-        <Menu.Item> 
-          <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
-        </Menu.Item> 
-        <UserOptions />
+          <Menu.Item>
+            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
+          </Menu.Item>
+          <UserOptions />
         </Menu.Menu>
       </Menu>
-      {role !== ROLE.user ? (
+      {role !== ROLE.user ? (<>
+        <div className="org-modal-btn-container">
+          <Button className="org-modal-btn" color="green" onClick={() => setOpen(true)}>
+            Create Organization
+          </Button>
+        </div>
         <Modal
           animation={false}
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           open={open}
-          trigger={
-            <Button className="org-modal-btn" color="green">
-              {" "}
-              Create Organization
-            </Button>
-          }
+
         >
           <Modal.Header>Make Your Organization</Modal.Header>
           <Modal.Content>
@@ -116,7 +116,7 @@ export default function OrgContent() {
               </Button>
             </Form>
           </Modal.Content>
-        </Modal>
+        </Modal></>
       ) : null}
       <div className="orgs-orgcard-box">
         {organizations.map((organization) => {
