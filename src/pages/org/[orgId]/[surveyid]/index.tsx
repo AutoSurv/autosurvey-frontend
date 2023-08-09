@@ -212,7 +212,7 @@ export default function SurveyDetails() {
               <TableCell component="th" scope="row" align="center">
                 <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey} />
               </TableCell>
-              <TableCell align="right"><Button onClick={() => {
+              <TableCell align="center"><Button onClick={() => {
                 setOpenConfirm(true);
               }} color="orange" basic>Delete Survey</Button><Confirm
                   open={openConfirm}

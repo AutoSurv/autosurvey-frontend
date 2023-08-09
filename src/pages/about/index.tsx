@@ -34,7 +34,7 @@ export default function About() {
       <Menu size="small" color="blue">
         <Menu.Item>
           <Link href={"/org"} style={{ textDecoration: "none" }}>
-            Back to Organizations
+            To Organizations
           </Link>
         </Menu.Item>
         {
@@ -42,7 +42,7 @@ export default function About() {
             <>
               <Menu.Item>
                 <Link href={"/org/" + organization.orgId} style={{ textDecoration: "none" }}>
-                  Back to Surveys
+                  To Surveys
                 </Link>
               </Menu.Item>
             </>
