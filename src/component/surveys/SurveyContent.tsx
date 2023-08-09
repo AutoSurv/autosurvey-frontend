@@ -67,7 +67,11 @@ export default function SurveyContent() {
     },
   };
 
-  const meanValues = calculateMeanValues(country_arr, organization.surveys);
+  let meanValues: number[][] = []
+  if (filteredSurveys.length != organization.surveys.length) {
+    meanValues = calculateMeanValues(country_arr, organization.surveys);
+  }
+  
 
   const series = [{
     name: 'rent',
@@ -134,7 +138,11 @@ export default function SurveyContent() {
       </Menu>
 
       <section className="surveys-management">
-        <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
+        {
+          organization && organization.surveys && organization.surveys.length > 0 ?
+          <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
+          : null
+        }            
         <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
       </section>
 
