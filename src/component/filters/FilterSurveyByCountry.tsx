@@ -1,6 +1,7 @@
 import { Survey } from "@/type/type";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import FilterCountry from "./FilterCountry";
+import { OrgContext } from "@/helper/context";
 
 type FilterProps = {
   propSurveys: Survey[];
@@ -11,10 +12,12 @@ type FilterProps = {
 export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurveys
   //, propSetFilter 
   } : FilterProps) {
-  const [filterCountries, setFilterCountries] = useState<string[]>([]);
+  const { filterCountries, setFilterCountries, setFilterLocations } = useContext(OrgContext);
+
+  //const [filterCountries, setFilterCountries] = useState<string[]>([]);
   
   useEffect (() => {
-    //propSetFilter(filterCountries);
+    setFilterCountries(filterCountries);
     propSetFilteredSurveys(
       propSurveys.filter((survey: Survey) => {  
       if (filterCountries.length > 0) {
@@ -26,6 +29,7 @@ export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSur
           }
         })
       } else {
+        setFilterLocations([]);
         return survey;
       }
     })
