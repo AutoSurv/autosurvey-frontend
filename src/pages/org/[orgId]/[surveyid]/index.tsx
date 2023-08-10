@@ -11,6 +11,7 @@ import { downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { initPagination } from "@/helper/initializer";
 import UserOptions from "@/component/UserOptions";
+import { NavigationBar } from "@/component/NavigationBar";
 
 
 export default function SurveyDetails() {
@@ -45,32 +46,8 @@ export default function SurveyDetails() {
           <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
         </Header>
       </div>
-      <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
-        <Menu.Item> <Link href={"/org/" + orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
-        <Menu.Item>
-          <Dropdown text='Export Survey' style={{ textDecoration: 'none' , color: '#4183c4'}}>
-            <Dropdown.Menu>
-              <Dropdown.Item> <label onClick={(e) => {
-                  e.preventDefault();
-                  downloadExcel(surveyArray, yearsArray, countriesArray, locationsArray);
-                }} style={{ textDecoration: 'none' , color: '#4183c4'}}>Export Surveys (xlsx)</label>                    
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <label >
-                  <CSVLink className="surveys-export-csv-link" filename={organization.orgName + "_" + survey.country + "_" + survey.id + ".csv"} data={surveyArray}>
-                    Export Survey (csv)
-                  </CSVLink>
-                </label>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
-        <Menu.Menu position='right'>
-          <Menu.Item> <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link></Menu.Item>
-          <UserOptions />
-        </Menu.Menu>
-      </Menu>
+
+      <NavigationBar pathname={router.pathname} />      
       
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">

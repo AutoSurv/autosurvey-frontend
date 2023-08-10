@@ -15,8 +15,12 @@ import OrgCard from "./OrgCard";
 import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import UserOptions from "../UserOptions";
+import { NavigationBar } from "../NavigationBar";
+import { useRouter } from "next/router";
 
 export default function OrgContent() {
+  const router = useRouter();
+
   const { setSignUpStatus, userNameAuth, setUserNameAuth } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
@@ -52,20 +56,9 @@ export default function OrgContent() {
         </Header>
       </div>
 
-      <Menu size="small" color="blue">
-        <Menu.Item>
-          {" "}
-          <Link href={"/org"} style={{ textDecoration: "none" }}>
-            Organization
-          </Link>
-        </Menu.Item>
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
-          </Menu.Item>
-          <UserOptions />
-        </Menu.Menu>
-      </Menu>
+
+      <NavigationBar pathname={router.pathname} />
+
       {role !== ROLE.user ? (<>
         <div className="org-modal-btn-container">
           <Button className="org-modal-btn" color="green" onClick={() => setOpen(true)}>

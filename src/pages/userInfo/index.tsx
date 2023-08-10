@@ -5,10 +5,13 @@ import { User } from "@/type/type";
 import Link from "next/link";
 import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
 import UserOptions from "@/component/UserOptions";
+import { useRouter } from "next/router";
+import { NavigationBar } from "@/component/NavigationBar";
 
 export default function UserInfo() {
   const { setUserNameAuth, organization } = useContext(OrgContext);
   const [user, setUser] = useState<User>();
+  const router = useRouter();
 
   const getUserInfo = async () => {
     const userName: string = window.localStorage.getItem("username") as string
@@ -46,30 +49,7 @@ export default function UserInfo() {
         </Header>
       </div>
 
-      <Menu size="small" color="blue">
-        <Menu.Item>
-          <Link href={"/org"} style={{ textDecoration: "none" }}>
-            Back to Organizations
-          </Link>
-        </Menu.Item>
-        {
-          organization.orgId.length > 0 ?
-            <>
-              <Menu.Item>
-                <Link href={"/org/" + organization.orgId} style={{ textDecoration: "none" }}>
-                  Back to Surveys
-                </Link>
-              </Menu.Item>
-            </>
-            : null
-        }
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
-          </Menu.Item>
-          <UserOptions />
-        </Menu.Menu>
-      </Menu>
+      <NavigationBar pathname={router.pathname} />
 
       <div className="user-card-container">
         <Card className="user-card" >

@@ -4,9 +4,12 @@ import Link from "next/link";
 import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow, Image } from "semantic-ui-react";
 import { useContext, useEffect, useState } from "react";
 import { Paper, TableHead } from "@mui/material";
+import { useRouter } from "next/router";
+import { NavigationBar } from "@/component/NavigationBar";
 
 
 export default function About() {
+  const router = useRouter();
   const { organization } =
     useContext(OrgContext);
 
@@ -31,30 +34,7 @@ export default function About() {
         </Header>
       </div>
 
-      <Menu size="small" color="blue">
-        <Menu.Item>
-          <Link href={"/org"} style={{ textDecoration: "none" }}>
-            To Organizations
-          </Link>
-        </Menu.Item>
-        {
-          organization.orgId.length > 0 ?
-            <>
-              <Menu.Item>
-                <Link href={"/org/" + organization.orgId} style={{ textDecoration: "none" }}>
-                  To Surveys
-                </Link>
-              </Menu.Item>
-            </>
-            : null
-        }
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
-          </Menu.Item>
-          <UserOptions />
-        </Menu.Menu>
-      </Menu>
+      <NavigationBar pathname={router.pathname} />
 
       <main className="org-main">
         <section className="about-project">

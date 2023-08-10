@@ -6,8 +6,8 @@ import * as XLSX from 'xlsx';
 
 export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[]) => {
 
-  const surneyAsString: string = JSON.stringify(data[0]);
-  const survey: Survey = JSON.parse(surneyAsString);
+  const surveyAsString: string = JSON.stringify(data[0]);
+  const survey: Survey = JSON.parse(surveyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
   const workbook = XLSX.utils.book_new();

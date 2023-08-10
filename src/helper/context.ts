@@ -28,6 +28,9 @@ export interface OrgContextValue {
     filterLocations: string[];
     setFilterLocations: Dispatch<SetStateAction<string[]>>;
 
+    filteredSurveys: Survey[];
+    setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>; 
+
 
 }
 
@@ -49,5 +52,7 @@ export const OrgContext = createContext<OrgContextValue> ({
     setFilterCountries: () => {},
     filterLocations: [],
     setFilterLocations: () => {},
+    filteredSurveys: [],
+    setFilteredSurveys: () => {},
 
 });

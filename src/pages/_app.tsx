@@ -22,6 +22,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [filterYears, setFilterYears] = useState<string[]>([]);
   const [filterCountries, setFilterCountries] = useState<string[]>([]);
   const [filterLocations, setFilterLocations] = useState<string[]>([]);
+  const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
 
   return (
 
@@ -34,7 +35,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         filterYears, setFilterYears,
         filterCountries, setFilterCountries,
         filterLocations, setFilterLocations,
-
+        filteredSurveys, setFilteredSurveys
         }}>
       <Component {...pageProps} />
       </OrgContext.Provider>

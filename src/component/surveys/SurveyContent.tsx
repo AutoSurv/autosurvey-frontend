@@ -15,17 +15,20 @@ import { TablePagination } from "@mui/material";
 import { initPagination } from "@/helper/initializer";
 import UserOptions from "../UserOptions";
 import SurveyTable from "./SurveyTable";
+import { NavigationBar } from "../NavigationBar";
+import { useRouter } from "next/router";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
-  const { organization, setOrganization, setUserNameAuth, filterYears, filterCountries, filterLocations } = useContext(OrgContext);
+  const router = useRouter();
+  const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys} = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
 
-  const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
+  //const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
 
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
@@ -104,41 +107,8 @@ export default function SurveyContent() {
           <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
         </Header>
       </div>
-      <Menu size='small' color="blue">
-        <Menu.Item> <Link href={"/org"} style={{ textDecoration: 'none' }}>Organization</Link></Menu.Item>
-        <Menu.Item >
-            <Dropdown className="exp-imp-items" text='Export / Import'>
-              <Dropdown.Menu>
-                <Dropdown.Item>
-                  <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <label onClick={(e) => {
-                    e.preventDefault();
-                    downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations);
-                  }} style={{ textDecoration: 'none' , color: '#4183c4'}} >Export Surveys (xlsx)
-                  </label>
-                </Dropdown.Item>
-                <Dropdown.Item>
-                  <label >
-                    <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
-                      Export Survey (csv)
-                    </CSVLink>
-                  </label>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-        </Menu.Item>
 
-        <Menu.Menu position='right' className="menu-nav-about-user">
-          <Menu.Item> 
-            <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
-          </Menu.Item>         
-            <UserOptions />
-          
-
-        </Menu.Menu>
-      </Menu>
+      <NavigationBar pathname={router.pathname} />      
 
       <section className="surveys-management">
         {
