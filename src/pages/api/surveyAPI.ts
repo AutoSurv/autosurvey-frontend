@@ -105,19 +105,13 @@ export async function deleteSurveyApi(
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const token = localStorage.getItem("jwt")
 
-  alert("sureveyApi.deleteSurveiApi.id: " + id)
-  alert("sureveyApi.deleteSurveiApi.token: " + token)
-  alert("sureveyApi.deleteSurveiApi.autosurveysURL: " + autosurveysURL)
-
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
-  alert("sureveyApi.deleteSurveiApi.response: " + response)  
   const listOfAllSurveys = await getSurveysApi();
-  alert("sureveyApi.deleteSurveiApi.listOfAllSurveys: " + listOfAllSurveys)  
   return listOfAllSurveys;
 };
 
