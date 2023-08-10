@@ -26,6 +26,7 @@ export type Survey = {
 }
 
 export type SurveyRequestDto = {
+  id: string,
   country: string;
   year: number;
   rent: number;

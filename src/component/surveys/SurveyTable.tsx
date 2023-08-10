@@ -2,7 +2,6 @@ import * as React from 'react';
 import {  Table } from 'semantic-ui-react';
 import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
-import { useEffect } from 'react';
 
 type SurveyCardProp = {
     organization: Organization,

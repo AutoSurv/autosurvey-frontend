@@ -10,23 +10,22 @@ type ImportSurveyProps = {
   organization: Organization;
   setOrganization: Dispatch<SetStateAction<Organization>>;
   setSurveys: Dispatch<SetStateAction<Survey[]>>;
+  setErrorMsg: Dispatch<SetStateAction<string>>;
+  setSuccessMessage: Dispatch<SetStateAction<string>>;
 }
 
 export default function ImportSurvey(props: ImportSurveyProps) {
-  const { organization, setOrganization, setSurveys } = props;
+  const { organization, setOrganization, setSurveys, setErrorMsg, setSuccessMessage } = props;
   const [pagination, setPagination] = useState<Pagination>(initPagination);
 
   const [open, setOpen] = useState(false);
-  const [errMessage, setErrMessage] = useState<string>("");
   const [dataFromImportedSurvey, setDataFromImportedSurvey] = useState<Survey[]>([]);
 
   const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
 
       const reader = new FileReader();
-      //ChangeEvent<HTMLInputElement>
       reader.readAsArrayBuffer(e.target.files[0]);
-      //reader.readAsArrayBuffer(e.target.files[0]);
 
       reader.onload = (e) => {
         const data = e.target!.result;
@@ -46,7 +45,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(dataFromImportedSurvey, organization.orgId, setPagination, setErrMessage, setOpen, setSurveys, setOrganization)
+    addImportedSurvey(dataFromImportedSurvey, organization.orgId, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization)
   }
   
   return (

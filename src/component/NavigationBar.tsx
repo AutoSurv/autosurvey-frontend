@@ -19,7 +19,10 @@ export function NavigationBar({ pathname }: HeaderProps) {
     filterCountries, filterLocations,
     filteredSurveys, setSurveys, survey
   } = useContext(OrgContext);
+
   const [errorMsg, setErrorMsg] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const surveyArray: Survey[] = [survey];
   const yearsArray: string[] = [survey.year.toString()];
   const countriesArray: string[] = [survey.country];
@@ -27,6 +30,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
 
   const handleDismiss = () => {
     setErrorMsg("");
+    setSuccessMessage("");
   }
 
   return (
@@ -35,6 +39,12 @@ export function NavigationBar({ pathname }: HeaderProps) {
         onDismiss={handleDismiss} negative compact>
         <p>{errorMsg}</p>
       </Message>
+
+      <Message visible={successMessage.length > 0} hidden={successMessage.length === 0}
+        onDismiss={handleDismiss} positive compact>
+        <p>{successMessage}</p>
+      </Message>
+
       <Menu size="small" color="blue">
         <Menu.Item>
           {" "}
@@ -49,7 +59,12 @@ export function NavigationBar({ pathname }: HeaderProps) {
               <Dropdown className="exp-imp-items" text='Export / Import'>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <ImportSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+                    <ImportSurvey organization={organization} 
+                                  setOrganization={setOrganization} 
+                                  setSurveys={setSurveys} 
+                                  setErrorMsg={setErrorMsg} 
+                                  setSuccessMessage={setSuccessMessage}
+                    />
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <label onClick={(e) => {

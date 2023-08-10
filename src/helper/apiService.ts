@@ -128,6 +128,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   orgId: string, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: SurveyRequestDto = {
+    id: "",
     country: event.currentTarget.country.value,
     year: event.currentTarget.year.value,
     rent: event.currentTarget.rent.value,
@@ -171,12 +172,17 @@ export async function addImportedSurvey(
   orgId: string,
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setErrMessage: Dispatch<SetStateAction<string>>,
+  setSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
-  setOrganization: Dispatch<SetStateAction<Organization>>) {
+  setOrganization: Dispatch<SetStateAction<Organization>>
+  ) {
+
+  let duplicateCounter: number = 0;
 
   for (let i = 0; i < surveyArr.length; i++) {
     const reqBody: SurveyRequestDto = {
+      id: surveyArr[i].id,
       country: surveyArr[i].country,
       year: surveyArr[i].year,
       rent: surveyArr[i].rent,
@@ -206,6 +212,18 @@ export async function addImportedSurvey(
       return;
     }
 
+    const allSurveyinDB = await getSurveyApi(reqBody.id);
+
+
+    if (allSurveyinDB.status === 200) {
+      //setErrMessage("Survey already saved on database");
+      duplicateCounter++;
+      continue;
+    } else if (allSurveyinDB.status !== 404) {
+      setErrMessage("Cannot retrieve survey list from database");
+      return;
+    }
+
     const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
     await addImportedSurveyApi(reqOptions);
     await getSurveys(setPagination,setSurveys);
@@ -213,6 +231,14 @@ export async function addImportedSurvey(
     setOpen(false);
     setErrMessage('');
   }
+
+  if (duplicateCounter > 0 ) {
+    setSuccessMessage("Import success! Found " + duplicateCounter + "duplicates");
+    return
+  }
+
+  setSuccessMessage("Import success!");
+
 }
 
 export async function updateSurvey(
@@ -283,7 +309,6 @@ export async function signUpUser(data: FormDataSingUp) {
     !data.password &&
     !data.email
   ) {
-    console.log("all empty fields");
     return null;
   }
 
