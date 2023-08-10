@@ -26,6 +26,7 @@ export type Survey = {
 }
 
 export type SurveyRequestDto = {
+  id: string,
   country: string;
   year: number;
   rent: number;
@@ -165,3 +166,7 @@ export type ReqOptions = {
   },
   body: string
 };
+
+export type MeadDataForChart = {
+  meanValues: number[][]
+}

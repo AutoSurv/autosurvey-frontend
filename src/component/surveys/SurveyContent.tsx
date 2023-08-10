@@ -1,19 +1,16 @@
-import { CSVLink } from "react-csv";
 import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Dropdown, Header, Icon, Label, Menu, Table } from "semantic-ui-react";
+import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
-import ImportSurvey from "./ImportSurvey";
-import { calculateMeanValues, downloadExcel } from '@/helper/methods';
+import { calculateMeanValues } from '@/helper/methods';
 import Link from "next/link";
 import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "../filters/FilterSurvey";
 import { TablePagination } from "@mui/material";
 import { initPagination } from "@/helper/initializer";
-import UserOptions from "../UserOptions";
 import SurveyTable from "./SurveyTable";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
@@ -27,6 +24,7 @@ export default function SurveyContent() {
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
+
 
   //const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
 
@@ -62,6 +60,7 @@ export default function SurveyContent() {
     meanValues = calculateMeanValues(country_arr, organization.surveys);
   } else {
     country_arr = ["world countries and cities"];
+    //meanValues[0][0] = 0;
   }
 
   const options: ApexOptions = {

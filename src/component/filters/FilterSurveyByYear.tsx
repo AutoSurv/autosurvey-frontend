@@ -1,5 +1,5 @@
 import { Survey } from "@/type/type";
-import { Dispatch, SetStateAction, useEffect, useState, useContext } from "react";
+import { Dispatch, SetStateAction, useEffect, useContext } from "react";
 import FilterYear from "./FilterYear";
 import { OrgContext } from "@/helper/context";
 

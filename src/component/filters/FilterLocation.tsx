@@ -1,6 +1,6 @@
 import { OrgContext } from '@/helper/context';
 import { Survey } from '@/type/type';
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react'
 import { Dropdown } from 'semantic-ui-react'
 
 type FilterProps = {
