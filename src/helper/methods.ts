@@ -4,9 +4,14 @@ import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
-export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[]) => {
+export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[], setErrorMsg: Dispatch<SetStateAction<string>>) => {
 
   const surveyAsString: string = JSON.stringify(data[0]);
+  console.log(surveyAsString);
+  if (surveyAsString === undefined) {
+    setErrorMsg("nothing to export");
+    return;
+  }
   const survey: Survey = JSON.parse(surveyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
@@ -15,21 +20,25 @@ export const downloadExcel = (data: any, filterYears: string[], filterCountries:
 
   if (data.length == 1) {
     XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
-  } else {
+  } else if (data.length > 1) {
     if (filterYears.length == 1) {
       if (filterCountries.length == 1) {
         if (filterLocations.length == 1) {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered +  "_" + survey.id + ".xlsx");
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         } else {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country +  "_" + survey.id + ".xlsx");
-        }  
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + ".xlsx");
+        }
       } else {
-        XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.id + ".xlsx"); 
-      }      
+        XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + ".xlsx");
+      }
     } else {
       XLSX.writeFile(workbook, survey.orgName + ".xlsx");
     }
-  }
+  } else {
+    setErrorMsg("nothing to export");
+    return;
+  };
+  setErrorMsg("");
 };
 
 export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
@@ -54,7 +63,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
   await authenticateUser(inputBody)
     .then((response) => {
       if (response.status === 200) {
-        
+
         return response.text();
       }
       else if (response.status === 401 || response.status === 403) {
@@ -84,7 +93,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignupSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>
-  ): Promise<void> {
+): Promise<void> {
 
   const inputSignUpBody: FormDataSingUp = {
     username: event.currentTarget.username.value,
@@ -121,34 +130,34 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
       } else {
         setErrorMsg('General error: ' + response?.status);
       }
-    }  
-  );
+    }
+    );
 }
 
 export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   data.forEach((survey) => {
-    if (survey.country === null) { survey.country = "";}  
-    if (typeof survey.year !== 'number') { survey.year = 0;}  
-    if (typeof survey.rent !== 'number') { survey.rent = 0;}  
-    if (typeof survey.utilities !== 'number') { survey.utilities = 0;}  
-    if (typeof survey.food !== 'number') { survey.food = 0;}  
-    if (typeof survey.basicItems !== 'number') { survey.basicItems = 0;}  
-    if (typeof survey.transportation !== 'number') { survey.transportation = 0;}  
-    if (typeof survey.educationTotal !== 'number') { survey.educationTotal = 0;}  
-    if (typeof survey.educationSupplies !== 'number') { survey.educationSupplies = 0;}   
-    if (typeof survey.educationFee !== 'number') { survey.educationFee = 0;}  
-    if (survey.educationType == null) { survey.educationType = "";}  
-    if (survey.accommodationType === null) { survey.accommodationType = "";}  
-    if (survey.profession === null) { survey.profession = "";}  
-    if (survey.locationGiven === null) { survey.locationGiven = "";}  
-    if (survey.locationClustered == null) { survey.locationClustered = "";}  
-    if (typeof survey.numResidents !== 'number') { survey.numResidents = 0;}  
-    if (typeof survey.numIncomes !== 'number') { survey.numIncomes = 0;}  
-    if (typeof survey.numFullIncomes !== 'number') { survey.numFullIncomes = 0;}  
-    if (typeof survey.numChildren !== 'number') { survey.numChildren = 0;}  
-    if (typeof survey.totalIncome !== 'number') { survey.totalIncome = 0;}  
-    if (survey.comments == null) { survey.comments = "";}  
+    if (survey.country === null) { survey.country = ""; }
+    if (typeof survey.year !== 'number') { survey.year = 0; }
+    if (typeof survey.rent !== 'number') { survey.rent = 0; }
+    if (typeof survey.utilities !== 'number') { survey.utilities = 0; }
+    if (typeof survey.food !== 'number') { survey.food = 0; }
+    if (typeof survey.basicItems !== 'number') { survey.basicItems = 0; }
+    if (typeof survey.transportation !== 'number') { survey.transportation = 0; }
+    if (typeof survey.educationTotal !== 'number') { survey.educationTotal = 0; }
+    if (typeof survey.educationSupplies !== 'number') { survey.educationSupplies = 0; }
+    if (typeof survey.educationFee !== 'number') { survey.educationFee = 0; }
+    if (survey.educationType == null) { survey.educationType = ""; }
+    if (survey.accommodationType === null) { survey.accommodationType = ""; }
+    if (survey.profession === null) { survey.profession = ""; }
+    if (survey.locationGiven === null) { survey.locationGiven = ""; }
+    if (survey.locationClustered == null) { survey.locationClustered = ""; }
+    if (typeof survey.numResidents !== 'number') { survey.numResidents = 0; }
+    if (typeof survey.numIncomes !== 'number') { survey.numIncomes = 0; }
+    if (typeof survey.numFullIncomes !== 'number') { survey.numFullIncomes = 0; }
+    if (typeof survey.numChildren !== 'number') { survey.numChildren = 0; }
+    if (typeof survey.totalIncome !== 'number') { survey.totalIncome = 0; }
+    if (survey.comments == null) { survey.comments = ""; }
   })
 
   return data;
@@ -164,23 +173,23 @@ type DataKey = keyof Data;
 export function calculateMeanValues(country_arr: string[], filteredSurvey: Survey[]) {
 
   const fiveVar: string[] = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"];
-  let dataForGraph: number[][] = []; 
+  let dataForGraph: number[][] = [];
 
-  for (let fiveVarIndex= 0; fiveVarIndex < fiveVar.length; fiveVarIndex++) {
-    let data: number[] = []; 
+  for (let fiveVarIndex = 0; fiveVarIndex < fiveVar.length; fiveVarIndex++) {
+    let data: number[] = [];
     const prop = fiveVar[fiveVarIndex];
 
     for (let countryIndex = 0; countryIndex < country_arr.length; countryIndex++) {
       const lowerPart = filteredSurvey
-      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); }})
-      .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; }})
-      .length;
-      
+        .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); } })
+        .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } })
+        .length;
+
       const totalResult = filteredSurvey
-      .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); }})
-      .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } else {return 0}})
-      .reduce(function add(sum, rent) { return sum + rent; }, 0) / lowerPart;
-      
+        .filter((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop] && (country_arr[countryIndex] === s.locationClustered || country_arr[countryIndex] === s.country); } })
+        .map((s) => { if (prop && isSurveyKey(prop, s)) { return s[prop]; } else { return 0 } })
+        .reduce(function add(sum, rent) { return sum + rent; }, 0) / lowerPart;
+
       data.push(parseFloat(totalResult.toFixed(2)));
     }
     dataForGraph.push(data);
@@ -188,7 +197,7 @@ export function calculateMeanValues(country_arr: string[], filteredSurvey: Surve
   return dataForGraph;
 }
 
-function isSurveyKey <T>(
+function isSurveyKey<T>(
   prop: string,
   survey: Survey
 ): prop is keyof Omit<T, number | symbol> {
