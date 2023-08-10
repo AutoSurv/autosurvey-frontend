@@ -280,7 +280,7 @@ export async function updateSurvey(
 };
 
 export async function deleteSurvey(
-  id: string | string[] | undefined, 
+  id: string, 
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
 
