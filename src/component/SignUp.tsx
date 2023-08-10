@@ -1,7 +1,8 @@
 import { signUpHandler } from "@/helper/methods";
 import Link from "@mui/material/Link";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { Form, Input, Label, Modal } from "semantic-ui-react";
+import Button from "@mui/material/Button";
 
 type SignUpProps = {
   setErrorMsg: Dispatch<SetStateAction<string>>
@@ -17,9 +18,9 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Link className="login-signup" variant="body2">
+      trigger={<Button className="login-signup" variant="text" size="small" style={{textTransform: 'none'}}>
         {"Don't have an account? Sign Up"}
-      </Link>}>
+      </Button>}>
       <Modal.Header>Sign Up</Modal.Header>
       
       <Modal.Content>
@@ -40,8 +41,8 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
             <Label>Email</Label>
             <Input placeholder="Email" type="email" name="email" />
           </Form.Field>
-          <Button type="submit" color="blue">Sign Up</Button>
-          <Button onClick={(e) => {
+          <Button className="login-signup-confirm" type="submit" variant="contained" >Sign Up</Button>
+          <Button variant="outlined"  onClick={(e) => {
             e.preventDefault();
             setErrorMsg("");
             setOpen(false);

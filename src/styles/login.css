@@ -5,3 +5,7 @@
 .MuiTypography-root.MuiTypography-body2.MuiLink-root.MuiLink-underlineAlways.login-forgotpassword.css-101ca9i-MuiTypography-root-MuiLink-root {
     cursor: pointer;
 }
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary.MuiButton-sizeMedium.MuiButton-containedSizeMedium.login-signup-confirm.css-sghohy-MuiButtonBase-root-MuiButton-root {
+    margin-right: 1%;
+}
