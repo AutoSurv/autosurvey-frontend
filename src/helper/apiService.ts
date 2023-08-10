@@ -214,7 +214,7 @@ export async function addImportedSurvey(
 
     const allSurveyinDB = await getSurveyApi(reqBody.id);
 
-
+    console.log("apiService.addImportedSurvey.allSurveyinDB.status: ", allSurveyinDB.status);
     if (allSurveyinDB.status === 200) {
       //setErrMessage("Survey already saved on database");
       duplicateCounter++;
@@ -283,7 +283,7 @@ export async function deleteSurvey(
   id: string | string[] | undefined, 
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
-   await deleteSurveyApi(id);
+  await deleteSurveyApi(id);
   await getSurveys(setPagination, setSurveys);
 };
 
