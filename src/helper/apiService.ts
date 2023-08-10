@@ -283,6 +283,9 @@ export async function deleteSurvey(
   id: string | string[] | undefined, 
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
+
+
+  console.log("apiService.deleteSurvey.id: ", id)  
   await deleteSurveyApi(id);
   await getSurveys(setPagination, setSurveys);
 };

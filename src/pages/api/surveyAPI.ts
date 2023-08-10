@@ -105,6 +105,7 @@ export async function deleteSurveyApi(
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const token = localStorage.getItem("jwt")
 
+  console.log("sureveyApi.deleteSurveiApi.id: ", id)
   console.log("sureveyApi.deleteSurveiApi.token: ", token)
   console.log("sureveyApi.deleteSurveiApi.autosurveysURL: ", autosurveysURL)
 
