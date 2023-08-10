@@ -7,7 +7,6 @@ import * as XLSX from 'xlsx';
 export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[], setErrorMsg: Dispatch<SetStateAction<string>>) => {
 
   const surveyAsString: string = JSON.stringify(data[0]);
-  console.log(surveyAsString);
   if (surveyAsString === undefined) {
     setErrorMsg("nothing to export");
     return;
