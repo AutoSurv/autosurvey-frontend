@@ -62,6 +62,7 @@ export default function SurveyContent() {
     meanValues = calculateMeanValues(country_arr, organization.surveys);
   } else {
     country_arr = ["world countries and cities"];
+    //meanValues[0][0] = 0;
   }
 
   const options: ApexOptions = {

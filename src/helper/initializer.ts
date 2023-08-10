@@ -1,4 +1,4 @@
-import { Survey, Organization, Pagination } from "@/type/type";
+import { Survey, Organization, Pagination, MeadDataForChart } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",
@@ -40,4 +40,9 @@ export const initPagination: Pagination = {
   pageSize: 100,
   surveys: [],
   totalPages: 1
+}
+
+export const initMeanData: MeadDataForChart = {
+  meanValues: [[0,1,2,3,4,5],[0,0,0,0,0,0]],
+  
 }

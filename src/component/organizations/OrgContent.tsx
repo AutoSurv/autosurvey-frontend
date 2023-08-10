@@ -17,16 +17,19 @@ import Link from "next/link";
 import UserOptions from "../UserOptions";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
+import { initOrg } from "@/helper/initializer";
 
 export default function OrgContent() {
   const router = useRouter();
 
-  const { setSignUpStatus, userNameAuth, setUserNameAuth } =
+  const { setSignUpStatus, userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [organizations, setOrganizations] = useState<Organization[]>([]);
 
   useEffect(() => {
+    setOrganization(initOrg);
+    setFilteredSurveys([]);
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
     getOrganizations(setOrganizations);

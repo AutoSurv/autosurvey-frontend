@@ -165,3 +165,7 @@ export type ReqOptions = {
   },
   body: string
 };
+
+export type MeadDataForChart = {
+  meanValues: number[][]
+}
