@@ -152,7 +152,7 @@ export default function SurveyContent() {
           </Table.Body>          
         </Table>
         <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25, 50, 100]}
             component="div"
             count={filteredSurveys.length}
             rowsPerPage={rowPage}
