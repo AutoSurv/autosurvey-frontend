@@ -209,42 +209,46 @@ export async function addImportedSurvey(
       orgId: orgId,
     };
 
-    if (!reqBody.country || !reqBody.orgId) {
-      setErrMessage('Please fill the form.');
-      return;
-    }
-
-    const allSurveyinDB = await getSurveyApi(reqBody.id);
-
-    console.log("apiService.addImportedSurvey.allSurveyinDB.status: ", allSurveyinDB.status);
-    if (allSurveyinDB.status === 200) {
-       const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
-       const response = await updateSurveyApi(reqBody.id, reqOptions);
-       if (response.status === 202) {
-        updateCounter++;
-       } else {
-        setErrMessage("Survey " + reqBody.id + " not updated due to error: " + response.status);
-        errorCounter++;
-       }       
+    if (!reqBody.orgId) {
+      setErrMessage('Organiztion information is missing on survey: ' + reqBody.id + ". Import skipped");
       continue;
-    } else if (allSurveyinDB.status !== 404) {
-      setErrMessage("Cannot retrieve survey list from database");
-      errorCounter++;
-      return;
+    }
+    
+    if(reqBody.id !== undefined) {
+      const surveyinDB = await getSurveyApi(reqBody.id);
+      if (surveyinDB.status === 200) {
+        const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
+        const response = await updateSurveyApi(reqBody.id, reqOptions);
+        if (response.status === 202) {
+         updateCounter++;
+        } else {
+         setErrMessage("Survey " + reqBody.id + " not updated due to error: " + response.status);
+         errorCounter++;
+        }       
+        continue;
+      } else if (surveyinDB.status !== 404) {
+        setErrMessage("Cannot retrieve survey from database!");
+        errorCounter++;
+        return;
+     }
+     const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
+     await addImportedSurveyApi(reqOptions);
+     importCounter++;
+    } else {
+      const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
+      await addImportedSurveyApi(reqOptions);
+      importCounter++;
     }
 
-    const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
-    await addImportedSurveyApi(reqOptions);
     await getSurveys(setPagination,setSurveys);
     await getOrganization(orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
-    importCounter++;
   }
+
   if (errorCounter == 0) {
     setSuccessMessage("Success! " + importCounter + " survey(s) imported and " + updateCounter + " survey(s) updated");
-  }
-  
+  } 
 
 }
 
