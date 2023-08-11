@@ -98,9 +98,7 @@ export async function updateSurveyApi(
   return response;
 };
 
-export async function deleteSurveyApi(
-  id: string, 
-  ) {
+export async function deleteSurveyApi(id: string) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const token = localStorage.getItem("jwt")
 

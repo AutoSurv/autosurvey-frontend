@@ -300,7 +300,10 @@ export async function deleteSurvey(
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
 
-  await deleteSurveyApi(id);
+  const response = await deleteSurveyApi(id);
+  if (response.status !== 204) {
+    console.log("response.status: ", response.status, " not deleted")
+  }
   await getSurveys(setPagination, setSurveys);
 };
 
