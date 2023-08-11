@@ -104,14 +104,16 @@ export async function deleteSurveyApi(
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const token = localStorage.getItem("jwt")
 
-  await fetch(autosurveysURL, {
+  const response = await fetch(autosurveysURL, {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${token}`
     }
   });
-  const listOfAllSurveys = await getSurveysApi();
-  return listOfAllSurveys;
+  console.log(response.status);
+  if(response.status === 204) 
+  await getSurveysApi();
+  //return listOfAllSurveys;
 };
 
 //userSection

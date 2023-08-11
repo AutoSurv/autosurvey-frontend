@@ -198,9 +198,8 @@ export default function SurveyDetails() {
                   onCancel={() => setOpenConfirm(false)}
                   onConfirm={(e) => {
                     e.preventDefault();
-                    deleteSurvey(survey.id, setPagination, setSurveys);
+                    deleteSurvey(organization.orgId, survey.id, setPagination, setSurveys);
                     setOpenConfirm(false);
-                    window.location.href = "/org/" + orgId;
                   }}
                 /></TableCell>
             </TableRow>

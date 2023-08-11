@@ -295,13 +295,15 @@ export async function updateSurvey(
 
 };
 
-export async function deleteSurvey(
+export async function deleteSurvey(orgId: string,
   id: string, 
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
 
   await deleteSurveyApi(id);
   await getSurveys(setPagination, setSurveys);
+
+  window.location.href = "/org/" + orgId;
 };
 
 //userSection
