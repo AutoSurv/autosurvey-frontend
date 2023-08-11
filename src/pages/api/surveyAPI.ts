@@ -98,9 +98,7 @@ export async function updateSurveyApi(
   return response;
 };
 
-export async function deleteSurveyApi(
-  id: string, 
-  ) {
+export async function deleteSurveyApi(id: string) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const token = localStorage.getItem("jwt")
 
@@ -110,10 +108,9 @@ export async function deleteSurveyApi(
       Authorization: `Bearer ${token}`
     }
   });
-  console.log(response.status);
-  if(response.status === 204) 
+
   await getSurveysApi();
-  //return listOfAllSurveys;
+
 };
 
 //userSection
