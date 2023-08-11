@@ -178,7 +178,9 @@ export async function addImportedSurvey(
   setOrganization: Dispatch<SetStateAction<Organization>>
   ) {
 
-  let duplicateCounter: number = 0;
+  let importCounter: number = 0;
+  let updateCounter: number = 0;
+  let errorCounter: number = 0;
 
   for (let i = 0; i < surveyArr.length; i++) {
     const reqBody: SurveyRequestDto = {
@@ -216,11 +218,18 @@ export async function addImportedSurvey(
 
     console.log("apiService.addImportedSurvey.allSurveyinDB.status: ", allSurveyinDB.status);
     if (allSurveyinDB.status === 200) {
-      //setErrMessage("Survey already saved on database");
-      duplicateCounter++;
+       const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
+       const response = await updateSurveyApi(reqBody.id, reqOptions);
+       if (response.status === 202) {
+        updateCounter++;
+       } else {
+        setErrMessage("Survey " + reqBody.id + " not updated due to error: " + response.status);
+        errorCounter++;
+       }       
       continue;
     } else if (allSurveyinDB.status !== 404) {
       setErrMessage("Cannot retrieve survey list from database");
+      errorCounter++;
       return;
     }
 
@@ -230,14 +239,12 @@ export async function addImportedSurvey(
     await getOrganization(orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
+    importCounter++;
   }
-
-  if (duplicateCounter > 0 ) {
-    setSuccessMessage("Import success! Found " + duplicateCounter + "duplicates");
-    return
+  if (errorCounter == 0) {
+    setSuccessMessage("Success! " + importCounter + " survey(s) imported and " + updateCounter + " survey(s) updated");
   }
-
-  setSuccessMessage("Import success!");
+  
 
 }
 
@@ -273,10 +280,15 @@ export async function updateSurvey(
   };
 
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
-  await updateSurveyApi(id, reqOptions);
-  await getSurvey(id, setSurvey);
-  setOpen(false);
-  setErrMessage('');
+  const response = await updateSurveyApi(id, reqOptions);
+  if (response.status === 202) {
+    await getSurvey(id, setSurvey);
+    setOpen(false);
+    setErrMessage('');
+  } else {
+    setErrMessage("Survey not imported due to error: " + response.status);
+  }
+
 };
 
 export async function deleteSurvey(
