@@ -50,7 +50,6 @@ export async function deleteOrganizationApi(id: string) {
     method: "DELETE",
     headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` }
   });
-  
 };
 
 //Survey section
@@ -100,13 +99,15 @@ export async function updateSurveyApi(
 };
 
 export async function deleteSurveyApi(
-  id: string | string[] | undefined, 
+  id: string, 
   ) {
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const response = await fetch(autosurveysURL, {
+  const token = localStorage.getItem("jwt")
+
+  await fetch(autosurveysURL, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
+      Authorization: `Bearer ${token}`
     }
   });
   const listOfAllSurveys = await getSurveysApi();

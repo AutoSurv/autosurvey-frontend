@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Dropdown, Header, Icon, Menu, Message } from "semantic-ui-react";
 import UserOptions from "./UserOptions";
-import { NextRouter } from "next/router";
 import ImportSurvey from "./surveys/ImportSurvey";
 import { downloadExcel } from "@/helper/methods";
 import { CSVLink } from "react-csv";
