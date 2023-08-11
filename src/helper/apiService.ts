@@ -302,7 +302,7 @@ export async function deleteSurvey(
 
   const response = await deleteSurveyApi(id);
   if (response.status !== 204) {
-    alert("response.status: " + response.status + " not deleted")
+    alert("apiService: response.status " + response.status + " not deleted")
   }
   await getSurveys(setPagination, setSurveys);
 };

@@ -108,6 +108,7 @@ export async function deleteSurveyApi(id: string) {
       Authorization: `Bearer ${token}`
     }
   });
+  alert("surveyApi: apiResponse.status: " + apiResponse.status + " not deleted")
   const listOfAllSurveys = await getSurveysApi();
   return apiResponse;
 };
