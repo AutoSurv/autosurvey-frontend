@@ -4,10 +4,7 @@ import router from "next/router";
 import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
-let jwt: string = "";
-if (typeof window !== "undefined") {
-  jwt = localStorage.getItem("jwt")!;
-}
+
 
 //Organization section
 
@@ -169,7 +166,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 
 export async function addImportedSurvey(
   surveyArr: Survey[],
-  orgId: string,
+  organization: Organization,
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setErrMessage: Dispatch<SetStateAction<string>>,
   setSuccessMessage: Dispatch<SetStateAction<string>>,
@@ -206,7 +203,7 @@ export async function addImportedSurvey(
       numChildren: surveyArr[i].numChildren,
       totalIncome: surveyArr[i].totalIncome,
       comments: surveyArr[i].comments,
-      orgId: orgId,
+      orgId: organization.orgId,
     };
 
     if (!reqBody.orgId) {
@@ -214,9 +211,13 @@ export async function addImportedSurvey(
       continue;
     }
     
+    console.log("reqBody.id: ", reqBody.id);
+
     if(reqBody.id !== undefined) {
-      const surveyinDB = await getSurveyApi(reqBody.id);
-      if (surveyinDB.status === 200) {
+      const listOfSurveys: Survey[] = organization.surveys;
+      const surveyFound = listOfSurveys.find(survey => survey.id == reqBody.id);
+
+      if (surveyFound != undefined) {
         const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
         const response = await updateSurveyApi(reqBody.id, reqOptions);
         if (response.status === 202) {
@@ -226,22 +227,19 @@ export async function addImportedSurvey(
          errorCounter++;
         }       
         continue;
-      } else if (surveyinDB.status !== 404) {
-        setErrMessage("Cannot retrieve survey from database!");
-        errorCounter++;
-        return;
-     }
-     const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
-     await addImportedSurveyApi(reqOptions);
-     importCounter++;
+      } 
+
+      const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
+      await addImportedSurveyApi(reqOptions);
+      importCounter++;
     } else {
       const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
       await addImportedSurveyApi(reqOptions);
       importCounter++;
-    }
+    } 
 
     await getSurveys(setPagination,setSurveys);
-    await getOrganization(orgId, setOrganization)
+    await getOrganization(organization.orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
   }
@@ -341,6 +339,12 @@ export async function authenticateUser(user: LoginUser) {
 }
 
 export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
+  let jwt: string = "";
+  if (typeof window !== "undefined") {
+    console.log("localStorage value: ", localStorage);
+    if (localStorage)
+      jwt = localStorage.getItem("jwt")!;
+  }
   const reqOptions: ReqOptions = {
     method: typeOfRequest,
     headers: {

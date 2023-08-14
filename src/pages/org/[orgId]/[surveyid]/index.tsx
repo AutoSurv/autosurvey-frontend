@@ -2,15 +2,12 @@ import { OrgContext } from "@/helper/context";
 import { deleteSurvey, getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react";
-import { Button, Confirm, Dropdown, Header, Icon, Menu } from "semantic-ui-react";
+import { useContext, useEffect, useMemo, useState } from "react";
+import { Button, Confirm, Header, Icon } from "semantic-ui-react";
 import { Survey, Pagination } from '@/type/type';
-import { CSVLink } from 'react-csv';
 import UpdateSurvey from "@/component/surveys/UpdateSurvey";
-import { downloadExcel } from '@/helper/methods';
 import Link from "next/link";
 import { initPagination } from "@/helper/initializer";
-import UserOptions from "@/component/UserOptions";
 import { NavigationBar } from "@/component/NavigationBar";
 
 
@@ -24,6 +21,8 @@ export default function SurveyDetails() {
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const {setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
+  //useMemo(() => getSurveys(setPagination, setSurveys), [] );
+
   useEffect(() => {
     setFilterCountries([])
     setFilterLocations([])
@@ -32,12 +31,7 @@ export default function SurveyDetails() {
       getSurvey(surveyid, setSurvey);
     }
     getSurveys(setPagination, setSurveys);
-  }, [setSurvey])
-
-  const surveyArray: Survey[] = [survey];
-  const yearsArray: string[] = [survey.year.toString()];
-  const countriesArray: string[] = [survey.country];
-  const locationsArray: string[] = [survey.locationClustered];
+  }, [])
 
   return (
     <div className="specificsurvey-card-container">

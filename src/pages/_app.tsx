@@ -23,6 +23,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [filterCountries, setFilterCountries] = useState<string[]>([]);
   const [filterLocations, setFilterLocations] = useState<string[]>([]);
   const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
+  const [isFilterSet, setIsFilterSet] =useState<boolean>(false);
 
   return (
 
@@ -35,7 +36,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         filterYears, setFilterYears,
         filterCountries, setFilterCountries,
         filterLocations, setFilterLocations,
-        filteredSurveys, setFilteredSurveys
+        filteredSurveys, setFilteredSurveys,
+        isFilterSet, setIsFilterSet
         }}>
       <Component {...pageProps} />
       </OrgContext.Provider>

@@ -31,7 +31,8 @@ export interface OrgContextValue {
     filteredSurveys: Survey[];
     setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>; 
 
-
+    isFilterSet: boolean;
+    setIsFilterSet: Dispatch<SetStateAction<boolean>>; 
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -54,5 +55,7 @@ export const OrgContext = createContext<OrgContextValue> ({
     setFilterLocations: () => {},
     filteredSurveys: [],
     setFilteredSurveys: () => {},
+    isFilterSet: false,
+    setIsFilterSet: () => {},
 
 });

@@ -1,6 +1,7 @@
 import { Survey } from "@/type/type";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import FilterLocation from "./FilterLocation";
+import { OrgContext } from "@/helper/context";
 
 type FilterProps = {
   propSurveys: Survey[];
@@ -11,6 +12,7 @@ type FilterProps = {
 export default function FilterSurveyByLocation( { propSurveys, propSetFilteredSurveys
   //, propSetFilter 
 } : FilterProps) {
+  const { filterYears, setFilterYears } = useContext(OrgContext);
   const [filterLocation, setFilterLocation] = useState<string[]>([]);
   
   useEffect (() => {
@@ -26,6 +28,7 @@ export default function FilterSurveyByLocation( { propSurveys, propSetFilteredSu
           }
         })
       } else {
+        setFilterYears([])
         return survey;
       }
     })

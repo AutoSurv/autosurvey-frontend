@@ -19,7 +19,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
   const router = useRouter();
-  const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys} = useContext(OrgContext);
+  const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
@@ -56,7 +56,7 @@ export default function SurveyContent() {
   }
 
   let meanValues: number[][] = []
-  if (filteredSurveys.length != organization.surveys.length) {
+  if (isFilterSet) {
     meanValues = calculateMeanValues(country_arr, organization.surveys);
   } else {
     country_arr = ["world countries and cities"];
@@ -66,6 +66,7 @@ export default function SurveyContent() {
   const options: ApexOptions = {
     chart: {
       stacked: true,
+      stackType: "100%",
       zoom: {
         enabled: true
       }
@@ -112,7 +113,7 @@ export default function SurveyContent() {
       <section className="surveys-management">
         {
           organization && organization.surveys && organization.surveys.length > 0 ?
-          <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} />
+          <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
           : null
         }            
         <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />

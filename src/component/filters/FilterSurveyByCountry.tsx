@@ -12,8 +12,7 @@ type FilterProps = {
 export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurveys
   //, propSetFilter 
   } : FilterProps) {
-  const { filterCountries, setFilterCountries, setFilterLocations } = useContext(OrgContext);
-
+  const { filterCountries, setFilterYears, setFilterCountries, setFilterLocations } = useContext(OrgContext);
   //const [filterCountries, setFilterCountries] = useState<string[]>([]);
   
   useEffect (() => {
@@ -30,16 +29,14 @@ export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSur
         })
       } else {
         setFilterLocations([]);
+        setFilterYears([])
         return survey;
       }
     })
     )
   }, [propSurveys.length, filterCountries.length])
 
-  return(
-    
-    
-        <FilterCountry propSurveys={propSurveys}  propSetFilteredCountry={setFilterCountries} />
-      
+  return(    
+    <FilterCountry propSurveys={propSurveys}  propSetFilteredCountry={setFilterCountries} />  
   )
 }

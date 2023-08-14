@@ -202,3 +202,12 @@ function isSurveyKey<T>(
 ): prop is keyof Omit<T, number | symbol> {
   return prop in survey;
 }
+
+export function checkIfLocalStorageDef() {
+  let jwt = "";
+  if (typeof window !== 'undefined') {
+    // Perform localStorage action
+    jwt = localStorage.getItem('jwt') as string
+  }
+  return jwt;
+}

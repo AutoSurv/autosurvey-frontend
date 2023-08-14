@@ -45,7 +45,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(dataFromImportedSurvey, organization.orgId, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization)
+    addImportedSurvey(dataFromImportedSurvey, organization, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization)
   }
   
   return (

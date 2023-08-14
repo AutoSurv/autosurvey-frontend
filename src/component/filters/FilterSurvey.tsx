@@ -8,43 +8,46 @@ import FilterSurveyByLocation from "./FilterSurveyByLocation";
 type FilterProps = {
   propSurveys: Survey[];
   propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
+  propSetIsFilterSet: Dispatch<SetStateAction<boolean>>
 }
 
-export default function FilterSurvey( { propSurveys, propSetFilteredSurveys } : FilterProps) {
+export default function FilterSurvey( { propSurveys, propSetFilteredSurveys, propSetIsFilterSet } : FilterProps) {
   const {filterYears, filterCountries, filterLocations} = useContext(OrgContext);
   
-  const [fromYear, setFromYear] = useState<Survey[]>([]);
   const [fromCountry, setFromCountry] = useState<Survey[]>([]);
+  const [fromLocations, setFromLocations] = useState<Survey[]>([]);
   const [filterSurveys, setFilterSurveys] = useState<Survey[]>([]);
 
   useEffect (() => {
-    if (filterYears.length == 0 && filterCountries.length == 0 && filterLocations.length == 0) {
-      setFilterSurveys(propSurveys)
+    if (filterCountries.length == 0 && filterLocations.length == 0 && filterYears.length == 0) {
+      propSetIsFilterSet(false);
+      setFilterSurveys(propSurveys);
     } 
-    if (filterYears.length != 0 && filterCountries.length == 0 && filterLocations.length == 0) {
-      setFilterSurveys(fromYear)
+    if (filterCountries.length != 0 && filterLocations.length == 0 && filterYears.length == 0) {
+      propSetIsFilterSet(true);
+      setFilterSurveys(fromCountry);
     } 
-    if (filterYears.length != 0 && filterCountries.length != 0 && filterLocations.length == 0) {
-      setFilterSurveys(fromCountry)
+    if (filterCountries.length != 0 && filterLocations.length != 0 && filterYears.length == 0) {
+      setFilterSurveys(fromLocations);
     } 
     propSetFilteredSurveys(
       filterSurveys
     )  
-  }, [propSurveys.length, filterSurveys.length, fromYear.length, fromCountry.length, filterLocations.length, filterCountries.length]) 
+  }, [propSurveys.length, filterSurveys.length, fromLocations.length, fromCountry.length, filterLocations.length, filterCountries.length, filterYears.length]) 
 
   return(
     <section >      
-        <FilterSurveyByYear propSurveys={propSurveys} propSetFilteredSurvey={setFromYear} />    
+      <FilterSurveyByCountry propSurveys={propSurveys} propSetFilteredSurveys={setFromCountry} />        
       {
-        filterYears.length > 0 ?
+        filterCountries.length > 0 ?
         <>
           {
             <>
-            <FilterSurveyByCountry propSurveys={fromYear} propSetFilteredSurveys={setFromCountry} />
+            <FilterSurveyByLocation propSurveys={fromCountry} propSetFilteredSurveys={setFromLocations} />
             {
-              filterCountries.length > 0 ?
+              filterLocations.length > 0 ?
               <>
-              <FilterSurveyByLocation propSurveys={fromCountry} propSetFilteredSurveys={setFilterSurveys} />
+                <FilterSurveyByYear propSurveys={fromLocations} propSetFilteredSurvey={setFilterSurveys} />    
               </>
               : null
             }  

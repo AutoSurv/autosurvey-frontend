@@ -1,6 +1,6 @@
 import { addOrganization, getOrganizations } from "@/helper/apiService";
 import { Organization, ROLE } from "@/type/type";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
   Button,
   Form,
@@ -24,7 +24,9 @@ export default function OrgContent() {
   const { userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);  
+
+  //useMemo(() => getOrganizations(setOrganizations), []);
 
   useEffect(() => {
     setOrganization(initOrg);

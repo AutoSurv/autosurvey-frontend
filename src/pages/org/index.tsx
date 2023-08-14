@@ -1,5 +1,5 @@
 
-import {  useContext, useEffect, useState } from "react";
+import {  useContext, useEffect, useMemo, useState } from "react";
 import { getOrganizations } from "../../helper/apiService";
 import { Organization } from "../../type/type";
 import OrgContent from "@/component/organizations/OrgContent";
@@ -7,8 +7,11 @@ import { OrgContext } from "@/helper/context";
 import { initOrg } from "@/helper/initializer";
 
 export default function Orgs() {
-    const {setFilterYears, setFilterCountries, setFilterLocations, setOrganization, organization, survey} = useContext(OrgContext);
+    const {setFilterYears, setFilterCountries, setFilterLocations, setOrganization } = useContext(OrgContext);
     const [organizations, setOrganizations] = useState<Organization[]>([]);
+
+    //useMemo(() => getOrganizations(setOrganizations), [] );
+
     useEffect(() => {
         setOrganization(initOrg);
         setFilterCountries([]);

@@ -1,18 +1,14 @@
+import { checkIfLocalStorageDef } from "@/helper/methods";
 import { FormDataSingUp, LoginUser, ReqOptions } from "../../type/type";
-
-
-let jwt: string = "";
-if (typeof window !== "undefined") {
-  jwt = localStorage.getItem("jwt")!;
-}
 
 //Organization section
 const BASE_ORG_URL = `${process.env.NEXT_PUBLIC_PORT}/api/organizations`;
 
 export async function getOrganizationsApi() {
+  const jwt: string = checkIfLocalStorageDef();
   const apiResponse = await fetch(BASE_ORG_URL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    headers: { Authorization: `Bearer ${jwt}` },
     mode: "cors",
   });
 
@@ -20,11 +16,11 @@ export async function getOrganizationsApi() {
 };
 
 export async function getOrganizationApi(orgid: string | string[]) {
-  
+  const jwt: string = checkIfLocalStorageDef();
   const organizationURL = BASE_ORG_URL + `/${orgid}`;
   const apiResponse = await fetch(organizationURL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    headers: { Authorization: `Bearer ${jwt}` },
     mode: "cors",
   });
 
@@ -45,10 +41,11 @@ export async function updateOrganizationNameApi(id: string, reqOptions: ReqOptio
 };
 
 export async function deleteOrganizationApi(id: string) {
+  const jwt: string = checkIfLocalStorageDef();
   const autosurveysURL = BASE_ORG_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` }
+    headers: { Authorization: `Bearer ${jwt}` }
   });
 };
 
@@ -56,22 +53,22 @@ export async function deleteOrganizationApi(id: string) {
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
 export async function getSurveysApi() {
+  const jwt: string = checkIfLocalStorageDef();
   const apiResponse = await fetch(BASE_SURVEY_URL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    headers: { Authorization: `Bearer ${jwt}` },
     mode: "cors",
   });
 
   return apiResponse;
-
 };
 
 export async function getSurveyApi(surveyId: string | string[] | undefined) {
-
+  const jwt: string = checkIfLocalStorageDef();
   const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    headers: { Authorization: `Bearer ${jwt}` },
     mode: "cors",
   });
   
@@ -99,13 +96,12 @@ export async function updateSurveyApi(
 };
 
 export async function deleteSurveyApi(id: string) {
+  const jwt: string = checkIfLocalStorageDef();
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
-  const token = localStorage.getItem("jwt")
-
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${jwt}`
     }
   });
 
@@ -120,10 +116,11 @@ const NEW_USER_URL = `${BASE_USER_URL}/new`;
 
 
 export async function getUserApi(name: string) {
+  const jwt: string = checkIfLocalStorageDef();
  const userURL = BASE_USER_URL + `/${name}`;
  const apiResponse = await fetch(userURL, {
     cache: 'no-store',
-    headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
+    headers: { Authorization: `Bearer ${jwt}` },
     mode: "cors",
   });
  
