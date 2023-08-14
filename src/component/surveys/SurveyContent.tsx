@@ -137,6 +137,7 @@ export default function SurveyContent() {
             </Table.Row>
             <Table.Row>
               <Table.HeaderCell >Survey ID</Table.HeaderCell>
+              <Table.HeaderCell >Actions</Table.HeaderCell>
               <Table.HeaderCell >Country</Table.HeaderCell>
               <Table.HeaderCell >Year</Table.HeaderCell>
               <Table.HeaderCell >Survey Collector</Table.HeaderCell>

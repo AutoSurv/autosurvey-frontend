@@ -29,10 +29,13 @@ export default function UpdSurvey(props: CreateSurveyProps) {
           >X</Button>
       </Modal.Header>
       <Modal.Content>
-        <Form onSubmit={(e) => {
+        <Form className="surveys-modal-form"
+          onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, orgid);
-        }}>
+            updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, orgid);
+          }}
+          
+        >
         <Form.Field>
           <Label>Country Name</Label>
           <Input placeholder={survey.country} type="text" name="country" pattern="^[a-zA-Z]*$"/>
