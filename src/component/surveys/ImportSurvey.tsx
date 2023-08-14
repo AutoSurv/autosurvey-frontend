@@ -12,11 +12,14 @@ type ImportSurveyProps = {
   setSurveys: Dispatch<SetStateAction<Survey[]>>;
   setErrorMsg: Dispatch<SetStateAction<string>>;
   setSuccessMessage: Dispatch<SetStateAction<string>>;
+  setTotalCounter: Dispatch<SetStateAction<number>>;
+  setProgressCounter: Dispatch<SetStateAction<number>>;
 }
 
 export default function ImportSurvey(props: ImportSurveyProps) {
-  const { organization, setOrganization, setSurveys, setErrorMsg, setSuccessMessage } = props;
+  const { organization, setOrganization, setSurveys, setErrorMsg, setSuccessMessage, setTotalCounter, setProgressCounter } = props;
   const [pagination, setPagination] = useState<Pagination>(initPagination);
+  
 
   const [open, setOpen] = useState(false);
   const [dataFromImportedSurvey, setDataFromImportedSurvey] = useState<Survey[]>([]);
@@ -39,13 +42,14 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         if (typeof valuetedData[0] === "object"){
           const surveyArr: Survey[] = JSON.parse(JSON.stringify(json));
           setDataFromImportedSurvey(surveyArr);
+          setTotalCounter(surveyArr.length);
         }
       };
     }  
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(dataFromImportedSurvey, organization, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization)
+    addImportedSurvey(dataFromImportedSurvey, organization, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization, setProgressCounter)
   }
   
   return (

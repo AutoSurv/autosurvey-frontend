@@ -1,7 +1,7 @@
 import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Header, Icon, Label, Table } from "semantic-ui-react";
+import { Header, Icon, Label, Progress, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import { calculateMeanValues } from '@/helper/methods';
@@ -66,7 +66,7 @@ export default function SurveyContent() {
   const options: ApexOptions = {
     chart: {
       stacked: true,
-      stackType: "100%",
+      //stackType: "100%",
       zoom: {
         enabled: true
       }
@@ -107,7 +107,7 @@ export default function SurveyContent() {
           <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/org">AutoSurvey</Link></Header.Content>
         </Header>
       </div>
-
+      
       <NavigationBar pathname={router.pathname} />      
 
       <section className="surveys-management">

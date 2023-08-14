@@ -25,13 +25,13 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
 };
 
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
-  
+
   const apiResponse = await getOrganizationApi(orgid);
 
   if (apiResponse.status !== 200) {
     localStorage.clear();
     router.push("/");
-  }   
+  }
 
   const data: Organization = await apiResponse.json();
   setOrganization(data);
@@ -172,8 +172,9 @@ export async function addImportedSurvey(
   setSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
-  setOrganization: Dispatch<SetStateAction<Organization>>
-  ) {
+  setOrganization: Dispatch<SetStateAction<Organization>>,
+  setProgressCounter: Dispatch<SetStateAction<number>>
+) {
 
   let importCounter: number = 0;
   let updateCounter: number = 0;
@@ -210,10 +211,8 @@ export async function addImportedSurvey(
       setErrMessage('Organiztion information is missing on survey: ' + reqBody.id + ". Import skipped");
       continue;
     }
-    
-    console.log("reqBody.id: ", reqBody.id);
 
-    if(reqBody.id !== undefined) {
+    if (reqBody.id !== undefined) {
       const listOfSurveys: Survey[] = organization.surveys;
       const surveyFound = listOfSurveys.find(survey => survey.id == reqBody.id);
 
@@ -221,37 +220,42 @@ export async function addImportedSurvey(
         const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
         const response = await updateSurveyApi(reqBody.id, reqOptions);
         if (response.status === 202) {
-         updateCounter++;
+          updateCounter++;
+          setProgressCounter(updateCounter);
         } else {
-         setErrMessage("Survey " + reqBody.id + " not updated due to error: " + response.status);
-         errorCounter++;
-        }       
+          setErrMessage("Survey " + reqBody.id + " not updated due to error: " + response.status);
+          errorCounter++;
+        }
         continue;
-      } 
+      }
 
       const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
       await addImportedSurveyApi(reqOptions);
       importCounter++;
+      setProgressCounter(updateCounter + importCounter);
     } else {
       const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
       await addImportedSurveyApi(reqOptions);
       importCounter++;
-    } 
+      setProgressCounter(updateCounter + importCounter);
+    }
 
-    await getSurveys(setPagination,setSurveys);
+    await getSurveys(setPagination, setSurveys);
     await getOrganization(organization.orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
   }
 
   if (errorCounter == 0) {
-    setSuccessMessage("Success! " + importCounter + " survey(s) imported and " + updateCounter + " survey(s) updated");
-  } 
+    setSuccessMessage("Success! " + importCounter + " survey(s) imported and "
+     + updateCounter + " survey(s) updated out of " + (importCounter+updateCounter) + " survey(s)");
+    setProgressCounter(importCounter+updateCounter);
+  }
 
 }
 
 export async function updateSurvey(
-  id: string | string[] | undefined, 
+  id: string | string[] | undefined,
   event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
   setErrMessage: Dispatch<SetStateAction<string>>, orgid: string | string[] | undefined) {
@@ -294,7 +298,7 @@ export async function updateSurvey(
 };
 
 export async function deleteSurvey(orgId: string,
-  id: string, 
+  id: string,
   setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
 
@@ -305,8 +309,8 @@ export async function deleteSurvey(orgId: string,
 };
 
 //userSection
-export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>> ) {
- const apiResponse = await getUserApi(name);
+export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>>) {
+  const apiResponse = await getUserApi(name);
   if (apiResponse.status === 200) {
 
     const data: User = await apiResponse.json();
@@ -341,8 +345,7 @@ export async function authenticateUser(user: LoginUser) {
 export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
   let jwt: string = "";
   if (typeof window !== "undefined") {
-    console.log("localStorage value: ", localStorage);
-    if (localStorage)
+      if (localStorage)
       jwt = localStorage.getItem("jwt")!;
   }
   const reqOptions: ReqOptions = {

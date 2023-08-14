@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Dropdown, Header, Icon, Menu, Message } from "semantic-ui-react";
+import { Dropdown, Menu, Message, Progress } from "semantic-ui-react";
 import UserOptions from "./UserOptions";
 import ImportSurvey from "./surveys/ImportSurvey";
 import { downloadExcel } from "@/helper/methods";
@@ -22,6 +22,9 @@ export function NavigationBar({ pathname }: HeaderProps) {
   const [errorMsg, setErrorMsg] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const [totalCounter, setTotalCounter] = useState(0);
+  const [progressCounter, setProgressCounter] = useState(0);
+
   const surveyArray: Survey[] = [survey];
   const yearsArray: string[] = [survey.year.toString()];
   const countriesArray: string[] = [survey.country];
@@ -34,6 +37,9 @@ export function NavigationBar({ pathname }: HeaderProps) {
 
   return (
     <>
+      {progressCounter > 0 && progressCounter < totalCounter  ? 
+      <Progress value={progressCounter} total={totalCounter} progress='ratio' indicating /> : null}
+
       <Message visible={errorMsg.length > 0} hidden={errorMsg.length === 0}
         onDismiss={handleDismiss} negative compact>
         <p>{errorMsg}</p>
@@ -58,11 +64,13 @@ export function NavigationBar({ pathname }: HeaderProps) {
               <Dropdown className="exp-imp-items" text='Export / Import'>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <ImportSurvey organization={organization} 
-                                  setOrganization={setOrganization} 
-                                  setSurveys={setSurveys} 
-                                  setErrorMsg={setErrorMsg} 
-                                  setSuccessMessage={setSuccessMessage}
+                    <ImportSurvey organization={organization}
+                      setOrganization={setOrganization}
+                      setSurveys={setSurveys}
+                      setErrorMsg={setErrorMsg}
+                      setSuccessMessage={setSuccessMessage}
+                      setTotalCounter={setTotalCounter}
+                      setProgressCounter={setProgressCounter}
                     />
                   </Dropdown.Item>
                   <Dropdown.Item>
