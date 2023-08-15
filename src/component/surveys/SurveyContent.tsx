@@ -148,7 +148,7 @@ export default function SurveyContent() {
               //datas.surveys.sort()
               filteredSurveys.sort((a, b) => {
                 if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
-                  return <SurveyTable key={index} organization={organization} survey={matchingSurvey} />
+                  return <SurveyTable key={index} propOrganization={organization} propSurvey={matchingSurvey} />
               })
             }
           </Table.Body>          

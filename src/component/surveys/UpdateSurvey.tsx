@@ -3,13 +3,13 @@ import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
-type CreateSurveyProps = {
+type UpdateSurveyProps = {
   survey: Survey;
   orgid: string | string[] | undefined;
   setSurvey: Dispatch<SetStateAction<Survey>>;
 }
 
-export default function UpdSurvey(props: CreateSurveyProps) {
+export default function UpdSurvey(props: UpdateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
@@ -20,7 +20,9 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<Button className="surveys-modal-btn" color="blue" basic>Edit Survey</Button>}>
+      trigger={
+        <Button className="surveys-modal-btn" color="blue" basic>Edit Survey</Button>
+      }>
       <Modal.Header>Edit Survey
         <Button onClick={(e) => {
             e.preventDefault();

@@ -48,6 +48,27 @@
 
 }
 
-.ui.for.surveys-modal-form {
+.excelStyle {
+    overflow-x: scroll;
+}
+
+.flex-or-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.excelElement {
+    display: flex;
+    flex-direction: column;  
     
+}
+
+.excelElement-label {
+    height: 50%;
+    white-space: nowrap
+}
+
+.excelElement-input {
+    height: 50%
 }
