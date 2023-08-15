@@ -1,7 +1,7 @@
-import { getSurveys } from "@/helper/apiService";
+import { getOrganization, getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Header, Icon, Label, Progress, Table } from "semantic-ui-react";
+import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import { calculateMeanValues } from '@/helper/methods';
@@ -133,9 +133,10 @@ export default function SurveyContent() {
         <Table celled striped color="violet">
           <Table.Header>
             <Table.Row>
-              <Table.HeaderCell colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
+              <Table.HeaderCell colSpan='5'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
             </Table.Row>
             <Table.Row>
+            <Table.HeaderCell >Edit</Table.HeaderCell>
               <Table.HeaderCell >Survey ID</Table.HeaderCell>
               <Table.HeaderCell >Country</Table.HeaderCell>
               <Table.HeaderCell >Year</Table.HeaderCell>
@@ -162,6 +163,7 @@ export default function SurveyContent() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
       </div>
+
     </div> 
   ) 
 }    
