@@ -3,7 +3,7 @@ import { OrgContext } from "@/helper/context";
 import { Survey } from "@/type/type";
 import router from "next/router";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
-import { Button, Form, Input, Label, Modal, Table } from "semantic-ui-react";
+import { Button, Form, Icon, Input, Label, Modal, Table } from "semantic-ui-react";
 
 type UpdateSurveyProps = {
   propSurvey: Survey;
@@ -14,7 +14,6 @@ type UpdateSurveyProps = {
 export default function UpdSurvey({ propOrgid, propSurvey, propSetSurvey }: UpdateSurveyProps) {
   const [open, setOpen] = useState(false);
   const { setOrganization } = useContext(OrgContext);
-
   const [errMessage, setErrMessage] = useState<string>("");
 
   return(
@@ -23,8 +22,8 @@ export default function UpdSurvey({ propOrgid, propSurvey, propSetSurvey }: Upda
       onOpen={() => setOpen(true)}
       open={open}
       size="fullscreen"
-      trigger={<Button className="surveys-modal-btn" color="blue" basic>Edit Survey</Button>}>
-      <Modal.Header>Edit Survey
+      trigger={<Icon className="edit-icon" name="edit outline" />}>
+      <Modal.Header>Edit Survey        
         <Button onClick={(e) => {
             e.preventDefault();
             setOpen(false);
@@ -183,7 +182,6 @@ export default function UpdSurvey({ propOrgid, propSurvey, propSetSurvey }: Upda
 */
         }
         <></>
-
         <div className="flex-or-grid">
           <div className="excelElement">
             <Label className="excelElement-label">Country Name</Label>

@@ -130,14 +130,14 @@ export default function SurveyContent() {
       </section>
 
       <div className="surveys-surveycard-box">
-        <Table celled striped color="violet">
-          <Table.Header>
+        <Table celled striped color="violet" >
+          <Table.Header >
             <Table.Row>
-              <Table.HeaderCell colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
+              <Table.HeaderCell textAlign="left" colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
             </Table.Row>
             <Table.Row>
-              <Table.HeaderCell >Survey ID</Table.HeaderCell>
               <Table.HeaderCell >Actions</Table.HeaderCell>
+              <Table.HeaderCell >Survey ID</Table.HeaderCell>
               <Table.HeaderCell >Country</Table.HeaderCell>
               <Table.HeaderCell >Year</Table.HeaderCell>
               <Table.HeaderCell >Survey Collector</Table.HeaderCell>

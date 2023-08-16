@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
 import { useContext, useEffect, useState } from 'react';
 import { OrgContext } from '@/helper/context';
-import UpdSurveyAsExcel from './UpdateSurveyAsExcel';
+import UpdSurveyAsExcel from './UpdateSurveyRows';
 import { initPagination } from "@/helper/initializer";
 import DelSurvey from './DeleteSurvey';
 
@@ -17,6 +17,15 @@ export default function SurveyRecord({propOrganization, propSurvey}: SurveyCardP
     const { survey, setSurvey } = useContext(OrgContext);
     const [actualSurvey, setActualSurevey] = useState(propSurvey)
     const [pagination, setPagination] = useState(initPagination);  
+    const [isHovering, setIsHovering] = useState(false);
+
+    const handleMouseOver = () => {
+      setIsHovering(true);
+    };
+  
+    const handleMouseOut = () => {
+      setIsHovering(false);
+    };
 
     useEffect(() => {
       if (survey.id === propSurvey.id) {        
@@ -25,13 +34,19 @@ export default function SurveyRecord({propOrganization, propSurvey}: SurveyCardP
     }, [survey] )
 
     return (        
-        <Table.Row >
+        <Table.Row 
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+        >
+          <Table.Cell collapsing>
+            {
+              isHovering && (
+                <UpdSurveyAsExcel propSurvey={actualSurvey} propOrgid={propOrganization.orgId} propSetSurvey={setSurvey} />
+              )
+            }
+            </Table.Cell>
             <Table.Cell >
               <Link className='survey-link' href={"/org/" + propOrganization.orgId + "/" + actualSurvey.id}>{actualSurvey.id} </Link>
-            </Table.Cell>
-            <Table.Cell collapsing>
-                  <UpdSurveyAsExcel propSurvey={actualSurvey} propOrgid={propOrganization.orgId} propSetSurvey={setSurvey} />
-                  <DelSurvey propOrgid={survey.orgId} propSurvey={survey} propSetPagination={setPagination}/>
             </Table.Cell>
             <Table.Cell >
               <Link className='survey-link' href={"/org/" + propOrganization.orgId + "/" + actualSurvey.id}>{actualSurvey.country}</Link>

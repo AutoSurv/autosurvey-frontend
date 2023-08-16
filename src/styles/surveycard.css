@@ -52,6 +52,9 @@
     overflow-x: scroll;
 }
 
+.edit-icon:hover {
+    cursor: pointer;
+}
 .flex-or-grid {
     display: flex;
     flex-direction: row;
