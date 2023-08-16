@@ -58,39 +58,10 @@ export default function SurveyRecord(props: SurveyCardProp) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                            {/*  <Typography variant="h6" gutterBottom component="div">
-                                Survey Details
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>Country</TableCell>
-                                        <TableCell>Year</TableCell>
-                                        <TableCell align="right">Location Clustered</TableCell>
-                                        <TableCell align="right">Location Given</TableCell>
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    <Form>
-                                        <TableRow>
-                                            <Form.Field>
-                                            <TableCell component="th" scope="row">
-                                            <Input placeholder= {props.survey.country} type="text" name="country" pattern="^[a-zA-Z]*$"/>  {props.survey.country}
-                                            </TableCell>
-                                            </Form.Field>
-                                            <TableCell>{props.survey.year}</TableCell>
-                                            <TableCell align="right">{props.survey.locationClustered}</TableCell>
-                                            <TableCell align="right">
-                                                {props.survey.locationGiven}
-                                            </TableCell>
-                                        </TableRow>
-                                    </Form>
-                                </TableBody>
-                            </Table> */}
+                        
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
                                 updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.orgId);
-                                //getOrganization(organization.orgId, setOrganization);
                             }} >
                                 <Form.Group className="surveys-form-edit" >
                                     <Form.Field className="surveys-form-edit-field">
