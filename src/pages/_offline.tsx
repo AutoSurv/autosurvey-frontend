@@ -1,32 +1,76 @@
-import { initSurvey } from '@/helper/initializer';
 import { Survey } from '@/type/type';
 import Head from 'next/head'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react';
 import { Button, Form, Input, Label, Modal } from 'semantic-ui-react';
 import * as XLSX from 'xlsx';
 
 export default function Fallback() {
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
-    const [offlineSurvey, setOfflineSurvey] = useState<Survey[]>([]);
-    const [actualSurvey, setActualSurevey] = useState<Survey[]>([]);
+    let offlineSurveys: Survey[] = [];
 
-    const downloadExcel = (setErrorMsg: Dispatch<SetStateAction<string>>) => {  
-        if(actualSurvey[0]) {
-            console.log("I am here", actualSurvey);
-            const surveyAsString: string = JSON.stringify(actualSurvey[0]);
-            console.log("I am here2", surveyAsString);
+    const saveOfflineSurvey = (e: FormEvent<HTMLFormElement>) => {
+        const actualSurvey: Survey = {
+            country: e.currentTarget.country.value,
+            year: e.currentTarget.year.value,
+            rent: e.currentTarget.rent.value,
+            utilities: e.currentTarget.utilities.value,
+            food: e.currentTarget.food.value,
+            basicItems: e.currentTarget.basicItems.value,
+            transportation: e.currentTarget.transportation.value,
+            educationTotal: e.currentTarget.educationTotal.value,
+            educationSupplies: e.currentTarget.educationSupplies.value,
+            educationFee: e.currentTarget.educationFee.value,
+            educationType: e.currentTarget.educationType.value,
+            accommodationType: e.currentTarget.accommodationType.value,
+            profession: e.currentTarget.profession.value,
+            locationGiven: e.currentTarget.locationGiven.value,
+            locationClustered: e.currentTarget.locationClustered.value,
+            numResidents: e.currentTarget.numResidents.value,
+            numIncomes: e.currentTarget.numIncomes.value,
+            numFullIncomes: e.currentTarget.numFullIncomes.value,
+            numChildren: e.currentTarget.numChildren.value,
+            totalIncome: e.currentTarget.totalIncome.value,
+            comments: e.currentTarget.comments.value,
+            id: "",
+            orgId: "649ae1e43d45417464a41fd3",
+            orgName: "MSF"
+        };
+
+
+        if (window.localStorage.getItem("offlineSurvey") === undefined) {
+            offlineSurveys.push(actualSurvey);
+            console.log("offlineSurvey: ", offlineSurveys);
+            window.localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
+            offlineSurveys = [];
+        } else {
+            let storedSurveys = window.localStorage.getItem("offlineSurvey");
+            offlineSurveys.push(JSON.parse(storedSurveys!));
+            offlineSurveys.push(actualSurvey);
+            console.log("after push:",offlineSurveys);
+            window.localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
+            offlineSurveys = [];
+        }
+
+
+    }
+
+    const downloadExcel = (setErrorMsg: Dispatch<SetStateAction<string>>) => {
+        let storedSurveys = window.localStorage.getItem("offlineSurvey");
+        offlineSurveys.push(JSON.parse(storedSurveys!));
+        console.log(offlineSurveys);
+        if (offlineSurveys[0]) {
+            const surveyAsString: string = JSON.stringify(offlineSurveys[0]);
             if (surveyAsString === undefined) {
                 setErrorMsg("nothing to export");
                 return;
             }
             const survey: Survey = JSON.parse(surveyAsString);
-            console.log("I am here3", survey);
-            const worksheet = XLSX.utils.json_to_sheet(actualSurvey);
+            const worksheet = XLSX.utils.json_to_sheet(offlineSurveys);
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    
-            if (actualSurvey) {
+
+            if (offlineSurveys) {
                 XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
             } else {
                 setErrorMsg("nothing to export");
@@ -34,19 +78,7 @@ export default function Fallback() {
             };
             setErrorMsg("");
         }
-
-        return console.log('sorry nothing');
-   
     };
-
-    useEffect(() => {
-
-        if (offlineSurvey) {        
-            setActualSurevey(offlineSurvey);
-          }      
-             
-      }, [offlineSurvey] )
-
 
     return (
         <>
@@ -70,22 +102,12 @@ export default function Fallback() {
                 <Modal.Content>
                     <Form onSubmit={(e) => {
                         e.preventDefault();
-                        console.log(e.currentTarget.country.value);
-                        downloadExcel(setErrMessage);
-                        console.log(offlineSurvey);
+                        saveOfflineSurvey(e);
                         setOpen(false);
                     }}>
                         <Form.Field>
                             <Label>Organization</Label>
                             <Input placeholder="Name your oranization" type="text" name="orgName" pattern="^[a-zA-Z]*$" />
-                        </Form.Field>
-                        <Form.Field>
-                            <Label>Organization ID</Label>
-                            <Input placeholder="Organization ID" type="text" name="orgId" />
-                        </Form.Field>
-                        <Form.Field>
-                            <Label>Survey ID</Label>
-                            <Input placeholder="Leave it empty" type="text" name="id" />
                         </Form.Field>
                         <Form.Field>
                             <Label>Country Name</Label>
@@ -172,17 +194,22 @@ export default function Fallback() {
                             <Input placeholder="Comments" type="text" name="comments" pattern="^[a-zA-Z]*$" />
                         </Form.Field>
 
-                        <Button type="submit" color="green">Add Survey</Button>
+                        <Button type="submit" color="green">Save Survey</Button>
                         <Button onClick={(e) => {
                             e.preventDefault();
-                            console.log("I am here")
                             setOpen(false);
                         }} color="orange"
                         >Cancel</Button>
                     </Form>
                 </Modal.Content>
-
             </Modal>
+            <Button onClick={(e) => {
+                e.preventDefault();
+                downloadExcel(setErrMessage);
+                setOpen(false);
+            }}>
+                Export Survey(s)
+            </Button>
         </>
     )
 }
