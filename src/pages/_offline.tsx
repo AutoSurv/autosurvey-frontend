@@ -37,18 +37,14 @@ export default function Fallback() {
             orgName: "MSF"
         };
 
-
-        if (window.localStorage.getItem("offlineSurvey") === undefined) {
-            offlineSurveys.push(actualSurvey);
-            console.log("offlineSurvey: ", offlineSurveys);
-            window.localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
+        if (!localStorage.getItem("offlineSurvey")) {
+            offlineSurveys.unshift(actualSurvey);
+            localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
             offlineSurveys = [];
         } else {
-            let storedSurveys = window.localStorage.getItem("offlineSurvey");
-            offlineSurveys.push(JSON.parse(storedSurveys!));
+            offlineSurveys = JSON.parse(window.localStorage.getItem("offlineSurvey")!);
             offlineSurveys.push(actualSurvey);
-            console.log("after push:",offlineSurveys);
-            window.localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
+            localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
             offlineSurveys = [];
         }
 
@@ -56,28 +52,26 @@ export default function Fallback() {
     }
 
     const downloadExcel = (setErrorMsg: Dispatch<SetStateAction<string>>) => {
-        let storedSurveys = window.localStorage.getItem("offlineSurvey");
-        offlineSurveys.push(JSON.parse(storedSurveys!));
-        console.log(offlineSurveys);
-        if (offlineSurveys[0]) {
-            const surveyAsString: string = JSON.stringify(offlineSurveys[0]);
-            if (surveyAsString === undefined) {
-                setErrorMsg("nothing to export");
-                return;
-            }
-            const survey: Survey = JSON.parse(surveyAsString);
-            const worksheet = XLSX.utils.json_to_sheet(offlineSurveys);
-            const workbook = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
-            if (offlineSurveys) {
-                XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
-            } else {
-                setErrorMsg("nothing to export");
-                return;
-            };
-            setErrorMsg("");
+        offlineSurveys = JSON.parse(window.localStorage.getItem("offlineSurvey")!);
+        const surveyAsString: string = JSON.stringify(offlineSurveys[0]);
+        if (surveyAsString === undefined) {
+            setErrorMsg("nothing to export");
+            return;
         }
+        const survey: Survey = JSON.parse(surveyAsString);
+        const worksheet = XLSX.utils.json_to_sheet(offlineSurveys);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+        if (offlineSurveys) {
+            XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
+            window.localStorage.clear();
+        } else {
+            setErrorMsg("nothing to export");
+            return;
+        };
+        setErrorMsg("");
+
     };
 
     return (
