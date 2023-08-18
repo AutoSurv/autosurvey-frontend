@@ -42,13 +42,13 @@ export default function SurveyRecord(props: SurveyCardProp) {
                     </IconButton>
                 </TableCell>
                 <TableCell >
-                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + survey.id}>{actualSurvey.id}</Link>
+                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + actualSurvey.id}>{actualSurvey.id}</Link>
                 </TableCell>
                 <TableCell >
-                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + survey.id}>{actualSurvey.country}</Link>
+                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + actualSurvey.id}>{actualSurvey.country}</Link>
                 </TableCell>
                 <TableCell >
-                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + survey.id}>{actualSurvey.year}</Link>
+                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + actualSurvey.id}>{actualSurvey.year}</Link>
                 </TableCell>
                 <TableCell >
                     {localStorage.getItem("username")}

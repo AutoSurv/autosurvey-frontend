@@ -2,10 +2,9 @@ import { Survey } from '@/type/type';
 import Head from 'next/head'
 import Link from 'next/link';
 import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
-import { Button, Form, Header, Icon, Input, Label, Modal, Table, TableBody, TableCell, TableRow } from 'semantic-ui-react';
+import { Button, Form, Header, Icon, Input, Label, List, Modal, Table, TableBody, TableCell, TableRow } from 'semantic-ui-react';
 import SignalWifiConnectedNoInternet4Icon from '@mui/icons-material/SignalWifiConnectedNoInternet4';
 import * as XLSX from 'xlsx';
-import { pink } from '@mui/material/colors';
 import { TableHead } from '@mui/material';
 
 export default function Fallback() {
@@ -79,6 +78,7 @@ export default function Fallback() {
 
         if (offlineSurveys) {
             XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
+            setSurveyCounter("0");
             window.localStorage.clear();
         } else {
             setErrorMsg("nothing to export");
@@ -95,12 +95,13 @@ export default function Fallback() {
             </Head>
             <div className="home-header-container">
                 <Header className="home-header" as='h1' icon textAlign='center' color='blue'>
-                    <Header.Content><Link href="/org"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/">AutoSurvey</Link></Header.Content>
+                    <Header.Content><Link href="/"><Icon name='clipboard' className="home-header-icon" /></Link><Link className="home-header-autosurvey" href="/">AutoSurvey</Link></Header.Content>
                 </Header>
             </div>
 
             <section className="offline-project">
-                <h1 className="offline-project-title">Offline mode <SignalWifiConnectedNoInternet4Icon /></h1>
+                <h1 className="offline-project-title">Offline mode <SignalWifiConnectedNoInternet4Icon fontSize='large' /></h1>
+                <Button className='offline-online-btn' color='blue'><Link href='/' style={{color : 'white'}}><Icon name='angle left' />Back to Online Mode</Link></Button>       
                 <section className="offline-project-table-section">
                     <Table className="offline-table">
                         <TableHead>
@@ -267,6 +268,20 @@ export default function Fallback() {
                     </Table>
                 </section>
             </section>
+            <footer className='home-footer'>
+            <List horizontal>
+              <List.Item>
+                <List.Content>
+                  <List.Header>Simon.H</List.Header>
+                </List.Content>
+              </List.Item>
+              <List.Item>
+                <List.Content>
+                  <List.Header>Marco.D</List.Header>
+                </List.Content>
+              </List.Item>
+            </List>
+          </footer>
         </>
     )
 }
