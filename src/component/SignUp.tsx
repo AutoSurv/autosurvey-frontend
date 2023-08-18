@@ -38,7 +38,7 @@ export function SignUp({setErrorMsg, setSignupSuccessMessage} : SignUpProps) {
             <Input placeholder="Password" type="password" name="password" />
           </Form.Field>
           <Form.Field>
-            <Label>Email</Label>
+            <Label>Email (use the organization email)</Label>
             <Input placeholder="Email" type="email" name="email" />
           </Form.Field>
           <Button className="login-signup-confirm" type="submit" variant="contained" >Sign Up</Button>
