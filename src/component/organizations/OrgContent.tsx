@@ -26,6 +26,7 @@ export default function OrgContent() {
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [organizations, setOrganizations] = useState<Organization[]>([]);  
+  let listOrg: Organization[];
 
   //useMemo(() => getOrganizations(setOrganizations), []);
 
@@ -119,12 +120,18 @@ export default function OrgContent() {
       ) : null}
       <div className="orgs-orgcard-box">
         {organizations.filter(organization => {
-          if (localStorage.getItem("role") !== "ROLE_ADMIN") {
+          if (localStorage.getItem("role") === "ROLE_ADMIN") {
+            return organization;
+          } else if (localStorage.getItem("role") === "ROLE_MANAGER") {
             return organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()
           } else {
-            return organization;
-          }           
-        })
+            if (organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()) {
+              return organization;
+            } else {
+              console.log("user no org")
+            }
+          }   
+        })        
         .map((organization) => {
           return (
             <OrgCard
@@ -133,10 +140,10 @@ export default function OrgContent() {
               setOrganizations={setOrganizations}
             />
           );
-        })
+        }) 
         }
-
         {
+
         }
       </div>
     </div>
