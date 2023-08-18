@@ -127,9 +127,7 @@ export default function OrgContent() {
           } else {
             if (organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()) {
               return organization;
-            } else {
-              console.log("user no org")
-            }
+            } 
           }   
         })        
         .map((organization) => {
@@ -140,10 +138,7 @@ export default function OrgContent() {
               setOrganizations={setOrganizations}
             />
           );
-        }) 
-        }
-        {
-
+        })
         }
       </div>
     </div>

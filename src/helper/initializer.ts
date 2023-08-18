@@ -6,6 +6,12 @@ export const initOrg: Organization = {
   surveys: []
 }
 
+export const notAnOrg: Organization = {
+  orgId: "0",
+  orgName: "ORGANIZATION NOT AVAILABLE",
+  surveys: []
+}
+
 export const initSurvey: Survey = {
   country: "",
   year: 0,
