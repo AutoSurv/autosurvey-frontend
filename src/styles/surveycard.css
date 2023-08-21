@@ -47,16 +47,31 @@
     justify-content:flex-end;
 
 }
-.ui.form.surveys-form {
-  
-}
-.fields.surveys-form-edit {
-    display: flex;
-    flex-wrap: wrap;
-    min-width: 500px;
-    justify-content: space-between;
+
+.excelStyle {
+    overflow-x: scroll;
 }
 
-.field.surveys-form-edit-field {
-    width:30%;
+.edit-icon:hover {
+    cursor: pointer;
+}
+.flex-or-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.excelElement {
+    display: flex;
+    flex-direction: column;  
+    
+}
+
+.excelElement-label {
+    height: 50%;
+    white-space: nowrap
+}
+
+.excelElement-input {
+    height: 50%
 }

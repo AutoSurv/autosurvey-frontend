@@ -1,14 +1,15 @@
 import { OrgContext } from "@/helper/context";
-import { deleteSurvey, getSurvey, getSurveys } from "@/helper/apiService";
+import { getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect, useMemo, useState } from "react";
-import { Button, Confirm, Header, Icon } from "semantic-ui-react";
-import { Survey, Pagination } from '@/type/type';
+import { useContext, useEffect, useState } from "react";
+import { Header, Icon } from "semantic-ui-react";
+import { Pagination } from '@/type/type';
 import UpdateSurvey from "@/component/surveys/UpdateSurvey";
 import Link from "next/link";
 import { initPagination } from "@/helper/initializer";
 import { NavigationBar } from "@/component/NavigationBar";
+import DelSurvey from "@/component/surveys/DeleteSurvey";
 
 
 export default function SurveyDetails() {
@@ -16,10 +17,8 @@ export default function SurveyDetails() {
   const router = useRouter();
   const { orgId, surveyid } = router.query;
 
-  const { organization, survey, setSurvey, setSurveys } = useContext(OrgContext);
-  const [openConfirm, setOpenConfirm] = useState(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
-  const {setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
+  const { survey, setSurvey, setSurveys, setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
   //useMemo(() => getSurveys(setPagination, setSurveys), [] );
 
@@ -183,19 +182,9 @@ export default function SurveyDetails() {
               <TableCell component="th" scope="row" align="center">
                 <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey} />
               </TableCell>
-              <TableCell align="center"><Button onClick={() => {
-                setOpenConfirm(true);
-              }} color="orange" basic>Delete Survey</Button><Confirm
-                  open={openConfirm}
-                  header='Remove your survey'
-                  content='Are you sure you want to remove your survey?'
-                  onCancel={() => setOpenConfirm(false)}
-                  onConfirm={(e) => {
-                    e.preventDefault();
-                    deleteSurvey(organization.orgId, survey.id, setPagination, setSurveys);
-                    setOpenConfirm(false);
-                  }}
-                /></TableCell>
+              <TableCell align="center">
+                <DelSurvey propOrgid={survey.orgId} propSurvey={survey} propSetPagination={setPagination}/>
+                </TableCell>
             </TableRow>
 
           </TableBody>

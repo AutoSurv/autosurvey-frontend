@@ -130,13 +130,13 @@ export default function SurveyContent() {
       </section>
 
       <div className="surveys-surveycard-box">
-        <Table celled striped color="violet">
-          <Table.Header>
+        <Table celled striped color="violet" >
+          <Table.Header >
             <Table.Row>
-              <Table.HeaderCell colSpan='5'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
+              <Table.HeaderCell textAlign="left" colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
             </Table.Row>
             <Table.Row>
-            <Table.HeaderCell >Edit</Table.HeaderCell>
+              <Table.HeaderCell >Actions</Table.HeaderCell>
               <Table.HeaderCell >Survey ID</Table.HeaderCell>
               <Table.HeaderCell >Country</Table.HeaderCell>
               <Table.HeaderCell >Year</Table.HeaderCell>
@@ -148,7 +148,7 @@ export default function SurveyContent() {
               //datas.surveys.sort()
               filteredSurveys.sort((a, b) => {
                 if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
-                  return <SurveyTable key={index} organization={organization} survey={matchingSurvey} />
+                  return <SurveyTable key={index} propOrganization={organization} propSurvey={matchingSurvey} />
               })
             }
           </Table.Body>          

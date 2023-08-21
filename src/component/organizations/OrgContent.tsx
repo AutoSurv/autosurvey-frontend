@@ -17,20 +17,23 @@ import Link from "next/link";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
 import { initOrg } from "@/helper/initializer";
+import { getUserEmailDomain } from "@/helper/methods";
 
 export default function OrgContent() {
   const router = useRouter();
-
+  const [userEmailDomain, setUserEmailDomain] = useState("");
   const { userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [organizations, setOrganizations] = useState<Organization[]>([]);  
+  let listOrg: Organization[];
 
   //useMemo(() => getOrganizations(setOrganizations), []);
 
   useEffect(() => {
     setOrganization(initOrg);
     setFilteredSurveys([]);
+    setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
     getOrganizations(setOrganizations);
@@ -116,7 +119,18 @@ export default function OrgContent() {
         </Modal></>
       ) : null}
       <div className="orgs-orgcard-box">
-        {organizations.map((organization) => {
+        {organizations.filter(organization => {
+          if (localStorage.getItem("role") === "ROLE_ADMIN") {
+            return organization;
+          } else if (localStorage.getItem("role") === "ROLE_MANAGER") {
+            return organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()
+          } else {
+            if (organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()) {
+              return organization;
+            } 
+          }   
+        })        
+        .map((organization) => {
           return (
             <OrgCard
               key={organization.orgId}
@@ -124,7 +138,8 @@ export default function OrgContent() {
               setOrganizations={setOrganizations}
             />
           );
-        })}
+        })
+        }
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
+import { getOrganizationsApi } from '@/pages/api/surveyAPI';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, Organization } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
@@ -75,11 +76,13 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
     })
     .then((data: any) => {
       if (data) {
+        
         const loggedUser: LoggedUser = JSON.parse(data);
         if (loggedUser) {
           localStorage.setItem("role", loggedUser.role);
           localStorage.setItem("jwt", loggedUser.token);
           localStorage.setItem("username", loggedUser.username);
+          localStorage.setItem("email", loggedUser.email);
           setUserNameAuth(loggedUser.username);
           setSignUpStatus(true);
           router.push("org");
@@ -114,6 +117,20 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     setErrorMsg('Please type your email.');
     return;
   }
+
+/*   const apiResponse = await getOrganizationsApi();
+  if (apiResponse.status === 200) {
+    const data: Organization[] = await apiResponse.json();
+    const domain = getUserEmailDomain(inputSignUpBody.email);
+    const check = data.filter(org => org.orgId === domain);
+    if (check.length == 0) {
+      setErrorMsg("Organization not available in the DB")
+    }
+  } else {
+    console.log("apiResponse.status: ", apiResponse.status);
+    setErrorMsg("Cannot check the email domain from the DB")
+    return;
+  } */
 
   await signUpUser(inputSignUpBody)
     .then((response) => {
@@ -210,4 +227,11 @@ export function checkIfLocalStorageDef() {
     jwt = localStorage.getItem('jwt') as string
   }
   return jwt;
+}
+
+export function getUserEmailDomain (userEmail: string) {
+  const first: number = userEmail.indexOf("@");
+  const last: number = userEmail.lastIndexOf(".");
+  const domain = userEmail.substring(first+1, last)
+  return domain;
 }
