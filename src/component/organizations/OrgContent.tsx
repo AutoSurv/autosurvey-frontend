@@ -8,7 +8,6 @@ import {
   Icon,
   Input,
   Label,
-  Menu,
   Modal,
 } from "semantic-ui-react";
 import OrgCard from "./OrgCard";

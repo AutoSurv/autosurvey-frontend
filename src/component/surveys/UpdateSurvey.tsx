@@ -3,13 +3,13 @@ import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
-type UpdateSurveyProps = {
+type CreateSurveyProps = {
   survey: Survey;
   orgid: string | string[] | undefined;
   setSurvey: Dispatch<SetStateAction<Survey>>;
 }
 
-export default function UpdSurvey(props: UpdateSurveyProps) {
+export default function UpdSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
 
@@ -20,9 +20,7 @@ export default function UpdSurvey(props: UpdateSurveyProps) {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={
-        <Button className="surveys-modal-btn" color="blue" basic>Edit Survey</Button>
-      }>
+      trigger={<Button className="surveys-modal-btn" color="blue" basic>Edit Survey</Button>}>
       <Modal.Header>Edit Survey
         <Button onClick={(e) => {
             e.preventDefault();
@@ -31,13 +29,10 @@ export default function UpdSurvey(props: UpdateSurveyProps) {
           >X</Button>
       </Modal.Header>
       <Modal.Content>
-        <Form className="surveys-modal-form"
-          onSubmit={(e) => {
+        <Form onSubmit={(e) => {
           e.preventDefault();
-            updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, orgid);
-          }}
-          
-        >
+          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.orgId);
+        }}>
         <Form.Field>
           <Label>Country Name</Label>
           <Input placeholder={survey.country} type="text" name="country" pattern="^[a-zA-Z]*$"/>
@@ -52,7 +47,7 @@ export default function UpdSurvey(props: UpdateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Utilities</Label>
-          <Input placeholder={survey.utilities} type="text" name="utilities" />
+          <Input placeholder={survey.utilities} type="text" name="utilities" pattern="^[0-9]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Food</Label>
@@ -64,15 +59,15 @@ export default function UpdSurvey(props: UpdateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Transportation</Label>
-          <Input placeholder={survey.transportation} type="text" name="transportation" />
+          <Input placeholder={survey.transportation} type="text" name="transportation" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Education Total</Label>
-          <Input placeholder={survey.educationTotal} type="text" name="educationTotal" />
+          <Input placeholder={survey.educationTotal} type="text" name="educationTotal" pattern="^[0-9]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Education Supplies</Label>
-          <Input placeholder={survey.educationSupplies} type="text" name="educationSupplies" />
+          <Input placeholder={survey.educationSupplies} type="text" name="educationSupplies" pattern="^[0-9]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Education Fee</Label>
