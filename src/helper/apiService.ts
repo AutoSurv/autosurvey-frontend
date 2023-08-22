@@ -289,7 +289,7 @@ export async function updateSurvey(
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
-    await getSurvey(id, setSurvey).then(data => console.log(data!.year));
+    await getSurvey(id, setSurvey);
     setOpen(false);
     setErrMessage('');
   } else {
