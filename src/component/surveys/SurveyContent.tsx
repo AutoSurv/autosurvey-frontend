@@ -39,12 +39,12 @@ export default function SurveyContent() {
     country_arr = Array.from(countryLocation_list)
   }
 
-  useEffect(() => {
+  useEffect(() => {  
     setOrganization(organization);
     setUserNameAuth(localStorage.getItem("username") as string);
     setSurveys([]);
     getSurveys(setPagination, setSurveys);
-  }, []);
+  }, [organization]);  
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
@@ -147,7 +147,13 @@ export default function SurveyContent() {
             {
               //datas.surveys.sort()
               filteredSurveys.sort((a, b) => {
-                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
+                if(a.country === b.country) {
+                  return a.year - b.year
+                } else {
+                  return a.country.localeCompare(b.country)
+                }
+              }).slice(page * rowPage, page * rowPage + rowPage)
+                .map((matchingSurvey: Survey, index: number) => {
                   return <SurveyTable key={index} propOrganization={organization} propSurvey={matchingSurvey} />
               })
             }

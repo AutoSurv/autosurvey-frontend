@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {  Button, Modal, Pagination, Table } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
 import { useContext, useEffect, useState } from 'react';
-import { OrgContext } from '@/helper/context';
 import UpdSurveyAsExcel from './UpdateSurveyRows';
-import { initPagination } from "@/helper/initializer";
-import DelSurvey from './DeleteSurvey';
+import { OrgContext } from '@/helper/context';
 
 type SurveyCardProp = {
     propOrganization: Organization,
@@ -14,34 +12,35 @@ type SurveyCardProp = {
 }
 
 export default function SurveyRecord({propOrganization, propSurvey}: SurveyCardProp) {
-    const { survey, setSurvey } = useContext(OrgContext);
-    const [actualSurvey, setActualSurevey] = useState(propSurvey)
-    const [pagination, setPagination] = useState(initPagination);  
-    const [isHovering, setIsHovering] = useState(false);
+  const { survey, setSurvey } = useContext(OrgContext);
+  const [actualSurvey, setActualSurvey] = useState(propSurvey)
+  const [isHovering, setIsHovering] = useState(false);
 
-    const handleMouseOver = () => {
-      setIsHovering(true);
-    };
-  
-    const handleMouseOut = () => {
-      setIsHovering(false);
-    };
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
 
-    useEffect(() => {
-      if (survey.id === propSurvey.id) {        
-        setActualSurevey(survey);
-      }      
-    }, [survey] )
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
+
+  useEffect(() => {
+    if (survey.id === propSurvey.id) {        
+      setActualSurvey(survey);
+    } else {
+      setActualSurvey(propSurvey);
+    }      
+  }, [survey, actualSurvey, propSurvey] )
 
     return (        
         <Table.Row 
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
         >
-          <Table.Cell collapsing>
+            <Table.Cell collapsing>
             {
               isHovering && (
-                <UpdSurveyAsExcel propSurvey={actualSurvey} propOrgid={propOrganization.orgId} propSetSurvey={setSurvey} />
+              <UpdSurveyAsExcel propSurvey={actualSurvey} propOrgid={propOrganization.orgId} propSetSurvey={setSurvey} />
               )
             }
             </Table.Cell>

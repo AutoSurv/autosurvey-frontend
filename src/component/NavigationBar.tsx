@@ -60,6 +60,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
 
         {
           pathname.includes("[orgId]") && !pathname.includes("[surveyid]") ?
+          <>
             <Menu.Item >
               <Dropdown className="exp-imp-items" text='Export / Import'>
                 <Dropdown.Menu>
@@ -90,7 +91,13 @@ export function NavigationBar({ pathname }: HeaderProps) {
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
-            : null
+            <Menu.Item >
+              <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
+                manage
+              </Link>             
+            </Menu.Item>
+          </>
+          : null
         }
 
         {

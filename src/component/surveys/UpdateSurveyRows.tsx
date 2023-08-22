@@ -11,7 +11,7 @@ type UpdateSurveyProps = {
   propSetSurvey: Dispatch<SetStateAction<Survey>>;
 }
 
-export default function UpdSurvey({ propOrgid, propSurvey, propSetSurvey }: UpdateSurveyProps) {
+export default function UpdSurveyAsExcel({ propOrgid, propSurvey, propSetSurvey }: UpdateSurveyProps) {
   const [open, setOpen] = useState(false);
   const { setOrganization } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
