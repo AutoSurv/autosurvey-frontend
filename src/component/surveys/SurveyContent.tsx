@@ -69,7 +69,7 @@ export default function SurveyContent() {
       }
     },
     title: {
-      text: 'Mean of Monthly Living Costs by country '
+      text: 'Mean of Monthly Living Costs by country and region'
     },
     xaxis: {
       categories: country_arr
