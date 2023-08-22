@@ -13,7 +13,7 @@ type UpdateSurveyProps = {
 
 export default function UpdSurvey({ propOrgid, propSurvey, propSetSurvey }: UpdateSurveyProps) {
   const [open, setOpen] = useState(false);
-  const { setOrganization } = useContext(OrgContext);
+  const { setOrganization, setFilteredSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   return(
@@ -34,8 +34,7 @@ export default function UpdSurvey({ propOrgid, propSurvey, propSetSurvey }: Upda
         <Form className="surveys-modal-form"
           onSubmit={(e) => {
           e.preventDefault();
-            updateSurvey(propSurvey.id, e, propSetSurvey, setOpen, setErrMessage, propOrgid);
-            getOrganization(propOrgid, setOrganization)
+            updateSurvey(propSurvey.id, e, propSetSurvey, setOpen, setErrMessage, propOrgid, setOrganization, setFilteredSurveys);
           }}          
         >
         <></>

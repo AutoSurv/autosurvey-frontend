@@ -258,7 +258,9 @@ export async function updateSurvey(
   id: string | string[] | undefined,
   event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string
+  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string,
+  setOrganization: Dispatch<SetStateAction<Organization>>,
+  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
   ) {
 
   const reqBody: SurveyUpdateDto = {
@@ -289,7 +291,8 @@ export async function updateSurvey(
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
-    await getSurvey(id, setSurvey).then(data => console.log(data!.year));
+    await getSurvey(id, setSurvey);
+    await getOrganization(orgid, setOrganization).then(data => setFilteredSurveys(data.surveys));
     setOpen(false);
     setErrMessage('');
   } else {
