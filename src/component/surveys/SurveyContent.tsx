@@ -10,7 +10,7 @@ import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "../filters/FilterSurvey";
 import { TablePagination } from "@mui/material";
-import { initPagination } from "@/helper/initializer";
+import { initPagination, initSurvey } from "@/helper/initializer";
 import SurveyTable from "./SurveyTable";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
@@ -24,9 +24,6 @@ export default function SurveyContent() {
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
-
-
-  //const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
 
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
@@ -146,7 +143,8 @@ export default function SurveyContent() {
           <Table.Body>
             {
               filteredSurveys.sort((a, b) => {
-                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
+                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage)
+                .map((matchingSurvey: Survey, index: number) => {
                   return <SurveyTable key={index} organization={organization} propSurvey={matchingSurvey} />
               })
             }

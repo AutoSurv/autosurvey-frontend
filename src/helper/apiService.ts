@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
 import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
 import router from "next/router";
-import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
+import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, authenticateUserApi, 
+  deleteOrganizationApi, deleteSurveyApi, getOrganizationApi, getOrganizationsApi,
+  getSurveyApi, getSurveysApi, getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
 
@@ -258,7 +260,9 @@ export async function updateSurvey(
   id: string | string[] | undefined,
   event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string
+  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string,  
+  setOrganization: Dispatch<SetStateAction<Organization>>,
+  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
   ) {
 
   const reqBody: SurveyUpdateDto = {
@@ -289,7 +293,8 @@ export async function updateSurvey(
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
-    await getSurvey(id, setSurvey).then(data => console.log(data!.year));
+    await getSurvey(id, setSurvey);
+    await getOrganization(orgid, setOrganization).then(data => setFilteredSurveys(data.surveys));
     setOpen(false);
     setErrMessage('');
   } else {
@@ -358,5 +363,9 @@ export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
     body: JSON.stringify(reqBody)
   };
   return reqOptions;
+}
+
+function setAcualSurvey(data: Survey | undefined): any {
+  throw new Error("Function not implemented.");
 }
 

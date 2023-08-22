@@ -1,34 +1,26 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
-import { useContext, useEffect, useState } from 'react';
-import { Box, Collapse, IconButton, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { Box, Collapse, IconButton, TableCell, TableRow } from '@mui/material';
 import { Button, Form, Icon, Input, Label } from 'semantic-ui-react';
-import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
-import { getOrganization, getSurvey, getSurveys, updateSurvey } from '@/helper/apiService';
+import { updateSurvey } from '@/helper/apiService';
 import { OrgContext } from '@/helper/context';
 
 
 type SurveyCardProp = {
     organization: Organization,
-    propSurvey: Survey
+    propSurvey: Survey,
+
 }
 
 export default function SurveyRecord(props: SurveyCardProp) {
     const { propSurvey, organization } = props;
     const [actualSurvey, setActualSurevey] = useState(propSurvey);
-    const { survey, setSurvey } = useContext(OrgContext);
+    const { survey, setSurvey, setOrganization, setFilteredSurveys } = useContext(OrgContext);
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
-
-    useEffect(() => {
-
-        if (survey.id === propSurvey.id) {        
-            setActualSurevey(survey);
-          }      
-             
-      }, [survey] )
-
+   
     return (
         <>
             <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -42,13 +34,13 @@ export default function SurveyRecord(props: SurveyCardProp) {
                     </IconButton>
                 </TableCell>
                 <TableCell >
-                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + actualSurvey.id}>{actualSurvey.id}</Link>
+                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + propSurvey.id}>{propSurvey.id}</Link>
                 </TableCell>
                 <TableCell >
-                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + actualSurvey.id}>{actualSurvey.country}</Link>
+                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + propSurvey.id}>{propSurvey.country}</Link>
                 </TableCell>
                 <TableCell >
-                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + actualSurvey.id}>{actualSurvey.year}</Link>
+                    <Link className='survey-link' href={"/org/" + organization.orgId + "/" + propSurvey.id}>{propSurvey.year}</Link>
                 </TableCell>
                 <TableCell >
                     {localStorage.getItem("username")}
@@ -58,10 +50,10 @@ export default function SurveyRecord(props: SurveyCardProp) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                        
+
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
-                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.orgId);
+                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.orgId, setOrganization, setFilteredSurveys);
                             }} >
                                 <Form.Group className="surveys-form-edit" >
                                     <Form.Field className="surveys-form-edit-field">
