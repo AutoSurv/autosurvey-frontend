@@ -4,13 +4,11 @@ import { Message, Popup, Modal } from 'semantic-ui-react';
 import { SignOut, signInJwtTokenHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { OrgContext } from "@/helper/context";
 import { SignUp } from "./SignUp";
-import { textTransform } from "@mui/system";
 
 const Login = () => {
   const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);

@@ -4,12 +4,11 @@ import { getUserApi } from "../api/surveyAPI";
 import { User } from "@/type/type";
 import Link from "next/link";
 import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
-import UserOptions from "@/component/UserOptions";
 import { useRouter } from "next/router";
 import { NavigationBar } from "@/component/NavigationBar";
 
 export default function UserInfo() {
-  const { setUserNameAuth, organization } = useContext(OrgContext);
+  const { setUserNameAuth } = useContext(OrgContext);
   const [user, setUser] = useState<User>();
   const router = useRouter();
 

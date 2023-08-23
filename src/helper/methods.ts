@@ -1,6 +1,5 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { getOrganizationsApi } from '@/pages/api/surveyAPI';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, Organization } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';

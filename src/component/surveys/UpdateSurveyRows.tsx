@@ -1,9 +1,8 @@
-import { getOrganization, updateSurvey } from "@/helper/apiService";
+import { updateSurvey } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { Survey } from "@/type/type";
-import router from "next/router";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
-import { Button, Form, Icon, Input, Label, Modal, Table } from "semantic-ui-react";
+import { Button, Form, Icon, Input, Label, Modal } from "semantic-ui-react";
 
 type UpdateSurveyProps = {
   propSurvey: Survey;

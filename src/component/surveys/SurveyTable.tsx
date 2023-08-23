@@ -47,7 +47,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={5}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
-                        
+
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
                                 updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.orgId, setOrganization, setFilteredSurveys);
@@ -139,7 +139,11 @@ export default function SurveyRecord(props: SurveyCardProp) {
                                     </Form.Field>
 
                                 </Form.Group>
-                                <Button type='submit' color='green'>Submit</Button>
+                                <Button type='submit' color='green'>Edit</Button>
+                                <Button color='orange' onClick={(e) => {
+                                    e.preventDefault();
+                                    setOpen(false);
+                                }}>Cancel</Button>
                             </Form>
                         </Box>
 

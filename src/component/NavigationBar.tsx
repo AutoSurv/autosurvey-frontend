@@ -14,7 +14,7 @@ type HeaderProps = {
 
 export function NavigationBar({ pathname }: HeaderProps) {
   const { organization, setOrganization,
-    setUserNameAuth, filterYears,
+    filterYears,
     filterCountries, filterLocations,
     filteredSurveys, setSurveys, survey
   } = useContext(OrgContext);

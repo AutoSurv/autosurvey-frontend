@@ -1,17 +1,12 @@
-import UserOptions from "@/component/UserOptions";
-import { OrgContext } from "@/helper/context";
 import Link from "next/link";
-import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow, Image } from "semantic-ui-react";
-import { useContext, useEffect, useState } from "react";
-import { Paper, TableHead } from "@mui/material";
+import { Card, Header, Icon, Table, TableBody, TableCell, TableRow, Image } from "semantic-ui-react";
+import { TableHead } from "@mui/material";
 import { useRouter } from "next/router";
 import { NavigationBar } from "@/component/NavigationBar";
 
 
 export default function About() {
   const router = useRouter();
-  const { organization } =
-    useContext(OrgContext);
 
   return (
     <>

@@ -1,5 +1,4 @@
 import { signUpHandler } from "@/helper/methods";
-import Link from "@mui/material/Link";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Form, Input, Label, Modal } from "semantic-ui-react";
 import Button from "@mui/material/Button";
