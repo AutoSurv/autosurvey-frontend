@@ -1,14 +1,19 @@
 import * as React from 'react';
 import { Button, Table } from 'semantic-ui-react';
-import Link from 'next/link';
-import { Survey, Organization } from '@/type/type';
-import { useContext, useEffect, useState } from 'react';
-import { OrgContext } from '@/helper/context';
+
 
 type UserProp = {
     propUserId: string,
     propUserName: string,
     propUserEmail: string
+}
+
+const handleApproveClick = () => {
+
+}
+
+const handleRejectClick = () => {
+    
 }
 
 export default function UserRecord({propUserId, propUserName, propUserEmail}: UserProp) {
@@ -19,7 +24,7 @@ export default function UserRecord({propUserId, propUserName, propUserEmail}: Us
             <Table.Cell >{propUserName}</Table.Cell>
             <Table.Cell >{propUserEmail}</Table.Cell>
             <Table.Cell >
-                <Button>Approve</Button>
+                <Button onClick={handleApproveClick}>Approve</Button>
                 <Button>Reject</Button>
             </Table.Cell>
         </Table.Row>       

@@ -6,19 +6,22 @@ import { downloadExcel } from "@/helper/methods";
 import { CSVLink } from "react-csv";
 import { useContext, useState } from "react";
 import { OrgContext } from "@/helper/context";
-import { Survey } from "@/type/type";
+import { ROLE, Survey } from "@/type/type";
 
 type HeaderProps = {
   pathname: string
 }
 
 export function NavigationBar({ pathname }: HeaderProps) {
-  const { organization, setOrganization,
-    setUserNameAuth, filterYears,
+  const { 
+    organization, setOrganization,
+    filterYears,
     filterCountries, filterLocations,
-    filteredSurveys, setSurveys, survey
+    filteredSurveys, setSurveys, 
+    survey
   } = useContext(OrgContext);
 
+  const [role, setRole] = useState(localStorage.getItem("role") as string);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -91,11 +94,15 @@ export function NavigationBar({ pathname }: HeaderProps) {
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item >
-              <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
-                manage
-              </Link>             
-            </Menu.Item>
+            {
+              role !== ROLE.user ?
+              <Menu.Item >
+                <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
+                  manage
+                </Link>             
+              </Menu.Item>
+              : null
+            }
           </>
           : null
         }
