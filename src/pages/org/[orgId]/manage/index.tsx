@@ -53,14 +53,12 @@ export default function Manage() {
           {
             userlist
             .filter((user: User) => {    
-              console.log("filter: organization.orgName: ", organization.orgName.toLowerCase(), " vs user.email domain: ", user.email.toLowerCase());    
                return organization.orgName.toLowerCase() === getUserEmailDomain(user.email).toLowerCase();
               }
             ).map((user: User, index: number) => {
-              console.log("user: ", user);
               return(
                 <>
-                  <UserTable key={index} propUserId={user.userId} propUserName={user.username} propUserEmail={user.email} />
+                  <UserTable key={index} propOrgId={organization.orgId} propUserId={user.userId} propUserName={user.username} propUserEmail={user.email} />
                 </>
               )
             })

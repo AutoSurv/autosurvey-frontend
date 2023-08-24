@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
 import router from "next/router";
-import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getAllUsersApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
+import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, addUserToOrgApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getAllUsersApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
 
@@ -81,6 +81,16 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
   await getOrganizations(setOrganizations);
   setOpen(false);
   setErrMessage('');
+};
+
+export async function addUserToOrg(orgId: string, userId: string , reqOptions: ReqOptions) {
+
+  const apiResponse = await addUserToOrgApi(orgId, userId, reqOptions);
+  if (apiResponse.status === 202) {
+    const data: Organization = await apiResponse.json();
+    return data;
+  }
+
 };
 
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {

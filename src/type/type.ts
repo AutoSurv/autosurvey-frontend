@@ -144,6 +144,10 @@ export type User = {
   roles: string,
 }
 
+export type UserID = {
+  userId: string
+}
+
 export enum ROLE {
   user = "ROLE_USER",
   manager = "ROLE_MANAGER",
