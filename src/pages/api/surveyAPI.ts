@@ -127,6 +127,18 @@ export async function getUserApi(name: string) {
   return apiResponse;
 }
 
+
+export async function getAllUsersApi() {
+ const jwt: string = checkIfLocalStorageDef();
+ const userURL = BASE_USER_URL;
+ const apiResponse = await fetch(userURL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
+  return apiResponse;
+}
+
 export async function signUpUserApi(data: FormDataSingUp) {
 
   const response = await fetch(NEW_USER_URL, {
