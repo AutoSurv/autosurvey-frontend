@@ -14,11 +14,13 @@ export default function Manage() {
   const { organization } =useContext(OrgContext);
   const [userlist, setUserList] = useState<User[]>([]);
   const router = useRouter();
+
   const getAllUsers = async () => {
     const apiResponse = await getAllUsersApi();
     if (apiResponse.status === 200) {
       const data: User[] = await apiResponse.json();
-      setUserList(data);
+
+      setUserList(data.filter(user => user.email.includes(organization.orgName) ));
     }
   } 
 
@@ -46,11 +48,14 @@ export default function Manage() {
             <Table.HeaderCell >User ID</Table.HeaderCell>
             <Table.HeaderCell >User name</Table.HeaderCell>
             <Table.HeaderCell >User email</Table.HeaderCell>
+            <Table.HeaderCell >User role</Table.HeaderCell>
+            <Table.HeaderCell >User status</Table.HeaderCell>
             <Table.HeaderCell >Manage</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {
+            userlist.length > 0 ?
             userlist
             .filter((user: User) => {    
                return organization.orgName.toLowerCase() === getUserEmailDomain(user.email).toLowerCase();
@@ -58,10 +63,12 @@ export default function Manage() {
             ).map((user: User, index: number) => {
               return(
                 <>
-                  <UserTable key={index} propOrgId={organization.orgId} propUserId={user.userId} propUserName={user.username} propUserEmail={user.email} />
+                  <UserTable key={index} propOrgId={organization.orgId} propUser={user} />
                 </>
               )
             })
+            :
+            <div>Organziation {organization.orgName} has no user(s)</div>
           }
         </Table.Body>
       </Table>

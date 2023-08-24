@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
 import router from "next/router";
-import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, addUserToOrgApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getAllUsersApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
+import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, addUserToOrgApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getAllUsersApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
 
@@ -354,7 +354,6 @@ export async function authenticateUser(user: LoginUser) {
 
 export async function getAllUsers() {
   const response = await getAllUsersApi();
-  console.log("apiService.getAllUsers.response: ", response);
   return response;
 }
 

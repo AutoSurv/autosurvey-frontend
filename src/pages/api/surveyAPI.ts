@@ -133,7 +133,6 @@ export async function getUserApi(name: string) {
   return apiResponse;
 }
 
-
 export async function getAllUsersApi() {
  const jwt: string = checkIfLocalStorageDef();
  const userURL = BASE_USER_URL;
