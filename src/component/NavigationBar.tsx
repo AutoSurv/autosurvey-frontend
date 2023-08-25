@@ -102,7 +102,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
               role !== ROLE.user ?
               <Menu.Item >
                 <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
-                  manage
+                  Manage
                 </Link>             
               </Menu.Item>
               : null
