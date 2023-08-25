@@ -1,5 +1,5 @@
-import { addOrganization, getOrganizations } from "@/helper/apiService";
-import { Organization, ROLE } from "@/type/type";
+import { addOrganization, getOrganizations, getUser } from "@/helper/apiService";
+import { Organization, ROLE, User } from "@/type/type";
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   Button,
@@ -15,7 +15,7 @@ import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
-import { initOrg } from "@/helper/initializer";
+import { initOrg, initUser } from "@/helper/initializer";
 import { getUserEmailDomain } from "@/helper/methods";
 
 export default function OrgContent() {
@@ -24,12 +24,14 @@ export default function OrgContent() {
   const { userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
+  const [user, setUser] = useState<User>(initUser)
   const [organizations, setOrganizations] = useState<Organization[]>([]);  
   let listOrg: Organization[];
 
   //useMemo(() => getOrganizations(setOrganizations), []);
 
   useEffect(() => {
+    getUser(localStorage.getItem("username") as string, setUser);
     setOrganization(initOrg);
     setFilteredSurveys([]);
     setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
@@ -65,7 +67,7 @@ export default function OrgContent() {
 
       <NavigationBar pathname={router.pathname} />
 
-      {role !== ROLE.user ? (<>
+      {user.roles !== ROLE.user ? (<>
         <div className="org-modal-btn-container">
           <Button className="org-modal-btn" color="green" onClick={() => setOpen(true)}>
             Create Organization

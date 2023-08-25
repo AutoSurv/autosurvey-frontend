@@ -362,9 +362,11 @@ export async function authenticateUser(user: LoginUser) {
   return response;
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(setUsers: Dispatch<SetStateAction<User[]>>) {
   const response = await getAllUsersApi();
-  return response;
+  const data: User[] = await response.json();
+  setUsers(data);
+  return data;
 }
 
 export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
