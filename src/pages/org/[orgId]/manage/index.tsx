@@ -12,11 +12,11 @@ import { Header, Icon, Label, Table } from "semantic-ui-react";
 
 export default function Manage() {
   const { organization } =useContext(OrgContext);
-  const [userlist, setUserList] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    getUsers(setUserList);
+    getUsers(setUsers);
   },[]);
 
   return (
@@ -45,16 +45,15 @@ export default function Manage() {
         </Table.Header>
         <Table.Body>
           {
-            userlist.length > 0 ?
-            userlist
+            users.length > 0 ?
+            users
             .filter((user: User) => {
                return organization.orgName.toLowerCase() === getUserEmailDomain(user.email).toLowerCase();
               }
             ).map((user: User, index: number) => {
-              console.log("user: ", user)
               return(
                 <>
-                  <UserTable key={index} propOrgId={organization.orgId} propUser={user} />
+                  <UserTable key={index} propOrgId={organization.orgId} propUser={user} setUsers={setUsers} />
                 </>
               )
             })

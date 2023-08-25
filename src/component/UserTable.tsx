@@ -2,27 +2,23 @@ import { addUserToOrg } from '@/helper/apiService';
 import { initUser } from '@/helper/initializer';
 import { User } from '@/type/type';
 import * as React from 'react';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Table } from 'semantic-ui-react';
 
 
 type UserProp = {
   propOrgId: string,
-  propUser: User
+  propUser: User,
+  setUsers: Dispatch<SetStateAction<User[]>>;
 }
 
-export default function UserRecord({ propOrgId, propUser }: UserProp) {
-  const [acceptStatus, setAcceptStatus] = useState(false);
+export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) {
   const [user, setUser] = useState<User>(initUser);
-  const [users, setUsers] = useState<User[]>([]);
-
-  //const [rejectStatus, setRejectStatus] = useState(false);
-
+ 
   const handleApproveClick = () => {
 
     addUserToOrg(propOrgId, propUser, setUser, setUsers);
-    //setAcceptStatus(true);
-    // setRejectStatus(false);
+
   }
 
   const handleDisapproveClick = () => {

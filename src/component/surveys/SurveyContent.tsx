@@ -14,7 +14,6 @@ import { initPagination } from "@/helper/initializer";
 import SurveyTable from "./SurveyTable";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
-
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function SurveyContent() {
