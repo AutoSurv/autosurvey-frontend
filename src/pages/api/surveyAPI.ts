@@ -114,6 +114,16 @@ const BASE_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users`;
 const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
 const NEW_USER_URL = `${BASE_USER_URL}/new`;
 
+export async function getUsersApi() {
+  const jwt: string = checkIfLocalStorageDef();
+ const apiResponse = await fetch(BASE_USER_URL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
+ 
+  return apiResponse;
+}
 
 export async function getUserApi(name: string) {
   const jwt: string = checkIfLocalStorageDef();

@@ -1,5 +1,5 @@
-import { addOrganization, getOrganizations } from "@/helper/apiService";
-import { Organization, ROLE } from "@/type/type";
+import { addOrganization, getOrganizations, getUsers } from "@/helper/apiService";
+import { Organization, ROLE, User } from "@/type/type";
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   Button,
@@ -20,11 +20,12 @@ import { getUserEmailDomain } from "@/helper/methods";
 
 export default function OrgContent() {
   const router = useRouter();
+  const [users, setUsers] = useState<User[]>([]);
   const [userEmailDomain, setUserEmailDomain] = useState("");
   const { userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
-  const [organizations, setOrganizations] = useState<Organization[]>([]);  
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
   let listOrg: Organization[];
 
   //useMemo(() => getOrganizations(setOrganizations), []);
@@ -36,6 +37,7 @@ export default function OrgContent() {
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
     getOrganizations(setOrganizations);
+    getUsers(setUsers);
   }, []);
 
   const [open, setOpen] = useState(false);
@@ -118,7 +120,7 @@ export default function OrgContent() {
         </Modal></>
       ) : null}
       <div className="orgs-orgcard-box">
-        {organizations.filter(organization => {
+        {organizations.filter(/* organization => {
           if (localStorage.getItem("role") === "ROLE_ADMIN") {
             return organization;
           } else if (localStorage.getItem("role") === "ROLE_MANAGER") {
@@ -128,16 +130,27 @@ export default function OrgContent() {
               return organization;
             } 
           }   
-        })        
-        .map((organization) => {
-          return (
-            <OrgCard
-              key={organization.orgId}
-              organization={organization}
-              setOrganizations={setOrganizations}
-            />
-          );
-        })
+        } */
+          organization => {
+            console.log(users);
+            if (localStorage.getItem("role") === "ROLE_ADMIN") {
+              return organization;
+            } else {
+              if (userEmailDomain.toLocaleLowerCase().includes(organization.orgName.toLowerCase())) {
+                return organization;
+              }
+            };
+          }
+        )
+          .map((organization) => {
+            return (
+              <OrgCard
+                key={organization.orgId}
+                organization={organization}
+                setOrganizations={setOrganizations}
+              />
+            );
+          })
         }
       </div>
     </div>

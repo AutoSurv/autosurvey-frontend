@@ -5,7 +5,7 @@ import router from "next/router";
 import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, 
   authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
   getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, 
-  getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
+  getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
 
@@ -317,6 +317,22 @@ export async function deleteSurvey(orgId: string,
 };
 
 //userSection
+
+export async function getUsers(setUsers: Dispatch<SetStateAction<User[]>>) {
+  const apiResponse = await getUsersApi();
+  if (apiResponse.status === 200) {
+
+    const data: User[] = await apiResponse.json();
+    setUsers(data);
+    return data;
+  }
+
+  if (apiResponse.status === 500) {
+    localStorage.clear();
+    router.push("/");
+  }
+}
+
 export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>>) {
   const apiResponse = await getUserApi(name);
   if (apiResponse.status === 200) {
@@ -350,6 +366,8 @@ export async function authenticateUser(user: LoginUser) {
   return response;
 }
 
+
+//
 export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
   let jwt: string = "";
   if (typeof window !== "undefined") {
