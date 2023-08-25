@@ -1,7 +1,13 @@
 import { Dispatch, SetStateAction } from "react";
-import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp, LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
+import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp,
+   LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
 import router from "next/router";
-import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, authenticateUserApi, deleteOrganizationApi, deleteSurveyApi, getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
+import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, 
+  addUserToOrgApi, 
+  authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
+  getAllUsersApi,
+  getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, 
+  getUserApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
 
 
 
@@ -81,6 +87,16 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
   await getOrganizations(setOrganizations);
   setOpen(false);
   setErrMessage('');
+};
+
+export async function addUserToOrg(orgId: string, reqOptions: ReqOptions) {
+
+  const apiResponse = await addUserToOrgApi(orgId, reqOptions);
+  if (apiResponse.status === 202) {
+    const data: Organization = await apiResponse.json();
+    return data;
+  }
+
 };
 
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
@@ -258,7 +274,9 @@ export async function updateSurvey(
   id: string | string[] | undefined,
   event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string
+  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string,
+  setOrganization: Dispatch<SetStateAction<Organization>>,
+  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
   ) {
 
   const reqBody: SurveyUpdateDto = {
@@ -290,6 +308,7 @@ export async function updateSurvey(
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
+    await getOrganization(orgid, setOrganization).then(data => setFilteredSurveys(data.surveys));
     setOpen(false);
     setErrMessage('');
   } else {
@@ -340,6 +359,11 @@ export async function signUpUser(data: FormDataSingUp) {
 
 export async function authenticateUser(user: LoginUser) {
   const response = await authenticateUserApi(user)
+  return response;
+}
+
+export async function getAllUsers() {
+  const response = await getAllUsersApi();
   return response;
 }
 

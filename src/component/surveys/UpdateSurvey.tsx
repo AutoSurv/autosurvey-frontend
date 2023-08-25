@@ -1,6 +1,7 @@
 import { updateSurvey } from "@/helper/apiService";
+import { OrgContext } from "@/helper/context";
 import { Survey } from "@/type/type";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
@@ -11,6 +12,7 @@ type CreateSurveyProps = {
 
 export default function UpdSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
+  const { setOrganization, setFilteredSurveys} = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   const { survey, setSurvey, orgid} = props;
@@ -31,7 +33,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       <Modal.Content>
         <Form onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.orgId);
+          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.orgId, setOrganization, setFilteredSurveys);
         }}>
         <Form.Field>
           <Label>Country Name</Label>

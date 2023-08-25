@@ -1,7 +1,6 @@
 import { Survey } from "@/type/type";
-import { Dispatch, SetStateAction, useEffect, useContext, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import FilterYear from "./FilterYear";
-import { OrgContext } from "@/helper/context";
 
 type FilterProps = {
   propSurveys: Survey[];

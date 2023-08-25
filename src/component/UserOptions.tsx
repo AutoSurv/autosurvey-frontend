@@ -2,7 +2,7 @@ import { OrgContext } from "@/helper/context";
 import { SignOut } from "@/helper/methods";
 import Link from "next/link";
 import { useContext } from "react";
-import { Button, Dropdown, Label, Menu } from "semantic-ui-react";
+import { Dropdown, Label, Menu } from "semantic-ui-react";
 
 export default function UserOptions() {
   const { userNameAuth, setSignUpStatus } = useContext(OrgContext);

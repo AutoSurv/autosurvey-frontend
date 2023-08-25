@@ -40,6 +40,12 @@ export async function updateOrganizationNameApi(id: string, reqOptions: ReqOptio
   return response;
 };
 
+export async function addUserToOrgApi(orgId: string, reqOptions: ReqOptions) {
+
+  const response = await fetch(`${BASE_ORG_URL}/${orgId}/manage`, reqOptions);
+  return response;
+};
+
 export async function deleteOrganizationApi(id: string) {
   const jwt: string = checkIfLocalStorageDef();
   const autosurveysURL = BASE_ORG_URL + `/${id}`;
@@ -126,6 +132,17 @@ export async function getUserApi(name: string) {
  
   return apiResponse;
 }
+
+export async function getAllUsersApi() {
+  const jwt: string = checkIfLocalStorageDef();
+  const userURL = BASE_USER_URL;
+  const apiResponse = await fetch(userURL, {
+     cache: 'no-store',
+     headers: { Authorization: `Bearer ${jwt}` },
+     mode: "cors",
+   });
+   return apiResponse;
+ }
 
 export async function signUpUserApi(data: FormDataSingUp) {
 
