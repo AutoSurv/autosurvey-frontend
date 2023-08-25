@@ -15,7 +15,7 @@ type UpdateSurveyProps = {
 }
 
 export default function CollapseUpdate({ openStatus, setOpenStatus, propOrgid, propSurvey, propSetSurvey }: UpdateSurveyProps) {
-  const { setOrganization } = useContext(OrgContext);
+  const { setOrganization, setFilteredSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   return (
@@ -24,7 +24,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrgid, p
 
         <Form className="surveys-form" onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(propSurvey.id, e, propSetSurvey, setOpenStatus, setErrMessage, propSurvey.orgId);
+          updateSurvey(propSurvey.id, e, propSetSurvey, setOpenStatus, setErrMessage, propSurvey.orgId, setOrganization, setFilteredSurveys);
           getOrganization(propOrgid, setOrganization);
         }} >
           <Form.Group className="surveys-form-edit" >
