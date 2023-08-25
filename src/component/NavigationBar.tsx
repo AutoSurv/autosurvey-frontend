@@ -4,7 +4,7 @@ import UserOptions from "./UserOptions";
 import ImportSurvey from "./surveys/ImportSurvey";
 import { downloadExcel } from "@/helper/methods";
 import { CSVLink } from "react-csv";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { OrgContext } from "@/helper/context";
 import { ROLE, Survey } from "@/type/type";
 
@@ -21,7 +21,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
     survey
   } = useContext(OrgContext);
 
-  const [role, setRole] = useState(localStorage.getItem("role") as string);
+  const [role, setRole] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -37,6 +37,10 @@ export function NavigationBar({ pathname }: HeaderProps) {
     setErrorMsg("");
     setSuccessMessage("");
   }
+
+  useEffect(() => {
+    setRole(localStorage.getItem("role") as string);
+  },[] )
 
   return (
     <>
@@ -98,7 +102,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
               role !== ROLE.user ?
               <Menu.Item >
                 <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
-                  manage
+                  Manage
                 </Link>             
               </Menu.Item>
               : null

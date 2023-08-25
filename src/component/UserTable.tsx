@@ -10,8 +10,6 @@ type UserProp = {
   propUser: User
 }
 
-
-
 export default function UserRecord({ propOrgId, propUser }: UserProp) {
   const [acceptStatus, setAcceptStatus] = useState(false);
   const [rejectStatus, setRejectStatus] = useState(false);
@@ -22,7 +20,7 @@ export default function UserRecord({ propOrgId, propUser }: UserProp) {
     }
 
     const reqOptions = setRequestOptions("PATCH", reqBody);
-    addUserToOrg(propOrgId, propUser.userId, reqOptions)
+    addUserToOrg(propOrgId, reqOptions)
     setAcceptStatus(true);
     setRejectStatus(false)
   }

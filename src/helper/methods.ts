@@ -1,6 +1,5 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { getOrganizationsApi } from '@/pages/api/surveyAPI';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, Organization } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
@@ -101,7 +100,8 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     username: event.currentTarget.username.value,
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
-    roles: "role_user"
+    roles: "role_user",
+    status: "not_approved"
   }
   localStorage.clear();
 

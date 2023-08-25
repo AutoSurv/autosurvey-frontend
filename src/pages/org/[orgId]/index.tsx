@@ -12,10 +12,10 @@ export default function OrgDetails() {
   const { setOrganization } =useContext(OrgContext);
 
   useEffect(() => {
-    if (orgId) {
-      getOrganization(orgId, setOrganization);     
-    }
-  }, [orgId])
+    
+      getOrganization(orgId!, setOrganization);
+    
+  }, [])
 
   return (
     <div>

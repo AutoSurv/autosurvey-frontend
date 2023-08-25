@@ -6,11 +6,12 @@ import 'semantic-ui-css/semantic.min.css'
 import '@/styles/about.css'
 import '@/styles/login.css'
 import '@/styles/userInfo.css'
+import '@/styles/offline.css'
 import type { AppProps } from 'next/app'
 import { useState } from 'react'
-import { Survey, Organization } from '../type/type'
+import { Survey, Organization, Pagination } from '../type/type'
 import { OrgContext } from '@/helper/context'
-import { initOrg, initSurvey } from '@/helper/initializer'
+import { initOrg, initPagination, initSurvey } from '@/helper/initializer'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
@@ -24,11 +25,13 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [filterLocations, setFilterLocations] = useState<string[]>([]);
   const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
   const [isFilterSet, setIsFilterSet] =useState<boolean>(false);
-
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
+  const [organizations, setOrganizations] = useState<Organization[]>([]);
   return (
 
       <OrgContext.Provider value={{ 
         organization, setOrganization, 
+        setOrganizations,
         survey, setSurvey, 
         surveys, setSurveys, setSignUpStatus, 
         signUpStatus, 
@@ -37,7 +40,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         filterCountries, setFilterCountries,
         filterLocations, setFilterLocations,
         filteredSurveys, setFilteredSurveys,
-        isFilterSet, setIsFilterSet
+        isFilterSet, setIsFilterSet,
+        pagination, setPagination
         }}>
       <Component {...pageProps} />
       </OrgContext.Provider>

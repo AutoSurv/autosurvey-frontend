@@ -1,7 +1,7 @@
 import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
-import { Header, Icon, Label, Progress, Table } from "semantic-ui-react";
+import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
 import { calculateMeanValues } from '@/helper/methods';
@@ -24,9 +24,6 @@ export default function SurveyContent() {
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
-
-
-  //const [filteredSurveys, setFilteredSurveys] = useState<Survey[]>([]);
 
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
@@ -72,7 +69,7 @@ export default function SurveyContent() {
       }
     },
     title: {
-      text: 'Monthly Living Costs by country '
+      text: 'Mean of Monthly Living Costs by country and region'
     },
     xaxis: {
       categories: country_arr
@@ -130,13 +127,13 @@ export default function SurveyContent() {
       </section>
 
       <div className="surveys-surveycard-box">
-        <Table celled striped color="violet" >
-          <Table.Header >
+        <Table celled striped color="violet">
+          <Table.Header>
             <Table.Row>
-              <Table.HeaderCell textAlign="left" colSpan='4'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
+              <Table.HeaderCell colSpan='5'><Label color="blue" size="large" ribbon>{organization.orgName}</Label></Table.HeaderCell>
             </Table.Row>
             <Table.Row>
-              <Table.HeaderCell >Actions</Table.HeaderCell>
+            <Table.HeaderCell >Edit</Table.HeaderCell>
               <Table.HeaderCell >Survey ID</Table.HeaderCell>
               <Table.HeaderCell >Country</Table.HeaderCell>
               <Table.HeaderCell >Year</Table.HeaderCell>
@@ -145,16 +142,9 @@ export default function SurveyContent() {
           </Table.Header>
           <Table.Body>
             {
-              //datas.surveys.sort()
               filteredSurveys.sort((a, b) => {
-                if(a.country === b.country) {
-                  return a.year - b.year
-                } else {
-                  return a.country.localeCompare(b.country)
-                }
-              }).slice(page * rowPage, page * rowPage + rowPage)
-                .map((matchingSurvey: Survey, index: number) => {
-                  return <SurveyTable key={index} propOrganization={organization} propSurvey={matchingSurvey} />
+                if(a.country === b.country) {return a.year - b.year} else {return a.country.localeCompare(b.country)}}).slice(page * rowPage, page * rowPage + rowPage).map((matchingSurvey: Survey, index: number) => {
+                  return <SurveyTable key={index} organization={organization} propSurvey={matchingSurvey} />
               })
             }
           </Table.Body>          
@@ -169,6 +159,7 @@ export default function SurveyContent() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
       </div>
+
     </div> 
   ) 
 }    

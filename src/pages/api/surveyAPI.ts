@@ -40,7 +40,7 @@ export async function updateOrganizationNameApi(id: string, reqOptions: ReqOptio
   return response;
 };
 
-export async function addUserToOrgApi(orgId: string, userId: string , reqOptions: ReqOptions) {
+export async function addUserToOrgApi(orgId: string, reqOptions: ReqOptions) {
 
   const response = await fetch(`${BASE_ORG_URL}/${orgId}/manage`, reqOptions);
   return response;
@@ -134,15 +134,15 @@ export async function getUserApi(name: string) {
 }
 
 export async function getAllUsersApi() {
- const jwt: string = checkIfLocalStorageDef();
- const userURL = BASE_USER_URL;
- const apiResponse = await fetch(userURL, {
-    cache: 'no-store',
-    headers: { Authorization: `Bearer ${jwt}` },
-    mode: "cors",
-  });
-  return apiResponse;
-}
+  const jwt: string = checkIfLocalStorageDef();
+  const userURL = BASE_USER_URL;
+  const apiResponse = await fetch(userURL, {
+     cache: 'no-store',
+     headers: { Authorization: `Bearer ${jwt}` },
+     mode: "cors",
+   });
+   return apiResponse;
+ }
 
 export async function signUpUserApi(data: FormDataSingUp) {
 

@@ -1,11 +1,14 @@
-import { Survey, Organization } from "@/type/type";
+import { Survey, Organization, Pagination } from "@/type/type";
 import { Dispatch, SetStateAction, createContext } from "react";
-import { initSurvey } from "./initializer";
+import { initPagination, initSurvey } from "./initializer";
 
 export interface OrgContextValue {
 
     organization: Organization;
     setOrganization: Dispatch<SetStateAction<Organization>>;  
+
+   
+    setOrganizations: Dispatch<SetStateAction<Organization[]>>;  
 
     survey: Survey;
     setSurvey: Dispatch<SetStateAction<Survey>>; 
@@ -33,12 +36,17 @@ export interface OrgContextValue {
 
     isFilterSet: boolean;
     setIsFilterSet: Dispatch<SetStateAction<boolean>>; 
+
+    pagination: Pagination;
+    setPagination: Dispatch<SetStateAction<Pagination>>;
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
 
     organization: {orgId: '', orgName: '', surveys: []},
     setOrganization: () => {},
+    
+    setOrganizations: () => {},
     survey: initSurvey,
     setSurvey: () => {},
     surveys: [],
@@ -57,5 +65,7 @@ export const OrgContext = createContext<OrgContextValue> ({
     setFilteredSurveys: () => {},
     isFilterSet: false,
     setIsFilterSet: () => {},
+    pagination: initPagination,
+    setPagination: () => {}
 
 });
