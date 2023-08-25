@@ -4,21 +4,24 @@ import UserOptions from "./UserOptions";
 import ImportSurvey from "./surveys/ImportSurvey";
 import { downloadExcel } from "@/helper/methods";
 import { CSVLink } from "react-csv";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { OrgContext } from "@/helper/context";
-import { Survey } from "@/type/type";
+import { ROLE, Survey } from "@/type/type";
 
 type HeaderProps = {
   pathname: string
 }
 
 export function NavigationBar({ pathname }: HeaderProps) {
-  const { organization, setOrganization,
+  const { 
+    organization, setOrganization,
     filterYears,
     filterCountries, filterLocations,
-    filteredSurveys, setSurveys, survey
+    filteredSurveys, setSurveys, 
+    survey
   } = useContext(OrgContext);
 
+  const [role, setRole] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -34,6 +37,10 @@ export function NavigationBar({ pathname }: HeaderProps) {
     setErrorMsg("");
     setSuccessMessage("");
   }
+
+  useEffect(() => {
+    setRole(localStorage.getItem("role") as string);
+  },[] )
 
   return (
     <>
@@ -60,6 +67,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
 
         {
           pathname.includes("[orgId]") && !pathname.includes("[surveyid]") ?
+          <>
             <Menu.Item >
               <Dropdown className="exp-imp-items" text='Export / Import'>
                 <Dropdown.Menu>
@@ -90,7 +98,17 @@ export function NavigationBar({ pathname }: HeaderProps) {
                 </Dropdown.Menu>
               </Dropdown>
             </Menu.Item>
-            : null
+            {
+              role !== ROLE.user ?
+              <Menu.Item >
+                <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
+                  Manage
+                </Link>             
+              </Menu.Item>
+              : null
+            }
+          </>
+          : null
         }
 
         {
@@ -138,9 +156,6 @@ export function NavigationBar({ pathname }: HeaderProps) {
         }
 
         <Menu.Menu position='right' className="menu-nav-about-user">
-        <Menu.Item>
-            <Link href={"/_offline"} style={{ textDecoration: 'none' }}>Offline Mode</Link>
-          </Menu.Item>
           <Menu.Item>
             <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
           </Menu.Item>

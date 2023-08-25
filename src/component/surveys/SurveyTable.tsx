@@ -150,7 +150,6 @@ export default function SurveyRecord(props: SurveyCardProp) {
                     </Collapse>
                 </TableCell>
             </TableRow>
-
         </>
 
     );

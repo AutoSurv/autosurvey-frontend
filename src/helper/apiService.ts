@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
 import { Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp,
-   LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions } from "../type/type";
+   LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions, UserStatusDto } from "../type/type";
 import router from "next/router";
 import { addImportedSurveyApi, addOrganizationApi, addSurveyApi, 
+  addUserToOrgApi, 
   authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
   getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi, 
-  getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi } from "@/pages/api/surveyAPI";
+  getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi } from "@/pages/api/surveyAPI";
 
 
 
@@ -85,6 +86,31 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
   await getOrganizations(setOrganizations);
   setOpen(false);
   setErrMessage('');
+};
+
+export async function addUserToOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
+
+  const updatedUser = await updateUserStatus(user, setUsers, setUser);
+  
+  const reqBody: User = {
+    userId: updatedUser!.userId,
+    username: updatedUser!.username,
+    password: updatedUser!.password,
+    email: updatedUser!.email,
+    roles: updatedUser!.roles,
+    status: updatedUser!.status
+  }
+
+  console.log("status: ",reqBody.status)
+
+  const reqOptions = setRequestOptions("PATCH", reqBody);
+
+  const apiResponse = await addUserToOrgApi(orgId, reqOptions);
+  if (apiResponse.status === 202) {
+    const data: Organization = await apiResponse.json();
+    return data;
+  }
+
 };
 
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
@@ -347,6 +373,22 @@ export async function getUser(name: string, setUser: Dispatch<SetStateAction<Use
     router.push("/");
   }
 }
+
+export async function updateUserStatus(user: User, setUsers: Dispatch<SetStateAction<User[]>>, setUser: Dispatch<SetStateAction<User>>) {
+ 
+  const reqBody: UserStatusDto = {
+      status: user.status === "disapproved" || user.status === "pending"  ? "approved" : "disapproved"
+    }  
+
+  const reqOptions = setRequestOptions("PATCH", reqBody);
+
+  updateUserStatusApi(user.username, reqOptions);
+  const updatedUser = await getUser(user.username, setUser);
+  console.log(updatedUser?.status);
+  await getUsers(setUsers);
+  return updatedUser;
+};
+
 
 export async function signUpUser(data: FormDataSingUp) {
   if (

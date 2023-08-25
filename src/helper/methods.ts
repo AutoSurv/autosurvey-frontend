@@ -101,7 +101,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user",
-    status: "not_approved"
+    status: "pending"
   }
   localStorage.clear();
 

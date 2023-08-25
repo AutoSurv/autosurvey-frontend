@@ -1,6 +1,6 @@
 import { getSurveys } from "@/helper/apiService";
 import { Pagination, Survey } from "@/type/type";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
 import CreateSurvey from "./CreateSurvey";
@@ -29,11 +29,11 @@ export default function SurveyContent() {
   let countryLocation_list = new Set<string>();
   
   filteredSurveys.forEach((s) => countryLocation_list.add(s.country));
-  country_arr = Array.from(countryLocation_list)
+  country_arr = Array.from(countryLocation_list);
 
   if (filterLocations.length !== 0) {
     filteredSurveys.forEach((s) => countryLocation_list.add(s.locationClustered));
-    country_arr = Array.from(countryLocation_list)
+    country_arr = Array.from(countryLocation_list);
   }
 
   useEffect(() => {

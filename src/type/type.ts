@@ -135,7 +135,6 @@ export type LoggedUser = {
   role: string,
   status: string,
   token: string
-  
 }
 
 export type User = {
@@ -144,6 +143,10 @@ export type User = {
   password: string,
   email: string,
   roles: string,
+  status: string
+}
+
+export type UserStatusDto = {
   status: string
 }
 
