@@ -44,7 +44,7 @@ export default function Fallback() {
             comments: e.currentTarget.comments.value,
             id: "",
             orgId: "649ae1e43d45417464a41fd3",
-            orgName: "MSF"
+            orgName: e.currentTarget.orgName.value
         };
 
         if (!localStorage.getItem("offlineSurvey")) {
