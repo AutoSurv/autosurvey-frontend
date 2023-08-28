@@ -66,7 +66,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
         </Menu.Item>
 
         {
-          pathname.includes("[orgId]") && !pathname.includes("[surveyid]") ?
+          pathname.includes("[orgId]") && !pathname.includes("[surveyid]") && !pathname.includes("manage") ?
           <>
             <Menu.Item >
               <Dropdown className="exp-imp-items" text='Export / Import'>
@@ -90,7 +90,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <label >
-                      <CSVLink className="surveys-export-csv-link" filename={"surveys.csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
+                      <CSVLink className="surveys-export-csv-link" filename={organization.orgName + "_" + survey.country + "_" + survey.id + ".csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
                         Export Survey (csv)
                       </CSVLink>
                     </label>
@@ -138,7 +138,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
         }
 
         {
-          pathname.includes("about") || pathname.includes("userInfo") ?
+          pathname.includes("about") || pathname.includes("userInfo") || pathname.includes("manage")?
             <>
               {
                 organization.orgId.length > 0 ?
