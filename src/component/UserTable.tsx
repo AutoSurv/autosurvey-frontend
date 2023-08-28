@@ -1,4 +1,4 @@
-import { addUserToOrg } from '@/helper/apiService';
+import { editUserToOrg } from '@/helper/apiService';
 import { initUser } from '@/helper/initializer';
 import { User } from '@/type/type';
 import * as React from 'react';
@@ -17,12 +17,12 @@ export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) 
  
   const handleApproveClick = () => {
 
-    addUserToOrg(propOrgId, propUser, setUser, setUsers);
+    editUserToOrg(propOrgId, propUser, setUser, setUsers);
 
   }
 
   const handleDisapproveClick = () => {
-    //removeUserFromOrg(propOrgId, propUser);
+    editUserToOrg(propOrgId, propUser, setUser, setUsers);
     // setRejectStatus(true);
     //setAcceptStatus(false);
   }
@@ -55,7 +55,7 @@ export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) 
         {
           propUser.status === "approved" ?
             <>
-              <Button onClick={handleApproveClick} color='orange'>Disapprove</Button>
+              <Button onClick={handleDisapproveClick} color='orange'>Disapprove</Button>
             </>
             : null
         }

@@ -13,11 +13,11 @@ type HeaderProps = {
 }
 
 export function NavigationBar({ pathname }: HeaderProps) {
-  const { 
+  const {
     organization, setOrganization,
     filterYears,
     filterCountries, filterLocations,
-    filteredSurveys, setSurveys, 
+    filteredSurveys, setSurveys,
     survey
   } = useContext(OrgContext);
 
@@ -40,12 +40,12 @@ export function NavigationBar({ pathname }: HeaderProps) {
 
   useEffect(() => {
     setRole(localStorage.getItem("role") as string);
-  },[] )
+  }, [])
 
   return (
     <>
-      {progressCounter > 0 && progressCounter < totalCounter  ? 
-      <Progress value={progressCounter} total={totalCounter} progress='ratio' indicating /> : null}
+      {progressCounter > 0 && progressCounter < totalCounter ?
+        <Progress value={progressCounter} total={totalCounter} progress='ratio' indicating /> : null}
 
       <Message visible={errorMsg.length > 0} hidden={errorMsg.length === 0}
         onDismiss={handleDismiss} negative compact>
@@ -67,48 +67,40 @@ export function NavigationBar({ pathname }: HeaderProps) {
 
         {
           pathname.includes("[orgId]") && !pathname.includes("[surveyid]") && !pathname.includes("manage") ?
-          <>
-            <Menu.Item >
-              <Dropdown className="exp-imp-items" text='Export / Import'>
-                <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <ImportSurvey organization={organization}
-                      setOrganization={setOrganization}
-                      setSurveys={setSurveys}
-                      setErrorMsg={setErrorMsg}
-                      setSuccessMessage={setSuccessMessage}
-                      setTotalCounter={setTotalCounter}
-                      setProgressCounter={setProgressCounter}
-                    />
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <label onClick={(e) => {
-                      e.preventDefault();
-                      downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations, setErrorMsg);
-                    }} style={{ textDecoration: 'none', color: '#4183c4' }} >Export Surveys (xlsx)
-                    </label>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <label >
-                      <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
-                        Export Survey (csv)
-                      </CSVLink>
-                    </label>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </Menu.Item>
-            {
-              role !== ROLE.user ?
+            <>
               <Menu.Item >
-                <Link href={"/org/" + organization.orgId + "/manage"} style={{ textDecoration: "none" }}>
-                  Manage
-                </Link>             
+                <Dropdown className="exp-imp-items" text='Export / Import'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <ImportSurvey organization={organization}
+                        setOrganization={setOrganization}
+                        setSurveys={setSurveys}
+                        setErrorMsg={setErrorMsg}
+                        setSuccessMessage={setSuccessMessage}
+                        setTotalCounter={setTotalCounter}
+                        setProgressCounter={setProgressCounter}
+                      />
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <label onClick={(e) => {
+                        e.preventDefault();
+                        downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations, setErrorMsg);
+                      }} style={{ textDecoration: 'none', color: '#4183c4' }} >Export Surveys (xlsx)
+                      </label>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <label >
+                        <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
+                          Export Survey (csv)
+                        </CSVLink>
+                      </label>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
               </Menu.Item>
-              : null
-            }
-          </>
-          : null
+
+            </>
+            : null
         }
 
         {
@@ -138,7 +130,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
         }
 
         {
-          pathname.includes("about") || pathname.includes("userInfo") || pathname.includes("manage")?
+          pathname.includes("about") || pathname.includes("userInfo") || pathname.includes("manage") ?
             <>
               {
                 organization.orgId.length > 0 ?
@@ -156,9 +148,18 @@ export function NavigationBar({ pathname }: HeaderProps) {
         }
 
         <Menu.Menu position='right' className="menu-nav-about-user">
-        <Menu.Item>
+          <Menu.Item>
             <Link href={"/_offline"} style={{ textDecoration: 'none' }}>Offline Mode</Link>
           </Menu.Item>
+          {
+            role !== ROLE.user && pathname.includes("[orgId]") ?
+              <Menu.Item >
+                <Link href={"/org/" + organization.orgId + "/" + "manage"} style={{ textDecoration: "none" }}>
+                  Approval
+                </Link>
+              </Menu.Item>
+              : null
+          }
           <Menu.Item>
             <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
           </Menu.Item>

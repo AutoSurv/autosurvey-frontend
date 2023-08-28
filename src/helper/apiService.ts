@@ -5,7 +5,7 @@ import {
 } from "../type/type";
 import {
   addImportedSurveyApi, addOrganizationApi, addSurveyApi,
-  addUserToOrgApi,
+  editUserToOrgApi,
   authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
   getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi,
   getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi
@@ -89,7 +89,7 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
   setErrMessage('');
 };
 
-export async function addUserToOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
+export async function editUserToOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
 
   await updateUserStatus(user, setUsers, setUser).then(async (updatedUser) => {
     const reqBody: User = {
@@ -101,7 +101,7 @@ export async function addUserToOrg(orgId: string, user: User, setUser: Dispatch<
       status: updatedUser!.status
     }
     const reqOptions = setRequestOptions("PATCH", reqBody);
-    const apiResponse = await addUserToOrgApi(orgId, reqOptions);
+    const apiResponse = await editUserToOrgApi(orgId, reqOptions);
     if (apiResponse.status === 202) {
       const data: Organization = await apiResponse.json();
       return data;
@@ -110,6 +110,11 @@ export async function addUserToOrg(orgId: string, user: User, setUser: Dispatch<
   });
 
 };
+
+export async function removeUserFromOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
+  
+
+}
 
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   await deleteOrganizationApi(id);
