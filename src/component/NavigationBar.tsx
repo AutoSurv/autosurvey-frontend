@@ -39,6 +39,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
   }
 
   useEffect(() => {
+    console.log("survey.country: ", survey.country);
     setRole(localStorage.getItem("role") as string);
   },[] )
 
@@ -90,7 +91,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <label >
-                      <CSVLink className="surveys-export-csv-link" filename={organization.orgName + "_" + survey.country + "_" + survey.id + ".csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
+                      <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
                         Export Survey (csv)
                       </CSVLink>
                     </label>
@@ -125,7 +126,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <label >
-                        <CSVLink className="surveys-export-csv-link" filename={organization.orgName + "_" + survey.country + "_" + survey.id + ".csv"} data={surveyArray}>
+                        <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={surveyArray}>
                           Export Survey (csv)
                         </CSVLink>
                       </label>
