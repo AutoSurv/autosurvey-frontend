@@ -16,8 +16,11 @@ export default function Manage() {
   const router = useRouter();
 
   useEffect(() => {
-    getUsers(setUsers);
-  },[]);
+    if(router.isReady){
+      getUsers(setUsers);
+    } 
+    
+  },[router.isReady]);
 
   return (
     <>
