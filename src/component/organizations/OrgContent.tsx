@@ -136,7 +136,9 @@ export default function OrgContent() {
             if (localStorage.getItem("role") === "ROLE_ADMIN") {
               return organization;
             } else {
-              if (userEmailDomain.toLocaleLowerCase().includes(organization.orgName.toLowerCase())) {
+              if (organization.users.find((userOrg) => {
+                return userOrg.userId === user.userId
+              })) {
                 return organization;
               }
             };

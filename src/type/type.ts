@@ -103,7 +103,8 @@ export type ImportedSurvey = {
 export type Organization = {
   orgId: string,
   orgName: string,
-  surveys: Survey[]
+  surveys: Survey[],
+  users: User[]
 }
 
 export type OrgRequestDto = {
