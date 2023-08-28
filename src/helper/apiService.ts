@@ -3,7 +3,6 @@ import {
   Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp,
   LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions, UserStatusDto
 } from "../type/type";
-import router from "next/router";
 import {
   addImportedSurveyApi, addOrganizationApi, addSurveyApi,
   addUserToOrgApi,
@@ -11,9 +10,7 @@ import {
   getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi,
   getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi
 } from "@/pages/api/surveyAPI";
-
-
-
+import router from "next/router";
 
 //Organization section
 
@@ -340,7 +337,6 @@ export async function deleteSurvey(orgId: string,
   await deleteSurveyApi(id);
   await getSurveys(setPagination, setSurveys);
 
-  window.location.href = "/org/" + orgId;
 };
 
 //userSection
@@ -385,7 +381,6 @@ export async function updateUserStatus(user: User, setUsers: Dispatch<SetStateAc
 
   updateUserStatusApi(user.username, reqOptions);
   const updatedUser = await getUser(user.username, setUser);
-  console.log(updatedUser?.status);
   await getUsers(setUsers);
   return updatedUser;
 };

@@ -36,10 +36,8 @@ export default function SurveyContent() {
   }
 
   useEffect(() => {
-    setOrganization(organization);
-    setUserNameAuth(localStorage.getItem("username") as string);
-    setSurveys([]);
-    getSurveys(setPagination, setSurveys);
+     console.log(organization);
+     getSurveys(setPagination, setSurveys);
   }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {

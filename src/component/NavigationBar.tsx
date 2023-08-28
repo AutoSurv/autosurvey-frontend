@@ -39,7 +39,6 @@ export function NavigationBar({ pathname }: HeaderProps) {
   }
 
   useEffect(() => {
-    console.log("survey.country: ", survey.country);
     setRole(localStorage.getItem("role") as string);
   },[] )
 

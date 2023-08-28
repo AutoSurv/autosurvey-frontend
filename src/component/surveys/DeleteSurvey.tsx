@@ -27,6 +27,7 @@ export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: 
             e.preventDefault();
             deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys);
             setOpenConfirm(false);
+            window.location.href = "/org/" + propOrgid;
           }}
         />
     </>     
