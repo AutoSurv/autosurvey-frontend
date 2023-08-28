@@ -156,6 +156,9 @@ export function NavigationBar({ pathname }: HeaderProps) {
         }
 
         <Menu.Menu position='right' className="menu-nav-about-user">
+        <Menu.Item>
+            <Link href={"/_offline"} style={{ textDecoration: 'none' }}>Offline Mode</Link>
+          </Menu.Item>
           <Menu.Item>
             <Link href={"/about"} style={{ textDecoration: 'none' }}>About</Link>
           </Menu.Item>
