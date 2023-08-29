@@ -1,6 +1,6 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
-import { Message, Popup, Modal } from 'semantic-ui-react';
+import { Message, Modal } from 'semantic-ui-react';
 import { SignOut, signInJwtTokenHandler } from "@/helper/methods";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";

@@ -4,9 +4,8 @@ import { Survey, Organization } from '@/type/type';
 import { useContext, useState } from 'react';
 import { Box, Collapse, IconButton, TableCell, TableRow } from '@mui/material';
 import { Button, Form, Icon, Input, Label } from 'semantic-ui-react';
-import { getOrganization, updateSurvey } from '@/helper/apiService';
+import { updateSurvey } from '@/helper/apiService';
 import { OrgContext } from '@/helper/context';
-import CollapseUpdate from './CollapseUpdate';
 
 type SurveyCardProp = {
     organization: Organization,

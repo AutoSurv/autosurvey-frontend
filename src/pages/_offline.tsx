@@ -43,8 +43,8 @@ export default function Fallback() {
             totalIncome: e.currentTarget.totalIncome.value,
             comments: e.currentTarget.comments.value,
             id: "",
-            orgId: "649ae1e43d45417464a41fd3",
-            orgName: "MSF"
+            orgId: "",
+            orgName: e.currentTarget.orgName.value
         };
 
         if (!localStorage.getItem("offlineSurvey")) {
@@ -77,7 +77,7 @@ export default function Fallback() {
         XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
         if (offlineSurveys) {
-            XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
+            XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.year + "_" + survey.id + ".xlsx");
             setSurveyCounter("0");
             window.localStorage.clear();
         } else {

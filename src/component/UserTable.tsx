@@ -1,34 +1,30 @@
-import { addUserToOrg, setRequestOptions } from '@/helper/apiService';
-import { User, UserID } from '@/type/type';
+import { editUserToOrg } from '@/helper/apiService';
+import { initUser } from '@/helper/initializer';
+import { User } from '@/type/type';
 import * as React from 'react';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Table } from 'semantic-ui-react';
 
 
 type UserProp = {
   propOrgId: string,
-  propUser: User
+  propUser: User,
+  setUsers: Dispatch<SetStateAction<User[]>>;
 }
 
-export default function UserRecord({ propOrgId, propUser }: UserProp) {
-  const [acceptStatus, setAcceptStatus] = useState(false);
-  const [rejectStatus, setRejectStatus] = useState(false);
-
+export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) {
+  const [user, setUser] = useState<User>(initUser);
+ 
   const handleApproveClick = () => {
-    const reqBody: UserID = {
-      userId: propUser.userId
-    }
 
-    const reqOptions = setRequestOptions("PATCH", reqBody);
-    addUserToOrg(propOrgId, reqOptions)
-    setAcceptStatus(true);
-    setRejectStatus(false)
+    editUserToOrg(propOrgId, propUser, setUser, setUsers);
+
   }
 
-  const handleRejectClick = () => {
-
-    setRejectStatus(true);
-    setAcceptStatus(false);
+  const handleDisapproveClick = () => {
+    editUserToOrg(propOrgId, propUser, setUser, setUsers);
+    // setRejectStatus(true);
+    //setAcceptStatus(false);
   }
 
   return (
@@ -37,19 +33,34 @@ export default function UserRecord({ propOrgId, propUser }: UserProp) {
       <Table.Cell >{propUser.username}</Table.Cell>
       <Table.Cell >{propUser.email}</Table.Cell>
       <Table.Cell >{propUser.roles}</Table.Cell>
-      <Table.Cell >???</Table.Cell>
+      <Table.Cell >{propUser.status}</Table.Cell>
       <Table.Cell >
         {
-          !acceptStatus ?
-          <Button onClick={handleApproveClick}>Approve</Button>
-          : null
+          propUser.status === "pending" ?
+            <>
+              <Button onClick={handleApproveClick} color='green'>Approve</Button>
+              <Button onClick={handleDisapproveClick} color='orange'>Disapprove</Button>
+            </>
+            : null
         }
 
         {
-          !rejectStatus ?
-          <Button onClick={handleRejectClick}>Reject</Button>
-          : null
+          propUser.status === "disapproved" ?
+            <>
+              <Button onClick={handleApproveClick} color='green'>Approve</Button>
+            </>
+            : null
         }
+
+        {
+          propUser.status === "approved" ?
+            <>
+              <Button onClick={handleDisapproveClick} color='orange'>Disapprove</Button>
+            </>
+            : null
+        }
+
+
       </Table.Cell>
     </Table.Row>
   );

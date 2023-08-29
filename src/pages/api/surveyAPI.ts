@@ -40,7 +40,7 @@ export async function updateOrganizationNameApi(id: string, reqOptions: ReqOptio
   return response;
 };
 
-export async function addUserToOrgApi(orgId: string, reqOptions: ReqOptions) {
+export async function editUserToOrgApi(orgId: string, reqOptions: ReqOptions) {
 
   const response = await fetch(`${BASE_ORG_URL}/${orgId}/manage`, reqOptions);
   return response;
@@ -120,6 +120,16 @@ const BASE_USER_URL = `${process.env.NEXT_PUBLIC_PORT}/users`;
 const AUTH_URL = `${process.env.NEXT_PUBLIC_PORT}/authenticate`;
 const NEW_USER_URL = `${BASE_USER_URL}/new`;
 
+export async function getUsersApi() {
+  const jwt: string = checkIfLocalStorageDef();
+ const apiResponse = await fetch(BASE_USER_URL, {
+    cache: 'no-store',
+    headers: { Authorization: `Bearer ${jwt}` },
+    mode: "cors",
+  });
+ 
+  return apiResponse;
+}
 
 export async function getUserApi(name: string) {
   const jwt: string = checkIfLocalStorageDef();
@@ -133,16 +143,11 @@ export async function getUserApi(name: string) {
   return apiResponse;
 }
 
-export async function getAllUsersApi() {
-  const jwt: string = checkIfLocalStorageDef();
-  const userURL = BASE_USER_URL;
-  const apiResponse = await fetch(userURL, {
-     cache: 'no-store',
-     headers: { Authorization: `Bearer ${jwt}` },
-     mode: "cors",
-   });
-   return apiResponse;
- }
+export async function updateUserStatusApi(name: string, reqOptions: ReqOptions) {
+
+  const response = await fetch(`${BASE_USER_URL}/${name}`, reqOptions);
+  return response;
+};
 
 export async function signUpUserApi(data: FormDataSingUp) {
 

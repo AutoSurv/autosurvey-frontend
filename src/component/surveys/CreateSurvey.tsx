@@ -82,7 +82,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
             </Form.Field>
             <Form.Field>
               <Label>Accommodation Type</Label>
-              <Input placeholder="Accommodation Type" type="text" name="accommodationType" pattern="^[0-9]*$"/>
+              <Input placeholder="Accommodation Type" type="text" name="accommodationType" pattern="^[a-zA-Z]*$"/>
             </Form.Field>
             <Form.Field>
               <Label>Profession</Label>

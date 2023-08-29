@@ -103,7 +103,8 @@ export type ImportedSurvey = {
 export type Organization = {
   orgId: string,
   orgName: string,
-  surveys: Survey[]
+  surveys: Survey[],
+  users: User[]
 }
 
 export type OrgRequestDto = {
@@ -133,7 +134,7 @@ export type LoggedUser = {
   username: string,
   email: string,
   role: string,
-  status:string,
+  status: string,
   token: string
 }
 
@@ -146,8 +147,8 @@ export type User = {
   status: string
 }
 
-export type UserID = {
-  userId: string
+export type UserStatusDto = {
+  status: string
 }
 
 export type UserID = {

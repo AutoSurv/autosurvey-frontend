@@ -20,15 +20,15 @@ export const downloadExcel = (data: any, filterYears: string[], filterCountries:
   if (data.length == 1) {
     XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else if (data.length > 1) {
-    if (filterYears.length == 1) {
-      if (filterCountries.length == 1) {
-        if (filterLocations.length == 1) {
+    if (filterCountries.length == 1) {
+      if (filterLocations.length == 1) {
+        if (filterYears.length == 1) {
           XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         } else {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + ".xlsx");
+          XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         }
       } else {
-        XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + ".xlsx");
+        XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + ".xlsx");
       }
     } else {
       XLSX.writeFile(workbook, survey.orgName + ".xlsx");
@@ -101,7 +101,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user",
-    status: "not_approved"
+    status: "pending"
   }
   localStorage.clear();
 
@@ -153,6 +153,8 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   data.forEach((survey) => {
+    console.log("typeof survey.year: ", typeof survey.year);
+
     if (survey.country === null) { survey.country = ""; }
     if (typeof survey.year !== 'number') { survey.year = 0; }
     if (typeof survey.rent !== 'number') { survey.rent = 0; }

@@ -3,13 +3,15 @@ import { Survey, Organization, Pagination, MeadDataForChart, User } from "@/type
 export const initOrg: Organization = {
   orgId: "",
   orgName: "",
-  surveys: []
+  surveys: [],
+  users: []
 }
 
 export const notAnOrg: Organization = {
   orgId: "0",
   orgName: "ORGANIZATION NOT AVAILABLE",
-  surveys: []
+  surveys: [],
+  users: []
 }
 
 export const initSurvey: Survey = {

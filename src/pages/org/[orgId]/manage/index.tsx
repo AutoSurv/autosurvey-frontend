@@ -1,9 +1,8 @@
 import { NavigationBar } from "@/component/NavigationBar";
 import UserTable from "@/component/UserTable";
-import { getAllUsers } from "@/helper/apiService";
+import { getUsers } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { getUserEmailDomain } from "@/helper/methods";
-import { getAllUsersApi } from "@/pages/api/surveyAPI";
 import { User } from "@/type/type"
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -13,23 +12,16 @@ import { Header, Icon, Label, Table } from "semantic-ui-react";
 
 export default function Manage() {
   const { organization } =useContext(OrgContext);
-  const [userlist, setUserList] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const router = useRouter();
 
-  // const getAllUsers = async () => {
-  //   const apiResponse = await getAllUsers();
-  //   if (apiResponse.status === 200) {
-  //     const data: User[] = await apiResponse.json();
-  //     console.log("users: ", data);
-  //     setUserList(data.filter(user => user.email.includes(organization.orgName) ));
-  //   }
-  // } 
-
   useEffect(() => {
-    getAllUsers(setUserList);
-  },[]);
+    if(router.isReady){
+      getUsers(setUsers);
+    } 
+    
+  },[router.isReady]);
 
-  console.log("userlist: ", userlist)
   return (
     <>
       <div className="home-header-container">
@@ -56,17 +48,15 @@ export default function Manage() {
         </Table.Header>
         <Table.Body>
           {
-            userlist.length > 0 ?
-            userlist
+            users.length > 0 ?
+            users
             .filter((user: User) => {
-              console.log("manage.user.email vs organization.orgname: ", user.email, ", ", organization.orgName)    
                return organization.orgName.toLowerCase() === getUserEmailDomain(user.email).toLowerCase();
               }
             ).map((user: User, index: number) => {
-              console.log("manage.user.email: ", user.email)
               return(
                 <>
-                  <UserTable key={index} propOrgId={organization.orgId} propUser={user} />
+                  <UserTable key={index} propOrgId={organization.orgId} propUser={user} setUsers={setUsers} />
                 </>
               )
             })

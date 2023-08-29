@@ -23,14 +23,17 @@ export default function SurveyDetails() {
   //useMemo(() => getSurveys(setPagination, setSurveys), [] );
 
   useEffect(() => {
-    setFilterCountries([])
-    setFilterLocations([])
-    setFilterYears([])
-    if (surveyid) {
-      getSurvey(surveyid, setSurvey);
+  
+    if (router.isReady) {
+
+      if (surveyid) {
+        getSurvey(surveyid, setSurvey);
+      }
+      getSurveys(setPagination, setSurveys);
+
     }
-    getSurveys(setPagination, setSurveys);
-  }, [])
+    
+  }, [setSurvey, router.isReady])
 
   return (
     <div className="specificsurvey-card-container">

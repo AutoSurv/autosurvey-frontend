@@ -13,9 +13,11 @@ export default function OrgDetails() {
 
   useEffect(() => {
     
+     if(router.isReady){
       getOrganization(orgId!, setOrganization);
-    
-  }, [])
+     }
+      
+  }, [router.isReady])
 
   return (
     <div>
