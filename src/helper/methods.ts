@@ -18,20 +18,20 @@ export const downloadExcel = (data: any, filterYears: string[], filterCountries:
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
   if (data.length == 1) {
-    XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
+    XLSX.writeFile(workbook, survey.organization.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else if (data.length > 1) {
     if (filterCountries.length == 1) {
       if (filterLocations.length == 1) {
         if (filterYears.length == 1) {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
+          XLSX.writeFile(workbook, survey.organization.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         } else {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
+          XLSX.writeFile(workbook, survey.organization.orgName + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         }
       } else {
-        XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + ".xlsx");
+        XLSX.writeFile(workbook, survey.organization.orgName + "_" + survey.country + ".xlsx");
       }
     } else {
-      XLSX.writeFile(workbook, survey.orgName + ".xlsx");
+      XLSX.writeFile(workbook, survey.organization.orgName + ".xlsx");
     }
   } else {
     setErrorMsg("nothing to export");

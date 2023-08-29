@@ -23,7 +23,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrgid, p
 
         <Form className="surveys-form" onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(propSurvey.id, e, propSetSurvey, setOpenStatus, setErrMessage, propSurvey.orgId, setOrganization, setFilteredSurveys);
+          updateSurvey(propSurvey.id, e, propSetSurvey, setOpenStatus, setErrMessage, propSurvey.organization, setOrganization, setFilteredSurveys);
           getOrganization(propOrgid, setOrganization);
         }} >
           <Form.Group className="surveys-form-edit" >

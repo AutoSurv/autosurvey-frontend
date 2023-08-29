@@ -6,6 +6,7 @@ import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   organization: Organization;
+  orgId: string;
   setOrganization: Dispatch<SetStateAction<Organization>>;
   setSurveys: Dispatch<SetStateAction<Survey[]>>;
 }
@@ -15,7 +16,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
   const [errMessage, setErrMessage] = useState<string>("");
   const [pagination, setPagination] = useState<Pagination>(initPagination);
 
-  const { organization, setOrganization, setSurveys } = props;
+  const { organization, orgId, setOrganization, setSurveys } = props;
 
   return (
   <>
@@ -34,7 +35,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey(e, organization.orgId, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization, orgId, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>

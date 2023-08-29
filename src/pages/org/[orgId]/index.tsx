@@ -9,20 +9,21 @@ export default function OrgDetails() {
 
   const  router  = useRouter();
   const { orgId } = router.query;
-  const { setOrganization } =useContext(OrgContext);
+  const { organization, setOrganization } =useContext(OrgContext);
 
   useEffect(() => {
     
      if(router.isReady){
       getOrganization(orgId!, setOrganization);
+      console.log(orgId);
      }
       
-  }, [router.isReady])
+  }, [router.isReady, setOrganization])
 
   return (
     <div>
       {orgId && 
-      <SurveyContent />}
+      <SurveyContent orgId={orgId as string}/>}
     </div>
   )
 }

@@ -37,8 +37,7 @@ export const initSurvey: Survey = {
   totalIncome: 0,
   comments: "",
   id: "",
-  orgId: "",
-  orgName: ""
+  organization: initOrg
 }
 
 export const initPagination: Pagination = {

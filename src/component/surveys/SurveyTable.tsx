@@ -50,7 +50,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
 
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
-                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.orgId, setOrganization, setFilteredSurveys);
+                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.organization, setOrganization, setFilteredSurveys);
                             }} >
                                 <Form.Group className="surveys-form-edit" >
                                     <Form.Field className="surveys-form-edit-field">
@@ -135,7 +135,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Comments</Label>
-                                        <Input placeholder={propSurvey.comments} type="text" name="comments" pattern="^[a-zA-Z]*$" />
+                                        <Input placeholder={propSurvey.comments} type="text" name="comments"  />
                                     </Form.Field>
 
                                 </Form.Group>

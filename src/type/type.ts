@@ -21,8 +21,9 @@ export type Survey = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  orgId: string,
-  orgName: string
+  organization: Organization
+  //orgId: string,
+  //orgName: string
 }
 
 export type SurveyRequestDto = {
@@ -48,7 +49,8 @@ export type SurveyRequestDto = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  orgId: string
+  organization: Organization
+  //orgId: string
 }
 
 export type SurveyUpdateDto = {
@@ -73,7 +75,8 @@ export type SurveyUpdateDto = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  orgId: string | string[] | undefined
+  organization: Organization
+  //orgId: string | string[] | undefined
 }
 
 export type ImportedSurvey = {

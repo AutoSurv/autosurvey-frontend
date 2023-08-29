@@ -16,14 +16,18 @@ import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export default function SurveyContent() {
+type SurveyContentProp = {
+  orgId: string
+}
+
+export default function SurveyContent({orgId}: SurveyContentProp) {
   const router = useRouter();
   const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
-
+  
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
   
@@ -36,9 +40,10 @@ export default function SurveyContent() {
   }
 
   useEffect(() => {
-     console.log(organization);
      getSurveys(setPagination, setSurveys);
+     
   }, []);
+  console.log(organization);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
@@ -110,7 +115,7 @@ export default function SurveyContent() {
           <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
           : null
         }            
-        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+        <CreateSurvey organization={organization} orgId={orgId} setOrganization={setOrganization} setSurveys={setSurveys} />
       </section>
 
       <section className="surveys-charts">

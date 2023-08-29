@@ -50,7 +50,7 @@ export default function SurveyDetails() {
 
           <TableHead>
             <TableRow>
-              <TableCell colSpan={2} className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country} {survey.year}</TableCell>
+              <TableCell colSpan={2} className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.organization.orgName} in {survey.country} {survey.year}</TableCell>
             </TableRow>
           </TableHead>
 
@@ -186,7 +186,7 @@ export default function SurveyDetails() {
                 <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey} />
               </TableCell>
               <TableCell align="center">
-                <DelSurvey propOrgid={survey.orgId} propSurveyid={surveyid} propSurvey={survey} propSetPagination={setPagination}/>
+                <DelSurvey propOrgid={survey.organization.orgId} propSurveyid={surveyid} propSurvey={survey} propSetPagination={setPagination}/>
                 </TableCell>
             </TableRow>
 

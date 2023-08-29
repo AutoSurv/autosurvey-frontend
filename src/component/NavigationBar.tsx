@@ -41,7 +41,9 @@ export function NavigationBar({ pathname }: HeaderProps) {
   useEffect(() => {
     setRole(localStorage.getItem("role") as string);
   }, [])
-
+  console.log(filteredSurveys);
+  console.log(organization.surveys);
+  console.log(survey);
   return (
     <>
       {progressCounter > 0 && progressCounter < totalCounter ?
@@ -84,13 +86,17 @@ export function NavigationBar({ pathname }: HeaderProps) {
                     <Dropdown.Item>
                       <label onClick={(e) => {
                         e.preventDefault();
-                        downloadExcel(filteredSurveys.filter(s => s.orgName === organization.orgName), filterYears, filterCountries, filterLocations, setErrorMsg);
+                        downloadExcel(filteredSurveys.filter(s => s.organization.orgName === organization.orgName), filterYears, filterCountries, filterLocations, setErrorMsg);
                       }} style={{ textDecoration: 'none', color: '#4183c4' }} >Export Surveys (xlsx)
                       </label>
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <label >
-                        <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={filteredSurveys.filter(s => s.orgName === organization.orgName)}>
+                        <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={filteredSurveys.filter(s =>{
+                           console.log(s);
+                           s.organization.orgName === organization.orgName
+
+                        })}>
                           Export Survey (csv)
                         </CSVLink>
                       </label>

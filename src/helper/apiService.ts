@@ -130,6 +130,7 @@ export async function getSurveys(setPagination: Dispatch<SetStateAction<Paginati
     const data: Pagination = await apiResponse.json();
     setPagination(data);
     setSurveys(data.surveys);
+    console.log(data.surveys);
     return data;
   }
 
@@ -155,7 +156,7 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  orgId: string, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
+  org: Organization, orgId: string, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: SurveyRequestDto = {
     id: "",
@@ -180,10 +181,10 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
-    orgId: orgId,
+    organization: org
   };
 
-  if (!reqBody.country || !reqBody.orgId) {
+  if (!reqBody.country) {
     setErrMessage('Please fill the form.');
     return;
   }
@@ -192,7 +193,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 
   await addSurveyApi(reqOptions);
   await getSurveys(setPagination, setSurveys);
-  await getOrganization(orgId, setOrganization)
+  await getOrganization(orgId, setOrganization);
   setOpen(false);
   setErrMessage('');
 }
@@ -237,14 +238,14 @@ export async function addImportedSurvey(
       numChildren: surveyArr[i].numChildren,
       totalIncome: surveyArr[i].totalIncome,
       comments: surveyArr[i].comments,
-      orgId: organization.orgId,
+      organization: organization,
     };
 
-    if (!reqBody.orgId) {
+     if (!reqBody.organization.orgId) {
       setErrMessage('Organiztion information is missing on survey: ' + reqBody.id + ". Import skipped");
       continue;
     }
-
+ 
     if (reqBody.id !== undefined) {
       const listOfSurveys: Survey[] = organization.surveys;
       const surveyFound = listOfSurveys.find(survey => survey.id == reqBody.id);
@@ -291,7 +292,7 @@ export async function updateSurvey(
   id: string | string[] | undefined,
   event: React.FormEvent<HTMLFormElement>,
   setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>, orgid: string,
+  setErrMessage: Dispatch<SetStateAction<string>>, org: Organization,
   setOrganization: Dispatch<SetStateAction<Organization>>,
   setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
 ) {
@@ -318,14 +319,14 @@ export async function updateSurvey(
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
-    orgId: orgid
+    organization: org
   };
 
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    await getOrganization(orgid, setOrganization).then(data => setFilteredSurveys(data.surveys));
+    await getOrganization(org.orgId, setOrganization).then(data => setFilteredSurveys(data.surveys));
     setOpen(false);
     setErrMessage('');
   } else {
