@@ -186,7 +186,7 @@ export default function SurveyDetails() {
                 <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey} />
               </TableCell>
               <TableCell align="center">
-                <DelSurvey propOrgid={survey.orgId} propSurvey={survey} propSetPagination={setPagination}/>
+                <DelSurvey propOrgid={survey.orgId} propSurveyid={surveyid} propSurvey={survey} propSetPagination={setPagination}/>
                 </TableCell>
             </TableRow>
 
