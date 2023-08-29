@@ -37,9 +37,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         const worksheet = workbook.Sheets[sheetName];
         const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
             
-        const valuetedData = checkImportedSurveyFields(json);
-
-        if (typeof valuetedData[0] === "object"){
+        if (typeof json[0] === "object"){
           const surveyArr: Survey[] = JSON.parse(JSON.stringify(json));
           setDataFromImportedSurvey(surveyArr);
           setTotalCounter(surveyArr.length);
