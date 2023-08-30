@@ -121,20 +121,6 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     return;
   }
 
-/*   const apiResponse = await getOrganizationsApi();
-  if (apiResponse.status === 200) {
-    const data: Organization[] = await apiResponse.json();
-    const domain = getUserEmailDomain(inputSignUpBody.email);
-    const check = data.filter(org => org.orgId === domain);
-    if (check.length == 0) {
-      setErrorMsg("Organization not available in the DB")
-    }
-  } else {
-    console.log("apiResponse.status: ", apiResponse.status);
-    setErrorMsg("Cannot check the email domain from the DB")
-    return;
-  } */
-
   await signUpUser(inputSignUpBody)
     .then((response) => {
       if (response?.status == 201) {
@@ -156,7 +142,6 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   data.forEach((survey) => {
-    console.log("typeof survey.year: ", typeof survey.year);
 
     if (survey.country === null) { survey.country = ""; }
     if (typeof survey.year !== 'number') { survey.year = 0; }
@@ -183,13 +168,6 @@ export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   return data;
 }
-
-//make it nicer with "key in"
-const data = ["rent", "utilities", "food", "basicItems", "transportation", "educationTotal"] as const;
-type Data = typeof data;
-type DataKey = keyof Data;
-// const dataKey: DataKey = ;
-// console.log("Datakey: ", dataKey);
 
 export function calculateMeanValues(country_arr: string[], filteredSurvey: Survey[]) {
 

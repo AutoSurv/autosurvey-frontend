@@ -16,15 +16,11 @@ export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) 
   const [user, setUser] = useState<User>(initUser);
  
   const handleApproveClick = () => {
-
     editUserToOrg(propOrgId, propUser, setUser, setUsers);
-
   }
 
   const handleDisapproveClick = () => {
     editUserToOrg(propOrgId, propUser, setUser, setUsers);
-    // setRejectStatus(true);
-    //setAcceptStatus(false);
   }
 
   return (

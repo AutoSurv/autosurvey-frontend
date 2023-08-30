@@ -129,7 +129,6 @@ export async function getSurveys(setPagination: Dispatch<SetStateAction<Paginati
   const apiResponse = await getOrganizationApi(propOrgId);
   
   if (apiResponse.status === 200) {
-    //const data = await apiOrgResponse.json();
     const data: Organization = await apiResponse.json();
     setSurveys(data.surveys);
     return data.surveys;
@@ -442,4 +441,3 @@ export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
   };
   return reqOptions;
 }
-

@@ -20,8 +20,6 @@ export default function SurveyDetails() {
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const { organization, survey, setSurvey, setSurveys, setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
-  //useMemo(() => getSurveys(setPagination, setSurveys), [] );
-
   useEffect(() => {
   
     if (router.isReady) {

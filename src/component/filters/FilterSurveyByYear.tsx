@@ -5,11 +5,9 @@ import FilterYear from "./FilterYear";
 type FilterProps = {
   propSurveys: Survey[];
   propSetFilteredSurvey: Dispatch<SetStateAction<Survey[]>>
-  //propSetFilter: Dispatch<SetStateAction<string[]>>
 }
 
 export default function FilterSurveyByYear( { propSurveys, propSetFilteredSurvey, 
-  //propSetFilter
   } : FilterProps) {
   const [filterYears, setFilterYears] = useState<string[]>([]);
 
