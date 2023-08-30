@@ -12,7 +12,7 @@ type UpdateSurveyProps = {
 
 export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: UpdateSurveyProps) {
   const [openConfirm, setOpenConfirm] = useState(false);
-  const { setSurveys } = useContext(OrgContext);
+  const { organization, setSurveys } = useContext(OrgContext);
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: 
           onCancel={() => setOpenConfirm(false)}
           onConfirm={(e) => {
             e.preventDefault();
-            deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys);
+            deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys, organization);
             setOpenConfirm(false);
             window.location.href = "/org/" + propOrgid;
           }}

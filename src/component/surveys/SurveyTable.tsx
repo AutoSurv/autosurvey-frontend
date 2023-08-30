@@ -50,7 +50,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
 
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
-                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, propSurvey.orgId, setOrganization, setFilteredSurveys);
+                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, organization, setOrganization, setFilteredSurveys);
                             }} >
                                 <Form.Group className="surveys-form-edit" >
                                     <Form.Field className="surveys-form-edit-field">

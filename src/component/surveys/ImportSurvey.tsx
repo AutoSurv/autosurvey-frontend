@@ -29,8 +29,6 @@ export default function ImportSurvey(props: ImportSurveyProps) {
 
       const reader = new FileReader();
       reader.readAsArrayBuffer(e.target.files[0]);
-      console.log("importSurvey.dataFromImportedSurvey: ", dataFromImportedSurvey);
-
 
       reader.onload = (e) => {
         const data = e.target!.result;
@@ -38,9 +36,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         const sheetName = workbook.SheetNames[0];
         const worksheet = workbook.Sheets[sheetName];
         const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
-    
-        const valuetedData = checkImportedSurveyFields(json);
-
+            
         if (typeof json[0] === "object"){
           const surveyArr: Survey[] = JSON.parse(JSON.stringify(json));
           setDataFromImportedSurvey(surveyArr);
