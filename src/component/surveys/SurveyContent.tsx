@@ -27,7 +27,6 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           filteredSurveys, setFilteredSurveys, 
           isFilterSet, setIsFilterSet, 
           surveys, setSurveys} = useContext(OrgContext);
-  //const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);

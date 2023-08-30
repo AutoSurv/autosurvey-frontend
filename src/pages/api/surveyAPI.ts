@@ -16,7 +16,6 @@ export async function getOrganizationsApi() {
 };
 
 export async function getOrganizationApi(orgid: string | string[]) {
-  console.log("surveyApi.getOrganizaiotnApi.orgId: ", orgid);
   const jwt: string = checkIfLocalStorageDef();
   const organizationURL = BASE_ORG_URL + `/${orgid}`;
   const apiResponse = await fetch(organizationURL, {

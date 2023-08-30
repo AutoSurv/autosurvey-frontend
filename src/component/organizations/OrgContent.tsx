@@ -28,8 +28,6 @@ export default function OrgContent() {
   const [user, setUser] = useState<User>(initUser)
   const [organizations, setOrganizations] = useState<Organization[]>([]);  
 
-  //useMemo(() => getOrganizations(setOrganizations), []);
-
   useEffect(() => {
     getUser(localStorage.getItem("username") as string, setUser);
     setOrganization(initOrg);
@@ -121,17 +119,7 @@ export default function OrgContent() {
         </Modal></>
       ) : null}
       <div className="orgs-orgcard-box">
-        {organizations.filter(/* organization => {
-          if (localStorage.getItem("role") === "ROLE_ADMIN") {
-            return organization;
-          } else if (localStorage.getItem("role") === "ROLE_MANAGER") {
-            return organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()
-          } else {
-            if (organization.orgName.toLowerCase() === userEmailDomain.toLowerCase()) {
-              return organization;
-            } 
-          }   
-        } */
+        {organizations.filter(
           organization => {
             if (localStorage.getItem("role") === "ROLE_ADMIN") {
               return organization;

@@ -6,7 +6,6 @@ export interface OrgContextValue {
 
     organization: Organization;
     setOrganization: Dispatch<SetStateAction<Organization>>;  
-
    
     setOrganizations: Dispatch<SetStateAction<Organization[]>>;  
 

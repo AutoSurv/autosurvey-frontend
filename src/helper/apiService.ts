@@ -129,22 +129,10 @@ export async function getSurveys(setPagination: Dispatch<SetStateAction<Paginati
   const apiResponse = await getOrganizationApi(propOrgId);
   
   if (apiResponse.status === 200) {
-    //const data = await apiOrgResponse.json();
     const data: Organization = await apiResponse.json();
     setSurveys(data.surveys);
     return data.surveys;
   }
-
-  // const apiResponse = await getSurveysApi();
-
-  // if (apiResponse.status === 200) {
-  //   const data: Survey[] = await apiResponse.json();
-  //   //setPagination(data);
-  //   const surveyList: Survey[] = data.filter(surv => surv.organization.orgName.includes(organization.orgName) );//=== organization.orgName);
-  //   //console.log("apiService.getSurveys.surveyList: ", surveyList);  
-  //   setSurveys(surveyList);
-  //   return surveyList;
-  // }
 
   if (apiResponse.status === 500) {
     localStorage.clear();

@@ -6,14 +6,11 @@ import { OrgContext } from "@/helper/context";
 type FilterProps = {
   propSurveys: Survey[];
   propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
-  //propSetFilter: Dispatch<SetStateAction<string[]>>
 }
 
 export default function FilterSurveyByCountry( { propSurveys, propSetFilteredSurveys
-  //, propSetFilter 
   } : FilterProps) {
   const { filterCountries, setFilterYears, setFilterCountries, setFilterLocations } = useContext(OrgContext);
-  //const [filterCountries, setFilterCountries] = useState<string[]>([]);
   
   useEffect (() => {
     setFilterCountries(filterCountries);

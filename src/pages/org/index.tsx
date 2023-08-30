@@ -10,8 +10,6 @@ export default function Orgs() {
     const {setFilterYears, setFilterCountries, setFilterLocations, setOrganization } = useContext(OrgContext);
     const [organizations, setOrganizations] = useState<Organization[]>([]);
 
-    //useMemo(() => getOrganizations(setOrganizations), [] );
-
     useEffect(() => {
         setOrganization(initOrg);
         setFilterCountries([]);

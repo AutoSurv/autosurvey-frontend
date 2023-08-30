@@ -16,7 +16,6 @@ export default function Fallback() {
     let offlineSurveyCounter: number = 0;
 
     useEffect(() => {
-
             
     }, [surveyCounter]);
 
