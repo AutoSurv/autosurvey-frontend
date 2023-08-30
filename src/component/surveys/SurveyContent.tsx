@@ -1,5 +1,5 @@
 import { getSurveys } from "@/helper/apiService";
-import { Pagination, Survey } from "@/type/type";
+import { Organization, Pagination, Survey } from "@/type/type";
 import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
@@ -16,10 +16,18 @@ import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-export default function SurveyContent() {
+type SurveyContentProps = {
+  propOrgId: string;
+}
+
+export default function SurveyContent({propOrgId}: SurveyContentProps) {
   const router = useRouter();
-  const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
-  const [surveys, setSurveys] = useState<Survey[]>([]);
+  const { organization, setOrganization, 
+          setUserNameAuth, filterLocations, 
+          filteredSurveys, setFilteredSurveys, 
+          isFilterSet, setIsFilterSet, 
+          surveys, setSurveys} = useContext(OrgContext);
+  //const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
@@ -35,15 +43,9 @@ export default function SurveyContent() {
     country_arr = Array.from(countryLocation_list);
   }
 
-  // const surveyOfOrg = () => {
-  //   const surveyList: Survey[] = surveys.filter(surv => surv.organization.orgName === organization.orgName);
-  //   console.log("SurveyContent.surveyList: ", surveyList);  
-  //   return surveyList;
-  // }
-
   useEffect(() => {
-     getSurveys(setPagination, setSurveys, organization);
-  }, []);
+     getSurveys(setPagination, setSurveys, propOrgId);
+  }, [surveys.length]);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);

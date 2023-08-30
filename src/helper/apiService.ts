@@ -33,7 +33,7 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
 export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
 
   const apiResponse = await getOrganizationApi(orgid);
-
+  
   if (apiResponse.status !== 200) {
     localStorage.clear();
     router.push("/");
@@ -124,16 +124,27 @@ export async function deleteOrganization(id: string, setOrganizations: Dispatch<
 //Survey section
 
 export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, 
-  setSurveys: Dispatch<SetStateAction<Survey[]>>, organization: Organization) {
-  const apiResponse = await getSurveysApi();
+  setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {// organization: Organization) {
 
+  const apiResponse = await getOrganizationApi(propOrgId);
+  
   if (apiResponse.status === 200) {
-    const data: Survey[] = await apiResponse.json();
-    //setPagination(data);
-    const surveyList: Survey[] = data.filter(surv => surv.organization.orgName.includes(organization.orgName) );//=== organization.orgName);
-    setSurveys(surveyList);
-    return surveyList;
+    //const data = await apiOrgResponse.json();
+    const data: Organization = await apiResponse.json();
+    setSurveys(data.surveys);
+    return data.surveys;
   }
+
+  // const apiResponse = await getSurveysApi();
+
+  // if (apiResponse.status === 200) {
+  //   const data: Survey[] = await apiResponse.json();
+  //   //setPagination(data);
+  //   const surveyList: Survey[] = data.filter(surv => surv.organization.orgName.includes(organization.orgName) );//=== organization.orgName);
+  //   //console.log("apiService.getSurveys.surveyList: ", surveyList);  
+  //   setSurveys(surveyList);
+  //   return surveyList;
+  // }
 
   if (apiResponse.status === 500) {
     localStorage.clear();
@@ -193,7 +204,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
   await addSurveyApi(reqOptions);
-  await getSurveys(setPagination, setSurveys, org);
+  await getSurveys(setPagination, setSurveys, org.orgId);
   await getOrganization(reqBody.organization.orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
@@ -276,8 +287,8 @@ export async function addImportedSurvey(
       setProgressCounter(updateCounter + importCounter);
     }
 
-    await getSurveys(setPagination, setSurveys,organization);
-    await getOrganization(organization.orgId, setOrganization)
+    await getSurveys(setPagination, setSurveys, organization.orgId);
+    await getOrganization(organization.orgId, setOrganization);
     setOpen(false);
     setErrMessage('');
   }
@@ -344,7 +355,7 @@ export async function deleteSurvey(orgId: string,
   organization: Organization) {
 
   await deleteSurveyApi(id);
-  await getSurveys(setPagination, setSurveys, organization);
+  await getSurveys(setPagination, setSurveys, organization.orgId);
 
 };
 
@@ -431,4 +442,3 @@ export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
   };
   return reqOptions;
 }
-
