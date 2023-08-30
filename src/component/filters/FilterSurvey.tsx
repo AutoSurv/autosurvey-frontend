@@ -31,7 +31,7 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys, pro
       setFilterSurveys(fromLocations);
     } 
     propSetFilteredSurveys(
-      filterSurveys
+      propSurveys
     )  
   }, [propSurveys.length, filterSurveys.length, fromLocations.length, fromCountry.length, filterLocations.length, filterCountries.length, filterYears.length]) 
 

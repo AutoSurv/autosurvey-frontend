@@ -22,7 +22,7 @@ type SurveyContentProp = {
 
 export default function SurveyContent({orgId}: SurveyContentProp) {
   const router = useRouter();
-  const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
+  const { organization, setOrganization, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
@@ -40,10 +40,12 @@ export default function SurveyContent({orgId}: SurveyContentProp) {
   }
 
   useEffect(() => {
-     getSurveys(setPagination, setSurveys);
+     getSurveys(setSurveys);
      
   }, []);
   console.log(organization);
+  console.log(filteredSurveys);
+  console.log(surveys);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
@@ -107,7 +109,7 @@ export default function SurveyContent({orgId}: SurveyContentProp) {
         </Header>
       </div>
       
-      <NavigationBar pathname={router.pathname} />      
+      <NavigationBar pathname={router.pathname} organization={organization} filteredSurveys={filteredSurveys} />      
 
       <section className="surveys-management">
         {

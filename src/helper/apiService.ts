@@ -111,11 +111,6 @@ export async function editUserToOrg(orgId: string, user: User, setUser: Dispatch
 
 };
 
-export async function removeUserFromOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
-  
-
-}
-
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   await deleteOrganizationApi(id);
   await getOrganizations(setOrganizations);
@@ -123,14 +118,14 @@ export async function deleteOrganization(id: string, setOrganizations: Dispatch<
 
 //Survey section
 
-export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>) {
+export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>) {
   const apiResponse = await getSurveysApi();
 
   if (apiResponse.status === 200) {
-    const data: Pagination = await apiResponse.json();
-    setPagination(data);
-    setSurveys(data.surveys);
-    console.log(data.surveys);
+    const data: Survey[] = await apiResponse.json();
+    //setPagination(data);
+    console.log(data);
+    setSurveys(data);
     return data;
   }
 
@@ -192,7 +187,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
   await addSurveyApi(reqOptions);
-  await getSurveys(setPagination, setSurveys);
+  await getSurveys(setSurveys);
   await getOrganization(orgId, setOrganization);
   setOpen(false);
   setErrMessage('');
@@ -274,7 +269,7 @@ export async function addImportedSurvey(
       setProgressCounter(updateCounter + importCounter);
     }
 
-    await getSurveys(setPagination, setSurveys);
+    await getSurveys(setSurveys);
     await getOrganization(organization.orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
@@ -341,7 +336,7 @@ export async function deleteSurvey(orgId: string,
   setSurveys: Dispatch<SetStateAction<Survey[]>>) {
 
   await deleteSurveyApi(id);
-  await getSurveys(setPagination, setSurveys);
+  await getSurveys(setSurveys);
 
 };
 

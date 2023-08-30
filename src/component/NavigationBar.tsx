@@ -6,18 +6,20 @@ import { downloadExcel } from "@/helper/methods";
 import { CSVLink } from "react-csv";
 import { useContext, useEffect, useState } from "react";
 import { OrgContext } from "@/helper/context";
-import { ROLE, Survey } from "@/type/type";
+import { Organization, ROLE, Survey } from "@/type/type";
 
 type HeaderProps = {
-  pathname: string
+  pathname: string,
+  organization: Organization,
+  filteredSurveys: Survey[]
 }
 
-export function NavigationBar({ pathname }: HeaderProps) {
+export function NavigationBar({organization, pathname, filteredSurveys }: HeaderProps) {
   const {
-    organization, setOrganization,
+    setOrganization,
     filterYears,
     filterCountries, filterLocations,
-    filteredSurveys, setSurveys,
+    setSurveys,
     survey
   } = useContext(OrgContext);
 
@@ -42,7 +44,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
     setRole(localStorage.getItem("role") as string);
   }, [])
   console.log(filteredSurveys);
-  console.log(organization.surveys);
+  console.log(organization);
   console.log(survey);
   return (
     <>
@@ -90,7 +92,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                       }} style={{ textDecoration: 'none', color: '#4183c4' }} >Export Surveys (xlsx)
                       </label>
                     </Dropdown.Item>
-                    <Dropdown.Item>
+                   {/*  <Dropdown.Item>
                       <label >
                         <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={filteredSurveys.filter(s =>{
                            console.log(s);
@@ -100,7 +102,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                           Export Survey (csv)
                         </CSVLink>
                       </label>
-                    </Dropdown.Item>
+                    </Dropdown.Item> */}
                   </Dropdown.Menu>
                 </Dropdown>
               </Menu.Item>

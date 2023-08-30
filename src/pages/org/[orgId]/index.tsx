@@ -1,6 +1,6 @@
 import SurveyContent from "@/component/surveys/SurveyContent";
 import { OrgContext } from "@/helper/context";
-import { getOrganization } from "@/helper/apiService";
+import { getOrganization, getSurvey, getSurveys } from "@/helper/apiService";
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react";
 
@@ -9,16 +9,16 @@ export default function OrgDetails() {
 
   const  router  = useRouter();
   const { orgId } = router.query;
-  const { organization, setOrganization } =useContext(OrgContext);
+  const { setPagination, setSurveys, setOrganization } =useContext(OrgContext);
 
   useEffect(() => {
     
      if(router.isReady){
       getOrganization(orgId!, setOrganization);
-      console.log(orgId);
+      getSurveys(setSurveys);
      }
       
-  }, [router.isReady, setOrganization])
+  }, [router.isReady])
 
   return (
     <div>

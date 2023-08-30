@@ -18,7 +18,7 @@ export default function SurveyDetails() {
   const { orgId, surveyid } = router.query;
 
   const [pagination, setPagination] = useState<Pagination>(initPagination);
-  const { survey, setSurvey, setSurveys, setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
+  const { survey, setSurvey, setSurveys, organization, filteredSurveys} = useContext(OrgContext);
 
   //useMemo(() => getSurveys(setPagination, setSurveys), [] );
 
@@ -29,7 +29,7 @@ export default function SurveyDetails() {
       if (surveyid) {
         getSurvey(surveyid, setSurvey);
       }
-      getSurveys(setPagination, setSurveys);
+      getSurveys(setSurveys);
 
     }
     
@@ -43,7 +43,7 @@ export default function SurveyDetails() {
         </Header>
       </div>
 
-      <NavigationBar pathname={router.pathname} />      
+      <NavigationBar organization={organization} pathname={router.pathname} filteredSurveys={filteredSurveys} />      
       
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
