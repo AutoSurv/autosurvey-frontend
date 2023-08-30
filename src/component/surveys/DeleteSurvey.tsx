@@ -5,16 +5,15 @@ import { Button, Confirm } from "semantic-ui-react";
 import { Survey, Pagination } from '@/type/type';
 
 type UpdateSurveyProps = {
-  propSurvey: Survey;
   propOrgid: string;
-  propSurveyid: string | string[];
+  propSurvey: Survey;
   propSetPagination: Dispatch<SetStateAction<Pagination>>;
 }
-
-export default function DelSurvey({ propOrgid, propSurveyid, propSurvey, propSetPagination }: UpdateSurveyProps) {
+export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: UpdateSurveyProps) {
   const [openConfirm, setOpenConfirm] = useState(false);
   const { organization, setSurveys } = useContext(OrgContext);
 
+  propSurvey.id
   return (
     <>
       <Button onClick={() => {
