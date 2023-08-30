@@ -13,7 +13,6 @@ export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: 
   const [openConfirm, setOpenConfirm] = useState(false);
   const { organization, setSurveys } = useContext(OrgContext);
 
-  propSurvey.id
   return (
     <>
       <Button onClick={() => {

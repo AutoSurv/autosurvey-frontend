@@ -131,7 +131,6 @@ export async function getSurveys(setPagination: Dispatch<SetStateAction<Paginati
     const data: Survey[] = await apiResponse.json();
     //setPagination(data);
     const surveyList: Survey[] = data.filter(surv => surv.organization.orgName.includes(organization.orgName) );//=== organization.orgName);
-    //console.log("apiService.getSurveys.surveyList: ", surveyList);  
     setSurveys(surveyList);
     return surveyList;
   }
