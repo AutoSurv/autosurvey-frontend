@@ -35,6 +35,13 @@ export default function FilterSurvey( { propSurveys, propSetFilteredSurveys, pro
     )  
   }, [propSurveys.length, filterSurveys.length, fromLocations.length, fromCountry.length, filterLocations.length, filterCountries.length, filterYears.length]) 
 
+/*   console.log("propSurveys: ", propSurveys);
+  console.log("fromCountry: ", fromCountry);
+  console.log("fromLocations: ", fromLocations);
+  console.log("filterSurveys: ", filterSurveys); */
+
+
+
   return(
     <section >      
       <FilterSurveyByCountry propSurveys={propSurveys} propSetFilteredSurveys={setFromCountry} />        

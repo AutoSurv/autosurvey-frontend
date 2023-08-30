@@ -1,37 +1,40 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
-export const downloadExcel = (data: any, filterYears: string[], filterCountries: string[], filterLocations: string[], setErrorMsg: Dispatch<SetStateAction<string>>) => {
+export const downloadExcel = (data: any, organization: Organization, filterYears: string[], filterCountries: string[], filterLocations: string[], 
+  setErrorMsg: Dispatch<SetStateAction<string>>) => {
 
   const surveyAsString: string = JSON.stringify(data[0]);
+
   if (surveyAsString === undefined) {
     setErrorMsg("nothing to export");
     return;
   }
-  const survey: Survey = JSON.parse(surveyAsString);
+  const survey: ExportedSurvey = JSON.parse(surveyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
+  delete (worksheet['W']);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
   if (data.length == 1) {
-    XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
+    XLSX.writeFile(workbook, organization.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else if (data.length > 1) {
     if (filterCountries.length == 1) {
       if (filterLocations.length == 1) {
         if (filterYears.length == 1) {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
+          XLSX.writeFile(workbook, organization.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         } else {
-          XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
+          XLSX.writeFile(workbook, organization.orgName + "_" + survey.country + "_" + survey.locationClustered + ".xlsx");
         }
       } else {
-        XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + ".xlsx");
+        XLSX.writeFile(workbook, organization.orgName + "_" + survey.country + ".xlsx");
       }
     } else {
-      XLSX.writeFile(workbook, survey.orgName + ".xlsx");
+      XLSX.writeFile(workbook, organization.orgName + ".xlsx");
     }
   } else {
     setErrorMsg("nothing to export");
@@ -153,6 +156,8 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
 export function checkImportedSurveyFields(data: ImportedSurvey[]) {
 
   data.forEach((survey) => {
+    console.log("typeof survey.year: ", typeof survey.year);
+
     if (survey.country === null) { survey.country = ""; }
     if (typeof survey.year !== 'number') { survey.year = 0; }
     if (typeof survey.rent !== 'number') { survey.rent = 0; }

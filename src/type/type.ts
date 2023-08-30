@@ -21,8 +21,7 @@ export type Survey = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  orgId: string,
-  orgName: string
+  organization: Organization
 }
 
 export type SurveyRequestDto = {
@@ -48,7 +47,7 @@ export type SurveyRequestDto = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  orgId: string
+  organization: Organization
 }
 
 export type SurveyUpdateDto = {
@@ -73,7 +72,7 @@ export type SurveyUpdateDto = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  orgId: string | string[] | undefined
+  organization: Organization
 }
 
 export type ImportedSurvey = {
@@ -97,6 +96,31 @@ export type ImportedSurvey = {
   numFullIncomes: number | string,
   numChildren: number | string,
   totalIncome: number | string,
+  comments: string,
+}
+
+export type ExportedSurvey = {
+  id: string;
+  country: string;
+  year: number;
+  rent: number;
+  utilities: number,
+  food: number,
+  basicItems: number,
+  transportation: number,
+  educationTotal: number,
+  educationSupplies: number,
+  educationFee: number,
+  educationType: string,
+  accommodationType: string,
+  profession: string,
+  locationGiven: string,
+  locationClustered: string,
+  numResidents: number,
+  numIncomes: number,
+  numFullIncomes: number,
+  numChildren: number,
+  totalIncome: number,
   comments: string,
 }
 
@@ -149,6 +173,10 @@ export type User = {
 
 export type UserStatusDto = {
   status: string
+}
+
+export type UserID = {
+  userId: string
 }
 
 export enum ROLE {

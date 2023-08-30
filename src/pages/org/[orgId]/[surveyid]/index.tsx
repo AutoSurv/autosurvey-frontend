@@ -18,7 +18,7 @@ export default function SurveyDetails() {
   const { orgId, surveyid } = router.query;
 
   const [pagination, setPagination] = useState<Pagination>(initPagination);
-  const { survey, setSurvey, setSurveys, setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSurveys, setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
   //useMemo(() => getSurveys(setPagination, setSurveys), [] );
 
@@ -29,7 +29,7 @@ export default function SurveyDetails() {
       if (surveyid) {
         getSurvey(surveyid, setSurvey);
       }
-      getSurveys(setPagination, setSurveys);
+      getSurveys(setPagination, setSurveys, organization);
 
     }
     
@@ -50,7 +50,7 @@ export default function SurveyDetails() {
 
           <TableHead>
             <TableRow>
-              <TableCell colSpan={2} className="specificsurvey-table-head" align="left" size="medium">Survey Details for {survey.orgName} in {survey.country} {survey.year}</TableCell>
+              <TableCell colSpan={2} className="specificsurvey-table-head" align="left" size="medium">Survey Details for {organization.orgName} in {survey.country} {survey.year}</TableCell>
             </TableRow>
           </TableHead>
 
@@ -186,7 +186,7 @@ export default function SurveyDetails() {
                 <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey} />
               </TableCell>
               <TableCell align="center">
-                <DelSurvey propOrgid={survey.orgId} propSurveyid={surveyid} propSurvey={survey} propSetPagination={setPagination}/>
+                <DelSurvey propOrgid={organization.orgId} propSurvey={survey} propSetPagination={setPagination}/>
                 </TableCell>
             </TableRow>
 

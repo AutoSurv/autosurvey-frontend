@@ -35,9 +35,14 @@ export default function SurveyContent() {
     country_arr = Array.from(countryLocation_list);
   }
 
+  // const surveyOfOrg = () => {
+  //   const surveyList: Survey[] = surveys.filter(surv => surv.organization.orgName === organization.orgName);
+  //   console.log("SurveyContent.surveyList: ", surveyList);  
+  //   return surveyList;
+  // }
+
   useEffect(() => {
-     console.log(organization);
-     getSurveys(setPagination, setSurveys);
+     getSurveys(setPagination, setSurveys, organization);
   }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
@@ -106,8 +111,8 @@ export default function SurveyContent() {
 
       <section className="surveys-management">
         {
-          organization && organization.surveys && organization.surveys.length > 0 ?
-          <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
+          surveys ?
+          <FilterSurvey propSurveys={surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
           : null
         }            
         <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
