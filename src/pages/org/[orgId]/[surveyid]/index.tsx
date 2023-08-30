@@ -29,7 +29,7 @@ export default function SurveyDetails() {
       if (surveyid) {
         getSurvey(surveyid, setSurvey);
       }
-      getSurveys(setPagination, setSurveys, organization);
+      getSurveys(setPagination, setSurveys, orgId as string);
 
     }
     
