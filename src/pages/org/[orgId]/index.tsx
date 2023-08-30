@@ -15,7 +15,6 @@ export default function OrgDetails() {
     
      if(router.isReady){
       getOrganization(orgId!, setOrganization);
-      console.log(orgId);
      }
       
   }, [router.isReady, setOrganization])
