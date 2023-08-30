@@ -35,7 +35,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey(e, organization, orgId, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>

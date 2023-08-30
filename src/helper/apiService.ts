@@ -123,15 +123,17 @@ export async function deleteOrganization(id: string, setOrganizations: Dispatch<
 
 //Survey section
 
-export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>) {
+export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, 
+  setSurveys: Dispatch<SetStateAction<Survey[]>>, organization: Organization) {
   const apiResponse = await getSurveysApi();
 
   if (apiResponse.status === 200) {
-    const data: Pagination = await apiResponse.json();
-    setPagination(data);
-    setSurveys(data.surveys);
-    console.log(data.surveys);
-    return data;
+    const data: Survey[] = await apiResponse.json();
+    //setPagination(data);
+    const surveyList: Survey[] = data.filter(surv => surv.organization.orgName.includes(organization.orgName) );//=== organization.orgName);
+    //console.log("apiService.getSurveys.surveyList: ", surveyList);  
+    setSurveys(surveyList);
+    return surveyList;
   }
 
   if (apiResponse.status === 500) {
@@ -156,7 +158,7 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  org: Organization, orgId: string, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
+  org: Organization, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: SurveyRequestDto = {
     id: "",
@@ -184,7 +186,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     organization: org
   };
 
-  if (!reqBody.country) {
+  if (!reqBody.country || !reqBody.organization.orgId) {
     setErrMessage('Please fill the form.');
     return;
   }
@@ -192,8 +194,8 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
   await addSurveyApi(reqOptions);
-  await getSurveys(setPagination, setSurveys);
-  await getOrganization(orgId, setOrganization);
+  await getSurveys(setPagination, setSurveys, org);
+  await getOrganization(reqBody.organization.orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
 }
@@ -210,6 +212,7 @@ export async function addImportedSurvey(
   setProgressCounter: Dispatch<SetStateAction<number>>
 ) {
 
+  console.log("apiService.addImportedSurvey.surveyArr: ", surveyArr);
   let importCounter: number = 0;
   let updateCounter: number = 0;
   let errorCounter: number = 0;
@@ -241,12 +244,12 @@ export async function addImportedSurvey(
       organization: organization,
     };
 
-     if (!reqBody.organization.orgId) {
+    if (!reqBody.organization.orgId) {
       setErrMessage('Organiztion information is missing on survey: ' + reqBody.id + ". Import skipped");
       continue;
     }
- 
-    if (reqBody.id !== undefined) {
+
+    if (reqBody.id !== undefined && reqBody.id !== '') {
       const listOfSurveys: Survey[] = organization.surveys;
       const surveyFound = listOfSurveys.find(survey => survey.id == reqBody.id);
 
@@ -274,7 +277,7 @@ export async function addImportedSurvey(
       setProgressCounter(updateCounter + importCounter);
     }
 
-    await getSurveys(setPagination, setSurveys);
+    await getSurveys(setPagination, setSurveys,organization);
     await getOrganization(organization.orgId, setOrganization)
     setOpen(false);
     setErrMessage('');
@@ -326,7 +329,7 @@ export async function updateSurvey(
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    await getOrganization(org.orgId, setOrganization).then(data => setFilteredSurveys(data.surveys));
+    await getOrganization(reqBody.organization.orgId, setOrganization).then(data => setFilteredSurveys(data.surveys));
     setOpen(false);
     setErrMessage('');
   } else {
@@ -338,10 +341,11 @@ export async function updateSurvey(
 export async function deleteSurvey(orgId: string,
   id: string,
   setPagination: Dispatch<SetStateAction<Pagination>>,
-  setSurveys: Dispatch<SetStateAction<Survey[]>>) {
+  setSurveys: Dispatch<SetStateAction<Survey[]>>,
+  organization: Organization) {
 
   await deleteSurveyApi(id);
-  await getSurveys(setPagination, setSurveys);
+  await getSurveys(setPagination, setSurveys, organization);
 
 };
 

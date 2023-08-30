@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { getUserApi } from "../api/surveyAPI";
 import { User } from "@/type/type";
 import Link from "next/link";
-import { Card, Header, Icon, Menu, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
+import { Card, Header, Icon, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
 import { useRouter } from "next/router";
 import { NavigationBar } from "@/component/NavigationBar";
 

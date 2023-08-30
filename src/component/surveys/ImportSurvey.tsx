@@ -1,5 +1,4 @@
 import { initPagination } from "@/helper/initializer";
-import { checkImportedSurveyFields } from "@/helper/methods";
 import { addImportedSurvey } from "@/helper/apiService";
 import { Survey, Pagination, ImportedSurvey, Organization } from "@/type/type";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";

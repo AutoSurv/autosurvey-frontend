@@ -22,7 +22,7 @@ type SurveyContentProp = {
 
 export default function SurveyContent({orgId}: SurveyContentProp) {
   const router = useRouter();
-  const { organization, setOrganization, setUserNameAuth, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
+  const { organization, setOrganization, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
@@ -40,10 +40,8 @@ export default function SurveyContent({orgId}: SurveyContentProp) {
   }
 
   useEffect(() => {
-     getSurveys(setPagination, setSurveys);
-     
+     getSurveys(setPagination, setSurveys, organization);
   }, []);
-  console.log(organization);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
@@ -111,8 +109,8 @@ export default function SurveyContent({orgId}: SurveyContentProp) {
 
       <section className="surveys-management">
         {
-          organization && organization.surveys && organization.surveys.length > 0 ?
-          <FilterSurvey propSurveys={organization.surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
+          surveys ?
+          <FilterSurvey propSurveys={surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
           : null
         }            
         <CreateSurvey organization={organization} orgId={orgId} setOrganization={setOrganization} setSurveys={setSurveys} />
