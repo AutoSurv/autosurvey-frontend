@@ -6,7 +6,6 @@ import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   organization: Organization;
-  orgId: string;
   setOrganization: Dispatch<SetStateAction<Organization>>;
   setSurveys: Dispatch<SetStateAction<Survey[]>>;
 }
@@ -16,7 +15,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
   const [errMessage, setErrMessage] = useState<string>("");
   const [pagination, setPagination] = useState<Pagination>(initPagination);
 
-  const { organization, orgId, setOrganization, setSurveys } = props;
+  const { organization, setOrganization, setSurveys } = props;
 
   return (
   <>

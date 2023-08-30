@@ -22,7 +22,7 @@ export default function OrgDetails() {
   return (
     <div>
       {orgId && 
-      <SurveyContent orgId={orgId as string}/>}
+      <SurveyContent propOrgId={orgId as string} />}
     </div>
   )
 }

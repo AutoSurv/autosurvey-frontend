@@ -1,5 +1,5 @@
 import { getSurveys } from "@/helper/apiService";
-import { Pagination, Survey } from "@/type/type";
+import { Organization, Pagination, Survey } from "@/type/type";
 import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
@@ -16,14 +16,17 @@ import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-type SurveyContentProp = {
-  orgId: string
+type SurveyContentProps = {
+  propOrgId: string;
 }
 
-export default function SurveyContent({orgId}: SurveyContentProp) {
+export default function SurveyContent({propOrgId}: SurveyContentProps) {
   const router = useRouter();
-  const { organization, setOrganization, filterLocations, filteredSurveys, setFilteredSurveys, isFilterSet, setIsFilterSet} = useContext(OrgContext);
-  const [surveys, setSurveys] = useState<Survey[]>([]);
+  const { organization, setOrganization, 
+          filterLocations, 
+          filteredSurveys, setFilteredSurveys, 
+          isFilterSet, setIsFilterSet, 
+          surveys, setSurveys} = useContext(OrgContext);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
@@ -40,8 +43,8 @@ export default function SurveyContent({orgId}: SurveyContentProp) {
   }
 
   useEffect(() => {
-     getSurveys(setPagination, setSurveys, organization);
-  }, []);
+     getSurveys(setPagination, setSurveys, propOrgId);
+  }, [surveys.length]);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
@@ -113,7 +116,7 @@ export default function SurveyContent({orgId}: SurveyContentProp) {
           <FilterSurvey propSurveys={surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
           : null
         }            
-        <CreateSurvey organization={organization} orgId={orgId} setOrganization={setOrganization} setSurveys={setSurveys} />
+        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
       </section>
 
       <section className="surveys-charts">

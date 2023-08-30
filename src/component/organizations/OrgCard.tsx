@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Organization, ROLE } from '@/type/type';
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { Button, Form, Input, Label, Modal, Card, Image, Confirm, Icon, Popup } from 'semantic-ui-react';
+import { Button, Form, Input, Label, Modal, Card, Image, Confirm, Icon } from 'semantic-ui-react';
 import { deleteOrganization, updateOrganizationName } from '@/helper/apiService';
 import { OrgContext } from '@/helper/context';
 import Link from 'next/link';
