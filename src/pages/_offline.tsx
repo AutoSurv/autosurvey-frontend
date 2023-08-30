@@ -6,6 +6,7 @@ import { Button, Form, Header, Icon, Input, Label, List, Modal, Table, TableBody
 import SignalWifiConnectedNoInternet4Icon from '@mui/icons-material/SignalWifiConnectedNoInternet4';
 import * as XLSX from 'xlsx';
 import { TableHead } from '@mui/material';
+import { initOrg } from '@/helper/initializer';
 
 export default function Fallback() {
     const [open, setOpen] = useState(false);
@@ -43,8 +44,7 @@ export default function Fallback() {
             totalIncome: e.currentTarget.totalIncome.value,
             comments: e.currentTarget.comments.value,
             id: "",
-            orgId: "",
-            orgName: e.currentTarget.orgName.value
+            organization: initOrg
         };
 
         if (!localStorage.getItem("offlineSurvey")) {
@@ -77,7 +77,7 @@ export default function Fallback() {
         XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
         if (offlineSurveys) {
-            XLSX.writeFile(workbook, survey.orgName + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.year + "_" + survey.id + ".xlsx");
+            XLSX.writeFile(workbook, survey.organization.orgName + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.year + "_" + survey.id + ".xlsx");
             setSurveyCounter("0");
             window.localStorage.clear();
         } else {
