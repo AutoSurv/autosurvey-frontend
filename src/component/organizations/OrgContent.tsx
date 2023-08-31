@@ -22,11 +22,11 @@ export default function OrgContent() {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [userEmailDomain, setUserEmailDomain] = useState("");
-  const { userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
+  const { organizations, setOrganizations, userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [user, setUser] = useState<User>(initUser)
-  const [organizations, setOrganizations] = useState<Organization[]>([]);  
+  //const [organizations, setOrganizations] = useState<Organization[]>([]);  
 
   useEffect(() => {
     getUser(localStorage.getItem("username") as string, setUser);
@@ -35,7 +35,7 @@ export default function OrgContent() {
     setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
-    getOrganizations(setOrganizations);
+    //getOrganizations(setOrganizations);
     getUsers(setUsers);
   }, []);
 

@@ -7,8 +7,8 @@ import { OrgContext } from "@/helper/context";
 import { initOrg } from "@/helper/initializer";
 
 export default function Orgs() {
-    const {setFilterYears, setFilterCountries, setFilterLocations, setOrganization } = useContext(OrgContext);
-    const [organizations, setOrganizations] = useState<Organization[]>([]);
+    const { organizations, setOrganizations, setFilterYears, setFilterCountries, setFilterLocations, setOrganization } = useContext(OrgContext);
+    //const [organizations, setOrganizations] = useState<Organization[]>([]);
 
     useEffect(() => {
         setOrganization(initOrg);

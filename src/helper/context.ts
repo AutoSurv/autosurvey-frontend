@@ -7,6 +7,7 @@ export interface OrgContextValue {
     organization: Organization;
     setOrganization: Dispatch<SetStateAction<Organization>>;  
    
+    organizations: Organization[];
     setOrganizations: Dispatch<SetStateAction<Organization[]>>;  
 
     survey: Survey;
@@ -44,7 +45,7 @@ export const OrgContext = createContext<OrgContextValue> ({
 
     organization: {orgId: '', orgName: '', surveys: [], users: []},
     setOrganization: () => {},
-    
+    organizations: [],
     setOrganizations: () => {},
     survey: initSurvey,
     setSurvey: () => {},

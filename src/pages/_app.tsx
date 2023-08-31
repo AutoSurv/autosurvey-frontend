@@ -31,7 +31,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
 
       <OrgContext.Provider value={{ 
         organization, setOrganization, 
-        setOrganizations,
+        organizations, setOrganizations,
         survey, setSurvey, 
         surveys, setSurveys, setSignUpStatus, 
         signUpStatus, 
