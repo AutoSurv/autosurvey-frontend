@@ -9,10 +9,11 @@ import { OrgContext } from "@/helper/context";
 import { ROLE, Survey } from "@/type/type";
 
 type HeaderProps = {
-  pathname: string
+  pathname: string,
+  propOrgId: string
 }
 
-export function NavigationBar({ pathname }: HeaderProps) {
+export function NavigationBar({ pathname, propOrgId }: HeaderProps) {
   const {
     organization, setOrganization,
     filterYears,
@@ -108,7 +109,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
         {
           pathname.includes("[surveyid]") ?
             <>
-              <Menu.Item> <Link href={"/org/" + organization.orgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
+              <Menu.Item> <Link href={"/org/" + propOrgId} style={{ textDecoration: 'none' }}>Surveys</Link></Menu.Item>
               <Menu.Item>
                 <Dropdown text='Export Survey' style={{ textDecoration: 'none', color: '#4183c4' }}>
                   <Dropdown.Menu>
@@ -135,10 +136,10 @@ export function NavigationBar({ pathname }: HeaderProps) {
           pathname.includes("about") || pathname.includes("userInfo") || pathname.includes("manage") ?
             <>
               {
-                organization.orgId.length > 0 ?
+                propOrgId ?
                   <>
                     <Menu.Item>
-                      <Link href={"/org/" + organization.orgId} style={{ textDecoration: "none" }}>
+                      <Link href={"/org/" + propOrgId} style={{ textDecoration: "none" }}>
                         Surveys
                       </Link>
                     </Menu.Item>
@@ -156,7 +157,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
           {
             role !== ROLE.user && pathname.includes("[orgId]") ?
               <Menu.Item >
-                <Link href={"/org/" + organization.orgId + "/" + "manage"} style={{ textDecoration: "none" }}>
+                <Link href={"/org/" + propOrgId + "/" + "manage"} style={{ textDecoration: "none" }}>
                   Approval
                 </Link>
               </Menu.Item>

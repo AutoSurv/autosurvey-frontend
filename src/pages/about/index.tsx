@@ -29,7 +29,7 @@ export default function About() {
         </Header>
       </div>
 
-      <NavigationBar pathname={router.pathname} />
+      <NavigationBar pathname={router.pathname} propOrgId=""/>
 
       <main className="org-main">
         <section className="about-project">

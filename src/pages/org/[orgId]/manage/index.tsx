@@ -30,7 +30,7 @@ export default function Manage() {
         </Header>
       </div>
       
-      <NavigationBar pathname={router.pathname} /> 
+      <NavigationBar pathname={router.pathname} propOrgId=""/> 
 
       <Table celled striped color="violet" >
         <Table.Header >
