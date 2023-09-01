@@ -117,9 +117,10 @@ export default function OrgContent() {
         </Modal></>
       ) : null}
       <div className="orgs-orgcard-box">
-        {organizations.filter(
+        {user.roles ?
+        organizations.filter(
           organization => {
-            if (localStorage.getItem("role") === "ROLE_ADMIN") {
+            if (user.roles === "ROLE_ADMIN") {
               return organization;
             } else {
               if (organization.users.find((userOrg) => {
@@ -139,6 +140,7 @@ export default function OrgContent() {
               />
             );
           })
+          : null
         }
       </div>
     </div>

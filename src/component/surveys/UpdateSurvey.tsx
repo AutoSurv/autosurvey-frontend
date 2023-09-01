@@ -33,7 +33,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       <Modal.Content>
         <Form onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.organization, setOrganization, setFilteredSurveys)
+          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.organization, setOrganization, setFilteredSurveys, setSurveys);
         }}>
         <Form.Field>
           <Label>Country Name</Label>

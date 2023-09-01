@@ -297,7 +297,8 @@ export async function updateSurvey(
   setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
   setErrMessage: Dispatch<SetStateAction<string>>, org: Organization,
   setOrganization: Dispatch<SetStateAction<Organization>>,
-  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>
+  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>,
+  setSurveys: Dispatch<SetStateAction<Survey[]>>
 ) {
 
   const reqBody: SurveyUpdateDto = {
@@ -329,7 +330,10 @@ export async function updateSurvey(
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    await getOrganization(reqBody.organization.orgId, setOrganization).then(data => setFilteredSurveys(data.surveys));
+    await getOrganization(org.orgId, setOrganization).then(data => {
+      setFilteredSurveys(data.surveys);
+      setSurveys(data.surveys);}
+    );
     setOpen(false);
     setErrMessage('');
   } else {

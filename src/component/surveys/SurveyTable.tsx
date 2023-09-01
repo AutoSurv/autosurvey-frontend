@@ -1,20 +1,21 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
-import { useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Box, Collapse, IconButton, TableCell, TableRow } from '@mui/material';
 import { Button, Form, Icon, Input, Label } from 'semantic-ui-react';
 import { updateSurvey } from '@/helper/apiService';
 import { OrgContext } from '@/helper/context';
 
 type SurveyCardProp = {
-    organization: Organization,
-    propSurvey: Survey
+    organization: Organization;
+    setSurveys: Dispatch<SetStateAction<Survey[]>>;
+    propSurvey: Survey;
 }
 
 export default function SurveyRecord(props: SurveyCardProp) {
-    const { propSurvey, organization } = props;
-    const { setSurvey, setOrganization, setFilteredSurveys } = useContext(OrgContext);
+    const { propSurvey, organization, setSurveys } = props;
+    const { setSurvey, setOrganization, setFilteredSurveys} = useContext(OrgContext);
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
 
@@ -50,7 +51,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
 
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
-                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, organization, setOrganization, setFilteredSurveys);
+                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, organization, setOrganization, setFilteredSurveys, setSurveys);
                             }} >
                                 <Form.Group className="surveys-form-edit" >
                                     <Form.Field className="surveys-form-edit-field">
