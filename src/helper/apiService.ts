@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import {
   Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp,
-  LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions, UserStatusDto
+  LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions, UserStatusDto, UserDto
 } from "../type/type";
 import {
   addImportedSurveyApi, addOrganizationApi, addSurveyApi,
@@ -89,13 +89,16 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
   setErrMessage('');
 };
 
-export async function editUserToOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
+export async function editUserToOrg(
+  orgId: string, user: UserDto, 
+    setUser: Dispatch<SetStateAction<UserDto>>, 
+    setUsers: Dispatch<SetStateAction<UserDto[]>>
+) {
 
   await updateUserStatus(user, setUsers, setUser).then(async (updatedUser) => {
-    const reqBody: User = {
+    const reqBody: UserDto = {
       userId: updatedUser!.userId,
       username: updatedUser!.username,
-      password: updatedUser!.password,
       email: updatedUser!.email,
       roles: updatedUser!.roles,
       status: updatedUser!.status
@@ -348,11 +351,11 @@ export async function deleteSurvey(orgId: string,
 
 //userSection
 
-export async function getUsers(setUsers: Dispatch<SetStateAction<User[]>>) {
+export async function getUsers(setUsers: Dispatch<SetStateAction<UserDto[]>>) {
   const apiResponse = await getUsersApi();
   if (apiResponse.status === 200) {
 
-    const data: User[] = await apiResponse.json();
+    const data: UserDto[] = await apiResponse.json();
     setUsers(data);
     return data;
   }
@@ -363,11 +366,11 @@ export async function getUsers(setUsers: Dispatch<SetStateAction<User[]>>) {
   }
 }
 
-export async function getUser(name: string, setUser: Dispatch<SetStateAction<User>>) {
+export async function getUser(name: string, setUser: Dispatch<SetStateAction<UserDto>>) {
   const apiResponse = await getUserApi(name);
   if (apiResponse.status === 200) {
 
-    const data: User = await apiResponse.json();
+    const data: UserDto = await apiResponse.json();
     setUser(data);
     return data;
   }
@@ -378,7 +381,7 @@ export async function getUser(name: string, setUser: Dispatch<SetStateAction<Use
   }
 }
 
-export async function updateUserStatus(user: User, setUsers: Dispatch<SetStateAction<User[]>>, setUser: Dispatch<SetStateAction<User>>) {
+export async function updateUserStatus(user: UserDto, setUsers: Dispatch<SetStateAction<UserDto[]>>, setUser: Dispatch<SetStateAction<UserDto>>) {
 
   const reqBody: UserStatusDto = {
     status: user.status === "disapproved" || user.status === "pending" ? "approved" : "disapproved"

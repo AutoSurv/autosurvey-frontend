@@ -171,6 +171,14 @@ export type User = {
   status: string
 }
 
+export type UserDto = {
+  userId: string,
+  username: string,
+  email: string,
+  roles: string,
+  status: string
+}
+
 export type UserStatusDto = {
   status: string
 }
