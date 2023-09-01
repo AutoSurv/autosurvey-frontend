@@ -1,6 +1,6 @@
 import { editUserToOrg } from '@/helper/apiService';
-import { initUser } from '@/helper/initializer';
-import { User } from '@/type/type';
+import { initUser, initUserDto } from '@/helper/initializer';
+import { User, UserDto } from '@/type/type';
 import * as React from 'react';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Table } from 'semantic-ui-react';
@@ -8,12 +8,12 @@ import { Button, Table } from 'semantic-ui-react';
 
 type UserProp = {
   propOrgId: string,
-  propUser: User,
-  setUsers: Dispatch<SetStateAction<User[]>>;
+  propUser: UserDto,
+  setUsers: Dispatch<SetStateAction<UserDto[]>>;
 }
 
 export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) {
-  const [user, setUser] = useState<User>(initUser);
+  const [user, setUser] = useState<UserDto>(initUserDto);
  
   const handleApproveClick = () => {
     editUserToOrg(propOrgId, propUser, setUser, setUsers);

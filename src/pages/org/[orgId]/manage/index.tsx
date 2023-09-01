@@ -3,7 +3,7 @@ import UserTable from "@/component/UserTable";
 import { getUsers } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { getUserEmailDomain } from "@/helper/methods";
-import { User } from "@/type/type"
+import { User, UserDto } from "@/type/type"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react"
@@ -12,7 +12,7 @@ import { Header, Icon, Label, Table } from "semantic-ui-react";
 
 export default function Manage() {
   const { organization } =useContext(OrgContext);
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserDto[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -50,10 +50,10 @@ export default function Manage() {
           {
             users.length > 0 ?
             users
-            .filter((user: User) => {
+            .filter((user: UserDto) => {
                return organization.orgName.toLowerCase() === getUserEmailDomain(user.email).toLowerCase();
               }
-            ).map((user: User, index: number) => {
+            ).map((user: UserDto, index: number) => {
               return(
                 <>
                   <UserTable key={index} propOrgId={organization.orgId} propUser={user} setUsers={setUsers} />

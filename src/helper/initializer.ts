@@ -1,4 +1,4 @@
-import { Survey, Organization, Pagination, MeadDataForChart, User } from "@/type/type";
+import { Survey, Organization, Pagination, MeadDataForChart, User, UserDto } from "@/type/type";
 
 export const initOrg: Organization = {
   orgId: "",
@@ -57,6 +57,14 @@ export const initUser: User = {
   userId: "",
   username: "",
   password: "",
+  email: "",
+  roles: "",
+  status: ""
+}
+
+export const initUserDto: UserDto = {
+  userId: "",
+  username: "",
   email: "",
   roles: "",
   status: ""
