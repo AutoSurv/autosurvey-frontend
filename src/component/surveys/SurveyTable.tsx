@@ -96,7 +96,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Education Type</Label>
-                                        <Input placeholder={propSurvey.educationType} type="text" name="educationType" defaultValue={propSurvey.educationType} pattern="^[A-zÀ-ž\s]*$" />
+                                        <Input placeholder={propSurvey.educationType} type="text" name="educationType" defaultValue={propSurvey.educationType} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Accommodation Type</Label>
@@ -104,15 +104,15 @@ export default function SurveyRecord(props: SurveyCardProp) {
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Profession</Label>
-                                        <Input placeholder={propSurvey.profession} type="text" name="profession" defaultValue={propSurvey.profession} pattern="^[A-zÀ-ž\s]*$" />
+                                        <Input placeholder={propSurvey.profession} type="text" name="profession" defaultValue={propSurvey.profession} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Location Given</Label>
-                                        <Input placeholder={propSurvey.locationGiven} type="text" name="locationGiven" defaultValue={propSurvey.locationGiven} pattern="^[A-zÀ-ž\s]*$" />
+                                        <Input placeholder={propSurvey.locationGiven} type="text" name="locationGiven" defaultValue={propSurvey.locationGiven} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Location Clustered</Label>
-                                        <Input placeholder={propSurvey.locationClustered} type="text" name="locationClustered" defaultValue={propSurvey.locationClustered} pattern="^[A-zÀ-ž\s]*$" />
+                                        <Input placeholder={propSurvey.locationClustered} type="text" name="locationClustered" defaultValue={propSurvey.locationClustered} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Number of Residents</Label>
@@ -136,7 +136,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
                                     </Form.Field>
                                     <Form.Field className="surveys-form-edit-field">
                                         <Label>Comments</Label>
-                                        <Input placeholder={propSurvey.comments} type="text" name="comments" defaultValue={propSurvey.comments}  pattern="^[A-z0-9À-ž\s]*$" />
+                                        <Input placeholder={propSurvey.comments} type="text" name="comments" defaultValue={propSurvey.comments}  pattern="^[A-z0-9À-ž\s\p{P}\p{S}]*$" />
                                     </Form.Field>
 
                                 </Form.Group>

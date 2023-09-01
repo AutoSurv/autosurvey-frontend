@@ -69,7 +69,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Education Type</Label>
-              <Input placeholder={propSurvey.educationType} type="text" name="educationType" defaultValue={propSurvey.educationType} pattern="^[A-zÀ-ž\s]*$" />
+              <Input placeholder={propSurvey.educationType} type="text" name="educationType" defaultValue={propSurvey.educationType} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Accommodation Type</Label>

@@ -81,11 +81,11 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Accommodation Type</Label>
-          <Input placeholder={survey.accommodationType} type="text" name="accommodationType" defaultValue={survey.accommodationType} pattern="^[A-zÀ-ž\s]*$" />
+          <Input placeholder={survey.accommodationType} type="text" name="accommodationType" defaultValue={survey.accommodationType} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Profession</Label>
-          <Input placeholder={survey.profession} type="text" name="profession" defaultValue={survey.profession} pattern="^[A-zÀ-ž\s]*$" />
+          <Input placeholder={survey.profession} type="text" name="profession" defaultValue={survey.profession} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Location Given</Label>
@@ -117,7 +117,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Comments</Label>
-          <Input placeholder={survey.comments} type="text" name="comments" defaultValue={survey.comments} pattern="^[A-z0-9À-ž.,+-\s]*$"/>
+          <Input placeholder={survey.comments} type="text" name="comments" defaultValue={survey.comments} pattern="^[A-z0-9À-ž.,+-\s\p{P}\p{S}]*$"/>
         </Form.Field>
 
         <Button type="submit" color="blue">Edit Survey</Button>
