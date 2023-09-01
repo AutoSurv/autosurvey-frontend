@@ -26,7 +26,7 @@ export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: 
             e.preventDefault();
             console.log("DeleteSurvey.DelSurvey.propSurvey.id: ", propSurvey.id);
             deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys, organization);
-            // setOpenConfirm(false);
+            setOpenConfirm(false);
             // window.location.href = "/org/" + propOrgid;
           }}
         />
