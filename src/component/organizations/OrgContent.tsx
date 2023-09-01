@@ -1,6 +1,6 @@
-import { addOrganization, getOrganizations, getUser, getUsers } from "@/helper/apiService";
-import { Organization, ROLE, User } from "@/type/type";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { addOrganization, getUser, getUsers } from "@/helper/apiService";
+import { Organization, ROLE, User, UserDto } from "@/type/type";
+import { useContext, useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -20,13 +20,12 @@ import { getUserEmailDomain } from "@/helper/methods";
 
 export default function OrgContent() {
   const router = useRouter();
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<UserDto[]>([]);
   const [userEmailDomain, setUserEmailDomain] = useState("");
   const { organizations, setOrganizations, userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
-  const [user, setUser] = useState<User>(initUser)
-  //const [organizations, setOrganizations] = useState<Organization[]>([]);  
+  const [user, setUser] = useState<UserDto>(initUser)
 
   useEffect(() => {
     getUser(localStorage.getItem("username") as string, setUser);
@@ -35,7 +34,6 @@ export default function OrgContent() {
     setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
-    //getOrganizations(setOrganizations);
     getUsers(setUsers);
   }, []);
 
@@ -66,7 +64,7 @@ export default function OrgContent() {
 
       <NavigationBar pathname={router.pathname} />
 
-      {user.roles !== ROLE.user ? (<>
+      { user.roles && user.roles !== ROLE.user ? (<>
         <div className="org-modal-btn-container">
           <Button className="org-modal-btn" color="green" onClick={() => setOpen(true)}>
             Create Organization

@@ -24,9 +24,9 @@ export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: 
           onCancel={() => setOpenConfirm(false)}
           onConfirm={(e) => {
             e.preventDefault();
-            deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys, organization);
-            setOpenConfirm(false);
-            window.location.href = "/org/" + propOrgid;
+            deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys, organization)
+            .then(() => setOpenConfirm(false))
+            .then(() => window.location.href = "/org/" + propOrgid);
           }}
         />
     </>     

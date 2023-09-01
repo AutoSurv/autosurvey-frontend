@@ -1,5 +1,5 @@
 import { getSurveys } from "@/helper/apiService";
-import { Organization, Pagination, Survey } from "@/type/type";
+import { Pagination, Survey } from "@/type/type";
 import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
@@ -122,7 +122,6 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
       <section className="surveys-charts">
         <Chart
           height={450}
-          //width={2000}
           type="bar"
           options={options}
           series={series}
