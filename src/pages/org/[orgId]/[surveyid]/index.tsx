@@ -16,19 +16,21 @@ export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-  const { organization, survey, setSurvey, setSurveys } = useContext(OrgContext);
+
+  const [pagination, setPagination] = useState<Pagination>(initPagination);
+  const { organization, survey, setSurvey, setSurveys, setFilterYears, setFilterCountries, setFilterLocations} = useContext(OrgContext);
 
   useEffect(() => {
-
+  
     if (router.isReady) {
-     
-        if (surveyid) {
-          getSurvey(surveyid, setSurvey);
-        }
-        getSurveys(setSurveys, orgId as string);
+
+      if (surveyid) {
+        getSurvey(surveyid, setSurvey);
+      }
+      getSurveys(setPagination, setSurveys, orgId as string);
 
     }
-
+    
   }, [setSurvey, router.isReady])
 
   return (
@@ -39,8 +41,8 @@ export default function SurveyDetails() {
         </Header>
       </div>
 
-      <NavigationBar pathname={router.pathname} propOrgId={orgId as string} />
-
+      <NavigationBar pathname={router.pathname} />      
+      
       {surveyid && <TableContainer className="specificsurvey-table-container" component={Paper}>
         <Table className="specificsurvey-table" aria-label="simple table">
 
@@ -182,8 +184,8 @@ export default function SurveyDetails() {
                 <UpdateSurvey survey={survey} orgid={orgId} setSurvey={setSurvey} />
               </TableCell>
               <TableCell align="center">
-                <DelSurvey propOrgid={orgId as string} propSurvey={survey} />
-              </TableCell>
+                <DelSurvey propOrgid={organization.orgId} propSurvey={survey} propSetPagination={setPagination}/>
+                </TableCell>
             </TableRow>
 
           </TableBody>

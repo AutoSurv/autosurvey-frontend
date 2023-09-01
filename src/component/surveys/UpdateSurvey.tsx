@@ -12,7 +12,7 @@ type CreateSurveyProps = {
 
 export default function UpdSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
-  const { setOrganization, setFilteredSurveys, setSurveys} = useContext(OrgContext);
+  const { setOrganization, setFilteredSurveys} = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   const { survey, setSurvey, orgid} = props;
@@ -33,7 +33,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       <Modal.Content>
         <Form onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(survey.id, e, setSurvey, setSurveys, setOpen, setErrMessage, survey.organization, setOrganization, setFilteredSurveys);
+          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.organization, setOrganization, setFilteredSurveys);
         }}>
         <Form.Field>
           <Label>Country Name</Label>

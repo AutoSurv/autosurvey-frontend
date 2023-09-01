@@ -48,7 +48,7 @@ export default function UserInfo() {
         </Header>
       </div>
 
-      <NavigationBar pathname={router.pathname} propOrgId=""/>
+      <NavigationBar pathname={router.pathname} />
 
       <div className="user-card-container">
         <Card className="user-card" >

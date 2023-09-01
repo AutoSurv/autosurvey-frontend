@@ -7,8 +7,9 @@ import { Survey, Pagination } from '@/type/type';
 type UpdateSurveyProps = {
   propOrgid: string;
   propSurvey: Survey;
+  propSetPagination: Dispatch<SetStateAction<Pagination>>;
 }
-export default function DelSurvey({ propOrgid, propSurvey }: UpdateSurveyProps) {
+export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: UpdateSurveyProps) {
   const [openConfirm, setOpenConfirm] = useState(false);
   const { organization, setSurveys } = useContext(OrgContext);
 
@@ -23,9 +24,9 @@ export default function DelSurvey({ propOrgid, propSurvey }: UpdateSurveyProps) 
           onCancel={() => setOpenConfirm(false)}
           onConfirm={(e) => {
             e.preventDefault();
-            deleteSurvey(organization.orgId, propSurvey.id, setSurveys);
+            deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys, organization);
             setOpenConfirm(false);
-            window.location.href = "/org/" + organization.orgId;
+            window.location.href = "/org/" + propOrgid;
           }}
         />
     </>     

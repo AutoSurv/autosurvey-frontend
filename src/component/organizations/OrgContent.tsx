@@ -26,6 +26,7 @@ export default function OrgContent() {
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [user, setUser] = useState<User>(initUser)
+  //const [organizations, setOrganizations] = useState<Organization[]>([]);  
 
   useEffect(() => {
     getUser(localStorage.getItem("username") as string, setUser);
@@ -34,7 +35,7 @@ export default function OrgContent() {
     setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
-    getOrganizations(setOrganizations);
+    //getOrganizations(setOrganizations);
     getUsers(setUsers);
   }, []);
 
@@ -63,7 +64,7 @@ export default function OrgContent() {
       </div>
 
 
-      <NavigationBar pathname={router.pathname} propOrgId={''}/>
+      <NavigationBar pathname={router.pathname} />
 
       {user.roles !== ROLE.user ? (<>
         <div className="org-modal-btn-container">
