@@ -102,8 +102,10 @@ export async function updateSurveyApi(
 };
 
 export async function deleteSurveyApi(id: string) {
-  console.log("surveyAPi.deleteSurvey.id: ", id);
   const jwt: string = checkIfLocalStorageDef();
+  console.log("surveyAPi.deleteSurvey.id: ", id);
+  console.log("surveyAPi.deleteSurvey.jwt: ", jwt);
+
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
   const response = await fetch(autosurveysURL, {
     method: "DELETE",
