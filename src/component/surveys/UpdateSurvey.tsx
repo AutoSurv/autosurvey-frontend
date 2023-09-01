@@ -1,4 +1,4 @@
-import { updateSurvey } from "@/helper/apiService";
+import { getSurvey, getSurveys, updateSurvey } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { Survey } from "@/type/type";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
@@ -6,13 +6,13 @@ import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   survey: Survey;
-  orgid: string | string[] | undefined;
+  orgid: string ;
   setSurvey: Dispatch<SetStateAction<Survey>>;
 }
 
 export default function UpdSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
-  const { setOrganization, setFilteredSurveys} = useContext(OrgContext);
+  const { setOrganization, setFilteredSurveys, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
   const { survey, setSurvey, orgid} = props;
@@ -33,11 +33,11 @@ export default function UpdSurvey(props: CreateSurveyProps) {
       <Modal.Content>
         <Form onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.organization, setOrganization, setFilteredSurveys);
+          updateSurvey(survey.id, e, setSurvey, setOpen, setErrMessage, survey.organization, setOrganization, setFilteredSurveys)
         }}>
         <Form.Field>
           <Label>Country Name</Label>
-          <Input placeholder={survey.country} type="text" name="country" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.country} type="text" name="country" pattern="^[A-zÀ-ž\s]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Year</Label>
@@ -77,23 +77,23 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Education Type</Label>
-          <Input placeholder={survey.educationType} type="text" name="educationType" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.educationType} type="text" name="educationType" pattern="^[A-zÀ-ž\s]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Accommodation Type</Label>
-          <Input placeholder={survey.accommodationType} type="text" name="accommodationType" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.accommodationType} type="text" name="accommodationType" pattern="^[A-zÀ-ž\s]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Profession</Label>
-          <Input placeholder={survey.profession} type="text" name="profession" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.profession} type="text" name="profession" pattern="^[A-zÀ-ž\s]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Location Given</Label>
-          <Input placeholder={survey.locationGiven} type="text" name="locationGiven" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.locationGiven} type="text" name="locationGiven" pattern="^[A-zÀ-ž\s]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Location Clustered</Label>
-          <Input placeholder={survey.locationClustered} type="text" name="locationClustered" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.locationClustered} type="text" name="locationClustered" pattern="^[A-zÀ-ž\s]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Number of Residents</Label>
@@ -117,7 +117,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Comments</Label>
-          <Input placeholder={survey.comments} type="text" name="comments" pattern="^[a-zA-Z]*$"/>
+          <Input placeholder={survey.comments} type="text" name="comments" pattern="^[A-z0-9À-ž.,+-\s]*$"/>
         </Form.Field>
 
         <Button type="submit" color="blue">Edit Survey</Button>

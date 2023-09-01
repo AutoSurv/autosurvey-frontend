@@ -1,4 +1,4 @@
-import { Survey } from '@/type/type';
+import { ExportedSurvey, Survey } from '@/type/type';
 import Head from 'next/head'
 import Link from 'next/link';
 import { Dispatch, FormEvent, SetStateAction, useEffect, useState } from 'react';
@@ -16,7 +16,7 @@ export default function Fallback() {
     let offlineSurveyCounter: number = 0;
 
     useEffect(() => {
-            
+
     }, [surveyCounter]);
 
     const saveOfflineSurvey = (e: FormEvent<HTMLFormElement>) => {
@@ -70,13 +70,14 @@ export default function Fallback() {
             setErrorMsg("nothing to export");
             return;
         }
-        const survey: Survey = JSON.parse(surveyAsString);
+        const survey: ExportedSurvey = JSON.parse(surveyAsString);
         const worksheet = XLSX.utils.json_to_sheet(offlineSurveys);
+        delete (worksheet['W1']);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
         if (offlineSurveys) {
-            XLSX.writeFile(workbook, survey.organization.orgName + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.year + "_" + survey.id + ".xlsx");
+            XLSX.writeFile(workbook, survey.country + "_" + survey.locationClustered + "_" + survey.year + ".xlsx");
             setSurveyCounter("0");
             window.localStorage.clear();
         } else {
@@ -100,7 +101,7 @@ export default function Fallback() {
 
             <section className="offline-project">
                 <h1 className="offline-project-title">Offline mode <SignalWifiConnectedNoInternet4Icon fontSize='large' /></h1>
-                <Button className='offline-online-btn' color='blue'><Link href="/" style={{color : 'white'}}><Icon name='angle left' />Back to Online Mode</Link></Button>       
+                <Button className='offline-online-btn' color='blue'><Link href="/" style={{ color: 'white' }}><Icon name='angle left' />Back to Online Mode</Link></Button>
                 <section className="offline-project-table-section">
                     <Table className="offline-table">
                         <TableHead>
@@ -154,16 +155,12 @@ export default function Fallback() {
                                                 setOpen(false);
                                             }}>
                                                 <Form.Field>
-                                                    <Label>Organization</Label>
-                                                    <Input placeholder="Name your oranization" type="text" name="orgName" pattern="^[a-zA-Z]*$" />
-                                                </Form.Field>
-                                                <Form.Field>
                                                     <Label>Country Name</Label>
-                                                    <Input placeholder="Name your country" type="text" name="country" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Name your country" type="text" name="country" required="required" pattern="^[A-zÀ-ž\s]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Year</Label>
-                                                    <Input placeholder="Year" type="text" name="year" pattern="^[0-9]*$" />
+                                                    <Input placeholder="Year" type="text" name="year" required="required" pattern="^[0-9]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Rent</Label>
@@ -199,23 +196,23 @@ export default function Fallback() {
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Education Type</Label>
-                                                    <Input placeholder="Education Type" type="text" name="educationType" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Education Type" type="text" name="educationType" pattern="^[A-zÀ-ž\s]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Accommodation Type</Label>
-                                                    <Input placeholder="Accommodation Type" type="text" name="accommodationType" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Accommodation Type" type="text" name="accommodationType" pattern="^[A-zÀ-ž\s]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Profession</Label>
-                                                    <Input placeholder="Profession" type="text" name="profession" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Profession" type="text" name="profession" pattern="^[A-zÀ-ž\s]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Location Given</Label>
-                                                    <Input placeholder="Location Given" type="text" name="locationGiven" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Location Given" type="text" name="locationGiven" pattern="^[A-zÀ-ž\s]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Location Clustered</Label>
-                                                    <Input placeholder="Location Clustered" type="text" name="locationClustered" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Location Clustered" type="text" name="locationClustered" required="required" pattern="^[A-zÀ-ž\s]*$" />
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Number of Residents</Label>
@@ -239,7 +236,7 @@ export default function Fallback() {
                                                 </Form.Field>
                                                 <Form.Field>
                                                     <Label>Comments</Label>
-                                                    <Input placeholder="Comments" type="text" name="comments" pattern="^[a-zA-Z]*$" />
+                                                    <Input placeholder="Comments" type="text" name="comments" pattern="^[A-z0-9À-ž.,+-\s]*$" />
                                                 </Form.Field>
 
                                                 <Button type="submit" color="green">Save Survey</Button>
@@ -268,19 +265,19 @@ export default function Fallback() {
                 </section>
             </section>
             <footer className='home-footer'>
-            <List horizontal>
-              <List.Item>
-                <List.Content>
-                  <List.Header>Simon.H</List.Header>
-                </List.Content>
-              </List.Item>
-              <List.Item>
-                <List.Content>
-                  <List.Header>Marco.D</List.Header>
-                </List.Content>
-              </List.Item>
-            </List>
-          </footer>
+                <List horizontal>
+                    <List.Item>
+                        <List.Content>
+                            <List.Header>Simon.H</List.Header>
+                        </List.Content>
+                    </List.Item>
+                    <List.Item>
+                        <List.Content>
+                            <List.Header>Marco.D</List.Header>
+                        </List.Content>
+                    </List.Item>
+                </List>
+            </footer>
         </>
     )
 }

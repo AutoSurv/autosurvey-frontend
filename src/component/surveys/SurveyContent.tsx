@@ -26,7 +26,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           filterLocations, 
           filteredSurveys, setFilteredSurveys, 
           isFilterSet, setIsFilterSet, 
-          surveys, setSurveys} = useContext(OrgContext);
+          surveys, setSurveys, setSurvey} = useContext(OrgContext);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
@@ -44,7 +44,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
 
   useEffect(() => {
      getSurveys(setPagination, setSurveys, propOrgId);
-  }, [surveys.length]);
+  }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);

@@ -29,7 +29,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
           <Form.Group className="surveys-form-edit" >
             <Form.Field className="surveys-form-edit-field">
               <Label>Country</Label>
-              <Input placeholder={propSurvey.country} type="text" name="country" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.country} type="text" name="country" pattern="^[A-zÀ-ž\s]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Year</Label>
@@ -41,7 +41,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Utilities</Label>
-              <Input placeholder={propSurvey.utilities} type="text" name="utilities" />
+              <Input placeholder={propSurvey.utilities} type="text" name="utilities" pattern="^[0-9]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Food</Label>
@@ -53,15 +53,15 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Transportation</Label>
-              <Input placeholder={propSurvey.transportation} type="text" name="transportation" />
+              <Input placeholder={propSurvey.transportation} type="text" name="transportation" pattern="^[0-9]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Education Total</Label>
-              <Input placeholder={propSurvey.educationTotal} type="text" name="educationTotal" />
+              <Input placeholder={propSurvey.educationTotal} type="text" name="educationTotal" pattern="^[0-9]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Education Supplies</Label>
-              <Input placeholder={propSurvey.educationSupplies} type="text" name="educationSupplies" />
+              <Input placeholder={propSurvey.educationSupplies} type="text" name="educationSupplies"  pattern="^[0-9]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Education Fee</Label>
@@ -69,23 +69,23 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Education Type</Label>
-              <Input placeholder={propSurvey.educationType} type="text" name="educationType" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.educationType} type="text" name="educationType" pattern="^[A-zÀ-ž\s]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Accommodation Type</Label>
-              <Input placeholder={propSurvey.accommodationType} type="text" name="accommodationType" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.accommodationType} type="text" name="accommodationType" pattern="^[A-zÀ-ž\s]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Profession</Label>
-              <Input placeholder={propSurvey.profession} type="text" name="profession" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.profession} type="text" name="profession" pattern="^[A-zÀ-ž\s]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Location Given</Label>
-              <Input placeholder={propSurvey.locationGiven} type="text" name="locationGiven" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.locationGiven} type="text" name="locationGiven" pattern="^[A-zÀ-ž\s]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Location Clustered</Label>
-              <Input placeholder={propSurvey.locationClustered} type="text" name="locationClustered" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.locationClustered} type="text" name="locationClustered" pattern="^[A-zÀ-ž\s]*$" />
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Number of Residents</Label>
@@ -109,7 +109,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
             </Form.Field>
             <Form.Field className="surveys-form-edit-field">
               <Label>Comments</Label>
-              <Input placeholder={propSurvey.comments} type="text" name="comments" pattern="^[a-zA-Z]*$" />
+              <Input placeholder={propSurvey.comments} type="text" name="comments" pattern="^[A-z0-9À-ž.,+-\s]*$" />
             </Form.Field>
 
           </Form.Group>
