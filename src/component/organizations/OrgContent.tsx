@@ -1,6 +1,6 @@
-import { addOrganization, getOrganizations, getUser, getUsers } from "@/helper/apiService";
+import { addOrganization, getUser, getUsers } from "@/helper/apiService";
 import { Organization, ROLE, User } from "@/type/type";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -26,7 +26,6 @@ export default function OrgContent() {
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [user, setUser] = useState<User>(initUser)
-  //const [organizations, setOrganizations] = useState<Organization[]>([]);  
 
   useEffect(() => {
     getUser(localStorage.getItem("username") as string, setUser);
@@ -35,7 +34,6 @@ export default function OrgContent() {
     setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
     setUserNameAuth(localStorage.getItem("username") as string);
     setRole(localStorage.getItem("role") as string);
-    //getOrganizations(setOrganizations);
     getUsers(setUsers);
   }, []);
 

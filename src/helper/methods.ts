@@ -206,7 +206,6 @@ function isSurveyKey<T>(
 export function checkIfLocalStorageDef() {
   let jwt = "";
   if (typeof window !== 'undefined') {
-    // Perform localStorage action
     jwt = localStorage.getItem('jwt') as string
   }
   return jwt;

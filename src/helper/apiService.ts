@@ -7,7 +7,7 @@ import {
   addImportedSurveyApi, addOrganizationApi, addSurveyApi,
   editUserToOrgApi,
   authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
-  getOrganizationApi, getOrganizationsApi, getSurveyApi, getSurveysApi,
+  getOrganizationApi, getOrganizationsApi, getSurveyApi,
   getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi
 } from "@/pages/api/surveyAPI";
 import router from "next/router";
@@ -210,7 +210,6 @@ export async function addImportedSurvey(
   setProgressCounter: Dispatch<SetStateAction<number>>
 ) {
 
-  console.log("apiService.addImportedSurvey.surveyArr: ", surveyArr);
   let importCounter: number = 0;
   let updateCounter: number = 0;
   let errorCounter: number = 0;
