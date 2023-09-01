@@ -77,7 +77,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Education Type</Label>
-          <Input placeholder={survey.educationType} type="text" name="educationType" defaultValue={survey.educationType} pattern="^[A-zÀ-ž\s]*$"/>
+          <Input placeholder={survey.educationType} type="text" name="educationType" defaultValue={survey.educationType} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$"/>
         </Form.Field>
         <Form.Field>
           <Label>Accommodation Type</Label>
