@@ -89,11 +89,11 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         </Form.Field>
         <Form.Field>
           <Label>Location Given</Label>
-          <Input placeholder={survey.locationGiven} type="text" name="locationGiven" defaultValue={survey.locationGiven} pattern="^[A-zÀ-ž\s]*$" />
+          <Input placeholder={survey.locationGiven} type="text" name="locationGiven" defaultValue={survey.locationGiven} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Location Clustered</Label>
-          <Input placeholder={survey.locationClustered} type="text" name="locationClustered" defaultValue={survey.locationClustered} pattern="^[A-zÀ-ž\s]*$" />
+          <Input placeholder={survey.locationClustered} type="text" name="locationClustered" defaultValue={survey.locationClustered} pattern="^[A-zÀ-ž\s\p{P}\p{S}]*$" />
         </Form.Field>
         <Form.Field>
           <Label>Number of Residents</Label>
