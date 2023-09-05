@@ -67,7 +67,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         </Modal.Header>
         <Modal.Content>
           <Form onSubmit={(e) => {
-            //saveImportedSurvey();
+            saveImportedSurvey();
             e.preventDefault();
             setOpen(false);
           }}>
