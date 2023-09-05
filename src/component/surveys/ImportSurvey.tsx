@@ -4,7 +4,6 @@ import { Survey, Pagination, ImportedSurvey, Organization } from "@/type/type";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
-import { transpose } from "@/helper/methods";
 
 type ImportSurveyProps = {
   organization: Organization;
@@ -34,32 +33,13 @@ export default function ImportSurvey(props: ImportSurveyProps) {
         const data = e.target!.result;
         const workbook = XLSX.read(data, { type: "array" });
 
-        let sheetIndex = 0;
-        let sheetName = "";
-
-        while(sheetName !== "Raw Data") {
-          sheetName = workbook.SheetNames[sheetIndex];
-          sheetIndex++;
-          if (sheetIndex > 5) {
-            sheetName = workbook.SheetNames[0];
-            break;
-          }
-        }      
-        
-        //const sheetName = workbook.SheetNames[0];
+        const sheetName = workbook.SheetNames[0];
 
         const worksheet = workbook.Sheets[sheetName];
-        //console.log("ws: ", worksheet);
-        const aoa: Object[][] = XLSX.utils.sheet_to_json(worksheet, {header: 1, blankrows: false, skipHidden: true, range: 1});
-        console.log("aoa[2]: ", aoa[2][1]);
-        const transposedData = transpose(aoa)
-        //console.log("transposedData: ", transposedData);
         const json: ImportedSurvey[] = XLSX.utils.sheet_to_json(worksheet);
-        //console.log("json: ", json);
             
         if (typeof json[0] === "object"){
           const surveyArr: Survey[] = JSON.parse(JSON.stringify(json));
-          //console.log("surveyArr: ", surveyArr);
           setDataFromImportedSurvey(surveyArr);
           setTotalCounter(surveyArr.length);
         }
