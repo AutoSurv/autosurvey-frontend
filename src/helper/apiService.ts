@@ -267,14 +267,26 @@ export async function addImportedSurvey(
       }
 
       const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
-      await addImportedSurveyApi(reqOptions);
-      importCounter++;
-      setProgressCounter(updateCounter + importCounter);
+      const response = await addImportedSurveyApi(reqOptions);
+      if (response.status === 201) {
+        importCounter++;
+        setProgressCounter(updateCounter + importCounter);
+      } else {
+        setErrMessage("Survey " + reqBody.id + " not imported due to error: " + response.status);
+        errorCounter++;
+      }
+
     } else {
       const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
-      await addImportedSurveyApi(reqOptions);
-      importCounter++;
-      setProgressCounter(updateCounter + importCounter);
+
+      const response = await addImportedSurveyApi(reqOptions);
+      if (response.status === 201) {
+        importCounter++;
+        setProgressCounter(updateCounter + importCounter);
+      } else {
+        setErrMessage("Survey " + reqBody.id + " not imported due to error: " + response.status);
+        errorCounter++;
+      }
     }
 
     await getSurveys(setPagination, setSurveys, organization.orgId);
