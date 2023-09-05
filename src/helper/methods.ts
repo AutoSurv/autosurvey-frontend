@@ -5,9 +5,11 @@ import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
 export const downloadExcel = (data: any, organization: Organization, filterYears: string[], filterCountries: string[], filterLocations: string[], 
-  setErrorMsg: Dispatch<SetStateAction<string>>) => {
+  setErrorMsg: Dispatch<SetStateAction<string>>) => {  
 
+  //const transposedData = transpose(data)
   const surveyAsString: string = JSON.stringify(data[0]);
+  //const surveyAsString: string = JSON.stringify(transposedData[0]);
 
   if (surveyAsString === undefined) {
     setErrorMsg("nothing to export");
@@ -16,11 +18,13 @@ export const downloadExcel = (data: any, organization: Organization, filterYears
   const survey: ExportedSurvey = JSON.parse(surveyAsString);
 
   const worksheet = XLSX.utils.json_to_sheet(data);
+  //const worksheet = XLSX.utils.json_to_sheet(transposedData);
   delete(worksheet['W1']);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-  if (data.length == 1) {
+  //if (data.length == 1) {
+  if (data.length == 1) {  
     XLSX.writeFile(workbook, organization.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else if (data.length > 1) {
     if (filterCountries.length == 1) {
@@ -41,6 +45,17 @@ export const downloadExcel = (data: any, organization: Organization, filterYears
     return;
   };
   setErrorMsg("");
+};
+
+export function transpose(data: unknown[]) {
+  return Object.keys(data).map(function(c) {
+    //console.log("transpose.c: ", c)
+    let ret=data.map(function(r: any) { 
+      //console.log("transpose.r: ", r)
+      return r[c]; });
+    ret.unshift(c); 
+    return ret;
+  });
 };
 
 export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
