@@ -1,6 +1,6 @@
-import { Survey, Organization, Pagination } from "@/type/type";
+import { Survey, Organization, Pagination, UserDto } from "@/type/type";
 import { Dispatch, SetStateAction, createContext } from "react";
-import { initPagination, initSurvey } from "./initializer";
+import { initPagination, initSurvey, initUserDto } from "./initializer";
 
 export interface OrgContextValue {
 
@@ -18,6 +18,9 @@ export interface OrgContextValue {
 
     userNameAuth: string;
     setUserNameAuth: Dispatch<SetStateAction<string>>;    
+
+    userDto: UserDto;
+    setUserDto: Dispatch<SetStateAction<UserDto>>;    
 
     signUpStatus: boolean;
     setSignUpStatus: Dispatch<SetStateAction<boolean>>; 
@@ -53,6 +56,8 @@ export const OrgContext = createContext<OrgContextValue> ({
     setSurveys: () => {},
     userNameAuth: "",
     setUserNameAuth: () => {},
+    userDto: initUserDto,
+    setUserDto: () => {},
     signUpStatus: false,
     setSignUpStatus: () => {},
     filterYears: [],

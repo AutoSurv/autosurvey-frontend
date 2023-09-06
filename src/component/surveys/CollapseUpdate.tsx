@@ -1,6 +1,6 @@
 import { getOrganization, updateSurvey } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
-import { Organization, Survey } from "@/type/type";
+import { Organization, Survey, UserDto } from "@/type/type";
 import { Box, Collapse } from "@mui/material";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Button, Form, Input, Label } from "semantic-ui-react";
@@ -11,9 +11,10 @@ type UpdateSurveyProps = {
   propSurvey: Survey;
   propOrg: Organization;
   propSetSurvey: Dispatch<SetStateAction<Survey>>;
+  propUserDto: UserDto;
 }
 
-export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, propSurvey, propSetSurvey }: UpdateSurveyProps) {
+export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, propSurvey, propSetSurvey, propUserDto}: UpdateSurveyProps) {
   const { setOrganization, setFilteredSurveys, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
@@ -23,7 +24,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
 
         <Form className="surveys-form" onSubmit={(e) => {
           e.preventDefault();
-          updateSurvey(propSurvey.id, e, propSetSurvey, setOpenStatus, setErrMessage, propOrg, setOrganization, setFilteredSurveys, setSurveys);
+          updateSurvey(propSurvey.id, e, propSetSurvey, setOpenStatus, setErrMessage, propOrg, setOrganization, setFilteredSurveys, setSurveys, propUserDto);
           getOrganization(propOrg.orgId, setOrganization);
         }} >
           <Form.Group className="surveys-form-edit" >

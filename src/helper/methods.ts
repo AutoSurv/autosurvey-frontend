@@ -1,6 +1,7 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto } from '@/type/type';
 import router from 'next/router';
+import { Result } from 'postcss';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 
@@ -54,7 +55,8 @@ export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): voi
 export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormElement>,
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignUpStatus: Dispatch<SetStateAction<boolean>>,
-  setUserNameAuth: Dispatch<SetStateAction<string>>
+  setUserNameAuth: Dispatch<SetStateAction<string>>,
+  setUser: Dispatch<SetStateAction<UserDto>>,
 ): Promise<void> {
 
   const inputBody: LoginUser = {
@@ -79,14 +81,23 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
     })
     .then((data: any) => {
       if (data) {
-        
         const loggedUser: LoggedUser = JSON.parse(data);
+
+        let userDto: UserDto = {
+          userId: loggedUser.userId,
+          username: loggedUser.username,
+          email: loggedUser.email,
+          roles: loggedUser.role,
+          status: loggedUser.status
+        }
+
         if (loggedUser) {
           localStorage.setItem("role", loggedUser.role);
           localStorage.setItem("jwt", loggedUser.token);
           localStorage.setItem("username", loggedUser.username);
           localStorage.setItem("email", loggedUser.email);
           setUserNameAuth(loggedUser.username);
+          setUser(userDto);
           setSignUpStatus(true);
           router.push("org");
         }
@@ -105,7 +116,8 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_user",
-    status: "pending"
+    status: "pending",
+    surveys: []
   }
   localStorage.clear();
 
@@ -130,7 +142,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
         setErrorMsg(
           ""
         );
-        return;
+        return response.body;
       } else if (response?.status == 409) {
         setErrorMsg('User aleady exists. Choose other name');
       } else {

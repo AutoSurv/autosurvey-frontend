@@ -1,7 +1,7 @@
 import { OrgContext } from "@/helper/context";
 import { useContext, useEffect, useState } from "react";
 import { getUserApi } from "../api/surveyAPI";
-import { User } from "@/type/type";
+import { User, UserDto } from "@/type/type";
 import Link from "next/link";
 import { Card, Header, Icon, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
 import { useRouter } from "next/router";
@@ -9,14 +9,14 @@ import { NavigationBar } from "@/component/NavigationBar";
 
 export default function UserInfo() {
   const { setUserNameAuth } = useContext(OrgContext);
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserDto>();
   const router = useRouter();
 
   const getUserInfo = async () => {
     const userName: string = window.localStorage.getItem("username") as string
     const apiResponse = await getUserApi(userName);
     if (apiResponse.status === 200) {
-      const data: User = await apiResponse.json();
+      const data: UserDto = await apiResponse.json();
       setUser(data);
     }
   }

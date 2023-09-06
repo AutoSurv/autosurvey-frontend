@@ -1,6 +1,6 @@
 import { initPagination } from "@/helper/initializer";
 import { addImportedSurvey } from "@/helper/apiService";
-import { Survey, Pagination, ImportedSurvey, Organization } from "@/type/type";
+import { Survey, Pagination, ImportedSurvey, Organization, UserDto } from "@/type/type";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'
@@ -13,10 +13,11 @@ type ImportSurveyProps = {
   setSuccessMessage: Dispatch<SetStateAction<string>>;
   setTotalCounter: Dispatch<SetStateAction<number>>;
   setProgressCounter: Dispatch<SetStateAction<number>>;
+  propUserDto: UserDto;
 }
 
 export default function ImportSurvey(props: ImportSurveyProps) {
-  const { organization, setOrganization, setSurveys, setErrorMsg, setSuccessMessage, setTotalCounter, setProgressCounter } = props;
+  const { organization, setOrganization, setSurveys, setErrorMsg, setSuccessMessage, setTotalCounter, setProgressCounter, propUserDto } = props;
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   
 
@@ -48,7 +49,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(dataFromImportedSurvey, organization, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization, setProgressCounter)
+    addImportedSurvey(dataFromImportedSurvey, organization, setPagination, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization, setProgressCounter, propUserDto)
   }
   
   return (

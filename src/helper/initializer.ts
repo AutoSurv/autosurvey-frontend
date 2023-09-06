@@ -7,6 +7,14 @@ export const initOrg: Organization = {
   users: []
 }
 
+export const initUserDto: UserDto = {
+  userId: "",
+  username: "",
+  email: "",
+  roles: "",
+  status: ""
+}
+
 export const notAnOrg: Organization = {
   orgId: "0",
   orgName: "ORGANIZATION NOT AVAILABLE",
@@ -37,7 +45,8 @@ export const initSurvey: Survey = {
   totalIncome: 0,
   comments: "",
   id: "",
-  organization: initOrg
+  organization: initOrg,
+  user: initUserDto
 }
 
 export const initPagination: Pagination = {
@@ -57,14 +66,6 @@ export const initUser: User = {
   userId: "",
   username: "",
   password: "",
-  email: "",
-  roles: "",
-  status: ""
-}
-
-export const initUserDto: UserDto = {
-  userId: "",
-  username: "",
   email: "",
   roles: "",
   status: ""

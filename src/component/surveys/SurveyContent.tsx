@@ -26,7 +26,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           filterLocations, 
           filteredSurveys, setFilteredSurveys, 
           isFilterSet, setIsFilterSet, 
-          surveys, setSurveys, setSurvey} = useContext(OrgContext);
+          surveys, setSurveys, setSurvey, userDto} = useContext(OrgContext);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
@@ -43,7 +43,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
   }
 
   useEffect(() => {
-     getSurveys(setPagination, setSurveys, propOrgId);
+     getSurveys(setSurveys, propOrgId);
   }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
@@ -116,7 +116,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           <FilterSurvey propSurveys={surveys} propSetFilteredSurveys={setFilteredSurveys} propSetIsFilterSet = {setIsFilterSet} />
           : null
         }            
-        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} />
+        <CreateSurvey organization={organization} setOrganization={setOrganization} setSurveys={setSurveys} propUser={userDto}/>
       </section>
 
       <section className="surveys-charts">

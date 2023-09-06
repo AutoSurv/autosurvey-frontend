@@ -8,7 +8,7 @@ import {
   editUserToOrgApi,
   authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
   getOrganizationApi, getOrganizationsApi, getSurveyApi,
-  getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi
+  getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi, getSurveysApi
 } from "@/pages/api/surveyAPI";
 import router from "next/router";
 
@@ -126,15 +126,19 @@ export async function deleteOrganization(id: string, setOrganizations: Dispatch<
 
 //Survey section
 
-export async function getSurveys(setPagination: Dispatch<SetStateAction<Pagination>>, 
-  setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {// organization: Organization) {
+export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {// organization: Organization) {
 
-  const apiResponse = await getOrganizationApi(propOrgId);
-  
+  //const apiResponse = await getOrganizationApi(propOrgId);
+  const apiResponse = await getSurveysApi();
+
   if (apiResponse.status === 200) {
-    const data: Organization = await apiResponse.json();
-    setSurveys(data.surveys);
-    return data.surveys;
+    //const data: Organization = await apiResponse.json();
+    const data: Survey[] = await apiResponse.json();
+    console.log("apiService.getSurveys.data: ", data);
+    setSurveys(data.filter(survey => {
+      return survey.organization.orgId === propOrgId;
+    }));
+    return data;
   }
 
   if (apiResponse.status === 500) {
@@ -159,9 +163,9 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  org: Organization, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
+  org: Organization, userDto: UserDto, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
-  const reqBody: SurveyRequestDto = {
+  const reqBody: Survey = {
     id: "",
     country: event.currentTarget.country.value,
     year: event.currentTarget.year.value,
@@ -184,7 +188,8 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
-    organization: org
+    organization: org,
+    user: userDto
   };
 
   if (!reqBody.country || !reqBody.organization.orgId) {
@@ -195,7 +200,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
   await addSurveyApi(reqOptions);
-  await getSurveys(setPagination, setSurveys, org.orgId);
+  await getSurveys(setSurveys, org.orgId);
   await getOrganization(reqBody.organization.orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
@@ -210,7 +215,8 @@ export async function addImportedSurvey(
   setOpen: Dispatch<SetStateAction<boolean>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
   setOrganization: Dispatch<SetStateAction<Organization>>,
-  setProgressCounter: Dispatch<SetStateAction<number>>
+  setProgressCounter: Dispatch<SetStateAction<number>>,
+  user: UserDto
 ) {
 
   let importCounter: number = 0;
@@ -218,7 +224,7 @@ export async function addImportedSurvey(
   let errorCounter: number = 0;
 
   for (let i = 0; i < surveyArr.length; i++) {
-    const reqBody: SurveyRequestDto = {
+    const reqBody: Survey = {
       id: surveyArr[i].id,
       country: surveyArr[i].country,
       year: surveyArr[i].year,
@@ -242,6 +248,7 @@ export async function addImportedSurvey(
       totalIncome: surveyArr[i].totalIncome,
       comments: surveyArr[i].comments,
       organization: organization,
+      user: user
     };
 
     if (!reqBody.organization.orgId) {
@@ -289,7 +296,7 @@ export async function addImportedSurvey(
       }
     }
 
-    await getSurveys(setPagination, setSurveys, organization.orgId);
+    await getSurveys(setSurveys, organization.orgId);
     await getOrganization(organization.orgId, setOrganization);
     setOpen(false);
     setErrMessage('');
@@ -310,7 +317,8 @@ export async function updateSurvey(
   setErrMessage: Dispatch<SetStateAction<string>>, org: Organization,
   setOrganization: Dispatch<SetStateAction<Organization>>,
   setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>,
-  setSurveys: Dispatch<SetStateAction<Survey[]>>
+  setSurveys: Dispatch<SetStateAction<Survey[]>>,
+  userDto: UserDto
 ) {
 
   const reqBody: SurveyUpdateDto = {
@@ -335,17 +343,22 @@ export async function updateSurvey(
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
-    organization: org
+    organization: org,
+    user: userDto
   };
 
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    await getOrganization(org.orgId, setOrganization).then(data => {
-      setFilteredSurveys(data.surveys);
-      setSurveys(data.surveys);}
-    );
+    // await getOrganization(org.orgId, setOrganization).then(data => {
+    //   setFilteredSurveys(data.surveys);
+    //   //setSurveys(data.surveys);
+    //   getSurveys(setSurveys, org.orgId);
+    // });
+    await getSurveys(setSurveys, org.orgId).then(data => setFilteredSurveys(data as Survey[]));
+    await getOrganization(org.orgId, setOrganization);
+
     setOpen(false);
     setErrMessage('');
   } else {
@@ -361,7 +374,7 @@ export async function deleteSurvey(orgId: string,
   organization: Organization) {
     
   await deleteSurveyApi(id);
-  await getSurveys(setPagination, setSurveys, organization.orgId);
+  await getSurveys(setSurveys, organization.orgId);
 
 };
 

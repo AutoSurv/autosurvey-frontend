@@ -1,21 +1,25 @@
 import { initPagination } from "@/helper/initializer";
 import { addSurvey } from "@/helper/apiService";
-import { Survey, Organization, Pagination } from "@/type/type";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Survey, Organization, Pagination, UserDto } from "@/type/type";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import { OrgContext } from "@/helper/context";
 
 type CreateSurveyProps = {
   organization: Organization;
   setOrganization: Dispatch<SetStateAction<Organization>>;
   setSurveys: Dispatch<SetStateAction<Survey[]>>;
+  propUser: UserDto
 }
 
 export default function CreateSurvey(props: CreateSurveyProps) {
+  //const { user } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
   const [pagination, setPagination] = useState<Pagination>(initPagination);
 
-  const { organization, setOrganization, setSurveys } = props;
+  const { organization, setOrganization, setSurveys, propUser } = props;
+
 
   return (
     <>
@@ -34,7 +38,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey(e, organization, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization, propUser, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>

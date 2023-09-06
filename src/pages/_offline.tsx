@@ -6,7 +6,7 @@ import { Button, Form, Header, Icon, Input, Label, List, Modal, Table, TableBody
 import SignalWifiConnectedNoInternet4Icon from '@mui/icons-material/SignalWifiConnectedNoInternet4';
 import * as XLSX from 'xlsx';
 import { TableHead } from '@mui/material';
-import { initOrg } from '@/helper/initializer';
+import { initOrg, initUserDto } from '@/helper/initializer';
 
 export default function Fallback() {
     const [open, setOpen] = useState(false);
@@ -43,7 +43,8 @@ export default function Fallback() {
             totalIncome: e.currentTarget.totalIncome.value,
             comments: e.currentTarget.comments.value,
             id: "",
-            organization: initOrg
+            organization: initOrg,
+            user: initUserDto
         };
 
         if (!localStorage.getItem("offlineSurvey")) {

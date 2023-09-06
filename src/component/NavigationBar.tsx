@@ -18,7 +18,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
     filterYears,
     filterCountries, filterLocations,
     filteredSurveys, setSurveys,
-    survey
+    survey, userDto
   } = useContext(OrgContext);
 
   const [role, setRole] = useState("");
@@ -79,6 +79,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                         setSuccessMessage={setSuccessMessage}
                         setTotalCounter={setTotalCounter}
                         setProgressCounter={setProgressCounter}
+                        propUserDto={userDto}
                       />
                     </Dropdown.Item>
                     <Dropdown.Item>

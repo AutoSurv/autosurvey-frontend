@@ -29,7 +29,7 @@ export default function OrgCard(props: OrgCardProp) {
     <div className="org-card-container">
       <Card className="org-card" >
         <Link href={"/org/" + organization.orgId} >
-          <Image className="org-card-image" src={`/${orgLowerName}.png`} alt={organization.orgName} size='large' />
+          <Image className="org-card-image" src={`/${orgLowerName}.png`} alt={organization.orgName.toLowerCase()} size='large' />
           <Card.Content>
             <Card.Header className='org-card-header'>{organization.orgName}</Card.Header>
             <Card.Meta className='org-card-meta'># the number of surveys: {organization.surveys.length}</Card.Meta>

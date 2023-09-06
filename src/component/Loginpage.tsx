@@ -11,7 +11,7 @@ import { OrgContext } from "@/helper/context";
 import { SignUp } from "./SignUp";
 
 const Login = () => {
-  const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth } = useContext(OrgContext);
+  const { signUpStatus, setSignUpStatus, userNameAuth, setUserNameAuth, setUserDto } = useContext(OrgContext);
   const [signupSuccessMessage, setSignupSuccessMessage] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ const Login = () => {
           sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center", }} >
           <Box component="form" onSubmit={(e) => {
             e.preventDefault();
-            signInJwtTokenHandler(e, setErrorMsg, setSignUpStatus, setUserNameAuth);
+            signInJwtTokenHandler(e, setErrorMsg, setSignUpStatus, setUserNameAuth, setUserDto);
           }} noValidate sx={{ mt: 1 }}>
             <TextField margin="normal" required fullWidth id="username"
               label="User Name" name="username" autoComplete="username" autoFocus

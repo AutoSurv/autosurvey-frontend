@@ -15,7 +15,7 @@ type SurveyCardProp = {
 
 export default function SurveyRecord(props: SurveyCardProp) {
     const { propSurvey, organization, setSurveys } = props;
-    const { setSurvey, setOrganization, setFilteredSurveys} = useContext(OrgContext);
+    const { setSurvey, setOrganization, setFilteredSurveys, userDto } = useContext(OrgContext);
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
 
@@ -41,7 +41,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
                     <Link className='survey-link' href={"/org/" + organization.orgId + "/" + propSurvey.id}>{propSurvey.year}</Link>
                 </TableCell>
                 <TableCell >
-                    {localStorage.getItem("username")}
+                    {propSurvey.user.username}
                 </TableCell>
             </TableRow>
             <TableRow>
@@ -51,7 +51,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
 
                             <Form className="surveys-form" onSubmit={(e) => {
                                 e.preventDefault();
-                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, organization, setOrganization, setFilteredSurveys, setSurveys);
+                                updateSurvey(propSurvey.id, e, setSurvey, setOpen, setErrMessage, organization, setOrganization, setFilteredSurveys, setSurveys, userDto);
                             }} >
                                 <Form.Group className="surveys-form-edit" >
                                     <Form.Field className="surveys-form-edit-field">
