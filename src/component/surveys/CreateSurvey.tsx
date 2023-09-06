@@ -13,10 +13,8 @@ type CreateSurveyProps = {
 }
 
 export default function CreateSurvey(props: CreateSurveyProps) {
-  //const { user } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-  const [pagination, setPagination] = useState<Pagination>(initPagination);
 
   const { organization, setOrganization, setSurveys, propUser } = props;
 
@@ -38,7 +36,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
         <Modal.Content>
           <Form onSubmit={(e) => {
             e.preventDefault();
-            addSurvey(e, organization, propUser, setPagination, setSurveys, setOrganization, setOpen, setErrMessage);
+            addSurvey(e, organization, propUser, setSurveys, setOrganization, setOpen, setErrMessage);
           }}>
             <Form.Field>
               <Label>Country Name</Label>

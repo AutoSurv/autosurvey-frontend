@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import {
-  Survey, SurveyRequestDto, SurveyUpdateDto, FormDataSingUp,
+  Survey, SurveyUpdateDto, FormDataSingUp,
   LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions, UserStatusDto, UserDto
 } from "../type/type";
 import {
@@ -45,7 +45,9 @@ export async function getOrganization(orgid: string | string[], setOrganization:
 
 }
 
-export async function addOrganization(event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>, username: string) {
+export async function addOrganization(event: React.FormEvent<HTMLFormElement>, 
+  setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, 
+  setErrMessage: Dispatch<SetStateAction<string>>, username: string) {
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value,
     creatorName: username
@@ -69,7 +71,9 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>, s
 
 };
 
-export async function updateOrganizationName(id: string, event: React.FormEvent<HTMLFormElement>, setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOrganization: Dispatch<SetStateAction<Organization>>, setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function updateOrganizationName(id: string, event: React.FormEvent<HTMLFormElement>, 
+  setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOrganization: Dispatch<SetStateAction<Organization>>, 
+  setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
 
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value,
@@ -114,11 +118,6 @@ export async function editUserToOrg(
 
 };
 
-export async function removeUserFromOrg(orgId: string, user: User, setUser: Dispatch<SetStateAction<User>>, setUsers: Dispatch<SetStateAction<User[]>>) {
-  
-
-}
-
 export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
   await deleteOrganizationApi(id);
   await getOrganizations(setOrganizations);
@@ -126,15 +125,12 @@ export async function deleteOrganization(id: string, setOrganizations: Dispatch<
 
 //Survey section
 
-export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {// organization: Organization) {
+export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {
 
-  //const apiResponse = await getOrganizationApi(propOrgId);
   const apiResponse = await getSurveysApi();
 
   if (apiResponse.status === 200) {
-    //const data: Organization = await apiResponse.json();
     const data: Survey[] = await apiResponse.json();
-    console.log("apiService.getSurveys.data: ", data);
     setSurveys(data.filter(survey => {
       return survey.organization.orgId === propOrgId;
     }));
@@ -163,7 +159,8 @@ export async function getSurvey(surveyId: string | string[] | undefined, setSurv
 }
 
 export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  org: Organization, userDto: UserDto, setPagination: Dispatch<SetStateAction<Pagination>>, setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
+  org: Organization, userDto: UserDto, 
+  setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
   const reqBody: Survey = {
     id: "",
@@ -209,7 +206,6 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 export async function addImportedSurvey(
   surveyArr: Survey[],
   organization: Organization,
-  setPagination: Dispatch<SetStateAction<Pagination>>,
   setErrMessage: Dispatch<SetStateAction<string>>,
   setSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
@@ -351,11 +347,6 @@ export async function updateSurvey(
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    // await getOrganization(org.orgId, setOrganization).then(data => {
-    //   setFilteredSurveys(data.surveys);
-    //   //setSurveys(data.surveys);
-    //   getSurveys(setSurveys, org.orgId);
-    // });
     await getSurveys(setSurveys, org.orgId).then(data => setFilteredSurveys(data as Survey[]));
     await getOrganization(org.orgId, setOrganization);
 
@@ -367,9 +358,8 @@ export async function updateSurvey(
 
 };
 
-export async function deleteSurvey(orgId: string,
+export async function deleteSurvey(
   id: string,
-  setPagination: Dispatch<SetStateAction<Pagination>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
   organization: Organization) {
     

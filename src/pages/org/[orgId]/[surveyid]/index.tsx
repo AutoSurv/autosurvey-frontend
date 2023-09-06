@@ -2,12 +2,10 @@ import { OrgContext } from "@/helper/context";
 import { getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Header, Icon } from "semantic-ui-react";
-import { Pagination } from '@/type/type';
 import UpdateSurvey from "@/component/surveys/UpdateSurvey";
 import Link from "next/link";
-import { initPagination } from "@/helper/initializer";
 import { NavigationBar } from "@/component/NavigationBar";
 import DelSurvey from "@/component/surveys/DeleteSurvey";
 
@@ -16,8 +14,6 @@ export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-
-  const [pagination, setPagination] = useState<Pagination>(initPagination);
   const { organization, survey, setSurvey, setSurveys, userDto } = useContext(OrgContext);
 
   useEffect(() => {
@@ -186,7 +182,7 @@ export default function SurveyDetails() {
                 <UpdateSurvey survey={survey} orgid={orgId as string} setSurvey={setSurvey} propUserDto={userDto}/>
               </TableCell>
               <TableCell align="center">
-                <DelSurvey propOrgid={organization.orgId} propSurvey={survey} propSetPagination={setPagination}/>
+                <DelSurvey propOrgid={organization.orgId} propSurvey={survey} />
                 </TableCell>
             </TableRow>
 

@@ -1,5 +1,5 @@
 import { getSurveys } from "@/helper/apiService";
-import { Pagination, Survey } from "@/type/type";
+import { Survey } from "@/type/type";
 import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
 import { OrgContext } from "@/helper/context";
@@ -10,7 +10,6 @@ import { ApexOptions } from "apexcharts";
 import dynamic from 'next/dynamic'
 import FilterSurvey from "../filters/FilterSurvey";
 import { TablePagination } from "@mui/material";
-import { initPagination } from "@/helper/initializer";
 import SurveyTable from "./SurveyTable";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
@@ -26,8 +25,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           filterLocations, 
           filteredSurveys, setFilteredSurveys, 
           isFilterSet, setIsFilterSet, 
-          surveys, setSurveys, setSurvey, userDto} = useContext(OrgContext);
-  const [pagination, setPagination] = useState<Pagination>(initPagination);
+          surveys, setSurveys, userDto} = useContext(OrgContext);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
   

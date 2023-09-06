@@ -1,4 +1,4 @@
-import { getSurvey, getSurveys, updateSurvey } from "@/helper/apiService";
+import { updateSurvey } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { Survey, UserDto } from "@/type/type";
 import { Dispatch, SetStateAction, useContext, useState } from "react";

@@ -3,7 +3,7 @@ import UserTable from "@/component/UserTable";
 import { getUsers } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { getUserEmailDomain } from "@/helper/methods";
-import { User, UserDto } from "@/type/type"
+import { UserDto } from "@/type/type"
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react"

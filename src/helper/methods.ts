@@ -1,7 +1,6 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
 import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto } from '@/type/type';
 import router from 'next/router';
-import { Result } from 'postcss';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from 'xlsx';
 

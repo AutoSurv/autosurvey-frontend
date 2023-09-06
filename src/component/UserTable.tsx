@@ -1,6 +1,6 @@
 import { editUserToOrg } from '@/helper/apiService';
-import { initUser, initUserDto } from '@/helper/initializer';
-import { User, UserDto } from '@/type/type';
+import { initUserDto } from '@/helper/initializer';
+import { UserDto } from '@/type/type';
 import * as React from 'react';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Button, Table } from 'semantic-ui-react';
@@ -55,8 +55,6 @@ export default function UserRecord({ propOrgId, propUser, setUsers }: UserProp) 
             </>
             : null
         }
-
-
       </Table.Cell>
     </Table.Row>
   );

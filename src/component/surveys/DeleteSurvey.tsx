@@ -1,15 +1,14 @@
 import { OrgContext } from "@/helper/context";
 import { deleteSurvey } from "@/helper/apiService";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Confirm } from "semantic-ui-react";
-import { Survey, Pagination } from '@/type/type';
+import { Survey } from '@/type/type';
 
 type UpdateSurveyProps = {
   propOrgid: string;
   propSurvey: Survey;
-  propSetPagination: Dispatch<SetStateAction<Pagination>>;
-}
-export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: UpdateSurveyProps) {
+  }
+export default function DelSurvey({ propOrgid, propSurvey }: UpdateSurveyProps) {
   const [openConfirm, setOpenConfirm] = useState(false);
   const { organization, setSurveys } = useContext(OrgContext);
 
@@ -24,7 +23,7 @@ export default function DelSurvey({ propOrgid, propSurvey, propSetPagination }: 
           onCancel={() => setOpenConfirm(false)}
           onConfirm={(e) => {
             e.preventDefault();
-            deleteSurvey(propOrgid, propSurvey.id, propSetPagination, setSurveys, organization)
+            deleteSurvey( propSurvey.id, setSurveys, organization)
             .then(() => setOpenConfirm(false))
             .then(() => window.location.href = "/org/" + propOrgid);
           }}

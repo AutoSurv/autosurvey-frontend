@@ -1,7 +1,7 @@
 import { OrgContext } from "@/helper/context";
 import { useContext, useEffect, useState } from "react";
 import { getUserApi } from "../api/surveyAPI";
-import { User, UserDto } from "@/type/type";
+import { UserDto } from "@/type/type";
 import Link from "next/link";
 import { Card, Header, Icon, Table, TableBody, TableCell, TableRow } from "semantic-ui-react";
 import { useRouter } from "next/router";

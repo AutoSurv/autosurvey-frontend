@@ -1,5 +1,5 @@
 import { addOrganization, getUser, getUsers } from "@/helper/apiService";
-import { Organization, ROLE, User, UserDto } from "@/type/type";
+import { ROLE, UserDto } from "@/type/type";
 import { useContext, useEffect, useState } from "react";
 import {
   Button,
