@@ -218,7 +218,7 @@ export async function addImportedSurvey(
   let importCounter: number = 0;
   let updateCounter: number = 0;
   let errorCounter: number = 0;
-
+  console.log("user",user);
   for (let i = 0; i < surveyArr.length; i++) {
     const reqBody: Survey = {
       id: surveyArr[i].id,
@@ -347,7 +347,7 @@ export async function updateSurvey(
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    await getSurveys(setSurveys, org.orgId).then(data => setFilteredSurveys(data as Survey[]));
+    await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.organization.orgId === org.orgId)));
     await getOrganization(org.orgId, setOrganization);
 
     setOpen(false);

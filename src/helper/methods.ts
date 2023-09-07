@@ -15,12 +15,17 @@ export const downloadExcel = (data: any, organization: Organization, filterYears
   }
 
   const survey: ExportedSurvey = JSON.parse(surveyAsString);
-  const worksheet = XLSX.utils.json_to_sheet(data);
-  delete(worksheet['W1']);
+  const myHeader = [ "id", "country", "year",	"rent",	"utilities",	"food",	"basicItems",
+    	"transportation",	"educationTotal",	"educationSupplies",	"educationFee",	
+      "educationType",	"accommodationType",	"profession",	"locationGiven",	
+      "locationClustered",	"numResidents",	"numIncomes",	"numFullIncomes",	
+      "numChildren",	"totalIncome",	"comments", "organization", "user" ];
+  const worksheet = XLSX.utils.json_to_sheet((data as ExportedSurvey[]), {header:myHeader});
+   delete(worksheet['W1']);
+  delete(worksheet['X1']);
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-  //if (data.length == 1) {
   if (data.length == 1) {  
     XLSX.writeFile(workbook, organization.orgName + "_" + survey.year + "_" + survey.country + "_" + survey.locationClustered + "_" + survey.id + ".xlsx");
   } else if (data.length > 1) {
