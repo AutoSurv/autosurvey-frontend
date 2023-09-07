@@ -345,10 +345,12 @@ export async function updateSurvey(
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
-    await getSurvey(id, setSurvey);
-    await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.organization.orgId === org.orgId)));
-    await getOrganization(org.orgId, setOrganization);
-
+    const survey = await getSurvey(id, setSurvey) as Survey;
+    if (survey) {
+      await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.organization.orgId === org.orgId)));
+      await getOrganization(org.orgId, setOrganization);
+    }
+    
     setOpen(false);
     setErrMessage('');
   } else {
