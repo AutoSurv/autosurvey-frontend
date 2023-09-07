@@ -346,7 +346,8 @@ export async function updateSurvey(
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
     await getSurvey(id, setSurvey);
-    await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.organization.orgId === org.orgId)));
+    const updatedSurveylist = await getSurveys(setSurveys, org.orgId) as Survey[];
+    setFilteredSurveys((updatedSurveylist).filter(s => s.organization.orgId === org.orgId));
     await getOrganization(org.orgId, setOrganization);
 
     setOpen(false);
