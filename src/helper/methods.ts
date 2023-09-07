@@ -60,7 +60,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
   setErrorMsg: Dispatch<SetStateAction<string>>,
   setSignUpStatus: Dispatch<SetStateAction<boolean>>,
   setUserNameAuth: Dispatch<SetStateAction<string>>,
-  setUser: Dispatch<SetStateAction<UserDto>>,
+  setUserDto: Dispatch<SetStateAction<UserDto>>,
 ): Promise<void> {
 
   const inputBody: LoginUser = {
@@ -103,7 +103,7 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
           localStorage.setItem("userId", userDto.userId);
           localStorage.setItem("status", userDto.status);
           setUserNameAuth(loggedUser.username);
-          setUser(userDto);
+          setUserDto(userDto);
           setSignUpStatus(true);
           router.push("org");
         }
