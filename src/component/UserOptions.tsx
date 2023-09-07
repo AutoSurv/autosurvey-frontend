@@ -5,11 +5,11 @@ import { useContext } from "react";
 import { Dropdown, Label, Menu } from "semantic-ui-react";
 
 export default function UserOptions() {
-  const { userNameAuth, setSignUpStatus } = useContext(OrgContext);
+  const { userNameAuth, setSignUpStatus, userDto } = useContext(OrgContext);
 
 return (
   <Menu.Item>
-      <Dropdown className="exp-imp-items" text={userNameAuth}>
+      <Dropdown className="exp-imp-items" text={userDto.username}>
         <Dropdown.Menu>
           <Dropdown.Item>
             <Link href={"/userInfo"} style={{ textDecoration: 'none' }} >Info</Link>

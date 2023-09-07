@@ -1,4 +1,4 @@
-import { getSurveys } from "@/helper/apiService";
+import { getSurveys, getUser } from "@/helper/apiService";
 import { Survey } from "@/type/type";
 import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
@@ -25,7 +25,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           filterLocations, 
           filteredSurveys, setFilteredSurveys, 
           isFilterSet, setIsFilterSet, 
-          surveys, setSurveys, userDto} = useContext(OrgContext);
+          surveys, setSurveys, userDto, setUserDto} = useContext(OrgContext);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
   
@@ -42,6 +42,14 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
 
   useEffect(() => {
      getSurveys(setSurveys, propOrgId);
+     //getUser(localStorage.getItem("username") as string, setUserDto);
+     setUserDto({
+      userId: localStorage.getItem("userId") as string,
+      username: localStorage.getItem("username") as string,
+      email: localStorage.getItem("email") as string,
+      roles: localStorage.getItem("role") as string,
+      status: localStorage.getItem("status") as string
+     })
   }, []);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {

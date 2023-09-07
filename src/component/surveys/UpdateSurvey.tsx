@@ -6,7 +6,6 @@ import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 
 type CreateSurveyProps = {
   survey: Survey;
-  orgid: string ;
   setSurvey: Dispatch<SetStateAction<Survey>>;
   propUserDto: UserDto;
 }
@@ -16,7 +15,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
   const { setOrganization, setFilteredSurveys, setSurveys } = useContext(OrgContext);
   const [errMessage, setErrMessage] = useState<string>("");
 
-  const { survey, setSurvey, orgid, propUserDto} = props;
+  const { survey, setSurvey, propUserDto} = props;
 
   return(
     <Modal animation={false}

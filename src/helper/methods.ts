@@ -100,6 +100,8 @@ export async function signInJwtTokenHandler(event: React.FormEvent<HTMLFormEleme
           localStorage.setItem("jwt", loggedUser.token);
           localStorage.setItem("username", loggedUser.username);
           localStorage.setItem("email", loggedUser.email);
+          localStorage.setItem("userId", userDto.userId);
+          localStorage.setItem("status", userDto.status);
           setUserNameAuth(loggedUser.username);
           setUser(userDto);
           setSignUpStatus(true);

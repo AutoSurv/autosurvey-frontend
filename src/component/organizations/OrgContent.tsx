@@ -22,13 +22,14 @@ export default function OrgContent() {
   const router = useRouter();
   const [users, setUsers] = useState<UserDto[]>([]);
   const [userEmailDomain, setUserEmailDomain] = useState("");
-  const { organizations, setOrganizations, userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys } =
+  const { organizations, setOrganizations, 
+          userNameAuth, setUserNameAuth, setOrganization, setFilteredSurveys, setUserDto, userDto } =
     useContext(OrgContext);
   const [role, setRole] = useState("");
   const [user, setUser] = useState<UserDto>(initUser)
 
   useEffect(() => {
-    getUser(localStorage.getItem("username") as string, setUser);
+    getUser(localStorage.getItem("username") as string, setUserDto);
     setOrganization(initOrg);
     setFilteredSurveys([]);
     setUserEmailDomain(getUserEmailDomain(localStorage.getItem("email") as string));
@@ -64,7 +65,7 @@ export default function OrgContent() {
 
       <NavigationBar pathname={router.pathname} />
 
-      { user.roles && user.roles !== ROLE.user ? (<>
+      { userDto.roles && userDto.roles !== ROLE.user ? (<>
         <div className="org-modal-btn-container">
           <Button className="org-modal-btn" color="green" onClick={() => setOpen(true)}>
             Create Organization
@@ -117,14 +118,14 @@ export default function OrgContent() {
         </Modal></>
       ) : null}
       <div className="orgs-orgcard-box">
-        {user.roles ?
+        {userDto.roles ?
         organizations.filter(
           organization => {
             if (user.roles === "ROLE_ADMIN") {
               return organization;
             } else {
               if (organization.users.find((userOrg) => {
-                return userOrg.userId === user.userId
+                return userOrg.userId === userDto.userId
               })) {
                 return organization;
               }

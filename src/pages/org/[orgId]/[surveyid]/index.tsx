@@ -14,21 +14,24 @@ export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-  const { organization, survey, setSurvey, setSurveys, userDto } = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSurveys, userDto, setUserDto } = useContext(OrgContext);
 
   useEffect(() => {
 
-    getSurveys(setSurveys, orgId as string);
-  
+    getSurveys(setSurveys, orgId as string);  
     if (router.isReady) {
 
       if (surveyid) {
         getSurvey(surveyid, setSurvey);
       }
-     
-
     }
-    
+    setUserDto({
+      userId: localStorage.getItem("userId") as string,
+      username: localStorage.getItem("username") as string,
+      email: localStorage.getItem("email") as string,
+      roles: localStorage.getItem("role") as string,
+      status: localStorage.getItem("status") as string
+     })
   }, [setSurvey, router.isReady])
 
   return (
@@ -179,7 +182,7 @@ export default function SurveyDetails() {
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="center">
-                <UpdateSurvey survey={survey} orgid={orgId as string} setSurvey={setSurvey} propUserDto={userDto}/>
+                <UpdateSurvey survey={survey} setSurvey={setSurvey} propUserDto={userDto}/>
               </TableCell>
               <TableCell align="center">
                 <DelSurvey propOrgid={organization.orgId} propSurvey={survey} />
