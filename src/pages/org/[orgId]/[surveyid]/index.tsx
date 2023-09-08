@@ -1,28 +1,29 @@
 import { OrgContext } from "@/helper/context";
-import { getSurvey, getSurveys } from "@/helper/apiService";
+import { getOrganization, getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Header, Icon } from "semantic-ui-react";
 import UpdateSurvey from "@/component/surveys/UpdateSurvey";
 import Link from "next/link";
 import { NavigationBar } from "@/component/NavigationBar";
 import DelSurvey from "@/component/surveys/DeleteSurvey";
+import { getOrganizationApi } from "@/pages/api/surveyAPI";
 
 
 export default function SurveyDetails() {
 
   const router = useRouter();
   const { orgId, surveyid } = router.query;
-  const { organization, survey, setSurvey, setSurveys, userDto, setUserDto } = useContext(OrgContext);
+  const { organization, survey, setSurvey, setSurveys, userDto, setUserDto, setOrganization } = useContext(OrgContext);
 
   useEffect(() => {
-
-    getSurveys(setSurveys, orgId as string);  
+    
     if (router.isReady) {
-
-      if (surveyid) {
-        getSurvey(surveyid, setSurvey);
+      if (surveyid && orgId) {
+        getOrganization(orgId, setOrganization);
+        getSurvey(orgId, surveyid, setSurvey);
+        getSurveys(setSurveys, orgId as string); 
       }
     }
     setUserDto({
@@ -32,7 +33,7 @@ export default function SurveyDetails() {
       roles: localStorage.getItem("role") as string,
       status: localStorage.getItem("status") as string
      })
-  }, [setSurvey, router.isReady])
+  }, [router.isReady])
 
   return (
     <div className="specificsurvey-card-container">
@@ -182,7 +183,7 @@ export default function SurveyDetails() {
             </TableRow>
             <TableRow className="survey-table-row">
               <TableCell component="th" scope="row" align="center">
-                <UpdateSurvey survey={survey} setSurvey={setSurvey} propUserDto={userDto}/>
+                <UpdateSurvey survey={survey} setSurvey={setSurvey} propUserDto={userDto} organization={organization}/>
               </TableCell>
               <TableCell align="center">
                 <DelSurvey propOrgid={organization.orgId} propSurvey={survey} />

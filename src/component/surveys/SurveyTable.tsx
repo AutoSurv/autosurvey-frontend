@@ -41,7 +41,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
                     <Link className='survey-link' href={"/org/" + organization.orgId + "/" + propSurvey.id}>{propSurvey.year}</Link>
                 </TableCell>
                 <TableCell >
-                    {propSurvey.user.username}
+                    {propSurvey.userId}
                 </TableCell>
             </TableRow>
             <TableRow>

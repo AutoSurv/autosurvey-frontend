@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import {
   Survey, SurveyUpdateDto, FormDataSingUp,
-  LoginUser, OrgRequestDto, Organization, User, Pagination, ReqOptions, UserStatusDto, UserDto
+  LoginUser, OrgRequestDto, Organization, ReqOptions, UserStatusDto, UserDto
 } from "../type/type";
 import {
   addImportedSurveyApi, addOrganizationApi, addSurveyApi,
@@ -127,12 +127,12 @@ export async function deleteOrganization(id: string, setOrganizations: Dispatch<
 
 export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {
 
-  const apiResponse = await getSurveysApi();
+  const apiResponse = await getSurveysApi(propOrgId);
 
   if (apiResponse.status === 200) {
     const data: Survey[] = await apiResponse.json();
     setSurveys(data.filter(survey => {
-      return survey.organization.orgId === propOrgId;
+      return survey.orgId === propOrgId;
     }));
     return data;
   }
@@ -143,9 +143,9 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>,
   }
 };
 
-export async function getSurvey(surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<Survey>>) {
+export async function getSurvey(orgId: string | string[] | undefined, surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<Survey>>) {
 
-  const apiResponse = await getSurveyApi(surveyId);
+  const apiResponse = await getSurveyApi(orgId, surveyId);
   if (apiResponse.status === 200) {
     const data: Survey = await apiResponse.json();
     setSurvey(data);
@@ -185,11 +185,12 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
-    organization: org,
-    user: userDto
+    orgId: org.orgId,
+    orgName: org.orgName,
+    userId: userDto.userId
   };
 
-  if (!reqBody.country || !reqBody.organization.orgId) {
+  if (!reqBody.country || !reqBody.orgId) {
     setErrMessage('Please fill the form.');
     return;
   }
@@ -198,7 +199,7 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 
   await addSurveyApi(reqOptions);
   await getSurveys(setSurveys, org.orgId);
-  await getOrganization(reqBody.organization.orgId, setOrganization)
+  await getOrganization(reqBody.orgId, setOrganization)
   setOpen(false);
   setErrMessage('');
 }
@@ -242,18 +243,19 @@ export async function addImportedSurvey(
       numChildren: surveyArr[i].numChildren,
       totalIncome: surveyArr[i].totalIncome,
       comments: surveyArr[i].comments,
-      organization: organization,
-      user: user
+      orgId: organization.orgId,
+      orgName: organization.orgName,
+      userId: user.userId
     };
 
-    if (!reqBody.organization.orgId) {
+    if (!reqBody.orgId) {
       setErrMessage('Organiztion information is missing on survey: ' + reqBody.id + ". Import skipped");
       continue;
     }
 
     if (reqBody.id !== undefined && reqBody.id !== '') {
-      const listOfSurveys: Survey[] = organization.surveys;
-      const surveyFound = listOfSurveys.find(survey => survey.id == reqBody.id);
+      const listOfSurveys: String[] = organization.surveysIds;
+      const surveyFound = listOfSurveys.find(survey => survey === reqBody.id);
 
       if (surveyFound != undefined) {
         const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
@@ -315,7 +317,6 @@ export async function updateSurvey(
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
   userDto: UserDto
 ) {
-
   const reqBody: SurveyUpdateDto = {
     country: event.currentTarget.country.value,
     year: event.currentTarget.year.value,
@@ -338,16 +339,17 @@ export async function updateSurvey(
     numChildren: event.currentTarget.numChildren.value,
     totalIncome: event.currentTarget.totalIncome.value,
     comments: event.currentTarget.comments.value,
-    organization: org,
-    user: userDto
+    orgId: org.orgId,
+    orgName: org.orgName,
+    userId: userDto.userId
   };
 
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
-    const survey = await getSurvey(id, setSurvey) as Survey;
+    const survey = await getSurvey( org.orgId,id, setSurvey) as Survey;
     if (survey) {
-      await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.organization.orgId === org.orgId)));
+      await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.orgId === org.orgId)));
       await getOrganization(org.orgId, setOrganization);
     }
     
@@ -364,7 +366,7 @@ export async function deleteSurvey(
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
   organization: Organization) {
     
-  await deleteSurveyApi(id);
+  await deleteSurveyApi(id, organization.orgId);
   await getSurveys(setSurveys, organization.orgId);
 
 };

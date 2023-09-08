@@ -85,14 +85,14 @@ export function NavigationBar({ pathname }: HeaderProps) {
                     <Dropdown.Item>
                       <label onClick={(e) => {
                         e.preventDefault();
-                        downloadExcel(filteredSurveys.filter(surv => organization.surveys.filter(s => surv.id === s.id)), organization, filterYears, filterCountries, filterLocations, setErrorMsg);
+                        downloadExcel(filteredSurveys, organization, filterYears, filterCountries, filterLocations, setErrorMsg);
                       }} style={{ textDecoration: 'none', color: '#4183c4' }} >Export Surveys (xlsx)
                       </label>
                     </Dropdown.Item>
                     <Dropdown.Item>
                       <label >
                         <CSVLink className="surveys-export-csv-link" filename={organization.orgName + ".csv"} data={
-                            filteredSurveys.filter(surv => organization.surveys.filter(s => surv.id === s.id))//s.organization.orgName === organization.orgName)
+                            filteredSurveys
                           }>
                           Export Survey (csv)
                         </CSVLink>

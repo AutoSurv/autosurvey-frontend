@@ -9,7 +9,6 @@ import Link from 'next/link';
 type OrgCardProp = {
   organization: Organization;
   setOrganizations: Dispatch<SetStateAction<Organization[]>>;
-
 }
 
 export default function OrgCard(props: OrgCardProp) {
@@ -32,7 +31,7 @@ export default function OrgCard(props: OrgCardProp) {
           <Image className="org-card-image" src={`/${orgLowerName}.png`} alt={organization.orgName.toLowerCase()} size='large' />
           <Card.Content>
             <Card.Header className='org-card-header'>{organization.orgName}</Card.Header>
-            <Card.Meta className='org-card-meta'># the number of surveys: {organization.surveys.length}</Card.Meta>
+            <Card.Meta className='org-card-meta'># the number of surveys: {organization.surveysIds?.length}</Card.Meta>
           </Card.Content>
         </Link>
 

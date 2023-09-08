@@ -1,4 +1,4 @@
-import { getSurveys, getUser } from "@/helper/apiService";
+import { getSurveys } from "@/helper/apiService";
 import { Survey } from "@/type/type";
 import React, { useContext, useEffect, useState } from "react";
 import { Header, Icon, Label, Table } from "semantic-ui-react";
@@ -63,7 +63,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
 
   let meanValues: number[][] = []
   if (isFilterSet) {
-    meanValues = calculateMeanValues(country_arr, organization.surveys);
+    meanValues = calculateMeanValues(country_arr, surveys);
   } else {
     country_arr = ["world countries and cities"];
     //meanValues[0][0] = 0;

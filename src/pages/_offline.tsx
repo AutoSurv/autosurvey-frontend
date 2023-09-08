@@ -60,8 +60,9 @@ export default function Fallback() {
       totalIncome: e.currentTarget.totalIncome.value,
       comments: e.currentTarget.comments.value,
       id: "",
-      organization: initOrg,
-      user: initUserDto,
+      orgId: "",
+      orgName: "",
+      userId: ""
     };
 
     if (!localStorage.getItem("offlineSurvey")) {
@@ -121,12 +122,14 @@ export default function Fallback() {
       "numChildren",
       "totalIncome",
       "comments",
-      "organization",
-      "user",
+      "orgId",
+      "orgName",
+      "userId"
     ];
     const worksheet = XLSX.utils.json_to_sheet(offlineSurveys, {header:myHeader});
     delete(worksheet["W1"]);
     delete(worksheet['X1']);
+    delete(worksheet['Y1']);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 

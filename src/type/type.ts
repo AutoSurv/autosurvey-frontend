@@ -21,11 +21,12 @@ export type Survey = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  organization: Organization,
-  user: UserDto
+  orgId: string,
+  orgName: string,
+  userId: string
 }
 
-export type SurveyRequestDto = {
+/* export type SurveyRequestDto = {
   id: string,
   country: string;
   year: number;
@@ -50,7 +51,7 @@ export type SurveyRequestDto = {
   comments: string,
   organization: Organization,
   user: UserDto
-}
+} */
 
 export type SurveyUpdateDto = {
   country: string;
@@ -74,8 +75,9 @@ export type SurveyUpdateDto = {
   numChildren: number,
   totalIncome: number,
   comments: string,
-  organization: Organization,
-  user: UserDto
+  orgId: string,
+  orgName: string,
+  userId: string
 }
 
 export type ImportedSurvey = {
@@ -130,8 +132,8 @@ export type ExportedSurvey = {
 export type Organization = {
   orgId: string,
   orgName: string,
-  surveys: Survey[],
-  users: User[]
+  surveysIds: string[],
+  usersIds: string[]
 }
 
 export type OrgRequestDto = {
@@ -155,7 +157,7 @@ export type FormDataSingUp = {
   email: string,
   roles: string,
   status: string,
-  surveys: Survey[]
+  surveysIds: string[]
 }
 
 export type LoggedUser = {

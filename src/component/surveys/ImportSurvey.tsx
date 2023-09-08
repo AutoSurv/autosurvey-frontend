@@ -1,6 +1,5 @@
-import { initPagination } from "@/helper/initializer";
 import { addImportedSurvey } from "@/helper/apiService";
-import { Survey, Pagination, ImportedSurvey, Organization, UserDto } from "@/type/type";
+import { Survey, ImportedSurvey, Organization, UserDto } from "@/type/type";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
 import * as XLSX from 'xlsx'

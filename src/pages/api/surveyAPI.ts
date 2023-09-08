@@ -58,9 +58,9 @@ export async function deleteOrganizationApi(id: string) {
 //Survey section
 const BASE_SURVEY_URL = `${process.env.NEXT_PUBLIC_PORT}/api/autosurveys`;
 
-export async function getSurveysApi() {
+export async function getSurveysApi(orgId: string | string[] | undefined) {
   const jwt: string = checkIfLocalStorageDef();
-  const apiResponse = await fetch(BASE_SURVEY_URL, {
+  const apiResponse = await fetch(BASE_ORG_URL + `/${orgId}/surveys`, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${jwt}` },
     mode: "cors",
@@ -69,9 +69,9 @@ export async function getSurveysApi() {
   return apiResponse;
 };
 
-export async function getSurveyApi(surveyId: string | string[] | undefined) {
+export async function getSurveyApi(orgId: string | string[] | undefined, surveyId: string | string[] | undefined) {
   const jwt: string = checkIfLocalStorageDef();
-  const autosurveysURL = BASE_SURVEY_URL + `/${surveyId}`;
+  const autosurveysURL = BASE_ORG_URL +`/${orgId}/surveys/${surveyId}`;
   const apiResponse = await fetch(autosurveysURL, {
     cache: 'no-store',
     headers: { Authorization: `Bearer ${jwt}` },
@@ -101,7 +101,7 @@ export async function updateSurveyApi(
   return response;
 };
 
-export async function deleteSurveyApi(id: string) {
+export async function deleteSurveyApi(id: string, orgId: string) {
   const jwt: string = checkIfLocalStorageDef();
   const autosurveysURL = BASE_SURVEY_URL + `/${id}`;
 
@@ -111,7 +111,7 @@ export async function deleteSurveyApi(id: string) {
       Authorization: `Bearer ${jwt}`
     }
   });
-  await getSurveysApi();
+  await getSurveysApi(orgId);
 
 };
 

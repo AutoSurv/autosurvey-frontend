@@ -3,8 +3,8 @@ import { Survey, Organization, Pagination, MeadDataForChart, User, UserDto } fro
 export const initOrg: Organization = {
   orgId: "",
   orgName: "",
-  surveys: [],
-  users: []
+  surveysIds: [],
+  usersIds: []
 }
 
 export const initUserDto: UserDto = {
@@ -18,8 +18,8 @@ export const initUserDto: UserDto = {
 export const notAnOrg: Organization = {
   orgId: "0",
   orgName: "ORGANIZATION NOT AVAILABLE",
-  surveys: [],
-  users: []
+  surveysIds: [],
+  usersIds: []
 }
 
 export const initSurvey: Survey = {
@@ -45,8 +45,9 @@ export const initSurvey: Survey = {
   totalIncome: 0,
   comments: "",
   id: "",
-  organization: initOrg,
-  user: initUserDto
+  orgId: "",
+  orgName: "",
+  userId: ""
 }
 
 export const initPagination: Pagination = {

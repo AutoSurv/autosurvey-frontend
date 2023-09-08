@@ -46,7 +46,7 @@ export interface OrgContextValue {
 
 export const OrgContext = createContext<OrgContextValue> ({
 
-    organization: {orgId: '', orgName: '', surveys: [], users: []},
+    organization: {orgId: '', orgName: '', surveysIds: [], usersIds: []},
     setOrganization: () => {},
     organizations: [],
     setOrganizations: () => {},

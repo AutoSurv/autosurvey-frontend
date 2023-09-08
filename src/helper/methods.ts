@@ -19,10 +19,11 @@ export const downloadExcel = (data: any, organization: Organization, filterYears
     	"transportation",	"educationTotal",	"educationSupplies",	"educationFee",	
       "educationType",	"accommodationType",	"profession",	"locationGiven",	
       "locationClustered",	"numResidents",	"numIncomes",	"numFullIncomes",	
-      "numChildren",	"totalIncome",	"comments", "organization", "user" ];
+      "numChildren",	"totalIncome",	"comments", "orgId", "orgName","userId" ];
   const worksheet = XLSX.utils.json_to_sheet((data as ExportedSurvey[]), {header:myHeader});
-   delete(worksheet['W1']);
+ /*   delete(worksheet['W1']);
   delete(worksheet['X1']);
+  delete(worksheet['Y1']); */
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
@@ -123,7 +124,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     email: event.currentTarget.email.value,
     roles: "role_user",
     status: "pending",
-    surveys: []
+    surveysIds: []
   }
   localStorage.clear();
 

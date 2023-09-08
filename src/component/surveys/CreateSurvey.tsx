@@ -1,9 +1,7 @@
-import { initPagination } from "@/helper/initializer";
 import { addSurvey } from "@/helper/apiService";
-import { Survey, Organization, Pagination, UserDto } from "@/type/type";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { Survey, Organization, UserDto } from "@/type/type";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
-import { OrgContext } from "@/helper/context";
 
 type CreateSurveyProps = {
   organization: Organization;

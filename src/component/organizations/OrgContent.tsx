@@ -15,7 +15,7 @@ import { OrgContext } from "@/helper/context";
 import Link from "next/link";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
-import { initOrg, initUser } from "@/helper/initializer";
+import { initOrg } from "@/helper/initializer";
 import { getUserEmailDomain } from "@/helper/methods";
 
 export default function OrgContent() {
@@ -140,8 +140,8 @@ export default function OrgContent() {
                   return organization;
                 } else {
                   if (
-                    organization.users.find((userOrg) => {
-                      return userOrg.userId === userDto.userId;
+                    organization.usersIds.find((userId) => {
+                      return userId === userDto.userId;
                     })
                   ) {
                     return organization;
