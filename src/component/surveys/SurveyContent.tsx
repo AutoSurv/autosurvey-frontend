@@ -13,6 +13,9 @@ import { TablePagination } from "@mui/material";
 import SurveyTable from "./SurveyTable";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
+import FilterCountry from "../filters/FilterCountry";
+import MapChart from "../MapChart";
+
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 type SurveyContentProps = {
@@ -22,12 +25,13 @@ type SurveyContentProps = {
 export default function SurveyContent({propOrgId}: SurveyContentProps) {
   const router = useRouter();
   const { organization, setOrganization, 
-          filterLocations, 
+          filterLocations, setFilterCountries,
           filteredSurveys, setFilteredSurveys, 
           isFilterSet, setIsFilterSet, 
           surveys, setSurveys, userDto, setUserDto} = useContext(OrgContext);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
+  const [content, setContent] = useState("");
   
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();
@@ -50,7 +54,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
       roles: localStorage.getItem("role") as string,
       status: localStorage.getItem("status") as string
      })
-  }, []);
+  }, [,setFilterCountries]);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
@@ -126,12 +130,18 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
       </section>
 
       <section className="surveys-charts">
-        <Chart
+        {filterLocations.length > 0 ?
+          <Chart
           height={450}
           type="bar"
           options={options}
           series={series}
-        />
+          />
+          :
+          <MapChart setTooltipContent={setContent} propSetFilteredSurveys={setFilteredSurveys} propSetFilterCountry={setFilterCountries}/>
+        }
+        
+
       </section>
 
       <div className="surveys-surveycard-box">

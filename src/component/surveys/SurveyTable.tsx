@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Survey, Organization } from '@/type/type';
-import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { Box, Collapse, IconButton, TableCell, TableRow } from '@mui/material';
 import { Button, Form, Icon, Input, Label } from 'semantic-ui-react';
 import { updateSurvey } from '@/helper/apiService';
@@ -18,6 +18,7 @@ export default function SurveyRecord(props: SurveyCardProp) {
     const { setSurvey, setOrganization, setFilteredSurveys, userDto } = useContext(OrgContext);
     const [open, setOpen] = useState(false);
     const [errMessage, setErrMessage] = useState<string>("");
+
 
     return (
         <>
@@ -154,4 +155,8 @@ export default function SurveyRecord(props: SurveyCardProp) {
         </>
 
     );
+}
+
+function UseEffect(arg0: () => void, arg1: never[]) {
+    throw new Error('Function not implemented.');
 }

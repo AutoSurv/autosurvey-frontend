@@ -221,3 +221,20 @@ export type ReqOptions = {
 export type MeadDataForChart = {
   meanValues: number[][]
 }
+
+export type CountryChart = {
+  type: string,
+  objects : {
+    world: {
+      type: string,
+      geometries: [{
+        type: string,
+        arcs: number[],
+        id: string,
+        properties: {
+          name: string
+        }
+      }]
+    }
+  }
+}

@@ -50,6 +50,32 @@ export const downloadExcel = (data: any, organization: Organization, filterYears
   setErrorMsg("");
 };
 
+export const createCsvFileName = (data: any, organization: Organization, 
+  filterYears: string[], filterCountries: string[], 
+  filterLocations: string[], setErrorMsg: Dispatch<SetStateAction<string>>) => {
+
+    if (data.length == 1) {  
+      return organization.orgName + "_" + data[0].year + "_" + data[0].country + "_" + data[0].locationClustered + "_" + data[0].id + ".csv";
+    } else if (data.length > 1) {
+      if (filterCountries.length == 1) {
+        if (filterLocations.length == 1) {
+          if (filterYears.length == 1) {
+            return organization.orgName + "_" + data[0].year + "_" + data[0].country + "_" + data[0].locationClustered + ".csv";
+          } else {
+            return  organization.orgName + "_" + data[0].country + "_" + data[0].locationClustered + ".csv";
+          }
+        } else {
+          return organization.orgName + "_" + data[0].country + ".csv";
+        }
+      } else {
+        return organization.orgName + ".csv";
+      }
+    } else {
+      setErrorMsg("Error during exporting data as CSV!");
+      return;
+    }
+}
+
 export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
   setSignUpStatus(false);
   localStorage.clear();
