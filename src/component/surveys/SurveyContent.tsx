@@ -137,7 +137,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           series={series}
           />
           :
-          <MapChart setTooltipContent={setContent} propSetFilteredSurveys={setFilteredSurveys} propSetFilterCountry={setFilterCountries}/>
+          <MapChart propSetFilteredSurveys={setFilteredSurveys} propSetFilterCountry={setFilterCountries}/>
         }
         
 

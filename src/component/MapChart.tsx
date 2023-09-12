@@ -4,7 +4,6 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
-  useState,
 } from "react";
 
 import {
@@ -18,22 +17,15 @@ import { Popup } from "semantic-ui-react";
 const geoUrl = "/countries.json";
 
 type MapChartProps = {
-  setTooltipContent: any;
   propSetFilteredSurveys: Dispatch<SetStateAction<Survey[]>>;
   propSetFilterCountry: Dispatch<SetStateAction<string[]>>;
 };
 
 export default function MapChart({
-  setTooltipContent,
   propSetFilteredSurveys,
   propSetFilterCountry,
 }: MapChartProps) {
   const { surveys, filterCountries } = useContext(OrgContext);
-  const [clickedCity, setClickedCity] = useState("");
-
-  const handleClick = (geo: any) => {
-    setClickedCity(geo.properties.name);
-  };
 
   return (
     <ComposableMap
@@ -80,12 +72,13 @@ export default function MapChart({
                               .includes(geo.properties.name.toLowerCase());
                           })
                         );
-                        propSetFilterCountry([geo.properties.name]);
-                        handleClick(geo);
-                        setTooltipContent("hej");
-                      }}
-                      onMouseLeave={() => {
-                        setTooltipContent("");
+                        let stringArray: string[] = filterCountries;
+                        if(stringArray.includes(geo.properties.name)) {
+                          stringArray = filterCountries.filter(country => country !== geo.properties.name)
+                        } else {
+                          stringArray.push(geo.properties.name)
+                        }
+                        propSetFilterCountry(stringArray);
                       }}
                       style={
                         d
