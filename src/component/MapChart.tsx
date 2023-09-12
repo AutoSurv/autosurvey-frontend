@@ -99,7 +99,7 @@ const MapChart = ({
         //data.length > 0 && (
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
-            geographies.map((geo) => {
+            geographies.map((geo, index: number) => {
               const d = surveys.find((s) => s.country === geo.properties.name);
               let location_arr: string[] = [];
               let countryLocation_list = new Set<string>();
@@ -108,7 +108,8 @@ const MapChart = ({
               location_arr = Array.from(countryLocation_list);
               
               return (
-                <Popup
+                <Popup 
+                  key={index}
                   trigger={
                     <Geography
                       key={geo.rsmKey}
