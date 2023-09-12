@@ -13,7 +13,6 @@ import { TablePagination } from "@mui/material";
 import SurveyTable from "./SurveyTable";
 import { NavigationBar } from "../NavigationBar";
 import { useRouter } from "next/router";
-import FilterCountry from "../filters/FilterCountry";
 import MapChart from "../MapChart";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });

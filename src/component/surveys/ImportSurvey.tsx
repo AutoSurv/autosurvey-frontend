@@ -2,7 +2,7 @@ import { addImportedSurvey } from "@/helper/apiService";
 import { Survey, ImportedSurvey, Organization, UserDto } from "@/type/type";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
-import * as XLSX from 'xlsx'
+import * as XLSX from 'xlsx';
 
 type ImportSurveyProps = {
   organization: Organization;
