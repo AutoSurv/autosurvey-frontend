@@ -1,6 +1,6 @@
-import { getOrganization, updateSurvey } from "@/helper/apiService";
+import { updateSurvey } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
-import { Organization, Survey, UserDto } from "@/type/type";
+import { Organization, Survey } from "@/type/type";
 import { Box, Collapse } from "@mui/material";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Button, Form, Input, Label } from "semantic-ui-react";

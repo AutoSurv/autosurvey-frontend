@@ -25,7 +25,6 @@ import {
 import SignalWifiConnectedNoInternet4Icon from "@mui/icons-material/SignalWifiConnectedNoInternet4";
 import * as XLSX from "xlsx";
 import { TableHead } from "@mui/material";
-import { initOrg, initUserDto } from "@/helper/initializer";
 
 export default function Fallback() {
   const [open, setOpen] = useState(false);

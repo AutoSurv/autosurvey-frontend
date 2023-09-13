@@ -30,7 +30,6 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
           surveys, setSurveys, userDto, setUserDto} = useContext(OrgContext);
   const [page, setPage] = useState(0);
   const [rowPage, setRowPage] = useState(10);
-  const [content, setContent] = useState("");
   
   let country_arr: string[] = [];
   let countryLocation_list = new Set<string>();

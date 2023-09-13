@@ -2,13 +2,12 @@ import { OrgContext } from "@/helper/context";
 import { getOrganization, getSurvey, getSurveys } from "@/helper/apiService";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useRouter } from "next/router"
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Header, Icon } from "semantic-ui-react";
 import UpdateSurvey from "@/component/surveys/UpdateSurvey";
 import Link from "next/link";
 import { NavigationBar } from "@/component/NavigationBar";
 import DelSurvey from "@/component/surveys/DeleteSurvey";
-import { getOrganizationApi } from "@/pages/api/surveyAPI";
 
 
 export default function SurveyDetails() {

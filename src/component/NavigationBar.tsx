@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Dropdown, Menu, Message, Progress } from "semantic-ui-react";
 import UserOptions from "./UserOptions";
 import ImportSurvey from "./surveys/ImportSurvey";
-import { createCsvFileName, downloadExcel } from "@/helper/methods";
+import { downloadExcel } from "@/helper/methods";
 import { CSVLink } from "react-csv";
 import { useContext, useEffect, useState } from "react";
 import { OrgContext } from "@/helper/context";

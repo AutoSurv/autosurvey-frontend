@@ -2,7 +2,7 @@ import { authenticateUser, signUpUser } from '@/helper/apiService';
 import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 
 export const downloadExcel = (data: any, organization: Organization, filterYears: string[], filterCountries: string[], filterLocations: string[], 
   setErrorMsg: Dispatch<SetStateAction<string>>) => {  
