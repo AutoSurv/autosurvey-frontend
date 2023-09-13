@@ -81,8 +81,7 @@ export default function MapChart({
                         propSetFilterCountry(stringArray);
                       }}
                       style={
-                        d
-                          ? {
+                        d ? {
                               default: {
                                 fill: "#F53",
                                 outline: "none",
