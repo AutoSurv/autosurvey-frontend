@@ -4,8 +4,9 @@ import React, {
   Dispatch,
   SetStateAction,
   useContext,
+  useEffect,
+  useState,
 } from "react";
-
 import {
   ComposableMap,
   Geographies,
@@ -27,6 +28,39 @@ export default function MapChart({
 }: MapChartProps) {
   const { surveys, filterCountries } = useContext(OrgContext);
 
+  type ClickedCountry = {
+    country: string;
+    clicked: boolean;
+  };
+  const [clickedCountry, setClickedCountry] = useState<ClickedCountry>({
+    country: "",
+    clicked: false,
+  });
+  const [clickedCountries, setClickedCountries] = useState<ClickedCountry[]>(
+    []
+  );
+  const [geoData, setGeoData] = useState("");
+  
+  function handleClickedCountry(geoName: string) {
+
+    if (
+      clickedCountries.filter(c=> c.country === geoData).length > 0
+    ) {
+      
+      clickedCountries.map((c) => {
+        if (c.country === geoName) {
+          c.clicked = !c.clicked;
+        }
+      });
+    } else {
+      clickedCountries.push(clickedCountry);
+    }
+  } 
+
+  useEffect(() => {
+      handleClickedCountry(geoData);
+  }, [clickedCountry, clickedCountries]);
+
   return (
     <ComposableMap
       projectionConfig={{
@@ -37,8 +71,7 @@ export default function MapChart({
       height={400}
       style={{ width: "100%", height: "auto" }}
     >
-    
-      <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
+      <Graticule stroke="#EAEAEC" strokeWidth={0.5} />
       {
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
@@ -53,8 +86,15 @@ export default function MapChart({
                 countryLocation_list.add(s.locationClustered)
               );
               location_arr = Array.from(countryLocation_list);
+          
+              
+              const isClicked =
+                clickedCountries.find((c) => c.country === geo.properties.name)
+                  ?.country === geo.properties.name &&
+                clickedCountries.find((c) => c.country === geo.properties.name)
+                  ?.clicked;
 
-              return (d ?
+              return d ? (
                 <Popup
                   key={index}
                   trigger={
@@ -62,9 +102,8 @@ export default function MapChart({
                       key={geo.rsmKey}
                       geography={geo}
                       fill="#F53"
-                      stroke="black"
-                      strokeWidth="0.1"
-                      onClick={() => {
+                      stroke="#EAEAEC"
+                      onClick={async () => {
                         propSetFilteredSurveys(
                           surveys.filter((survey: Survey) => {
                             return survey.country
@@ -73,40 +112,54 @@ export default function MapChart({
                           })
                         );
                         let stringArray: string[] = filterCountries;
-                        if(stringArray.includes(geo.properties.name)) {
-                          stringArray = filterCountries.filter(country => country !== geo.properties.name)
+                        if (stringArray.includes(geo.properties.name)) {
+                          stringArray = filterCountries.filter(
+                            (country) => country !== geo.properties.name
+                          );
                         } else {
-                          stringArray.push(geo.properties.name)
+                          stringArray.push(geo.properties.name);
                         }
                         propSetFilterCountry(stringArray);
+                        setGeoData(geo.properties.name);
+                        setClickedCountry({
+                          country: geo.properties.name,
+                          clicked: true,
+                        });
+
+                       
                       }}
                       style={
-                        d ? {
+                        !isClicked
+                          ? {
                               default: {
                                 fill: "#F53",
                                 outline: "none",
                               },
                               hover: {
-                                fill: "#228B22",
+                                fill: "#4183c4",
                                 outline: "none",
                               },
                               pressed: {
-                                fill: "#228B22",
+                                fill: "#4183c4",
                                 outline: "none",
                               },
                             }
                           : {
                               default: {
-                                fill: "#D6D6DA",
+                                fill: "#4183c4",
                                 outline: "none",
                               },
                               hover: {
-                                fill: "#D6D6DA",
+                                fill: "#4183c4",
+                                outline: "none",
+                              },
+                              pressed: {
+                                fill: "#4183c4",
                                 outline: "none",
                               },
                             }
                       }
-                    /> 
+                    />
                   }
                   content={
                     <>
@@ -126,13 +179,27 @@ export default function MapChart({
                   }
                   header={geo.properties.name}
                   basic
-                />:
+                />
+              ) : (
                 <Geography
-                key={geo.rsmKey}
-                geography={geo}
-                fill="#D6D6DA"
-                stroke="black"
-                strokeWidth="0.1"
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill="#D3D3D3"
+                  stroke="#EAEAEC"
+                  style={{
+                    default: {
+                      fill: "#D3D3D3",
+                      outline: "none",
+                    },
+                    hover: {
+                      fill: "#D3D3D3",
+                      outline: "none",
+                    },
+                    pressed: {
+                      fill: "#D3D3D3",
+                      outline: "none",
+                    },
+                  }}
                 />
               );
             })
@@ -141,4 +208,4 @@ export default function MapChart({
       }
     </ComposableMap>
   );
-};
+}
