@@ -267,31 +267,19 @@ export function getUserEmailDomain (userEmail: string) {
 export function handleClickedCountry(geoName: string, 
                                       clickedCountries: ClickedCountry[], 
                                       setClickedCountries: Dispatch<SetStateAction<ClickedCountry[]>>) {
-  console.log("methods.handleClickCountry.geoName: ", geoName);  
-  console.log("methods.handleClickCountry.clickedCountries.lenfgth: ", clickedCountries);  
 
-  if (clickedCountries.filter(c=> c.country === geoName).length > 0) {
-    console.log("methods.handleClickCountry.clickedCountries.lenfgth > 0!")
-    //setClickedCountries(
+  if (clickedCountries.filter(c=> c.country === geoName && c.country !== "").length > 0) {
     clickedCountries.map(c => {
       if (c.country === geoName) {
-        console.log("methods.handleClickCountry.c.clicked: ", c.clicked);
         c.clicked = !c.clicked;
-        console.log("methods.handleClickCountry.c.clicked: ", c.clicked);
-      //   return c;
-      // } else {
-      //   return c;
       }
 
     });
-    //)
-    console.log("methods.handleClickCountry.clickedCountries: ", clickedCountries)
   } else {
+    if(geoName !== "")
     clickedCountries.push({
       country: geoName,
       clicked: true,
     });
-    //setClickedCountries(clickedCountries);
-
   }
 }

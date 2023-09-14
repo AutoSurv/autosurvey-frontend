@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { Dropdown, Label, Menu } from "semantic-ui-react";
 
 export default function UserOptions() {
-  const { userNameAuth, setSignUpStatus, userDto } = useContext(OrgContext);
+  const { setSignUpStatus, userDto } = useContext(OrgContext);
 
 return (
   <Menu.Item>

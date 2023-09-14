@@ -1,6 +1,6 @@
 import { OrgContext } from "@/helper/context";
 import { handleClickedCountry } from "@/helper/methods";
-import { ClickedCountry, Survey } from "@/type/type";
+import { Survey } from "@/type/type";
 import React, {
   Dispatch,
   SetStateAction,
@@ -32,7 +32,6 @@ export default function MapChart({
 
   useEffect(() => {
       handleClickedCountry(geoData, clickedCountries, setClickedCountries);
-      //infinite loop -> fix it!
     }, [clickedCountry, clickedCountries]);
 
   return (
