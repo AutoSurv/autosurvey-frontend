@@ -1,5 +1,5 @@
 import { OrgContext } from "@/helper/context";
-import { Survey } from "@/type/type";
+import { ClickedCountry, Survey } from "@/type/type";
 import React, {
   Dispatch,
   SetStateAction,
@@ -28,10 +28,7 @@ export default function MapChart({
 }: MapChartProps) {
   const { surveys, filterCountries } = useContext(OrgContext);
 
-  type ClickedCountry = {
-    country: string;
-    clicked: boolean;
-  };
+ 
   const [clickedCountry, setClickedCountry] = useState<ClickedCountry>({
     country: "",
     clicked: false,
@@ -40,25 +37,11 @@ export default function MapChart({
     []
   );
   const [geoData, setGeoData] = useState("");
-  
-  function handleClickedCountry(geoName: string) {
-
-    if (
-      clickedCountries.filter(c=> c.country === geoData).length > 0
-    ) {
-      
-      clickedCountries.map((c) => {
-        if (c.country === geoName) {
-          c.clicked = !c.clicked;
-        }
-      });
-    } else {
-      clickedCountries.push(clickedCountry);
-    }
-  } 
+ 
+ 
 
   useEffect(() => {
-      handleClickedCountry(geoData);
+      handleClickedCountry(geoData, clickedCountries, clickedCountry);
   }, [clickedCountry, clickedCountries]);
 
   return (
@@ -209,3 +192,20 @@ export default function MapChart({
     </ComposableMap>
   );
 }
+
+
+export function handleClickedCountry(geoData: string, clickedCountries: ClickedCountry[], clickedCountry: ClickedCountry) {
+
+  if (
+    clickedCountries.filter(c=> c.country === geoData).length > 0
+  ) {
+    
+    clickedCountries.map((c) => {
+      if (c.country === geoData) {
+        c.clicked = !c.clicked;
+      }
+    });
+  } else {
+    clickedCountries.push(clickedCountry);
+  }
+} 

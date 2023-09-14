@@ -1,4 +1,4 @@
-import { Survey, Organization, Pagination, UserDto } from "@/type/type";
+import { Survey, Organization, Pagination, UserDto, ClickedCountry } from "@/type/type";
 import { Dispatch, SetStateAction, createContext } from "react";
 import { initPagination, initSurvey, initUserDto } from "./initializer";
 
@@ -42,6 +42,12 @@ export interface OrgContextValue {
 
     pagination: Pagination;
     setPagination: Dispatch<SetStateAction<Pagination>>;
+
+    geoData: string;
+
+    clickedCountries: ClickedCountry[];
+
+    clickedCountry: ClickedCountry;
 }
 
 export const OrgContext = createContext<OrgContextValue> ({
@@ -71,6 +77,12 @@ export const OrgContext = createContext<OrgContextValue> ({
     isFilterSet: false,
     setIsFilterSet: () => {},
     pagination: initPagination,
-    setPagination: () => {}
+    setPagination: () => {},
+    geoData: "",
+    clickedCountries: [],
+    clickedCountry: {
+        country: "",
+        clicked: false
+    }
 
 });
