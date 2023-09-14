@@ -10,7 +10,6 @@ import '@/styles/offline.css'
 import type { AppProps } from 'next/app'
 import { useState } from 'react'
 import { Survey, Organization, Pagination, UserDto, ClickedCountry } from '../type/type'
-import { Survey, Organization, Pagination, UserDto, ClickedCountry } from '../type/type'
 import { OrgContext } from '@/helper/context'
 import { initClickedCountry, initOrg, initPagination, initSurvey, initUserDto } from '@/helper/initializer'
 
