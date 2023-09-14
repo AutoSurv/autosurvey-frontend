@@ -9,9 +9,9 @@ import '@/styles/userInfo.css'
 import '@/styles/offline.css'
 import type { AppProps } from 'next/app'
 import { useState } from 'react'
-import { Survey, Organization, Pagination, UserDto } from '../type/type'
+import { Survey, Organization, Pagination, UserDto, ClickedCountry } from '../type/type'
 import { OrgContext } from '@/helper/context'
-import { initOrg, initPagination, initSurvey, initUserDto } from '@/helper/initializer'
+import { initClickedCountry, initOrg, initPagination, initSurvey, initUserDto } from '@/helper/initializer'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 
@@ -27,15 +27,18 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   const [isFilterSet, setIsFilterSet] =useState<boolean>(false);
   const [pagination, setPagination] = useState<Pagination>(initPagination);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [userDto, setUserDto] = useState<UserDto>(initUserDto)
+  const [userDto, setUserDto] = useState<UserDto>(initUserDto);
+  const [clickedCountry, setClickedCountry] = useState<ClickedCountry>(initClickedCountry);
+  const [clickedCountries, setClickedCountries] = useState<ClickedCountry[]>([]);
+
   return (
 
       <OrgContext.Provider value={{ 
         organization, setOrganization, 
         organizations, setOrganizations,
         survey, setSurvey, 
-        surveys, setSurveys, setSignUpStatus, 
-        signUpStatus, 
+        surveys, setSurveys, 
+        signUpStatus, setSignUpStatus, 
         userNameAuth, setUserNameAuth, 
         filterYears, setFilterYears,
         filterCountries, setFilterCountries,
@@ -44,6 +47,8 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         isFilterSet, setIsFilterSet,
         pagination, setPagination,
         userDto, setUserDto,
+        clickedCountry, setClickedCountry,
+        clickedCountries, setClickedCountries
         }}>
       <Component {...pageProps} />
       </OrgContext.Provider>

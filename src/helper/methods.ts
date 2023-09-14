@@ -1,5 +1,5 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto, ClickedCountry } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from "xlsx";
@@ -262,4 +262,36 @@ export function getUserEmailDomain (userEmail: string) {
   const last: number = userEmail.lastIndexOf(".");
   const domain = userEmail.substring(first+1, last)
   return domain;
+}
+
+export function handleClickedCountry(geoName: string, 
+                                      clickedCountries: ClickedCountry[], 
+                                      setClickedCountries: Dispatch<SetStateAction<ClickedCountry[]>>) {
+  console.log("methods.handleClickCountry.geoName: ", geoName);  
+  console.log("methods.handleClickCountry.clickedCountries.lenfgth: ", clickedCountries);  
+
+  if (clickedCountries.filter(c=> c.country === geoName).length > 0) {
+    console.log("methods.handleClickCountry.clickedCountries.lenfgth > 0!")
+    //setClickedCountries(
+    clickedCountries.map(c => {
+      if (c.country === geoName) {
+        console.log("methods.handleClickCountry.c.clicked: ", c.clicked);
+        c.clicked = !c.clicked;
+        console.log("methods.handleClickCountry.c.clicked: ", c.clicked);
+      //   return c;
+      // } else {
+      //   return c;
+      }
+
+    });
+    //)
+    console.log("methods.handleClickCountry.clickedCountries: ", clickedCountries)
+  } else {
+    clickedCountries.push({
+      country: geoName,
+      clicked: true,
+    });
+    //setClickedCountries(clickedCountries);
+
+  }
 }

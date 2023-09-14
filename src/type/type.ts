@@ -238,3 +238,8 @@ export type CountryChart = {
     }
   }
 }
+
+export type ClickedCountry = {
+  country: string;
+  clicked: boolean;
+};

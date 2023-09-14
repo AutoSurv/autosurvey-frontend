@@ -51,7 +51,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
       email: localStorage.getItem("email") as string,
       roles: localStorage.getItem("role") as string,
       status: localStorage.getItem("status") as string
-     })
+     });
   }, [,setFilterCountries]);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {

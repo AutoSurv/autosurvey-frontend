@@ -1,4 +1,5 @@
 import { OrgContext } from '@/helper/context';
+import { handleClickedCountry } from '@/helper/methods';
 import { Survey } from '@/type/type';
 import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react'
 import { Dropdown } from 'semantic-ui-react'
@@ -9,7 +10,7 @@ type FilterProps = {
 }
 
 export default function FilterCountry( { propSurveys, propSetFilteredCountry } : FilterProps) {
-  const {filterCountries, setFilterCountries} = useContext(OrgContext);
+  const {filterCountries, setFilterCountries, clickedCountry, setClickedCountry, clickedCountries, setClickedCountries} = useContext(OrgContext);
 
   const uniqueSurveyCountryArray: string[] = [];
   propSurveys.map(survey => {
@@ -25,7 +26,13 @@ export default function FilterCountry( { propSurveys, propSetFilteredCountry } :
   }));
   
   const handleChange = (event: React.SyntheticEvent<HTMLElement, Event>, {value}: any) => {
-    setFilterCountries(typeof value === 'string' ? value.split(',') : value);
+    console.log();
+    const strArr: string[] = typeof value === 'string' ? value.split(',') : value;
+    
+    for (let i=0; i< strArr.length; i++) {   
+      handleClickedCountry(strArr[i], clickedCountries, setClickedCountries);
+    }
+    setFilterCountries(strArr);
   };
 
   useEffect(() => {

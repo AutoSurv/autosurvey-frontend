@@ -1,5 +1,6 @@
 import { OrgContext } from "@/helper/context";
-import { Survey } from "@/type/type";
+import { handleClickedCountry } from "@/helper/methods";
+import { ClickedCountry, Survey } from "@/type/type";
 import React, {
   Dispatch,
   SetStateAction,
@@ -26,40 +27,13 @@ export default function MapChart({
   propSetFilteredSurveys,
   propSetFilterCountry,
 }: MapChartProps) {
-  const { surveys, filterCountries } = useContext(OrgContext);
-
-  type ClickedCountry = {
-    country: string;
-    clicked: boolean;
-  };
-  const [clickedCountry, setClickedCountry] = useState<ClickedCountry>({
-    country: "",
-    clicked: false,
-  });
-  const [clickedCountries, setClickedCountries] = useState<ClickedCountry[]>(
-    []
-  );
-  const [geoData, setGeoData] = useState("");
-  
-  function handleClickedCountry(geoName: string) {
-
-    if (
-      clickedCountries.filter(c=> c.country === geoData).length > 0
-    ) {
-      
-      clickedCountries.map((c) => {
-        if (c.country === geoName) {
-          c.clicked = !c.clicked;
-        }
-      });
-    } else {
-      clickedCountries.push(clickedCountry);
-    }
-  } 
+  const { surveys, filterCountries, clickedCountry, setClickedCountry, clickedCountries, setClickedCountries } = useContext(OrgContext);
+  const [geoData, setGeoData] = useState(""); 
 
   useEffect(() => {
-      handleClickedCountry(geoData);
-  }, [clickedCountry, clickedCountries]);
+      handleClickedCountry(geoData, clickedCountries, setClickedCountries);
+      //infinite loop -> fix it!
+    }, [clickedCountry, clickedCountries]);
 
   return (
     <ComposableMap
@@ -112,6 +86,7 @@ export default function MapChart({
                           })
                         );
                         let stringArray: string[] = filterCountries;
+                        
                         if (stringArray.includes(geo.properties.name)) {
                           stringArray = filterCountries.filter(
                             (country) => country !== geo.properties.name
