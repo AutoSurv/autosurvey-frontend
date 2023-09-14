@@ -13,7 +13,7 @@ type OrgCardProp = {
 
 export default function OrgCard(props: OrgCardProp) {
   const { organization, setOrganizations } = props;
-  const { setOrganization } = useContext(OrgContext);
+  const { setOrganization, setClickedCountries } = useContext(OrgContext);
   const [open, setOpen] = useState(false);
   const [role, setRole] = useState("");
   const [errMessage, setErrMessage] = useState<string>("");
@@ -22,6 +22,7 @@ export default function OrgCard(props: OrgCardProp) {
 
   useEffect(() => {
     setRole(localStorage.getItem("role") as string);
+    setClickedCountries([]);
   }, []);
 
   return (
