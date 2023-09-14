@@ -43,12 +43,13 @@ export default function FilterCountry({
   ) => {
     const strArr: string[] =
       typeof value === "string" ? value.split(",") : value;
-    previousStrArr = clickedCountries.filter(item => item.clicked).map(item => item.country);
+    previousStrArr = clickedCountries
+      .filter((item) => item.clicked)
+      .map((item) => item.country);
 
     if (strArr.length === 0 && previousStrArr.length !== 1) {
-      for (let i=0; i< previousStrArr.length; i++) {   
-        handleClickedCountry(previousStrArr[i], clickedCountries, setClickedCountries);
-      }
+      clickedCountries.map((c) => (c.clicked = false));
+      previousStrArr = [];
     }
 
     if (strArr.length > previousStrArr.length) {
@@ -67,7 +68,7 @@ export default function FilterCountry({
       handleClickedCountry(country, clickedCountries, setClickedCountries);
       previousStrArr = strArr;
     }
-    setFilterCountries(strArr);    
+    setFilterCountries(strArr);
   };
 
   useEffect(() => {

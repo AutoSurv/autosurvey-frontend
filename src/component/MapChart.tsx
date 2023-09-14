@@ -110,11 +110,11 @@ export default function MapChart({
                                 outline: "none",
                               },
                               hover: {
-                                fill: "#4183c4",
+                                fill: "#F53",
                                 outline: "none",
                               },
                               pressed: {
-                                fill: "#4183c4",
+                                fill: "#F53",
                                 outline: "none",
                               },
                             }
