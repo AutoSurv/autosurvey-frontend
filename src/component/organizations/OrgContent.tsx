@@ -133,7 +133,7 @@ export default function OrgContent() {
         </>
       ) : null}
       <div className="orgs-orgcard-box">
-        {userDto.roles
+        {userDto.status === "approved"
           ? organizations
               .filter((organization) => {
                 if (userDto.roles === "ROLE_ADMIN") {
@@ -157,7 +157,12 @@ export default function OrgContent() {
                   />
                 );
               })
-          : null}
+          : <div>
+          <p>You are not approved.</p>
+          <p>Request approval to your manager or admin : </p>
+          <p><i>seonbong.hong@appliedtechnology.se</i> <br /> or <br /> <i>marco.debernardi@appliedtechnology.se</i></p>
+          <p>You can have access after your manager approve you.</p>
+         </div>}
       </div>
     </div>
   );
