@@ -1,5 +1,5 @@
 import { NavigationBar } from "@/component/NavigationBar";
-import UserTable from "@/component/UserTable";
+import UserTable from "@/component/user/UserTable";
 import { getUsers } from "@/helper/apiService";
 import { OrgContext } from "@/helper/context";
 import { getUserEmailDomain } from "@/helper/methods";

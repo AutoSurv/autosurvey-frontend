@@ -2,7 +2,6 @@ import { addSurvey } from "@/helper/apiService";
 import { Survey, Organization, UserDto } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
-import { getCountryFromJson } from "@/helper/methods";
 import CountrySelector from "./CountrySelector";
 
 type CreateSurveyProps = {

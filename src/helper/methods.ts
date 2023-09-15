@@ -1,7 +1,7 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
 import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto, ClickedCountry, CountryGeo } from '@/type/type';
 import router from 'next/router';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, FormEvent, SetStateAction } from 'react';
 import * as XLSX from "xlsx";
 import countiesListJson from "@/../../public/countries.json"
 
@@ -76,6 +76,126 @@ export const createCsvFileName = (data: any, organization: Organization,
       return;
     }
 }
+
+export const offlineDownloadExcel = (offlineSurveys: Survey[], 
+                                     setErrorMsg: Dispatch<SetStateAction<string>>,
+                                     setSurveyCounter: Dispatch<SetStateAction<string>>
+                                     ) => {
+  offlineSurveys = JSON.parse(window.localStorage.getItem("offlineSurvey")!);
+  const surveyAsString: string = JSON.stringify(offlineSurveys[0]);
+  if (surveyAsString === undefined) {
+    setErrorMsg("nothing to export");
+    return;
+  }
+  const survey: ExportedSurvey = JSON.parse(surveyAsString);
+  const myHeader = [
+    "id",
+    "country",
+    "year",
+    "rent",
+    "utilities",
+    "food",
+    "basicItems",
+    "transportation",
+    "educationTotal",
+    "educationSupplies",
+    "educationFee",
+    "educationType",
+    "accommodationType",
+    "profession",
+    "locationGiven",
+    "locationClustered",
+    "numResidents",
+    "numIncomes",
+    "numFullIncomes",
+    "numChildren",
+    "totalIncome",
+    "comments",
+    "orgId",
+    "orgName",
+    "userId"
+  ];
+  const worksheet = XLSX.utils.json_to_sheet(offlineSurveys, {header:myHeader});
+  delete(worksheet["W1"]);
+  delete(worksheet['X1']);
+  delete(worksheet['Y1']);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+  if (offlineSurveys) {
+    XLSX.writeFile(
+      workbook,
+      survey.country +
+        "_" +
+        survey.locationClustered +
+        "_" +
+        survey.year +
+        ".xlsx"
+    );
+    setSurveyCounter("0");
+    window.localStorage.clear();
+  } else {
+    setErrorMsg("nothing to export");
+    return;
+  }
+  setErrorMsg("");
+}
+
+export const saveOfflineSurvey = (e: FormEvent<HTMLFormElement>, offlineSurveys: Survey[],
+                                  offlineSurveyCounter: number, setSurveyCounter: Dispatch<SetStateAction<string>>) => {
+  const actualSurvey: Survey = {
+    id: "",
+    country: e.currentTarget.country.value,
+    year: e.currentTarget.year.value,
+    rent: e.currentTarget.rent.value,
+    utilities: e.currentTarget.utilities.value,
+    food: e.currentTarget.food.value,
+    basicItems: e.currentTarget.basicItems.value,
+    transportation: e.currentTarget.transportation.value,
+    educationTotal: e.currentTarget.educationTotal.value,
+    educationSupplies: e.currentTarget.educationSupplies.value,
+    educationFee: e.currentTarget.educationFee.value,
+    educationType: e.currentTarget.educationType.value,
+    accommodationType: e.currentTarget.accommodationType.value,
+    profession: e.currentTarget.profession.value,
+    locationGiven: e.currentTarget.locationGiven.value,
+    locationClustered: e.currentTarget.locationClustered.value,
+    numResidents: e.currentTarget.numResidents.value,
+    numIncomes: e.currentTarget.numIncomes.value,
+    numFullIncomes: e.currentTarget.numFullIncomes.value,
+    numChildren: e.currentTarget.numChildren.value,
+    totalIncome: e.currentTarget.totalIncome.value,
+    comments: e.currentTarget.comments.value,
+    orgId: "",
+    orgName: "",
+    userId: ""
+  };
+
+  if (!localStorage.getItem("offlineSurvey")) {
+    offlineSurveys.unshift(actualSurvey);
+    localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
+    offlineSurveyCounter++;
+    localStorage.setItem(
+      "offlineSurveyCounter",
+      JSON.stringify(offlineSurveyCounter)
+    );
+    offlineSurveys = [];
+  } else {
+    offlineSurveys = JSON.parse(
+      window.localStorage.getItem("offlineSurvey")!
+    );
+    offlineSurveys.push(actualSurvey);
+    localStorage.setItem("offlineSurvey", JSON.stringify(offlineSurveys));
+    offlineSurveyCounter =
+      1 + parseInt(JSON.parse(localStorage.getItem("offlineSurveyCounter")!));
+    localStorage.setItem(
+      "offlineSurveyCounter",
+      JSON.stringify(offlineSurveyCounter)
+    );
+    offlineSurveys = [];
+  }
+  setSurveyCounter("" + offlineSurveyCounter);
+};
 
 export function SignOut(setSignUpStatus: Dispatch<SetStateAction<boolean>>): void {
   setSignUpStatus(false);
@@ -293,5 +413,16 @@ export function getCountryFromJson() {
     value: item.properties.name,
     text: item.properties.name
   }});
-  return countriesList;
+  console.log(countriesList.sort());
+  return countriesList.sort(compareCountries);
+}
+
+function compareCountries(countryGeo1: CountryGeo, countryGeo2: CountryGeo ) {
+  if ( countryGeo1.text < countryGeo2.text ){
+    return -1;
+  }
+  if ( countryGeo1.text > countryGeo2.text ){
+    return 1;
+  }
+  return 0;
 }

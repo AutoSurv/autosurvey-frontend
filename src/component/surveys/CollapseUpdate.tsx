@@ -4,6 +4,7 @@ import { Organization, Survey } from "@/type/type";
 import { Box, Collapse } from "@mui/material";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Button, Form, Input, Label } from "semantic-ui-react";
+import CountrySelector from "./CountrySelector";
 
 type UpdateSurveyProps = {
   openStatus: boolean;
@@ -28,7 +29,7 @@ export default function CollapseUpdate({ openStatus, setOpenStatus, propOrg, pro
               <Form.Group className="surveys-form-edit" >
                   <Form.Field className="surveys-form-edit-field">
                       <Label>Country</Label>
-                      <Input placeholder={propSurvey.country} type="text" name="country" defaultValue={propSurvey.country} pattern="^[A-zÀ-ž\s]*$" />
+                      <CountrySelector />
                   </Form.Field>
                   <Form.Field className="surveys-form-edit-field">
                       <Label>Year</Label>

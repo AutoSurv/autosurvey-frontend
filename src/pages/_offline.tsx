@@ -2,19 +2,14 @@ import { ExportedSurvey, Survey } from "@/type/type";
 import Head from "next/head";
 import Link from "next/link";
 import {
-  Dispatch,
   FormEvent,
-  SetStateAction,
   useEffect,
   useState,
 } from "react";
 import {
   Button,
-  Form,
   Header,
   Icon,
-  Input,
-  Label,
   List,
   Modal,
   Table,
@@ -23,8 +18,10 @@ import {
   TableRow,
 } from "semantic-ui-react";
 import SignalWifiConnectedNoInternet4Icon from "@mui/icons-material/SignalWifiConnectedNoInternet4";
-import * as XLSX from "xlsx";
 import { TableHead } from "@mui/material";
+import { offlineDownloadExcel } from "@/helper/methods";
+import OfflineSurveyForm from "@/component/offline/OfflineSurveyForm";
+
 
 export default function Fallback() {
   const [open, setOpen] = useState(false);
@@ -37,6 +34,7 @@ export default function Fallback() {
 
   const saveOfflineSurvey = (e: FormEvent<HTMLFormElement>) => {
     const actualSurvey: Survey = {
+      id: "",
       country: e.currentTarget.country.value,
       year: e.currentTarget.year.value,
       rent: e.currentTarget.rent.value,
@@ -58,7 +56,6 @@ export default function Fallback() {
       numChildren: e.currentTarget.numChildren.value,
       totalIncome: e.currentTarget.totalIncome.value,
       comments: e.currentTarget.comments.value,
-      id: "",
       orgId: "",
       orgName: "",
       userId: ""
@@ -90,66 +87,6 @@ export default function Fallback() {
     setSurveyCounter("" + offlineSurveyCounter);
   };
 
-  const downloadExcel = (setErrorMsg: Dispatch<SetStateAction<string>>) => {
-    offlineSurveys = JSON.parse(window.localStorage.getItem("offlineSurvey")!);
-    const surveyAsString: string = JSON.stringify(offlineSurveys[0]);
-    if (surveyAsString === undefined) {
-      setErrorMsg("nothing to export");
-      return;
-    }
-    const survey: ExportedSurvey = JSON.parse(surveyAsString);
-    const myHeader = [
-      "id",
-      "country",
-      "year",
-      "rent",
-      "utilities",
-      "food",
-      "basicItems",
-      "transportation",
-      "educationTotal",
-      "educationSupplies",
-      "educationFee",
-      "educationType",
-      "accommodationType",
-      "profession",
-      "locationGiven",
-      "locationClustered",
-      "numResidents",
-      "numIncomes",
-      "numFullIncomes",
-      "numChildren",
-      "totalIncome",
-      "comments",
-      "orgId",
-      "orgName",
-      "userId"
-    ];
-    const worksheet = XLSX.utils.json_to_sheet(offlineSurveys, {header:myHeader});
-    delete(worksheet["W1"]);
-    delete(worksheet['X1']);
-    delete(worksheet['Y1']);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
-    if (offlineSurveys) {
-      XLSX.writeFile(
-        workbook,
-        survey.country +
-          "_" +
-          survey.locationClustered +
-          "_" +
-          survey.year +
-          ".xlsx"
-      );
-      setSurveyCounter("0");
-      window.localStorage.clear();
-    } else {
-      setErrorMsg("nothing to export");
-      return;
-    }
-    setErrorMsg("");
-  };
 
   return (
     <>
@@ -256,225 +193,18 @@ export default function Fallback() {
                       </Button>
                     </Modal.Header>
                     <Modal.Content>
-                      <Form
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          saveOfflineSurvey(e);
-                          setOpen(false);
-                        }}
-                      >
-                        <Form.Field>
-                          <Label>Country Name</Label>
-                          <Input
-                            placeholder="Name your country"
-                            type="text"
-                            name="country"
-                            required="required"
-                            pattern="^[A-zÀ-ž\s]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Year</Label>
-                          <Input
-                            placeholder="Year"
-                            type="text"
-                            name="year"
-                            required="required"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Rent</Label>
-                          <Input
-                            placeholder="Rent"
-                            type="text"
-                            name="rent"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Utilities</Label>
-                          <Input
-                            placeholder="Utilities"
-                            type="text"
-                            name="utilities"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Food</Label>
-                          <Input
-                            placeholder="Food"
-                            type="text"
-                            name="food"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Basic Items</Label>
-                          <Input
-                            placeholder="Basic Items"
-                            type="text"
-                            name="basicItems"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Transportation</Label>
-                          <Input
-                            placeholder="Transportation"
-                            type="text"
-                            name="transportation"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Education Total</Label>
-                          <Input
-                            placeholder="Education Total"
-                            type="text"
-                            name="educationTotal"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Education Supplies</Label>
-                          <Input
-                            placeholder="Education Supplies"
-                            type="text"
-                            name="educationSupplies"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Education Fee</Label>
-                          <Input
-                            placeholder="Education Fee"
-                            type="text"
-                            name="educationFee"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Education Type</Label>
-                          <Input
-                            placeholder="Education Type"
-                            type="text"
-                            name="educationType"
-                            pattern="^[A-zÀ-ž\s]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Accommodation Type</Label>
-                          <Input
-                            placeholder="Accommodation Type"
-                            type="text"
-                            name="accommodationType"
-                            pattern="^[A-zÀ-ž\s]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Profession</Label>
-                          <Input
-                            placeholder="Profession"
-                            type="text"
-                            name="profession"
-                            pattern="^[A-zÀ-ž\s]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Location Given</Label>
-                          <Input
-                            placeholder="Location Given"
-                            type="text"
-                            name="locationGiven"
-                            pattern="^[A-zÀ-ž\s]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Location Clustered</Label>
-                          <Input
-                            placeholder="Location Clustered"
-                            type="text"
-                            name="locationClustered"
-                            required="required"
-                            pattern="^[A-zÀ-ž\s]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Number of Residents</Label>
-                          <Input
-                            placeholder="Number of Residents"
-                            type="text"
-                            name="numResidents"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Number of Incomes</Label>
-                          <Input
-                            placeholder="Number of Incomes"
-                            type="text"
-                            name="numIncomes"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Number of Full Incomes</Label>
-                          <Input
-                            placeholder="Number of Full Incomes"
-                            type="text"
-                            name="numFullIncomes"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Number of Children</Label>
-                          <Input
-                            placeholder="Number of Children"
-                            type="text"
-                            name="numChildren"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Total Income</Label>
-                          <Input
-                            placeholder="Total Income"
-                            type="text"
-                            name="totalIncome"
-                            pattern="^[0-9]*$"
-                          />
-                        </Form.Field>
-                        <Form.Field>
-                          <Label>Comments</Label>
-                          <Input
-                            placeholder="Comments"
-                            type="text"
-                            name="comments"
-                            pattern="^[A-z0-9À-ž.,+-\s]*$"
-                          />
-                        </Form.Field>
-
-                        <Button type="submit" color="green">
-                          Save Survey
-                        </Button>
-                        <Button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setOpen(false);
-                          }}
-                          color="orange"
-                        >
-                          Cancel
-                        </Button>
-                      </Form>
+                    <OfflineSurveyForm  
+                      propSetOpen={setOpen} 
+                      propOfflineSurveys={offlineSurveys}
+                      propOfflineSurveyCounter={offlineSurveyCounter}
+                      propSetSurveyCounter={setSurveyCounter} 
+                    />
                     </Modal.Content>
                   </Modal>
                   <Button
                     onClick={(e) => {
                       e.preventDefault();
-                      downloadExcel(setErrMessage);
+                      offlineDownloadExcel(offlineSurveys, setErrMessage, setSurveyCounter)
                       setOpen(false);
                     }}
                     color="olive"
