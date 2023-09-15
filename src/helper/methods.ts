@@ -1,8 +1,9 @@
 import { authenticateUser, signUpUser } from '@/helper/apiService';
-import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto, ClickedCountry } from '@/type/type';
+import { Survey, FormDataSingUp, ImportedSurvey, LoggedUser, LoginUser, ExportedSurvey, Organization, UserDto, ClickedCountry, CountryGeo } from '@/type/type';
 import router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
 import * as XLSX from "xlsx";
+import countiesListJson from "@/../../public/countries.json"
 
 export const downloadExcel = (data: any, organization: Organization, filterYears: string[], filterCountries: string[], filterLocations: string[], 
   setErrorMsg: Dispatch<SetStateAction<string>>) => {  
@@ -282,4 +283,15 @@ export function handleClickedCountry(geoName: string,
       clicked: true,
     });
   }
+}
+
+export function getCountryFromJson() {
+  const countriesList: CountryGeo[] = 
+  countiesListJson.objects.world.geometries.map((item, index: number ) => {
+   return {
+    key: index,
+    value: item.properties.name,
+    text: item.properties.name
+  }});
+  return countriesList;
 }

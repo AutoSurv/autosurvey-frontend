@@ -162,7 +162,8 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
   org: Organization, userDto: UserDto, 
   setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
   setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
-  const reqBody: Survey = {
+  
+    const reqBody: Survey = {
     id: "",
     country: event.currentTarget.country.value,
     year: event.currentTarget.year.value,
