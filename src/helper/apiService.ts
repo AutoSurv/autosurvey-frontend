@@ -1,20 +1,41 @@
 import { Dispatch, SetStateAction } from "react";
 import {
-  Survey, SurveyUpdateDto, FormDataSingUp,
-  LoginUser, OrgRequestDto, Organization, ReqOptions, UserStatusDto, UserDto
+  Survey,
+  SurveyUpdateDto,
+  FormDataSingUp,
+  LoginUser,
+  OrgRequestDto,
+  Organization,
+  ReqOptions,
+  UserStatusDto,
+  UserDto,
 } from "../type/type";
 import {
-  addImportedSurveyApi, addOrganizationApi, addSurveyApi,
+  addImportedSurveyApi,
+  addOrganizationApi,
+  addSurveyApi,
   editUserToOrgApi,
-  authenticateUserApi, deleteOrganizationApi, deleteSurveyApi,
-  getOrganizationApi, getOrganizationsApi, getSurveyApi,
-  getUserApi, getUsersApi, signUpUserApi, updateOrganizationNameApi, updateSurveyApi, updateUserStatusApi, getSurveysApi
+  authenticateUserApi,
+  deleteOrganizationApi,
+  deleteSurveyApi,
+  getOrganizationApi,
+  getOrganizationsApi,
+  getSurveyApi,
+  getUserApi,
+  getUsersApi,
+  signUpUserApi,
+  updateOrganizationNameApi,
+  updateSurveyApi,
+  updateUserStatusApi,
+  getSurveysApi,
 } from "@/pages/api/surveyAPI";
 import router from "next/router";
 
 //Organization section
 
-export async function getOrganizations(setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
+export async function getOrganizations(
+  setOrganizations: Dispatch<SetStateAction<Organization[]>>
+) {
   const apiResponse = await getOrganizationsApi();
 
   if (apiResponse.status === 200) {
@@ -27,13 +48,14 @@ export async function getOrganizations(setOrganizations: Dispatch<SetStateAction
     localStorage.clear();
     router.push("/");
   }
+}
 
-};
-
-export async function getOrganization(orgid: string | string[], setOrganization: Dispatch<SetStateAction<Organization>>) {
-
+export async function getOrganization(
+  orgid: string | string[],
+  setOrganization: Dispatch<SetStateAction<Organization>>
+) {
   const apiResponse = await getOrganizationApi(orgid);
-  
+
   if (apiResponse.status !== 200) {
     localStorage.clear();
     router.push("/");
@@ -42,21 +64,24 @@ export async function getOrganization(orgid: string | string[], setOrganization:
   const data: Organization = await apiResponse.json();
   setOrganization(data);
   return data;
-
 }
 
-export async function addOrganization(event: React.FormEvent<HTMLFormElement>, 
-  setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOpen: Dispatch<SetStateAction<boolean>>, 
-  setErrMessage: Dispatch<SetStateAction<string>>, username: string) {
+export async function addOrganization(
+  event: React.FormEvent<HTMLFormElement>,
+  setOrganizations: Dispatch<SetStateAction<Organization[]>>,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  setErrMessage: Dispatch<SetStateAction<string>>,
+  username: string
+) {
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value,
-    creatorName: username
+    creatorName: username,
   };
 
   const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
   if (!reqBody.orgName) {
-    setErrMessage('Please choose a name for your organization');
+    setErrMessage("Please choose a name for your organization");
   }
 
   const response = await addOrganizationApi(reqOptions);
@@ -68,17 +93,20 @@ export async function addOrganization(event: React.FormEvent<HTMLFormElement>,
   } else {
     setErrMessage("Organization already taken.");
   }
+}
 
-};
-
-export async function updateOrganizationName(id: string, event: React.FormEvent<HTMLFormElement>, 
-  setOrganizations: Dispatch<SetStateAction<Organization[]>>, setOrganization: Dispatch<SetStateAction<Organization>>, 
-  setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
-
+export async function updateOrganizationName(
+  id: string,
+  event: React.FormEvent<HTMLFormElement>,
+  setOrganizations: Dispatch<SetStateAction<Organization[]>>,
+  setOrganization: Dispatch<SetStateAction<Organization>>,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  setErrMessage: Dispatch<SetStateAction<string>>
+) {
   const reqBody: OrgRequestDto = {
     orgName: event.currentTarget.orgname.value,
-    creatorName: ""
-  }
+    creatorName: "",
+  };
 
   if (!reqBody.orgName) {
     setErrMessage("Please edit name");
@@ -86,54 +114,59 @@ export async function updateOrganizationName(id: string, event: React.FormEvent<
 
   const reqOptions = setRequestOptions("PATCH", reqBody);
 
-  updateOrganizationNameApi(id, reqOptions)
+  updateOrganizationNameApi(id, reqOptions);
   await getOrganization(id, setOrganization);
   await getOrganizations(setOrganizations);
   setOpen(false);
-  setErrMessage('');
-};
+  setErrMessage("");
+}
 
 export async function editUserToOrg(
-  orgId: string, user: UserDto, 
-    setUser: Dispatch<SetStateAction<UserDto>>, 
-    setUsers: Dispatch<SetStateAction<UserDto[]>>
+  orgId: string,
+  user: UserDto,
+  setUser: Dispatch<SetStateAction<UserDto>>,
+  setUsers: Dispatch<SetStateAction<UserDto[]>>
 ) {
-
   await updateUserStatus(user, setUsers, setUser).then(async (updatedUser) => {
     const reqBody: UserDto = {
       userId: updatedUser!.userId,
       username: updatedUser!.username,
       email: updatedUser!.email,
       roles: updatedUser!.roles,
-      status: updatedUser!.status
-    }
+      status: updatedUser!.status,
+    };
     const reqOptions = setRequestOptions("PATCH", reqBody);
     const apiResponse = await editUserToOrgApi(orgId, reqOptions);
     if (apiResponse.status === 202) {
       const data: Organization = await apiResponse.json();
       return data;
     }
-
   });
+}
 
-};
-
-export async function deleteOrganization(id: string, setOrganizations: Dispatch<SetStateAction<Organization[]>>) {
+export async function deleteOrganization(
+  id: string,
+  setOrganizations: Dispatch<SetStateAction<Organization[]>>
+) {
   await deleteOrganizationApi(id);
   await getOrganizations(setOrganizations);
-};
+}
 
 //Survey section
 
-export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>, propOrgId: string) {
-
+export async function getSurveys(
+  setSurveys: Dispatch<SetStateAction<Survey[]>>,
+  propOrgId: string
+) {
   const apiResponse = await getSurveysApi(propOrgId);
 
   if (apiResponse.status === 200) {
     const data: Survey[] = await apiResponse.json();
-    setSurveys(data.filter(survey => {
-      return survey.orgId === propOrgId;
-    }));
+    setSurveys(
+      data.filter((survey) => {
+        return survey.orgId === propOrgId;
+      })
+    );
     return data;
   }
 
@@ -141,10 +174,13 @@ export async function getSurveys(setSurveys: Dispatch<SetStateAction<Survey[]>>,
     localStorage.clear();
     router.push("/");
   }
-};
+}
 
-export async function getSurvey(orgId: string | string[] | undefined, surveyId: string | string[] | undefined, setSurvey: Dispatch<SetStateAction<Survey>>) {
-
+export async function getSurvey(
+  orgId: string | string[] | undefined,
+  surveyId: string | string[] | undefined,
+  setSurvey: Dispatch<SetStateAction<Survey>>
+) {
   const apiResponse = await getSurveyApi(orgId, surveyId);
   if (apiResponse.status === 200) {
     const data: Survey = await apiResponse.json();
@@ -158,10 +194,15 @@ export async function getSurvey(orgId: string | string[] | undefined, surveyId: 
   }
 }
 
-export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
-  org: Organization, userDto: UserDto, 
-  setSurveys: Dispatch<SetStateAction<Survey[]>>, setOrganization: Dispatch<SetStateAction<Organization>>,
-  setOpen: Dispatch<SetStateAction<boolean>>, setErrMessage: Dispatch<SetStateAction<string>>) {
+export async function addSurvey(
+  event: React.FormEvent<HTMLFormElement>,
+  org: Organization,
+  userDto: UserDto,
+  setSurveys: Dispatch<SetStateAction<Survey[]>>,
+  setOrganization: Dispatch<SetStateAction<Organization>>,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  setErrMessage: Dispatch<SetStateAction<string>>
+) {
   const reqBody: Survey = {
     id: "",
     country: event.currentTarget.country.value,
@@ -187,11 +228,11 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
     comments: event.currentTarget.comments.value,
     orgId: org.orgId,
     orgName: org.orgName,
-    userId: userDto.userId
+    userId: userDto.userId,
   };
 
   if (!reqBody.country || !reqBody.orgId) {
-    setErrMessage('Please fill the form.');
+    setErrMessage("Please fill the form.");
     return;
   }
 
@@ -199,9 +240,9 @@ export async function addSurvey(event: React.FormEvent<HTMLFormElement>,
 
   await addSurveyApi(reqOptions);
   await getSurveys(setSurveys, org.orgId);
-  await getOrganization(reqBody.orgId, setOrganization)
+  await getOrganization(reqBody.orgId, setOrganization);
   setOpen(false);
-  setErrMessage('');
+  setErrMessage("");
 }
 
 export async function addImportedSurvey(
@@ -211,11 +252,11 @@ export async function addImportedSurvey(
   setSuccessMessage: Dispatch<SetStateAction<string>>,
   setOpen: Dispatch<SetStateAction<boolean>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
+  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>,
   setOrganization: Dispatch<SetStateAction<Organization>>,
   setProgressCounter: Dispatch<SetStateAction<number>>,
   user: UserDto
 ) {
-
   let importCounter: number = 0;
   let updateCounter: number = 0;
   let errorCounter: number = 0;
@@ -245,17 +286,21 @@ export async function addImportedSurvey(
       comments: surveyArr[i].comments,
       orgId: organization.orgId,
       orgName: organization.orgName,
-      userId: user.userId
+      userId: user.userId,
     };
 
     if (!reqBody.orgId) {
-      setErrMessage('Organiztion information is missing on survey: ' + reqBody.id + ". Import skipped");
+      setErrMessage(
+        "Organiztion information is missing on survey: " +
+          reqBody.id +
+          ". Import skipped"
+      );
       continue;
     }
 
-    if (reqBody.id !== undefined && reqBody.id !== '') {
+    if (reqBody.id !== undefined && reqBody.id !== "") {
       const listOfSurveys: String[] = organization.surveysIds;
-      const surveyFound = listOfSurveys.find(survey => survey === reqBody.id);
+      const surveyFound = listOfSurveys.find((survey) => survey === reqBody.id);
 
       if (surveyFound != undefined) {
         const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
@@ -264,7 +309,12 @@ export async function addImportedSurvey(
           updateCounter++;
           setProgressCounter(updateCounter);
         } else {
-          setErrMessage("Survey " + reqBody.id + " not updated due to error: " + response.status);
+          setErrMessage(
+            "Survey " +
+              reqBody.id +
+              " not updated due to error: " +
+              response.status
+          );
           errorCounter++;
         }
         continue;
@@ -276,10 +326,14 @@ export async function addImportedSurvey(
         importCounter++;
         setProgressCounter(updateCounter + importCounter);
       } else {
-        setErrMessage("Survey " + reqBody.id + " not imported due to error: " + response.status);
+        setErrMessage(
+          "Survey " +
+            reqBody.id +
+            " not imported due to error: " +
+            response.status
+        );
         errorCounter++;
       }
-
     } else {
       const reqOptions: ReqOptions = setRequestOptions("POST", reqBody);
 
@@ -288,30 +342,44 @@ export async function addImportedSurvey(
         importCounter++;
         setProgressCounter(updateCounter + importCounter);
       } else {
-        setErrMessage("Survey " + reqBody.id + " not imported due to error: " + response.status);
+        setErrMessage(
+          "Survey " +
+            reqBody.id +
+            " not imported due to error: " +
+            response.status
+        );
         errorCounter++;
       }
     }
-
-    await getSurveys(setSurveys, organization.orgId);
-    await getOrganization(organization.orgId, setOrganization);
-    setOpen(false);
-    setErrMessage('');
   }
 
   if (errorCounter == 0) {
-    setSuccessMessage("Success! " + importCounter + " survey(s) imported and "
-      + updateCounter + " survey(s) updated out of " + (importCounter + updateCounter) + " survey(s)");
+    setSuccessMessage(
+      "Success! " +
+        importCounter +
+        " survey(s) imported and " +
+        updateCounter +
+        " survey(s) updated out of " +
+        (importCounter + updateCounter) +
+        " survey(s)"
+    );
     setProgressCounter(importCounter + updateCounter);
+    await getSurveys(setSurveys, organization.orgId).then((surveys) =>
+      setFilteredSurveys(surveys as Survey[])
+    );
+    await getOrganization(organization.orgId, setOrganization);
+    setOpen(false);
+    setErrMessage("");
   }
-
 }
 
 export async function updateSurvey(
   id: string | string[] | undefined,
   event: React.FormEvent<HTMLFormElement>,
-  setSurvey: Dispatch<SetStateAction<Survey>>, setOpen: Dispatch<SetStateAction<boolean>>,
-  setErrMessage: Dispatch<SetStateAction<string>>, org: Organization,
+  setSurvey: Dispatch<SetStateAction<Survey>>,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  setErrMessage: Dispatch<SetStateAction<string>>,
+  org: Organization,
   setOrganization: Dispatch<SetStateAction<Organization>>,
   setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
@@ -341,42 +409,43 @@ export async function updateSurvey(
     comments: event.currentTarget.comments.value,
     orgId: org.orgId,
     orgName: org.orgName,
-    userId: userDto.userId
+    userId: userDto.userId,
   };
 
   const reqOptions: ReqOptions = setRequestOptions("PATCH", reqBody);
   const response = await updateSurveyApi(id, reqOptions);
   if (response.status === 202) {
-    const survey = await getSurvey( org.orgId,id, setSurvey) as Survey;
+    const survey = (await getSurvey(org.orgId, id, setSurvey)) as Survey;
     if (survey) {
-      await getSurveys(setSurveys, org.orgId).then(data =>  setFilteredSurveys((data as Survey[]).filter(s => s.orgId === org.orgId)));
+      await getSurveys(setSurveys, org.orgId).then((data) =>
+        setFilteredSurveys(
+          (data as Survey[]).filter((s) => s.orgId === org.orgId)
+        )
+      );
       await getOrganization(org.orgId, setOrganization);
     }
-    
+
     setOpen(false);
-    setErrMessage('');
+    setErrMessage("");
   } else {
     setErrMessage("Survey not imported due to error: " + response.status);
   }
-
-};
+}
 
 export async function deleteSurvey(
   id: string,
   setSurveys: Dispatch<SetStateAction<Survey[]>>,
-  organization: Organization) {
-    
+  organization: Organization
+) {
   await deleteSurveyApi(id, organization.orgId);
   await getSurveys(setSurveys, organization.orgId);
-
-};
+}
 
 //userSection
 
 export async function getUsers(setUsers: Dispatch<SetStateAction<UserDto[]>>) {
   const apiResponse = await getUsersApi();
   if (apiResponse.status === 200) {
-
     const data: UserDto[] = await apiResponse.json();
     setUsers(data);
     return data;
@@ -388,10 +457,12 @@ export async function getUsers(setUsers: Dispatch<SetStateAction<UserDto[]>>) {
   }
 }
 
-export async function getUser(name: string, setUser: Dispatch<SetStateAction<UserDto>>) {
+export async function getUser(
+  name: string,
+  setUser: Dispatch<SetStateAction<UserDto>>
+) {
   const apiResponse = await getUserApi(name);
   if (apiResponse.status === 200) {
-
     const data: UserDto = await apiResponse.json();
     setUser(data);
     return data;
@@ -403,11 +474,17 @@ export async function getUser(name: string, setUser: Dispatch<SetStateAction<Use
   }
 }
 
-export async function updateUserStatus(user: UserDto, setUsers: Dispatch<SetStateAction<UserDto[]>>, setUser: Dispatch<SetStateAction<UserDto>>) {
-
+export async function updateUserStatus(
+  user: UserDto,
+  setUsers: Dispatch<SetStateAction<UserDto[]>>,
+  setUser: Dispatch<SetStateAction<UserDto>>
+) {
   const reqBody: UserStatusDto = {
-    status: user.status === "disapproved" || user.status === "pending" ? "approved" : "disapproved"
-  }
+    status:
+      user.status === "disapproved" || user.status === "pending"
+        ? "approved"
+        : "disapproved",
+  };
 
   const reqOptions = setRequestOptions("PATCH", reqBody);
 
@@ -415,15 +492,10 @@ export async function updateUserStatus(user: UserDto, setUsers: Dispatch<SetStat
   const updatedUser = await getUser(user.username, setUser);
   await getUsers(setUsers);
   return updatedUser;
-};
-
+}
 
 export async function signUpUser(data: FormDataSingUp) {
-  if (
-    !data.username &&
-    !data.password &&
-    !data.email
-  ) {
+  if (!data.username && !data.password && !data.email) {
     return null;
   }
 
@@ -432,25 +504,23 @@ export async function signUpUser(data: FormDataSingUp) {
 }
 
 export async function authenticateUser(user: LoginUser) {
-  const response = await authenticateUserApi(user)
+  const response = await authenticateUserApi(user);
   return response;
 }
-
 
 //
 export function setRequestOptions(typeOfRequest: string, reqBody: Object) {
   let jwt: string = "";
   if (typeof window !== "undefined") {
-    if (localStorage)
-      jwt = localStorage.getItem("jwt")!;
+    if (localStorage) jwt = localStorage.getItem("jwt")!;
   }
   const reqOptions: ReqOptions = {
     method: typeOfRequest,
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem("jwt")}`
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`,
     },
-    body: JSON.stringify(reqBody)
+    body: JSON.stringify(reqBody),
   };
   return reqOptions;
 }

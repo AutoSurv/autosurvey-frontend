@@ -17,7 +17,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
     organization, setOrganization,
     filterYears,
     filterCountries, filterLocations,
-    filteredSurveys, setSurveys,
+    filteredSurveys, setSurveys,setFilteredSurveys,
     survey, userDto
   } = useContext(OrgContext);
 
@@ -75,6 +75,7 @@ export function NavigationBar({ pathname }: HeaderProps) {
                       <ImportSurvey organization={organization}
                         setOrganization={setOrganization}
                         setSurveys={setSurveys}
+                        setFilteredSurveys={setFilteredSurveys}
                         setErrorMsg={setErrorMsg}
                         setSuccessMessage={setSuccessMessage}
                         setTotalCounter={setTotalCounter}

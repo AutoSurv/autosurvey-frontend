@@ -8,6 +8,7 @@ type ImportSurveyProps = {
   organization: Organization;
   setOrganization: Dispatch<SetStateAction<Organization>>;
   setSurveys: Dispatch<SetStateAction<Survey[]>>;
+  setFilteredSurveys: Dispatch<SetStateAction<Survey[]>>;
   setErrorMsg: Dispatch<SetStateAction<string>>;
   setSuccessMessage: Dispatch<SetStateAction<string>>;
   setTotalCounter: Dispatch<SetStateAction<number>>;
@@ -16,7 +17,7 @@ type ImportSurveyProps = {
 }
 
 export default function ImportSurvey(props: ImportSurveyProps) {
-  const { organization, setOrganization, setSurveys, setErrorMsg, 
+  const { organization, setOrganization, setSurveys, setFilteredSurveys, setErrorMsg, 
           setSuccessMessage, setTotalCounter, setProgressCounter, propUserDto } = props;
   const [open, setOpen] = useState(false);
   const [dataFromImportedSurvey, setDataFromImportedSurvey] = useState<Survey[]>([]);
@@ -46,7 +47,7 @@ export default function ImportSurvey(props: ImportSurveyProps) {
   }
 
   const saveImportedSurvey = () => {
-    addImportedSurvey(dataFromImportedSurvey, organization, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setOrganization, setProgressCounter, propUserDto)
+    addImportedSurvey(dataFromImportedSurvey, organization, setErrorMsg, setSuccessMessage, setOpen, setSurveys, setFilteredSurveys, setOrganization, setProgressCounter, propUserDto)
   }
   
   return (

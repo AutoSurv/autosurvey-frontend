@@ -44,7 +44,6 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
 
   useEffect(() => {
      getSurveys(setSurveys, propOrgId);
-     //getUser(localStorage.getItem("username") as string, setUserDto);
      setUserDto({
       userId: localStorage.getItem("userId") as string,
       username: localStorage.getItem("username") as string,
@@ -52,7 +51,7 @@ export default function SurveyContent({propOrgId}: SurveyContentProps) {
       roles: localStorage.getItem("role") as string,
       status: localStorage.getItem("status") as string
      });
-  }, [,setFilterCountries]);
+  }, [ , setFilterCountries]);
 
   function handleChangePage(event: React.MouseEvent<HTMLButtonElement> | null, newpage: number) {
     setPage(newpage);
