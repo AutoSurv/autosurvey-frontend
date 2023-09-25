@@ -2,6 +2,7 @@ import { addSurvey } from "@/helper/apiService";
 import { Survey, Organization, UserDto } from "@/type/type";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import CountrySelector from "./CountrySelector";
 
 type CreateSurveyProps = {
   organization: Organization;
@@ -13,9 +14,8 @@ type CreateSurveyProps = {
 export default function CreateSurvey(props: CreateSurveyProps) {
   const [open, setOpen] = useState(false);
   const [errMessage, setErrMessage] = useState<string>("");
-
+  
   const { organization, setOrganization, setSurveys, propUser } = props;
-
 
   return (
     <>
@@ -38,7 +38,7 @@ export default function CreateSurvey(props: CreateSurveyProps) {
           }}>
             <Form.Field>
               <Label>Country Name</Label>
-              <Input placeholder="Name your country" type="text" name="country" required="required" pattern="^[A-zÀ-ž\s]*$" />
+              <CountrySelector /> 
             </Form.Field>
             <Form.Field>
               <Label>Year</Label>

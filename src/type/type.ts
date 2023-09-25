@@ -222,21 +222,10 @@ export type MeadDataForChart = {
   meanValues: number[][]
 }
 
-export type CountryChart = {
-  type: string,
-  objects : {
-    world: {
-      type: string,
-      geometries: [{
-        type: string,
-        arcs: number[],
-        id: string,
-        properties: {
-          name: string
-        }
-      }]
-    }
-  }
+export type CountryGeo = {
+  key: number,
+  value: string,
+  text: string
 }
 
 export type ClickedCountry = {

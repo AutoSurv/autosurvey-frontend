@@ -6,12 +6,12 @@ import { useContext, useEffect } from "react";
 
 export default function OrgDetails() {
 
+
   const  router  = useRouter();
   const { orgId } = router.query;
   const { setOrganization } =useContext(OrgContext);
 
-  useEffect(() => {
-    
+  useEffect(() => {    
      if(router.isReady){
       getOrganization(orgId!, setOrganization);
      }

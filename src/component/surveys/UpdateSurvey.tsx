@@ -3,6 +3,7 @@ import { OrgContext } from "@/helper/context";
 import { Organization, Survey, UserDto } from "@/type/type";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import { Button, Form, Input, Label, Modal } from "semantic-ui-react";
+import CountrySelector from "./CountrySelector";
 
 type CreateSurveyProps = {
   survey: Survey;
@@ -38,7 +39,7 @@ export default function UpdSurvey(props: CreateSurveyProps) {
         }}>
         <Form.Field>
           <Label>Country Name</Label>
-          <Input placeholder={survey.country} type="text" name="country" defaultValue={survey.country} pattern="^[A-zÀ-ž\s]*$"/>
+          <CountrySelector />
         </Form.Field>
         <Form.Field>
           <Label>Year</Label>
