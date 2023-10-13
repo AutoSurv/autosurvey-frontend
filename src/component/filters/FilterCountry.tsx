@@ -2,7 +2,8 @@ import { OrgContext } from "@/helper/context";
 import { handleClickedCountry } from "@/helper/methods";
 import { Survey } from "@/type/type";
 import React, { Dispatch, SetStateAction, useContext, useEffect } from "react";
-import { Dropdown, Item } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
+import '../../styles/filterCountry.css'
 
 type FilterProps = {
   propSurveys: Survey[];
@@ -23,72 +24,61 @@ export default function FilterCountry({
   } = useContext(OrgContext);
 
   const uniqueSurveyCountryArray: string[] = [];
-  // propSurveys.map((survey) => {
-  //   if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
-  //     uniqueSurveyCountryArray.push(survey.country);
-  //   }
-  // });
   propSurveys.forEach((survey) => {
     if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
       uniqueSurveyCountryArray.push(survey.country);
     }
   });
+  const stateOptions = uniqueSurveyCountryArray
+    .sort()
+    .map((country: string, index: number) => (
+      <option key={index} value={country}>
+        {country}
+      </option>
+    ));
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value: string[] = e.target.value.split(",");
-    const strArr: string[] = typeof value === "string" ? value : value;
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value
+    );
+    console.log("this is selected options", selectedOptions);
+    selectedOptions.forEach((country) =>
+      handleClickedCountry(country, clickedCountries, setClickedCountries)
+    );
     previousStrArr = clickedCountries
       .filter((item) => item.clicked)
       .map((item) => item.country);
-      console.log(previousStrArr);
+    setFilterCountries(selectedOptions);
+    console.log("this is previous str array", previousStrArr);
+    console.log("this is clicked countries", clickedCountries);
 
-    if (strArr.length === 0 && previousStrArr.length !== 1) {
-      clickedCountries.map((c) => (c.clicked = false));
-      previousStrArr = [];
-    }
-
-    if (strArr.length > previousStrArr.length) {
+    if (selectedOptions.length === 0 && previousStrArr.length) {
       handleClickedCountry(
-        strArr[strArr.length - 1],
+        selectedOptions[selectedOptions.length - 1],
         clickedCountries,
         setClickedCountries
       );
-      previousStrArr = strArr;
+      previousStrArr = selectedOptions;
     }
-
-        if (strArr.length < previousStrArr.length) {
-      const country = previousStrArr
-        .filter((p) => !strArr.includes(p))
-        .toString();
-      handleClickedCountry(country, clickedCountries, setClickedCountries);
-      previousStrArr = strArr;
-    }
-    setFilterCountries(strArr);
+    setFilterCountries(selectedOptions);
   };
-
   useEffect(() => {
     propSetFilteredCountry(filterCountries);
   }, [filterCountries.length]);
-      return(
-        <>
-        <label htmlFor="country">Chose a country</label>
-        <select
-        id="country"
-        name="country"
-        
-        multiple
-        value={filterCountries}
-        onChange={handleChange}
-        >
-          <option value="">Country</option>
-          {uniqueSurveyCountryArray.map((country:string, index:number)=>(
-            <option key={index} value={country}>{country}</option>
-          )) }
+  return (
+    <select multiple onChange={handleChange} value={filterCountries}>
+      {stateOptions}
+    </select>
+  );
 
-        </select>
-        </>
-      )
-  };
+  // old code: down
+  // const uniqueSurveyCountryArray: string[] = [];
+  // propSurveys.map((survey) => {
+  //   if (uniqueSurveyCountryArray.indexOf(survey.country) === -1) {
+  //     uniqueSurveyCountryArray.push(survey.country);
+  //   }
+  // });
+
   // const stateOptions = uniqueSurveyCountryArray
   //   .sort()
   //   .map((country, index: number) => ({
@@ -99,13 +89,18 @@ export default function FilterCountry({
 
   // const handleChange = (
   //   event: React.SyntheticEvent<HTMLElement, Event>,
-  //   { value }: any
+  //   { value }:any
   // ) => {
   //   const strArr: string[] =
   //     typeof value === "string" ? value.split(",") : value;
+  //     console.log('this is value', value)
+  //     strArr.forEach(country=>handleClickedCountry(country, clickedCountries, setClickedCountries))
   //   previousStrArr = clickedCountries
   //     .filter((item) => item.clicked)
   //     .map((item) => item.country);
+  //     setFilterCountries(strArr)
+  //     console.log('this is previous str array', previousStrArr)
+  //     console.log('this is clicked countries', clickedCountries)
 
   //   if (strArr.length === 0 && previousStrArr.length !== 1) {
   //     clickedCountries.map((c) => (c.clicked = false));
@@ -147,3 +142,4 @@ export default function FilterCountry({
   //     value={filterCountries}
   //   />
   // );
+}

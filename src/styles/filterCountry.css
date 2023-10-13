@@ -1,0 +1,33 @@
+/* Style the select to look like a dropdown */
+select {
+  appearance: none; /* Remove default appearance */
+  padding: 0.5rem; /* Add some padding */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Add border-radius for rounded corners */
+  width: 100%; /* Set width to 100% */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  background-color: #fff; /* Set background color */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+/* Style the dropdown arrow */
+select::after {
+  content: "\f107"; /* Unicode for an arrow icon (you can use your own) */
+  font-family: FontAwesome; /* Use a font that includes the arrow icon */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Prevent click on the arrow */
+}
+
+/* Style on hover */
+select:hover {
+  border-color: #999; /* Change border color on hover */
+}
+
+/* Style when focused */
+select:focus {
+  outline: none; /* Remove focus outline */
+  border-color: #555; /* Change border color on focus */
+}
