@@ -48,7 +48,7 @@ Project AutoSurvey aims to help NGO to retrieve data from different surveys and 
   - User and Managers can use filters to focus on a specific year/country/city <br />
   <img src="assets/graphNfilters.png" width="600"> <br />
   - User and Managers can access the specifi survey from the table <br />
-  <img src="assets/surveysTable.png" width="600">
+  <img src="assets/surveysTable.png" width="600"> <br />
 
 ### Survey Details page
 - In the Surveys Details page:
