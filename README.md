@@ -40,20 +40,21 @@ Project AutoSurvey aims to help NGO to retrieve data from different surveys and 
 
 ### Surveys Page
 - In the Surveys page:
-  - User and Managers can visualize map from all the surveys
-  <img src="assets/map.png" width="600">
-  - User and Managers can visualize the core statistics from all the surveys
-  <img src="assets/surveysGraph.png" width="600">
-  - User and Managers can use filters to focus on a specific year/country/city
-  <img src="assets/graphNfilters.png" width="600">
-  - User and Managers can access the specifi survey from the table
+  - User and Managers can visualize map from all the surveys <br />
+  <img src="assets/map.png" width="600"> <br />
+
+  - User and Managers can visualize the core statistics from all the surveys <br />
+  <img src="assets/surveysGraph.png" width="600"> <br />
+  - User and Managers can use filters to focus on a specific year/country/city <br />
+  <img src="assets/graphNfilters.png" width="600"> <br />
+  - User and Managers can access the specifi survey from the table <br />
   <img src="assets/surveysTable.png" width="600">
 
 ### Survey Details page
 - In the Surveys Details page:
-  - User and Managers can visualize the data from the surveys
-  <img src="assets/surveyDetails.png" width="600">
-  - User and Managers can delete or modify the selected survey
+  - User and Managers can visualize the data from the surveys <br />
+  <img src="assets/surveyDetails.png" width="600"> <br />
+  - User and Managers can delete or modify the selected survey <br />
 
 ## Tech stack, Frameworks and libriaries
 ### Tech
