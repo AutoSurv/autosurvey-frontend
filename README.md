@@ -73,12 +73,10 @@ Project AutoSurvey aims to help NGO to retrieve data from different surveys and 
 
 ## About us
   - Simon: [![Linkedin Badge](https://img.shields.io/badge/Simon-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/seongbong-hong-080293121/)
-
-           [![Github Badge](https://img.shields.io/badge/Simon-Github-black?style=flat&logo=github&logoColor=white)](https://github.com/simonhong2022)
+           [![Github-Nate](https://img.shields.io/badge/Simon-Github-black?style=flat&logo=github&logoColor=white)](https://github.com/simonhong2022)
   
 
   - Marco: [![Linkedin Badge](https://img.shields.io/badge/Marco-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-debernardi-0292a3146/)
-         
-           [![Github Badge](https://img.shields.io/badge/Marco-Github-black?style=flat&logo=github&logoColor=white)](https://github.com/debe82)
+           [![Github-Nate](https://img.shields.io/badge/Marco-Github-black?style=flat&logo=github&logoColor=white)](https://github.com/debe82)
   
 
