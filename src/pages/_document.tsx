@@ -4,8 +4,9 @@ export default function Document() {
   return (
     <Html className='whole-html' lang="en">
       <Head>
+          <title>Autusurvey</title>
           <link rel="manifest" href="/manifest.json" />
-          <link rel="icon" href="/favicon.ico"></link>
+          <link rel="icon" href="/clip.png"></link>
           <meta name="theme-color" content="#fff" />
         </Head>
       <body className='whole-body'>

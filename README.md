@@ -1,11 +1,21 @@
-# Autosurvey Project (Frontend)
+# Autosurvey Project
+
+## Introduction 
+Project AutoSurvey aims to help NGO to retrieve data from different surveys and use them globally in an automated way reducing the time and resources needed. Having one standardized entry point for data collection increases the efficiency and it’s less prone to human error due to field validation.
+
+## Project Board
+
+- Check out our board: https://github.com/orgs/AutoSurv/projects/1
+
+**Pitch Deck and Demo**  
+[![Demo video](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/BHqXPjQSqVk)
 
 ##  Table of content
 - [How to run the application](#how-to-run-the-application)
 - [The application](#the-application)
 - [Tech stack and frameworks](#tech-stack-and-frameworks)
 - [About us](#about-us)
-- [Credits](#credits)
+
 
 ## How to run the application:
 - Click on the vercel link: https://autosurvey.vercel.app/
@@ -30,7 +40,9 @@
 
 ### Surveys Page
 - In the Surveys page:
-  - User and Managers can visualize the data from all the surveys
+  - User and Managers can visualize map from all the surveys
+  <img src="assets/map.png" width="600">
+  - User and Managers can visualize the core statistics from all the surveys
   <img src="assets/surveysGraph.png" width="600">
   - User and Managers can use filters to focus on a specific year/country/city
   <img src="assets/graphNfilters.png" width="600">
@@ -48,6 +60,7 @@
   - Java
   - TypeScript
   - MongoDb
+  - PostgreSQL
 
 ### Frameworks
   - Spring Boot / Web
@@ -59,10 +72,8 @@
   - Semantic UI 
 
 ## About us
-  - About Simon:
+  - Simon: [![Linkedin Badge](https://img.shields.io/badge/Simon-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/seongbong-hong-080293121/)
+
+  - Marco: [![Linkedin Badge](https://img.shields.io/badge/Marco-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marco-debernardi-0292a3146/)
 
 
-  - About Marco:
-
-
-## Credits

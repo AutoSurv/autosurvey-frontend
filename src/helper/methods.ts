@@ -269,7 +269,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     username: event.currentTarget.username.value,
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
-    roles: "role_user",
+    roles: "role_admin",
     status: "pending",
     surveysIds: []
   }
