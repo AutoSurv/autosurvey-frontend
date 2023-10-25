@@ -270,7 +270,7 @@ export async function signUpHandler(event: React.FormEvent<HTMLFormElement>,
     password: event.currentTarget.password.value,
     email: event.currentTarget.email.value,
     roles: "role_admin",
-    status: "pending",
+    status: "approved",
     surveysIds: []
   }
   localStorage.clear();
