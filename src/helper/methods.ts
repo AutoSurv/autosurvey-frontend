@@ -54,7 +54,7 @@ export const downloadExcel = (data: any, organization: Organization, filterYears
 export const createCsvFileName = (data: any, organization: Organization, 
   filterYears: string[], filterCountries: string[], 
   filterLocations: string[], setErrorMsg: Dispatch<SetStateAction<string>>) => {
-
+      
     if (data.length == 1) {  
       return organization.orgName + "_" + data[0].year + "_" + data[0].country + "_" + data[0].locationClustered + "_" + data[0].id + ".csv";
     } else if (data.length > 1) {
