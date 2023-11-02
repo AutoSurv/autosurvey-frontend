@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { Survey, Organization, Pagination, UserDto, ClickedCountry } from '../type/type'
 import { OrgContext } from '@/helper/context'
 import { initClickedCountry, initOrg, initPagination, initSurvey, initUserDto } from '@/helper/initializer'
+import '../../style/globals.css'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
 

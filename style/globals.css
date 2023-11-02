@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Roboto:wght@300;400;500&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: lato;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  padding: 30px;
+}
+.main_title {
+  background: linear-gradient(
+    90deg,
+    #ed6d0b 9.47%,
+    #bf6f32 41.05%,
+    rgba(0, 0, 0, 0.75) 80.79%
+  );
+  background-clip: text;
+  color: transparent;
+}
