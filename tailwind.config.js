@@ -22,6 +22,8 @@ module.exports = {
         primary: "#ED6D0B",
         secondary: "#F5C82E",
         third: "#FFF2F0",
+        accent:'#db6409',
+        offline:"#EEC128"
       },
     },
   },

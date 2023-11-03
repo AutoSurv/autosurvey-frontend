@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 // import 'semantic-ui-css/semantic.min.css'
-import { Button, Header, Icon, List } from "semantic-ui-react";
+import Header from "@/component/Header";
+import { Button, Icon, List } from "semantic-ui-react";
 import Loginpage from "@/component/Loginpage";
 import SignalWifiConnectedNoInternet4Icon from "@mui/icons-material/SignalWifiConnectedNoInternet4";
 import Link from "next/link";
@@ -10,29 +11,16 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <>
-      <main className=" min-h-[25vh] w-full flex flex-col items-center justify-center">
-        <div className="  mx-auto">
-          <header className=" font-primary font-bold text-4xl mx-auto">
-            <h1>
-              Welcome to <br /> <span className="main_title">AutoSurvey</span>
-            </h1>
-          </header>
-        </div>
-        </main>
+    <Header/>
 
-        <Loginpage></Loginpage>
-        <main>
-        <div className="home-offlinemode-container">
-          <button className=" ">
-            {" "}
-            <Link href="/_offline">
-              Offline Mode{" "}
-              <SignalWifiConnectedNoInternet4Icon fontSize="small" />
-            </Link>
-          </button>
+        
+        <main className=" bg-third  h-screen rounded-t-[30px] ">
+          <Loginpage/>
+        <div className="">
+       
         </div>
 
-        <footer className="home-footer">
+        <footer className="">
           <List horizontal>
             <List.Item>
               <List.Content>
