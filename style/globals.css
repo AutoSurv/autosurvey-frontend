@@ -18,8 +18,8 @@ body {
 .main_title_landing_page{
   background: linear-gradient(
     90deg,
-    #ed6d0b 9.47%,
-    #bf6f32 41.05%,
+    #5C61F4ff 9.47%,
+    #696cc4 41.05%,
     rgba(0, 0, 0, 0.75) 80.79%
   );
   background-clip: text;
