@@ -12,18 +12,20 @@ module.exports = {
       },
     },
     screens: {
-      sm: "640px",
+      sm: "600px",
       md: "768px",
       lg: "960px",
       xl: "1200px",
     },
     extend: {
       colors: {
-        primary: "#ED6D0B",
+        primary: "#5C61F4ff",
         secondary: "#F5C82E",
-        third: "#FFF2F0",
-        accent:'#db6409',
-        offline:"#EEC128"
+        third: "#EFEFFEff",
+        accent:'#4e53dc',
+        offline:"#EEC128",
+        FormColour:"#ffffff"
+      
       },
     },
   },
